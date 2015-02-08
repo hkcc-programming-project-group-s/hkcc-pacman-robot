@@ -1,20 +1,25 @@
-public Class Sever{
-private boolean gameRun = true;
-public void gameStart(){
+package hkccpacmanrobot.server;
+
+import java.sql.Timestamp;
+
+public class Sever {
+    private boolean gameRun = true;
+
+    public void gameStart() {
 /*
 send message to robot to start game which function is in connection class
 */
-}
+    }
 
-public void gameEnd(){
+    public void gameEnd() {
 /*
 get the position of the robot from database in ?? time.
 if(compareThePosition)
   using function which is in connection class send message to robot to stop the game.  
 */
-}
+    }
 
-public boolean compareThePosition(){
+    public boolean compareThePosition() {
 /*
 get the position of different robot from database(x1:student x2=deadline x3=assignment...)
 compare the position
@@ -35,13 +40,14 @@ else If assignment is near then student(|x3-x2| <= ?? && |y3-y2| <= ??),
  
  else  return false;
 */
-}
+        return true;
+    }
 
 //private void switchGameStatus(){
 //	gameOver=!gameOver;	
 //}
 
-public void compareUpdateTime() {
+    public void compareUpdateTime() {
 /*
 get the update time of different robot from database
 do{
@@ -57,11 +63,11 @@ if( time1 - time2 >= ??)
 }while(!gameRun && i<=3);
 
 */
-}
+    }
 
-public Timestamp getUpdateTime(int robotNo){
-		/*
-		It is for sever
+    public Timestamp getUpdateTime(int robotNo) {
+        /*
+        It is for sever
 		
 		Timestamp time;
 		get the update time of different robot to sever from database use SQL;
@@ -69,7 +75,8 @@ public Timestamp getUpdateTime(int robotNo){
 		 
 		return time;
 		*/
-	}
+        return null;
+    }
 
 
 }
