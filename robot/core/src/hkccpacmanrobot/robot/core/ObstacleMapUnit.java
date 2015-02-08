@@ -1,3 +1,5 @@
+package hkccpacmanrobot.robot.core;
+
 public class ObstacleMapUnit {
 	public long x, y;
 

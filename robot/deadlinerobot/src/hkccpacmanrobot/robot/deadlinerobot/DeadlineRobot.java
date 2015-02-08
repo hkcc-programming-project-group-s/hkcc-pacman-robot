@@ -1,28 +1,32 @@
+package hkccpacmanrobot.robot.deadlinerobot;
+
+import hkccpacmanrobot.robot.core.Robot;
+
 public class DeadlineRobot extends Robot {
-	@Override
-	public void setup() {
-		// TODO Auto-generated method stub
+    @Override
+    public void setup() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
+    @Override
+    public void save() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	public void listenToRemoteController() {
+    public void listenToRemoteController() {
 
-	}
-	
-	public void getTargetPosition(){
-	
-	}
+    }
+
+    public void getTargetPosition() {
+
+    }
 
 }

@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/robot.iml" filepath="$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/robot.iml" />
       <module fileurl="file://$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/robot-core.iml" filepath="$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/robot-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/robot/deadlinerobot/src/hkccpacmanrobot/robot/robot-deadline.iml" filepath="$PROJECT_DIR$/robot/deadlinerobot/src/hkccpacmanrobot/robot/robot-deadline.iml" />
+      <module fileurl="file://$PROJECT_DIR$/robot/deadlinerobot/robot-deadline.iml" filepath="$PROJECT_DIR$/robot/deadlinerobot/robot-deadline.iml" />
       <module fileurl="file://$PROJECT_DIR$/robot/studentrobot/src/hkccpacmanrobot/robot/robot-student.iml" filepath="$PROJECT_DIR$/robot/studentrobot/src/hkccpacmanrobot/robot/robot-student.iml" />
       <module fileurl="file://$PROJECT_DIR$/server/src/hkccpacmanrobot/server.iml" filepath="$PROJECT_DIR$/server/src/hkccpacmanrobot/server.iml" />
       <module fileurl="file://$PROJECT_DIR$/utils/src/hkccpacmanrobot/utils.iml" filepath="$PROJECT_DIR$/utils/src/hkccpacmanrobot/utils.iml" />

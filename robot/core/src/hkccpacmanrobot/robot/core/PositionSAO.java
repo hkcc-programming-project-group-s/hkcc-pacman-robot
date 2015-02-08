@@ -1,3 +1,7 @@
+package hkccpacmanrobot.robot.core;
+
+import hkccpacmanrobot.robot.utils.Position;
+
 //Sever Access Object
 public class PositionSAO extends Thread {
 
@@ -9,20 +13,19 @@ public class PositionSAO extends Thread {
 	 * assignment
 	 */
 	private final String mode;
-
-	public PositionSAO(String mode) {
-		this.mode = mode;
-	}
-
 	/*
-	 * Deadline: Student location
-	 * 
+     * Deadline: Student location
+	 *
 	 * Student: remote pointed location
-	 * 
+	 *
 	 * Assignment: Student location
 	 */
 	public Position targetPosition;
 	public Position planPosition;
+
+    public PositionSAO(String mode) {
+        this.mode = mode;
+    }
 
 	public void sendPosition() {
 	/*
