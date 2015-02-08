@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="robot">
+    <output-path>$PROJECT_DIR$/out/artifacts/robot</output-path>
+    <root id="archive" name="robot.jar">
+      <element id="module-output" name="Robot" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/robot/Robot/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
