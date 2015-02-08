@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/robot.iml" filepath="$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/robot.iml" />
-      <module fileurl="file://$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/robot-core.iml" filepath="$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/robot-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/robot/deadlinerobot/robot-deadline.iml" filepath="$PROJECT_DIR$/robot/deadlinerobot/robot-deadline.iml" />
-      <module fileurl="file://$PROJECT_DIR$/robot/studentrobot/src/hkccpacmanrobot/robot/robot-student.iml" filepath="$PROJECT_DIR$/robot/studentrobot/src/hkccpacmanrobot/robot/robot-student.iml" />
-      <module fileurl="file://$PROJECT_DIR$/server/src/hkccpacmanrobot/server.iml" filepath="$PROJECT_DIR$/server/src/hkccpacmanrobot/server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/utils/src/hkccpacmanrobot/utils.iml" filepath="$PROJECT_DIR$/utils/src/hkccpacmanrobot/utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/robot/assigmentrobot/src/hkccpacmanrobot/robot/AssignmentRobot.iml" filepath="$PROJECT_DIR$/robot/assigmentrobot/src/hkccpacmanrobot/robot/AssignmentRobot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/robot/deadlinerobot/DeadlineRobot.iml" filepath="$PROJECT_DIR$/robot/deadlinerobot/DeadlineRobot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/controller/java/src/hkccpacmanrobot/controller/JavaController.iml" filepath="$PROJECT_DIR$/controller/java/src/hkccpacmanrobot/controller/JavaController.iml" />
+      <module fileurl="file://$PROJECT_DIR$/robot/core/Robot.iml" filepath="$PROJECT_DIR$/robot/core/Robot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/src/hkccpacmanrobot/Server.iml" filepath="$PROJECT_DIR$/server/src/hkccpacmanrobot/Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/robot/studentrobot/src/hkccpacmanrobot/robot/StudentRobot.iml" filepath="$PROJECT_DIR$/robot/studentrobot/src/hkccpacmanrobot/robot/StudentRobot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utils/src/hkccpacmanrobot/Utils.iml" filepath="$PROJECT_DIR$/utils/src/hkccpacmanrobot/Utils.iml" />
     </modules>
   </component>
 </project>
