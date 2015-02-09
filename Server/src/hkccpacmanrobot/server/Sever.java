@@ -1,5 +1,7 @@
 package hkccpacmanrobot.server;
 
+import hkccpacmanrobot.utils.Position;
+
 import java.sql.Timestamp;
 
 
@@ -13,8 +15,8 @@ public class Sever {
          */
     }
 
-    public void getNextPosition(){
-        Position nextPosition = new Position();
+    public void sendNextPosition() {
+        Position nextPosition = null;
         /*
         Listen to remote control
         get the Next Position of student robot

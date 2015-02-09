@@ -1,33 +1,15 @@
 package hkccpacmanrobot.utils;
 
-import hkccpacmanrobot.robot.utils.Position;
-
 import java.sql.Timestamp;
 
 //Sever Access Object
 public class PositionDAO extends Thread {
 
-    /*
-     * deadline
-     *
-     * student
-     *
-     * assignment
-     */
-    private final String mode;
-    /*
-     * Deadline: Student location
-	 *
-	 * Student: remote pointed location
-	 *
-	 * Assignment: Student location
-	 */
+
 
     public Position planPosition;
 
-    public PositionSAO(String mode) {
-        this.mode = mode;
-    }
+
 
     /*
     send the position(x,y) and time to database per ?? s
@@ -37,8 +19,8 @@ public class PositionDAO extends Thread {
     }
 
     public void sendPosition(int robotID, Position position) {
-    //TODO send to database
-    //TODO tell server
+        //TODO send to database
+        //TODO tell server
     }
 
     /*
@@ -59,7 +41,7 @@ public class PositionDAO extends Thread {
         get the time of this robot ID from database
      */
     public Timestamp getTime(int robotID) {
-        Timestamp time;
+        Timestamp time = null;
 
 
         return time;

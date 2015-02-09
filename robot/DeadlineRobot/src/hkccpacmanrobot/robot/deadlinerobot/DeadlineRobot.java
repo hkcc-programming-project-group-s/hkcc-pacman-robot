@@ -1,8 +1,11 @@
 package hkccpacmanrobot.robot.deadlinerobot;
 
 import hkccpacmanrobot.robot.core.Robot;
-import hkccpacmanrobot.robot.core.PositionDAO;
 import hkccpacmanrobot.robot.utils.Position;
+import hkccpacmanrobot.utils.PositionDAO;
+import hkccpacmanrobot.utils.PositionMessageManager;
+
+import static hkccpacmanrobot.utils.PositionMessageManager.MODE_DEADLINE;
 
 
 public class DeadlineRobot extends Robot{
