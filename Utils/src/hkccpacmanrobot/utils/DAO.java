@@ -1,7 +1,7 @@
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-//import com.mysql.jdbc.Connection;
+//import com.mysql.jdbc.ConnectionInfo;
 import java.sql.Connection;
 
 //Database Access Object

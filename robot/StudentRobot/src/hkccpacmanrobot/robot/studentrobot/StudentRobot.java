@@ -19,7 +19,10 @@ public class StudentRobot extends Robot {
 		// TODO Auto-generated method stub
 
 	}
-
+    /*
+        listen to sever
+        get the next position from sever
+     */
 	public void listenToRemoteController() {
 
 	}

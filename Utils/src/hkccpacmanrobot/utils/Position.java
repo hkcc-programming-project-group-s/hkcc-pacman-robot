@@ -1,4 +1,4 @@
-package hkccpacmanrobot.robot.utils;
+package hkccpacmanrobot.utils;
 
 import java.sql.Timestamp;
 
@@ -12,6 +12,11 @@ public class Position {
         this.z = z;
         this.time = time;
     }
-
+    public Position(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        time=null;
+    }
 
 }
