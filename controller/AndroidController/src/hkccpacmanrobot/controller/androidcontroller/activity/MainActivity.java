@@ -1,7 +1,8 @@
-package hkccpacmanrobot.controller.androidcontroller;
+package hkccpacmanrobot.controller.androidcontroller.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import hkccpacmanrobot.controller.androidcontroller.R;
 
 public class MainActivity extends Activity {
     /**

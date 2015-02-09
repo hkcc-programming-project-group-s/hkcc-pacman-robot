@@ -21,6 +21,8 @@ public class Sever {
          */
     }
 
+
+
     public void gameStart() {
     /*
     send message to robot to start game which function is in connection class
