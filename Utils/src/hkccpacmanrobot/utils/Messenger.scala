@@ -1,19 +1,36 @@
 package hkccpacmanrobot.utils
 
-import java.io.IOException
+import java.io.{IOException, ObjectInputStream, ObjectOutputStream}
+import java.net.Socket
 
 /**
  * Created by beenotung on 2/10/15.
  */
 
-class Messenger[Type](val sender: String, val receiver: String, val decoder: Array[Byte] => Type) {
+object Messenger {
   val RESET: Byte = 0x01
-  setup
+}
 
-  def setup: Unit = {
-    //setup server socket
-    //setup client socket
+
+class Messenger[Type](val socket: Socket) extends Thread {
+  val objectInputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
+  val objectOutputStream: ObjectOutputStream = new ObjectOutputStream(socket.getOutputStream)
+  var active: Boolean = false
+
+
+  override def run(): Unit = {
+    while (active) {
+
+    }
   }
+
+  override def start: Unit = {
+    if (active)
+      return
+    active = true
+    super.start()
+  }
+
 
   @throws(classOf[IOException])
   def sendMessage(content: Type): Unit = {}
@@ -21,10 +38,7 @@ class Messenger[Type](val sender: String, val receiver: String, val decoder: Arr
   @throws(classOf[IOException])
   def getMessage(): Type = {
     val rawMessage: Array[Byte] = Array[Byte](1)
+    def decoder: Array[Byte] => Type = null
     decoder(rawMessage)
   }
-}
-
-trait Client[Type] {
-  def decoder: Array[Byte] => Type
 }

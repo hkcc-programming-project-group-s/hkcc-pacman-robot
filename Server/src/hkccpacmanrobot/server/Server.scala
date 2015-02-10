@@ -2,49 +2,64 @@ package hkccpacmanrobot.server
 
 import java.sql.Timestamp
 
-import hkccpacmanrobot.utils.{GameStatus, Messenger, Position}
+import hkccpacmanrobot.server.listener.NewDeviceListener
+import hkccpacmanrobot.utils.{GameReport, Messenger, Position}
 
 /**
  * Created by beenotung on 2/10/15.
  */
+
+
 class Server {
-  val gameStatusMessenger: Messenger[GameStatus]
-  val positionMessenger: Messenger[Position]
-  private var gameRun: Boolean = true
+  val gameReportMessengers: List[Messenger[GameReport]] = List[Messenger[GameReport]]()
+  val positionMessenger: Messenger[Position] = new Messenger[Position](sender = "remote controller ip", receiver = "student ip")
+  private var gameStarted: Boolean = true
   private var gamePause: Boolean = false
 
+  val gameReport:GameReport=new GameReport(GameReport.TYPE_SETUP)
+  val newDeviceListener:NewDeviceListener=new NewDeviceListener(gameReport,gameReportMessengers)
+
   def setup: Unit = {
-    pairUpNewDevice
+    newDeviceListener.start
     listenToRemoteController
   }
 
-  //wait for incoming connection
-  def pairUpNewDevice = {}
+  //loop wait for incoming connection
+  def pairUpNewDevice = {
+    while (!gameStarted) {
+      //get client socket
+      //add to gameStatusMessengers
+    }
+  }
 
   //continuously get remote command
   //timeout check connection
-  def listenToRemoteController: Unit = {
+  def listenToRemoteController = {
     // loop , check when controller is paired up
     while (true) {
       //wait start game message
-      //kill pairUpNew Device
-      while(gameRun && !gamePause){
-        
+      while (!gameStarted) {
+        //wait game start message
+        gameStarted = true
+      }
+      while (gameStarted && !gamePause) {
+        val position = positionMessenger.getMessage()
+        positionMessenger.sendMessage(position)
       }
       //wait for
     }
   }
 
-  def loop: Unit = {}
+  def loop = {}
 
-  def save: Unit = {}
+  def save = {}
 
   def sendNextPosition {
     val nextPosition: Position = null
   }
 
 
-  def isNear(p1:Position,p2:Position): Boolean = {
+  def isNear(p1: Position, p2: Position): Boolean = {
     return true
   }
 

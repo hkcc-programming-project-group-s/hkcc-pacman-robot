@@ -23,21 +23,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca929748-536e-4f11-9b39-a0cf09a4fc69" name="Default" comment="moved Position from package robot (main package) into package Utils (main package);&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameStatusMessenger.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/RemoteControllMessenger.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Utils/MapDAO.class" afterPath="$PROJECT_DIR$/out/production/Utils/MapDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/AndroidController/AndroidController.iml" afterPath="$PROJECT_DIR$/controller/AndroidController/AndroidController.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/DAO.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/DAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/MapDAO.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/MapDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Position.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Position.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/AndroidController/src/hkccpacmanrobot/controller/androidcontroller/connection/PositionSAO.java" afterPath="$PROJECT_DIR$/controller/AndroidController/src/hkccpacmanrobot/controller/androidcontroller/connection/PositionSAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/Server.iml" afterPath="$PROJECT_DIR$/Server/Server.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java" afterPath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/Utils.iml" afterPath="$PROJECT_DIR$/Utils/Utils.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControlCommandListener.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ControllCommand.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/NewDeviceListener.scala" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Launcher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameStatus.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/RemoteControllInfo.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/Client.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/GameStatus.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/RemoteControllInfo.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/Messenger.class" afterPath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/Messenger.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/robot/robot.jar" afterPath="$PROJECT_DIR$/out/artifacts/robot/robot.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/utils/utils.jar" afterPath="$PROJECT_DIR$/out/artifacts/utils/utils.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.scala" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala" afterPath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="hkcc-pacman-robot.iws" />
@@ -66,9 +66,24 @@
       <file leaf-file-name="Messenger.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="525">
-              <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="735">
+              <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+              <folding>
+                <element signature="e#31#98#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Socket.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/default/src.zip!/java/net/Socket.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="8131" max-vertical-offset="25320">
+              <caret line="608" column="34" selection-start-line="608" selection-start-column="34" selection-end-line="608" selection-end-column="34" />
+              <folding>
+                <element signature="e#1829#1830#0" expanded="true" />
+                <element signature="e#1854#1855#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,7 +92,7 @@
         <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
-              <caret line="15" column="50" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
+              <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -88,8 +103,8 @@
       <file leaf-file-name="Server.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5555556" vertical-offset="240" max-vertical-offset="990">
-              <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.4814815" vertical-offset="270" max-vertical-offset="1215">
+              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
               <folding>
                 <element signature="e#32#57#0" expanded="true" />
               </folding>
@@ -97,21 +112,61 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="ControlCommandListener.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControlCommandListener.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+              <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewDeviceListener.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/NewDeviceListener.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+              <caret line="8" column="121" selection-start-line="8" selection-start-column="115" selection-end-line="8" selection-end-column="121" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Robot.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/Robot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="47" max-vertical-offset="990">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
               <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameStatus.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameStatus.java">
+      <file leaf-file-name="ControllCommand.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ControllCommand.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="52" max-vertical-offset="465">
-              <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
+              <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConnectionInfo.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+              <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameReport.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameReport.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="480">
+              <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -157,14 +212,12 @@
         <option value="$PROJECT_DIR$/robot/AssigmentRobot/src/hkccpacmanrobot/robot/assignmentrobot/AssignmentRobot.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/connection.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Connection.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/MessageManager.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionMessageManager.java" />
         <option value="$PROJECT_DIR$/robot/DeadlineRobot/src/hkccpacmanrobot/robot/deadlinerobot/DeadlineRobot.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameStatusMessenger.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameStatusMessage.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameStatus.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionMessenger.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/RemoteControllCommand.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/RemoteControllInfo.java" />
@@ -172,6 +225,16 @@
         <option value="$PROJECT_DIR$/controller/AndroidController/src/hkccpacmanrobot/controller/androidcontroller/connection/PositionSAO.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.java" />
         <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameStatus.java" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameReport.java" />
+        <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/asd.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/RemoteControllInfo.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ControllCommand.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java" />
+        <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/NewDeviceListener.scala" />
+        <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/PositionListener.scala" />
+        <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControllCommandListener.scala" />
+        <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControlCommandListener.scala" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.scala" />
         <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala" />
       </list>
@@ -280,6 +343,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControllCommand.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hkcc-pacman-robot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="StudentRobot" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -327,6 +412,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hkcc-pacman-robot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="listener" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -839,11 +946,12 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32605305" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32605305" sideWeight="0.5014663" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291789" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885087" sideWeight="0.49966422" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2725322" sideWeight="0.49894068" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -854,12 +962,11 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885087" sideWeight="0.49966422" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -893,30 +1000,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="465">
-          <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Position.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7" max-vertical-offset="420">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/RemoteControllInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="450">
-          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="15" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="300">
@@ -1136,14 +1219,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-          <caret line="0" column="26" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/robot/DeadlineRobot/src/hkccpacmanrobot/robot/deadlinerobot/DeadlineRobot.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="750">
@@ -1164,14 +1239,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20096852" vertical-offset="7" max-vertical-offset="420">
           <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/RemoteControllInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4" vertical-offset="50" max-vertical-offset="450">
-          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="15" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -1227,14 +1294,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="52" max-vertical-offset="465">
-          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/default/src.zip!/javax/print/attribute/standard/Destination.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.4814814" vertical-offset="1020" max-vertical-offset="1425">
@@ -1243,13 +1302,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///usr/share/scala/lib/scala-actors.jar!/scala/actors/Actor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4520548" vertical-offset="0" max-vertical-offset="825">
+          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="480">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ControllCommand.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/NewDeviceListener.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+          <caret line="8" column="121" selection-start-line="8" selection-start-column="115" selection-end-line="8" selection-end-column="121" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/default/src.zip!/java/net/Socket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8131" max-vertical-offset="25320">
+          <caret line="608" column="34" selection-start-line="608" selection-start-column="34" selection-end-line="608" selection-end-column="34" />
+          <folding>
+            <element signature="e#1829#1830#0" expanded="true" />
+            <element signature="e#1854#1855#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
-          <caret line="15" column="50" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
+          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControlCommandListener.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1263,16 +1381,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="525">
-          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="735">
+          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+          <folding>
+            <element signature="e#31#98#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5555556" vertical-offset="240" max-vertical-offset="990">
-          <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.4814815" vertical-offset="270" max-vertical-offset="1215">
+          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
           <folding>
             <element signature="e#32#57#0" expanded="true" />
           </folding>
