@@ -1,5 +1,7 @@
 package hkccpacmanrobot.server;
 
+import com.sun.deploy.util.SessionState;
+import com.sun.security.ntlm.Client;
 import hkccpacmanrobot.utils.Position;
 
 import java.sql.Timestamp;
@@ -34,7 +36,7 @@ public class Sever {
     public void gameEnd() {
     /*
     get the position of the robot from database in ?? time.
-    if(compareThePosition)
+    if(isNear)
       using function which is in connection class send message to robot to stop the game.
     */
     }

@@ -1,5 +1,7 @@
 package hkccpacmanrobot.controller.androidcontroller.connection;
 
+import hkccpacmanrobot.utils.Position;
+
 /**
  * Created by 13058456a on 2/9/2015.
  */

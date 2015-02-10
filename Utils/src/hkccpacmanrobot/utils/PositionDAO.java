@@ -6,9 +6,7 @@ import java.sql.Timestamp;
 public class PositionDAO extends Thread {
 
 
-
     public Position planPosition;
-
 
 
     /*

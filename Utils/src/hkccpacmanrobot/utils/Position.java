@@ -12,11 +12,12 @@ public class Position {
         this.z = z;
         this.time = time;
     }
+
     public Position(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
-        time=null;
+        time = null;
     }
 
 }
