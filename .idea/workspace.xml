@@ -23,10 +23,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca929748-536e-4f11-9b39-a0cf09a4fc69" name="Default" comment="moved Position from package robot (main package) into package Utils (main package);&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/lib_java_myutils.xml" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\launcher\Launcher.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\CanvasShell.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Colors$RGB.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Colors.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Display$1.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Display$2.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Display$3.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Display$4.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Display.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Key.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\KeyHandler.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Mouse.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\MouseHandler.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Pixels.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\StringUtils.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Utils.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\Vector2D.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\connection\MyDatabaseConnector.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\connection\MyPortForwardingThread$MyUserInfo.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\connection\MyPortForwardingThread.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\connection\MyPortforwardInfo.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\connection\MySSHInfo.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\connection\MySecureInfo.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\connection\MySqlServerInfo.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\13058536A\Desktop\hkcc-pacman-robot\lib\NeuroEvolution\bin\myutils\connection\MyUtils.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/NeuroEvolution" afterPath="$PROJECT_DIR$/lib/NeuroEvolution" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/Server.iml" afterPath="$PROJECT_DIR$/Server/Server.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/Utils.iml" afterPath="$PROJECT_DIR$/Utils/Utils.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="hkcc-pacman-robot.iws" />
@@ -281,10 +307,10 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="options.lastSelected" value="org.jetbrains.plugins.scala.settings.ScalaProjectSettingsConfigurable" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.iml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/java-myutils/lib/opengl/native/windows/x64/OpenAL32.dll" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -548,14 +574,14 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32419354" sideWeight="0.5014663" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32419354" sideWeight="0.5014663" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2725322" sideWeight="0.49894068" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27373886" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27373886" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1068,7 +1094,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>utils</last-edited>
+          <last-edited>lib-java-myutils</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

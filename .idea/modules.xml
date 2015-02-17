@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/robot/StudentRobot/StudentRobot.iml" filepath="$PROJECT_DIR$/robot/StudentRobot/StudentRobot.iml" />
       <module fileurl="file://$PROJECT_DIR$/Utils/Utils.iml" filepath="$PROJECT_DIR$/Utils/Utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/Database/database.iml" filepath="$PROJECT_DIR$/Database/database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/java-myutils/java-myutils.iml" filepath="$PROJECT_DIR$/lib/java-myutils/java-myutils.iml" />
     </modules>
   </component>
 </project>
