@@ -1,4 +1,5 @@
 //reference python demo http://blog.bitify.co.uk/2013/11/reading-data-from-mpu-6050-on-raspberry.html
+
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
@@ -15,6 +16,15 @@ public class Mpu6050AO {
     public int gyro_xout, gyro_yout, gyro_zout;
     public int accel_xout, accel_yout, accel_zout;
 
+    public final static void goto11() {
+        System.out.print((char) 27 + "[1;1H");
+    }
+
+    public final static void clearConsole() {
+        System.out.print((char) 27 + "[2J");
+        goto11();
+    }
+
     public static void main(String[] args) {
         System.out.println("Hello, PI");
         try {
@@ -23,11 +33,23 @@ public class Mpu6050AO {
             mpu6050 = bus.getDevice(0x68);
             mpu6050AO.writeMpu6050((byte) 0xff);
             mpu6050.write(power_mgmt_1, (byte) 0x00);
-            mpu6050AO.readGyro();
-            mpu6050AO.printGyro();
-            mpu6050AO.readAccel();
-            mpu6050AO.printAccel();
-            mpu6050AO.printRotation();
+            while (true) {
+                String msg="";
+                mpu6050AO.readGyro();
+                mpu6050AO.readAccel();
+                msg+=mpu6050AO.printGyro();
+                msg+="\n\n"+mpu6050AO.printAccel();
+                msg+="\n\n"+mpu6050AO.printRotation();
+                clearConsole();
+                for(int i=0;i<35;i++)
+                    msg="\n"+msg;
+                System.out.print(msg);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         } catch (IOException e) {
         }
         System.out.println("Bye, PI");
@@ -47,24 +69,27 @@ public class Mpu6050AO {
         return -Math.toDegrees(rad);
     }
 
-    private void printGyro() {
-        String msg = "gyro_xout: " + gyro_xout + " scaled: " + (gyro_xout / 131);
-        msg += "gyro_yout: " + gyro_yout + " scaled: " + (gyro_yout / 131);
-        msg += "gyro_zout: " + gyro_zout + " scaled: " + (gyro_zout / 131);
-        System.out.println(msg);
+    private String printGyro() {
+        String msg = "\tgyro_xout: " + gyro_xout + "    \tscaled: " + String.format("%.2f", (gyro_xout / 131d));
+        msg += "\n\tgyro_yout: " + gyro_yout + "    \tscaled: " + String.format("%.2f", (gyro_yout / 131d));
+        msg += "\n\tgyro_zout: " + gyro_zout + "    \tscaled: " + String.format("%.2f", (gyro_zout / 131d));
+        //System.out.println(msg);
+        return msg;
     }
 
-    private void printAccel() {
-        String msg = "accel_xout: " + accel_xout + " scaled: " + accel_xout_scaled;
-        msg += "accel_yout: " + accel_yout + " scaled: " + accel_yout_scaled;
-        msg += "accel_zout: " + accel_zout + " scaled: " + accel_zout_scaled;
-        System.out.println(msg);
+    private String printAccel() {
+        String msg = "\taccel_xout: " + accel_xout + "    \tscaled: " + String.format("%.2f", accel_xout_scaled);
+        msg += "\n\taccel_yout: " + accel_yout + "    \tscaled: " + String.format("%.2f", accel_yout_scaled);
+        msg += "\n\taccel_zout: " + accel_zout + "    \tscaled: " + String.format("%.2f", accel_zout_scaled);
+        //System.out.println(msg);
+        return msg;
     }
 
-    private void printRotation() {
-        String msg = "x rotation: " + getXRotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled);
-        msg += "y rotation: " + getYRotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled);
-        System.out.println(msg);
+    private String printRotation() {
+        String msg = "\tx rotation: " + String.format("%.2f", getXRotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled));
+        msg += "\n\ty rotation: " + String.format("%.2f", getYRotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled));
+        //System.out.println(msg);
+        return msg;
     }
 
     public void readAccel() throws IOException {
@@ -104,4 +129,3 @@ public class Mpu6050AO {
     }
 
 }
-
