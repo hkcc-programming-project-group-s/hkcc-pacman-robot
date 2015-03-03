@@ -1,0 +1,53 @@
+import com.pi4j.io.gpio.*;
+
+/**
+ * Created by beenotung on 3/3/15.
+ */
+public class SRF05AO {
+    public static final GpioController gpio = GpioFactory.getInstance();
+    private final int PULSE_DURATION = 10000;        // #10 µs pulse = 10,000 ns
+    private final int SPEEDOFSOUND = 34029; // Speed of sound = 34029 cm/s
+    public double distance;
+
+    public static GpioPinDigitalOutput getGpioPinDigitalOutput() {
+        return gpio.provisionDigitalOutputPin(RaspiPin.GPIO_20);
+    }
+
+    public static GpioPinDigitalInput getGpioPinDigitalInput() {
+        return gpio.provisionDigitalInputPin(RaspiPin.GPIO_20);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("HI, PI");
+        SRF05AO srf05AO = new SRF05AO();
+        do {
+            srf05AO.getDistance();
+            srf05AO.printDistance();
+        } while (true);
+    }
+
+    public static void delay(long microSecond) {
+        long startTime = System.nanoTime();
+        while ((System.nanoTime() - startTime) < microSecond * 1000) ;
+    }
+
+    public double getDistance() {
+        GpioPinDigitalOutput output = getGpioPinDigitalOutput();
+        output.pulse(PULSE_DURATION);
+
+        GpioPinDigitalInput input = getGpioPinDigitalInput();
+        long starttime = System.nanoTime(); //ns
+        long stop = starttime;
+        long start = starttime;
+        while (input.isLow())
+            start = System.nanoTime();
+        while (input.isHigh())
+            stop = System.nanoTime();
+        return (stop - start) * SPEEDOFSOUND / 2.0 / (1000000000L);
+    }
+
+    public String printDistance() {
+        String msg = "\tDistance: \t" + distance;
+        return msg;
+    }
+}
