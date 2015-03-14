@@ -21,7 +21,7 @@ import com.pi4j.io.gpio.RaspiPin;
  * 
  * @reference Rutger Claes <rutger.claes@cs.kuleuven.be>
  */
-public class UltrasonicAO {
+public class SRF05AO {
     
     private final static float DURATION_RATIO = 340.29f/(2*10000);  // speed of sound in m/s
     
@@ -35,7 +35,7 @@ public class UltrasonicAO {
     private final GpioPinDigitalInput echoPin;
     private final GpioPinDigitalOutput trigPin;
             
-    private DistanceMonitor( Pin echoPin, Pin trigPin ) {
+    private SRF05AO( Pin echoPin, Pin trigPin ) {
         this.echoPin = gpio.provisionDigitalInputPin( echoPin );
         this.trigPin = gpio.provisionDigitalOutputPin( trigPin );
         this.trigPin.low();
@@ -70,7 +70,7 @@ public class UltrasonicAO {
     /**
      * Wait for a high on the echo pin
      * 
-     * @throws DistanceMonitor.TimeoutException if no high appears in time
+     * @throws SRF05AO.TimeoutException if no high appears in time
      */
     private void waitForSignal() throws TimeoutException {
         int countdown = TIMEOUT;
@@ -86,7 +86,7 @@ public class UltrasonicAO {
     
     /**
      * @return the duration of the signal in micro seconds
-     * @throws DistanceMonitor.TimeoutException if no low appears in time
+     * @throws SRF05AO.TimeoutException if no low appears in time
      */
     private long measureSignal() throws TimeoutException {
         int countdown = TIMEOUT;
@@ -106,7 +106,7 @@ public class UltrasonicAO {
     public static void main( String[] args ) {
         Pin echoPin = RaspiPin.GPIO_00; // PI4J custom numbering (pin 11)
         Pin trigPin = RaspiPin.GPIO_07; // PI4J custom numbering (pin 7)
-        DistanceMonitor monitor = new DistanceMonitor( echoPin, trigPin );
+        SRF05AO monitor = new SRF05AO( echoPin, trigPin );
         
         while( true ) {
             try {
