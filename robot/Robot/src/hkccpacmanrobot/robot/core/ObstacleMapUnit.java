@@ -1,7 +1,5 @@
 package hkccpacmanrobot.robot.core;
 
-import java.util.Calendar;
-
 class ObstacleMapUnitFactory {
     public ObstacleMapUnit createFromServer(double x, double y, long time) {
         ObstacleMapUnit result = new ObstacleMapUnit(x, y);
@@ -14,7 +12,8 @@ class ObstacleMapUnitFactory {
         result.localTime = time;
         return result;
     }
-    public ObstacleMapUnit createToServer(double x,double y,long time,long robotID){
+
+    public ObstacleMapUnit createToServer(double x, double y, long time, long robotID) {
         ObstacleMapUnit result = new ObstacleMapUnit(x, y);
         result.localTime = time;
         result.serverTime = robotID;

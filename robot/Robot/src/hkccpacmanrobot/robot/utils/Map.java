@@ -13,13 +13,14 @@ public class Map {
     private Vector<ObstacleMapUnit> obstacleMap = new Vector<ObstacleMapUnit>();
 
     public void updateObstacle(double x, double y, boolean isObstacle,
-                               long time){
-        updateObstacle(x,y,isObstacle,true,time);
+                               long time) {
+        updateObstacle(x, y, isObstacle, true, time);
     }
+
     public void updateObstacle(double x, double y, boolean isObstacle,
-                               boolean shouldUpdateDatabase,long time) {
-        x_axis = Math.round(x / 5)*5;
-        y_axis = Math.round(y / 5)*5;
+                               boolean shouldUpdateDatabase, long time) {
+        x_axis = Math.round(x / 5) * 5;
+        y_axis = Math.round(y / 5) * 5;
         // this.axis[x_axis][y_axis] = isObstacle;
         ObstacleMapUnit unit = null;
         for (ObstacleMapUnit iObstacleMapUnit : obstacleMap) {
@@ -31,7 +32,7 @@ public class Map {
         }
         if ((unit == null) && (isObstacle))
 
-            obstacleMap.add(new ObstacleMapUnit(x, y,time));
+            obstacleMap.add(new ObstacleMapUnit(x, y, time));
             //update to database(insect)
         else if ((unit != null) && (!isObstacle))
             obstacleMap.remove(unit);
@@ -66,11 +67,15 @@ public class Map {
 //        }
 //    }
 
-    public long getLastServerTime(){
+    public long getLastServerTime() {
 
         return time;
     }
-    public long getLastLocalTime(){}
-    public long getLastTime(){}
+
+    public long getLastLocalTime() {
+    }
+
+    public long getLastTime() {
+    }
 
 }
