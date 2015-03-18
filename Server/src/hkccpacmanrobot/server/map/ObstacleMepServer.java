@@ -7,7 +7,7 @@ package hkccpacmanrobot.server.map;
  */
 public class ObstacleMepServer {
     private double x,y;
-    ObstacleMapUnitNewServer map = new ObstacleMapUnitNewServer(x,y);
+    ServerMapUnit map = new ServerMapUnit(x,y);
 
     public void updateMap(double x,double y,long localTime,long robotID){
         this.x=x;

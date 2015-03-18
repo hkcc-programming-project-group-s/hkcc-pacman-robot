@@ -1,10 +1,10 @@
 package hkccpacmanrobot.robot.core;
-import hkccpacmanrobot.utils.map.ObstacleMapUnitNew;
+import hkccpacmanrobot.utils.map.MapUnit;
 /**
  * Created by 13058456a on 3/14/2015.
  */
-public class ObstacleMapUnitNewRobot extends ObstacleMapUnitNew {
-    ObstacleMapUnitNewRobot(double x, double y) {
+public class RobotMapUnit extends MapUnit {
+    RobotMapUnit(double x, double y) {
         super(x, y);
     }
 

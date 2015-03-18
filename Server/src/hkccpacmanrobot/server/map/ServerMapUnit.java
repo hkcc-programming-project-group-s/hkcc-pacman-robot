@@ -1,14 +1,14 @@
 package hkccpacmanrobot.server.map;
 
-import hkccpacmanrobot.utils.map.ObstacleMapUnitNew;
+import hkccpacmanrobot.utils.map.MapUnit;
 
 /**
  * Created by 13058456a on 3/14/2015.
  */
-public class ObstacleMapUnitNewServer extends ObstacleMapUnitNew {
+public class ServerMapUnit extends MapUnit {
 
 
-    ObstacleMapUnitNewServer(double x, double y) {
+    ServerMapUnit(double x, double y) {
         super(x, y);
     }
 
@@ -35,7 +35,7 @@ public class ObstacleMapUnitNewServer extends ObstacleMapUnitNew {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        ObstacleMapUnitNewServer result=new ObstacleMapUnitNewServer(x,y);
+        ServerMapUnit result=new ServerMapUnit(x,y);
         result.setTime(getLatestTime(),getRobotId());
         return result;
     }
