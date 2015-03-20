@@ -21,7 +21,7 @@ public class ObstacleMepServer {
 
         if(map.getLatestTime()>=localTime){
             if(map.getRobotId()==robotID){
-                //TODO get map data
+                //TODO getMap map data
             }
         }
         return null;//change null when yoe finish.

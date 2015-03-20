@@ -23,7 +23,7 @@ public class PositionDAO extends Thread {
 
     /*
         It is for deadline and sever
-		get position of this robot ID from database
+		getMap position of this robot ID from database
 	*/
     public Position getTargetPosition(int robotID) {
         double x, y, z;
@@ -36,7 +36,7 @@ public class PositionDAO extends Thread {
 
     /*
         It is for sever
-        get the time of this robot ID from database
+        getMap the time of this robot ID from database
      */
     public Timestamp getTime(int robotID) {
         Timestamp time = null;
