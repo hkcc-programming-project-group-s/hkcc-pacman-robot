@@ -1,5 +1,7 @@
 package hkccpacmanrobot.server.map;
 
+import hkccpacmanrobot.utils.map.MapContent;
+import hkccpacmanrobot.utils.map.MapKey;
 import hkccpacmanrobot.utils.map.MapUnit;
 
 /**
@@ -8,34 +10,37 @@ import hkccpacmanrobot.utils.map.MapUnit;
 public class ServerMapUnit extends MapUnit {
 
 
-    ServerMapUnit(double x, double y) {
-        super(x, y);
+    public ServerMapUnit(MapKey key) {
+        super(key);
     }
 
+    public ServerMapUnit(MapKey key, MapContent value) {
+        super(key, value);
+    }
 
     @Override
 
-    public long getLatestTime() {return time;}
+    public long getLatestTime() {return value.time;}
 
 //    public long getServerTime() {
   //      return time;
 //    }
 
     public long getRobotId() {
-        return preservedLong;
+        return value.preservedLong;
     }
 
     //public long getMap(){return x,y;}
 
     public void setTime(long localTime,long robotId){
-        time=localTime;
-        preservedLong=robotId;
+        value.time=localTime;
+        value.preservedLong=robotId;
     };
 
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        ServerMapUnit result=new ServerMapUnit(x,y);
+        ServerMapUnit result=new ServerMapUnit(key,value);
         result.setTime(getLatestTime(),getRobotId());
         return result;
     }

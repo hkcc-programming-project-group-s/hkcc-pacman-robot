@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Created by 13058456a on 3/17/2015.
  */
-public class ObstacleMap extends HashMap<MapKey, MapContent> {
+public class ObstacleMap extends HashMap<MapKey, MapContent> implements Cloneable {
     public boolean isExist(MapUnit target) {
         return keySet().contains(target.key);
     }
@@ -16,5 +16,13 @@ public class ObstacleMap extends HashMap<MapKey, MapContent> {
 
     public void get(MapUnit mapUnit) {
         mapUnit.value.set(get(mapUnit.key));
+    }
+
+    @Override
+    public Object clone() {
+        ObstacleMap newInstance = new ObstacleMap();
+        for (MapKey key : this.keySet())
+            newInstance.put((MapKey) key.clone(), (MapContent) get(key).clone());
+        return newInstance;
     }
 }
