@@ -16,23 +16,29 @@ object Messenger {
 class Messenger[Type](val socket: Socket) extends Thread {
   val inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
   val outputStream: ObjectOutputStream = new ObjectOutputStream(socket.getOutputStream)
+  val inputThread: Thread = new Thread(new Runnable {
+    override def run = {
+      receiveMessage
+    }
+  })
+  val outputThread: Thread = new Thread(new Runnable {
+    override def run = {
+      sendMessage
+    }
+  })
+  val outputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
+  val inputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
   var active: Boolean = false
 
-  val inputThread:Thread=new Thread(new Runnable{override def run={receiveMessage}})
-  val outputThread:Thread=new Thread(new Runnable{override def run={sendMessage}})
-
-
-  override def  start: Unit = {
-  inputThread.start
+  override def start: Unit = {
+    inputThread.start
     outputThread.start
   }
-  override def interrupt={
+
+  override def interrupt = {
     inputThread.interrupt
     outputThread.interrupt
   }
-
-  val outputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
-  val inputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
 
   def sendMessage(): Unit = {
     if (!outputQueue.isEmpty)
