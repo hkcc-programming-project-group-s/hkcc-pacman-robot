@@ -1,11 +1,11 @@
 package hkccpacmanrobot.robot.core;
 
-import hkccpacmanrobot.robot.utils.Map;
 
 public abstract class Robot {
     public boolean gameOver = true;
     public PositionSAO positionSAO;
-    public Map map = new Map();
+    //public ObstacleMap<RobotMapUnit> map = new ObstacleMap<RobotMapUnit>();
+
 
     public Robot() {
         setup();
