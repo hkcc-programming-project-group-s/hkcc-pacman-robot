@@ -1,4 +1,4 @@
-package hkccpacmanrobot.utils
+package hkccpacmanrobot.utils.message
 
 import java.io.{IOException, ObjectInputStream, ObjectOutputStream}
 import java.net.Socket
