@@ -1,3 +1,5 @@
+package hkccpacmanrobot.utils;
+
 public class MapDAO {
     public static final String TABLE_NAME = "map";
     public static final String TABLE_COL_X = "x";
@@ -13,6 +15,7 @@ public class MapDAO {
             + "CREATE INDEX index_" + TABLE_NAME + "_timestamp ON "
             + TABLE_NAME + " (" + TABLE_COL_UPDATE_TIME + ");";
     private final DAO dao;
+
     public MapDAO(DAO dao) {
         this.dao = dao;
     }
