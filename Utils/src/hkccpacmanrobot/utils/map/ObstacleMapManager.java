@@ -1,5 +1,6 @@
 package hkccpacmanrobot.utils.map;
 
+import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.function.BiConsumer;
 
@@ -9,7 +10,7 @@ import java.util.function.BiConsumer;
 public class ObstacleMapManager {
     public ObstacleMap map;
     private Semaphore semaphore = new Semaphore(1, true);
-    private long lastSendMapTime,lastReceiveMapTime;
+    private long lastSendMapTime, lastReceiveMapTime;
 
     /*return cloned map (only when a robot forget all map data)*/
     public ObstacleMap getMap() {
@@ -20,7 +21,7 @@ public class ObstacleMapManager {
     }
 
     public static interface ShouldUpdateOperator {
-        public boolean mapCompare(ObstacleMapManager obstacleMapManager, MapKey key,MapContent value);
+        public boolean mapCompare(ObstacleMapManager obstacleMapManager, MapKey key, MapContent value);
     }
 
     /*return new date (between current and last update)*/
@@ -41,7 +42,7 @@ public class ObstacleMapManager {
     /*interact with other devices/server*/
     protected void sendMap(ShouldUpdateOperator operator) {
         ObstacleMap bufferedMap = getDeltaMap(operator);
-        lastSendMapTime=System.currentTimeMillis();
+        lastSendMapTime = System.currentTimeMillis();
         //send over network
         //TODO
     }
@@ -50,6 +51,12 @@ public class ObstacleMapManager {
     public void addMap(ObstacleMap deltaObstacleMap) {
         semaphore.tryAcquire();
         map.putAll(deltaObstacleMap);
+        semaphore.release();
+    }
+
+    public void addMap(List<MapUnit> mapUnits) {
+        semaphore.tryAcquire();
+        mapUnits.forEach(map::put);
         semaphore.release();
     }
 
