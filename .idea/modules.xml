@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/Server/Server.iml" filepath="$PROJECT_DIR$/Server/Server.iml" />
       <module fileurl="file://$PROJECT_DIR$/robot/StudentRobot/StudentRobot.iml" filepath="$PROJECT_DIR$/robot/StudentRobot/StudentRobot.iml" />
       <module fileurl="file://$PROJECT_DIR$/Utils/Utils.iml" filepath="$PROJECT_DIR$/Utils/Utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/controller/Controller/src/hkccpacmanrobot/controller/controller.iml" filepath="$PROJECT_DIR$/controller/Controller/src/hkccpacmanrobot/controller/controller.iml" />
       <module fileurl="file://$PROJECT_DIR$/Database/database.iml" filepath="$PROJECT_DIR$/Database/database.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/java-myutils/java-myutils.iml" filepath="$PROJECT_DIR$/lib/java-myutils/java-myutils.iml" />
     </modules>
