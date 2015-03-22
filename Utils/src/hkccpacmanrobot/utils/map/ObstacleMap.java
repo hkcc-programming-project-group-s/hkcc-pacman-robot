@@ -1,11 +1,12 @@
 package hkccpacmanrobot.utils.map;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by 13058456a on 3/17/2015.
  */
-public class ObstacleMap extends HashMap<MapKey, MapContent> implements Cloneable {
+public class ObstacleMap extends HashMap<MapKey, MapContent> implements Cloneable ,Serializable{
     public boolean isExist(MapUnit target) {
         return keySet().contains(target.key);
     }

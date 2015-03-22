@@ -1,12 +1,14 @@
 package hkccpacmanrobot.utils.message
 
-import hkccpacmanrobot.utils.Maths
+import hkccpacmanrobot.utils.{Config, Maths}
 
 
 /**
  * Created by beenotung on 2/10/15.
  */
-object MovementCommand {
+object MovementCommand extends  AbstractMessage{
+  override val port: Int = Config.PORT_MOVEMENT_COMMAND
+
   val MODE_POLAR: Byte = 0x01
   val MODE_RECTANGULAR: Byte = 0x02
 }

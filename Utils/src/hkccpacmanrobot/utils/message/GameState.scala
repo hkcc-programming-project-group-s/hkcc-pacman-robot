@@ -1,9 +1,13 @@
 package hkccpacmanrobot.utils.message
 
+import hkccpacmanrobot.utils.Config
+
 /**
  * Created by 13058456a on 3/21/2015.
  */
-object GameState {
+object GameState  extends  AbstractMessage{
+  override val port: Int = Config.PORT_GAME_STATUS
+
   val STATE_SETUP: Byte = 0x01
   val STATE_START: Byte = 0x02
   val STATE_RESUME: Byte = 0x03

@@ -4,14 +4,36 @@ import java.io.{ObjectInputStream, ObjectOutputStream}
 import java.net.Socket
 import java.util.concurrent.ConcurrentLinkedQueue
 
+import hkccpacmanrobot.utils.map.ObstacleMap
+import hkccpacmanrobot.utils.{Config, DeviceInfo}
+
 /**
  * Created by beenotung on 2/10/15.
  */
 
 object Messenger {
   val RESET: Byte = 0x01
-}
 
+  def getPort(messageTypeName: String): Int = {
+    if (messageTypeName.equals(new ObstacleMap().getClass.getTypeName))
+      Config.PORT_MAP
+    else
+    if (messageTypeName.equals(new MovementCommand(0x00, null).getClass.getTypeName))
+      Config.PORT_MOVEMENT_COMMAND
+    else
+    if (messageTypeName.equals(new DeviceInfo(null, null).getClass.getTypeName))
+      Config.PORT_DEVICE_INFO
+    else
+    if (messageTypeName.equals(new GameState(0x00).getClass.getTypeName))
+      Config.PORT_GAME_STATUS
+    else
+      throw new ClassNotFoundException()
+  }
+
+  def create[T](message: AbstractMessage):Messenger[T]={
+    new Messenger[T](message.port)
+  }
+}
 
 class Messenger[Type](val socket: Socket) extends Thread {
   val inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
@@ -29,6 +51,10 @@ class Messenger[Type](val socket: Socket) extends Thread {
   val outputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
   val inputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
   var active: Boolean = false
+
+  def this(port: Int) = {
+    this(new Socket(Config.serverAddress, port))
+  }
 
   override def start: Unit = {
     inputThread.start

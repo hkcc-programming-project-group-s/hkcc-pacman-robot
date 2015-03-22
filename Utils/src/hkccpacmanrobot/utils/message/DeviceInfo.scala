@@ -1,9 +1,13 @@
 package hkccpacmanrobot.utils
 
+import hkccpacmanrobot.utils.message.AbstractMessage
+
 /**
  * Created by 13058456a on 3/21/2015.
  */
-object DeviceInfo {
+object DeviceInfo extends  AbstractMessage{
+  override val port: Int = Config.PORT_DEVICE_INFO
+
   val DEVICE_TYPE_CONTROLLER: Byte = 1
   val DEVICE_TYPE_ASSIGNMENT_ROBOT: Byte = 2
   val DEVICE_TYPE_STUDENT_ROBOT: Byte = 3
