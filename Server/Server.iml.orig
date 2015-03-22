@@ -7,7 +7,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
+    <orderEntry type="library" name="utils" level="project" />
     <orderEntry type="library" name="scala-sdk-2.9.2" level="application" />
     <orderEntry type="library" name="scala-sdk-2.11.5" level="application" />
+=======
+    <orderEntry type="module" module-name="Utils" />
+>>>>>>> map
   </component>
 </module>

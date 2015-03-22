@@ -1,7 +1,9 @@
-package hkccpacmanrobot.utils;/*
+package hkccpacmanrobot.utils;
+
+/*
 there is for connection to each other like Sever send message to Robot to let Robot start the game.
 */
-
+@Deprecated
 public class ConnectionInfo {
     public static final byte TYPE_POSITION_UPDATE = 1;
     public static final byte TYPE_PAUSE_NOTIFICATION = 2;
