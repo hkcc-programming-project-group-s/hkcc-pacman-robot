@@ -3,5 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/NeuroEvolution" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/java-myutils" vcs="Git" />
   </component>
 </project>

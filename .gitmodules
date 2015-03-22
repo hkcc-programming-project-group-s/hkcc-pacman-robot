@@ -1,3 +1,6 @@
 [submodule "lib/NeuroEvolution"]
 	path = lib/NeuroEvolution
 	url = https://aabbcc1241:Asd770cc8@github.com/aabbcc1241/NeuroEvolution.git
+[submodule "lib/java-myutils"]
+	path = lib/java-myutils
+	url = https://aabbcc1241:Asd770cc8@github.com/aabbcc1241/java-myutils.git
