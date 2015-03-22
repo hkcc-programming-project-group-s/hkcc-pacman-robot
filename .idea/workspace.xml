@@ -22,34 +22,23 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca929748-536e-4f11-9b39-a0cf09a4fc69" name="Default" comment="moved Position from package robot (main package) into package Utils (main package);&#10;">
-<<<<<<< HEAD
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/NeuroEvolution" afterPath="$PROJECT_DIR$/lib/NeuroEvolution" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapContent.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapContent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapKey.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapKey.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.iml" afterPath="$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.iml" />
-<<<<<<< HEAD
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMapManager.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMapManager.java" />
-=======
+    <list default="true" id="ca929748-536e-4f11-9b39-a0cf09a4fc69" name="Default" comment="moved Position from package robot (main package) into package Utils (main package);">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/AbstractMessage.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/ObstacleMap.scala" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Utils/DAO.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Utils/MapDAO.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/GameReport.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/Position.class" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Port.scala" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Config.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/ConnectionInfo.class" afterPath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/ConnectionInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/PositionDAO.class" afterPath="$PROJECT_DIR$/out/production/Utils/hkccpacmanrobot/utils/PositionDAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/DeviceInfo.scala" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/DeviceInfo.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/GameState.scala" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/GameState.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Messenger.scala" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Messenger.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/MovementCommand.scala" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/MovementCommand.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMap.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMapManager.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMapManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ObstacleMepServer.java" afterPath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ObstacleMepServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala" afterPath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ServerMapUnit.java" afterPath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ServerMapUnit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java" afterPath="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-=======
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Device.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/GameState.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/MovementCommand.scala" />
-      <change type="DELETED" beforePath="C:\Users\13058456a\Desktop\hkcc-pacman-robot\Utils\src\hkccpacmanrobot\utils\ControllCommand.scala" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\13058456a\Desktop\hkcc-pacman-robot\Utils\src\hkccpacmanrobot\utils\Messenger.scala" afterPath="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Messenger.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/NeuroEvolution" afterPath="$PROJECT_DIR$/lib/NeuroEvolution" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.iml" afterPath="$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.iml" />
->>>>>>> messenger
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
->>>>>>> map
     </list>
     <ignored path="hkcc-pacman-robot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -74,170 +63,97 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-<<<<<<< HEAD
-      <file leaf-file-name="ObstacleMap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMap.java">
-          <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding>
-                <element signature="e#415#416#0" expanded="true" />
-                <element signature="e#466#467#0" expanded="true" />
-              </folding>
-=======
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
-              <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
-=======
       <file leaf-file-name="Messenger.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Messenger.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
-              <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
->>>>>>> messenger
+            <state vertical-scroll-proportion="0.0" vertical-offset="518" max-vertical-offset="1335">
+              <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
               <folding />
->>>>>>> map
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< HEAD
-      <file leaf-file-name="ObstacleMapManager.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMapManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state vertical-scroll-proportion="0.5159332" vertical-offset="357" max-vertical-offset="1224">
-              <caret line="41" column="59" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
-=======
-            <state vertical-scroll-proportion="0.20637329" vertical-offset="0" max-vertical-offset="1207">
-              <caret line="8" column="31" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="31" />
->>>>>>> map
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-=======
-      <file leaf-file-name="Device.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Device.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-              <caret line="13" column="98" selection-start-line="13" selection-start-column="98" selection-end-line="13" selection-end-column="98" />
-              <folding />
->>>>>>> messenger
-            </state>
-          </provider>
-        </entry>
-      </file>
-<<<<<<< HEAD
-      <file leaf-file-name="BiConsumer.java" pinned="false" current-in-tab="false">
-        <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/function/BiConsumer.java">
-<<<<<<< HEAD
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="327" max-vertical-offset="986">
-              <caret line="44" column="17" selection-start-line="44" selection-start-column="17" selection-end-line="44" selection-end-column="17" />
-=======
       <file leaf-file-name="GameState.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/GameState.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.12265512" vertical-offset="0" max-vertical-offset="693">
-              <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.4814189" vertical-offset="0" max-vertical-offset="592">
+              <caret line="19" column="2" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Launcher.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controller/JavaController/src/hkccpacmanrobot/controller/javacontroller/Launcher.java">
+      <file leaf-file-name="ObstacleMap.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
+              <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ObstacleMap.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/ObstacleMap.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+              <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ControlCommandListener.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControlCommandListener.scala">
+      <file leaf-file-name="DeviceInfo.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/DeviceInfo.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-              <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+              <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewDeviceListener.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/NewDeviceListener.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
-              <caret line="8" column="121" selection-start-line="8" selection-start-column="115" selection-end-line="8" selection-end-column="121" />
->>>>>>> messenger
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-<<<<<<< HEAD
-      <file leaf-file-name="ObstacleMepServer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ObstacleMepServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
-              <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
-              <folding />
-=======
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="986">
-              <caret line="66" column="22" selection-start-line="66" selection-start-column="12" selection-end-line="66" selection-end-column="22" />
-=======
       <file leaf-file-name="MovementCommand.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/MovementCommand.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-              <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+              <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Position.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Position.java">
+      <file leaf-file-name="AbstractMessage.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/AbstractMessage.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
-              <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+              <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ObstacleMapUnit.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/ObstacleMapUnit.java">
+      <file leaf-file-name="Object.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/default/src.zip!/java/lang/Object.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
->>>>>>> messenger
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-<<<<<<< HEAD
-      <file leaf-file-name="HashMap.java" pinned="false" current-in-tab="false">
-        <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/HashMap.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="9403" max-vertical-offset="39372">
-              <caret line="609" column="13" selection-start-line="609" selection-start-column="13" selection-end-line="609" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2938" max-vertical-offset="8055">
+              <caret line="235" column="28" selection-start-line="235" selection-start-column="28" selection-end-line="235" selection-end-column="28" />
               <folding>
-                <element signature="e#24298#24299#0" expanded="true" />
-                <element signature="e#24363#24364#0" expanded="true" />
+                <element signature="e#10065#10066#0" expanded="true" />
+                <element signature="e#10148#10149#0" expanded="true" />
               </folding>
->>>>>>> map
-=======
-      <file leaf-file-name="Map.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/utils/Map.java">
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Class.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/default/src.zip!/java/lang/Class.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="21" max-vertical-offset="1122">
-              <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="18703" max-vertical-offset="53025">
+              <caret line="1335" column="18" selection-start-line="1335" selection-start-column="18" selection-end-line="1335" selection-end-column="18" />
               <folding />
->>>>>>> messenger
             </state>
           </provider>
         </entry>
@@ -251,35 +167,15 @@
         <option value="Nicola513" />
       </list>
     </option>
-    <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-<<<<<<< HEAD
-=======
-        <option value="$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/core/Map.java" />
-        <option value="$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/core/SeverDAO.java" />
-        <option value="$PROJECT_DIR$/robot/deadlinerobot/src/hkccpacmanrobot/robot/deadlinerobot/DeadlineRobot.java" />
-        <option value="$PROJECT_DIR$/utils/src/hkccpacmanrobot/utils/MessageManager.java" />
-        <option value="$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/utils/Map.java" />
-        <option value="$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/utils/PositionSAO.java" />
-        <option value="$PROJECT_DIR$/robot/core/src/hkccpacmanrobot/robot/utils/Position.java" />
-        <option value="$PROJECT_DIR$/robot/studentrobot/src/hkccpacmanrobot/robot/studentrobot/StudentRobot.java" />
-        <option value="$PROJECT_DIR$/controller/AndroidController/AndroidController.iml" />
-        <option value="$PROJECT_DIR$/controller/JavaController/src/hkccpacmanrobot/controller/javacontroller/Launcher.java" />
-        <option value="$PROJECT_DIR$/controller/AndroidController/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/utils/Position.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/PositionSAO.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/PositionDAO.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/Robot.java" />
         <option value="$PROJECT_DIR$/robot/StudentRobot/src/hkccpacmanrobot/robot/studentrobot/StudentRobot.java" />
         <option value="$PROJECT_DIR$/robot/AssigmentRobot/src/hkccpacmanrobot/robot/assignmentrobot/AssignmentRobot.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/connection.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Connection.java" />
->>>>>>> messenger
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/MessageManager.java" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionMessageManager.java" />
         <option value="$PROJECT_DIR$/robot/DeadlineRobot/src/hkccpacmanrobot/robot/deadlinerobot/DeadlineRobot.java" />
@@ -296,201 +192,45 @@
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameReport.java" />
         <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/asd.scala" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/RemoteControllInfo.scala" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java" />
         <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/NewDeviceListener.scala" />
         <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/PositionListener.scala" />
         <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControllCommandListener.scala" />
         <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControlCommandListener.scala" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.scala" />
         <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala" />
-<<<<<<< HEAD
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/ObstacleMapForRobot.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/ObstacleMapUnitNewServer.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/ObstacleMapUnit.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/ObstacleMapUnitNew.java" />
-        <option value="$PROJECT_DIR$/Utils/src/ObstacleMapUnitNew.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/ObstacleMapNew.java" />
-        <option value="$PROJECT_DIR$/Utils/src/ObstacleMapNew.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMapUnitNew.java" />
-        <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ObstacleMapUnitNewServer.java" />
-        <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ObstacleMepServer.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/ObstacleMapUnitNewRobot.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/ObstacleMapUnitRobot.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/MapUnitRobot.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/RobotMapUnit.java" />
-        <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/MapUnitServer.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMapNew.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/utils/Map.java" />
-        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/Robot.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapUnit.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/Map.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapManager.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapContent.java" />
-        <option value="$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ServerMapUnit.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapKey.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMap.java" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMapManager.java" />
-=======
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/messager/Messenger.scala" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Messenger.scala" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ControllCommand.scala" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/MovementCommand.scala" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/MovementCommand.scala" />
         <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/package.scala" />
-        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/GameState.scala" />
         <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/utils/Map.java" />
->>>>>>> messenger
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Port.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Maths.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Device.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/MapDAO.java" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/DAO.java" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionManager.java" />
+        <option value="$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/utils/PositionManager.java" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Maths.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Message.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Config.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMap.java" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/AbstractMessage.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/GameState.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/DeviceInfo.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/MovementCommand.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/MapMessage.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/ObstacleMap.scala" />
+        <option value="$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Messenger.scala" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-<<<<<<< HEAD
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>Abstraction issues</id>
-          </State>
-          <State>
-            <id>Android Lint</id>
-          </State>
-          <State>
-            <id>Class metrics</id>
-          </State>
-          <State>
-            <id>Class structure</id>
-          </State>
-          <State>
-            <id>Code style issues</id>
-          </State>
-          <State>
-            <id>Control flow issues</id>
-          </State>
-          <State>
-            <id>Data flow issues</id>
-          </State>
-          <State>
-            <id>Declaration redundancy</id>
-          </State>
-          <State>
-            <id>Dependency issues</id>
-          </State>
-          <State>
-            <id>Error handling</id>
-          </State>
-          <State>
-            <id>Error handlingGroovy</id>
-          </State>
-          <State>
-            <id>General</id>
-          </State>
-          <State>
-            <id>Groovy</id>
-          </State>
-          <State>
-            <id>HTML</id>
-          </State>
-          <State>
-            <id>Inheritance issues</id>
-          </State>
-          <State>
-            <id>Internationalization issues</id>
-          </State>
-          <State>
-            <id>JUnit issues</id>
-          </State>
-          <State>
-            <id>Java language level issues</id>
-          </State>
-          <State>
-            <id>JavaBeans issues</id>
-          </State>
-          <State>
-            <id>Logging issues</id>
-          </State>
-          <State>
-            <id>Manifest</id>
-          </State>
-          <State>
-            <id>Memory issues</id>
-          </State>
-          <State>
-            <id>Modularization issues</id>
-          </State>
-          <State>
-            <id>Naming ConventionsGroovy</id>
-          </State>
-          <State>
-            <id>Naming conventions</id>
-          </State>
-          <State>
-            <id>Packaging issues</id>
-          </State>
-          <State>
-            <id>Performance issues</id>
-          </State>
-          <State>
-            <id>Portability issues</id>
-          </State>
-          <State>
-            <id>Potentially confusing code constructsGroovy</id>
-          </State>
-          <State>
-            <id>Probable bugs</id>
-          </State>
-          <State>
-            <id>Probable bugsGroovy</id>
-          </State>
-          <State>
-            <id>RELAX NG</id>
-          </State>
-          <State>
-            <id>Resource management issues</id>
-          </State>
-          <State>
-            <id>Scala: General</id>
-          </State>
-          <State>
-            <id>Scala: Method signature</id>
-          </State>
-          <State>
-            <id>TestNG</id>
-          </State>
-          <State>
-            <id>Visibility issues</id>
-          </State>
-          <State>
-            <id>XML</id>
-          </State>
-          <State>
-            <id>XPath</id>
-          </State>
-          <State>
-            <id>XSLT</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>Abstraction issues</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
-=======
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1050" />
->>>>>>> messenger
+    <option name="x" value="-1" />
+    <option name="y" value="28" />
+    <option name="width" value="1922" />
+    <option name="height" value="1020" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -515,6 +255,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -525,10 +266,6 @@
           </PATH>
         </subPane>
       </pane>
-<<<<<<< HEAD
-      <pane id="Scope" />
-=======
->>>>>>> messenger
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -583,28 +320,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="map" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hkcc-pacman-robot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="StudentRobot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-=======
               <option name="myItemId" value="message" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MovementCommand.scala" />
-              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
->>>>>>> messenger
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -612,18 +330,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="Server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hkcc-pacman-robot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Server" />
+              <option name="myItemId" value="Utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -631,9 +338,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
+              <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-=======
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="message" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MovementCommand.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hkcc-pacman-robot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -652,7 +374,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Messenger.scala" />
               <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
->>>>>>> messenger
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -661,11 +382,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="Server" />
-=======
               <option name="myItemId" value="Utils" />
->>>>>>> messenger
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -673,15 +390,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="map" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-=======
               <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -693,7 +401,6 @@
               <option name="myItemId" value="GameState.scala" />
               <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
->>>>>>> messenger
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -701,11 +408,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="Server" />
-=======
               <option name="myItemId" value="Utils" />
->>>>>>> messenger
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -713,15 +416,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="listener" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-=======
               <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -730,10 +424,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Device.scala" />
+              <option name="myItemId" value="DeviceInfo.scala" />
               <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
->>>>>>> messenger
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -741,25 +434,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="Robot" />
-=======
-              <option name="myItemId" value="Server" />
->>>>>>> messenger
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hkcc-pacman-robot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="Robot" />
-=======
-              <option name="myItemId" value="Server" />
->>>>>>> messenger
+              <option name="myItemId" value="Utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -767,11 +442,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="core" />
-=======
-              <option name="myItemId" value="server" />
->>>>>>> messenger
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="map" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -781,9 +456,34 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="JavaController" />
-=======
+              <option name="myItemId" value="Server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hkcc-pacman-robot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hkcc-pacman-robot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Server" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -797,7 +497,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="listener" />
->>>>>>> messenger
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -807,11 +506,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="DeadlineRobot" />
-=======
               <option name="myItemId" value="Robot" />
->>>>>>> messenger
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -821,53 +516,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="Database" />
-=======
               <option name="myItemId" value="Robot" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="robot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
->>>>>>> messenger
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hkcc-pacman-robot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="Database" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="setup_script" />
-=======
-              <option name="myItemId" value="Robot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="robot" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="core" />
->>>>>>> messenger
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -877,19 +534,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value="Database" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-=======
               <option name="myItemId" value="Robot" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="META-INF" />
->>>>>>> messenger
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -904,17 +553,10 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-<<<<<<< HEAD
-    <property name="options.lastSelected" value="vcs.Git" />
-    <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="last_opened_file_path" value="E:/tool/portableapps/PortableApps/GitPortable/Data/home/lib/java/scalap-2.9.2.jar!/" />
-=======
     <property name="options.lastSelected" value="preferences.keymap" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
->>>>>>> messenger
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -927,13 +569,31 @@
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="LayoutCode.rearrangeEntriesScala" value="true" />
     <property name="LayoutCode.rearrangeEntries" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="hkccpacmanrobot.robot.core" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Android Application.AndroidController">
+  <component name="RunManager" selected="Application.test">
+    <configuration default="false" name="test" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="hkccpacmanrobot.utils.message.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="hkccpacmanrobot.utils.message.test" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Utils" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -983,6 +643,25 @@
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="AndroidController" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -1019,6 +698,27 @@
       <setting name="testKind" value="Class" />
       <setting name="showProgressMessages" value="true" />
       <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="AndroidController" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="JarApplication" factoryName="JAR Application">
@@ -1069,6 +769,34 @@
       <listeners />
       <method />
     </configuration>
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="AndroidController" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -1090,6 +818,63 @@
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
+    <configuration default="true" type="executeSpecs" factoryName="Gauge Execution">
+      <setting name="environment" value="" />
+      <setting name="specsToExecute" value="" />
+      <setting name="tags" value="" />
+      <setting name="parallelNodes" value="" />
+      <setting name="execInParallel" value="false" />
+      <setting name="programParameters" value="" />
+      <setting name="workingDirectory" value="" />
+      <envMap />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="AndroidController" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="AndroidController" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -1104,6 +889,25 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="AndroidController" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -1157,13 +961,19 @@
       <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
       <method />
     </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Android Application.AndroidController" />
+      <item index="1" class="java.lang.String" itemvalue="Application.test" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Application.test" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
-    <configuration>C:\Users\13058456a\AppData\Roaming\Subversion</configuration>
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -1174,70 +984,38 @@
     </task>
     <servers />
   </component>
-  <component name="TodoView" selected-index="0">
-    <todo-panel id="selected-file">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="default-changelist">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="false" />
-    </todo-panel>
-  </component>
   <component name="ToolWindowManager">
-<<<<<<< HEAD
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-=======
-    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
->>>>>>> messenger
+    <frame x="-1" y="28" width="1922" height="1020" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3253796" sideWeight="0.4984375" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-<<<<<<< HEAD
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27531645" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-=======
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21682848" sideWeight="0.5014663" order="7" side_tool="true" content_ui="tabs" />
->>>>>>> messenger
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3286334" sideWeight="0.5005208" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286334" sideWeight="0.49947917" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2725322" sideWeight="0.49894068" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-<<<<<<< HEAD
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13333334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-=======
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1921875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
->>>>>>> messenger
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19166666" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27531645" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286334" sideWeight="0.49947917" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3257821" sideWeight="0.4984375" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291789" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885087" sideWeight="0.49966422" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1271,23 +1049,66 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapContent.java">
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="405">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-          <folding>
-            <element signature="e#519#520#0" expanded="true" />
-            <element signature="e#576#577#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="300">
+          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapUnit.java">
+    <entry file="file://$PROJECT_DIR$/robot/StudentRobot/src/hkccpacmanrobot/robot/studentrobot/StudentRobot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="405">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="540">
+          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot/DeadlineRobot/src/hkccpacmanrobot/robot/deadlinerobot/DeadlineRobot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="705">
+          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot/AssigmentRobot/src/hkccpacmanrobot/robot/assignmentrobot/AssignmentRobot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="450">
+          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/AndroidController/src/hkccpacmanrobot/controller/androidcontroller/connection/PositionSAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="240">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1575">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/Robot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="990">
+          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot/DeadlineRobot/src/hkccpacmanrobot/robot/deadlinerobot/DeadlineRobot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="555">
+          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/Robot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="720">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -1295,13 +1116,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="315">
           <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="795">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1323,12 +1137,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-=======
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameReport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="544">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
->>>>>>> messenger
         </state>
       </provider>
     </entry>
@@ -1360,33 +1168,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/SeverDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.8" vertical-offset="0" max-vertical-offset="357">
-          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state vertical-scroll-proportion="-2.04" vertical-offset="0" max-vertical-offset="323">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-=======
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1575">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
->>>>>>> messenger
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/MapDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.12" vertical-offset="0" max-vertical-offset="544">
-          <caret line="11" column="47" selection-start-line="11" selection-start-column="47" selection-end-line="11" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/robot/StudentRobot/src/hkccpacmanrobot/robot/studentrobot/StudentRobot.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="540">
@@ -1408,10 +1189,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Position.java">
+    <entry file="file://$PROJECT_DIR$/controller/AndroidController/src/hkccpacmanrobot/controller/androidcontroller/connection/PositionSAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20096852" vertical-offset="7" max-vertical-offset="420">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1423,272 +1204,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/AndroidController/res/layout/main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0433526" vertical-offset="0" max-vertical-offset="346">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/GameReport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="480">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ControllCommand.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControlCommandListener.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25449103" vertical-offset="0" max-vertical-offset="668">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller/JavaController/src/hkccpacmanrobot/controller/javacontroller/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07359307" vertical-offset="0" max-vertical-offset="693">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Server.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1326">
-          <caret line="26" column="37" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
-        </state>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
           <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Messenger.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="833">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="918">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/NewDeviceListener.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.08" vertical-offset="0" max-vertical-offset="357">
-          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/RobotMapUnit.java">
-<<<<<<< HEAD
-=======
-=======
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/DAO.java">
->>>>>>> messenger
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
-          <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/Robot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1122">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ObstacleMepServer.java">
->>>>>>> map
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
-          <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/Robot.java">
-=======
-    <entry file="file://$PROJECT_DIR$/robot/StudentRobot/src/hkccpacmanrobot/robot/studentrobot/StudentRobot.java">
->>>>>>> messenger
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1122">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/io/Serializable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.740516" vertical-offset="0" max-vertical-offset="2601">
-          <caret line="168" column="17" selection-start-line="168" selection-start-column="17" selection-end-line="168" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/jre/lib/rt.jar!/sun/misc/Unsafe.class">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state vertical-scroll-proportion="0.3323217" vertical-offset="4099" max-vertical-offset="6630">
-          <caret line="300" column="32" selection-start-line="300" selection-start-column="32" selection-end-line="300" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/lang/UnsupportedOperationException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323217" vertical-offset="87" max-vertical-offset="1207">
-          <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
-=======
-        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="918">
-          <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#296#297#0" expanded="true" />
-            <element signature="e#322#323#0" expanded="true" />
-            <element signature="e#380#381#0" expanded="true" />
-            <element signature="e#413#414#0" expanded="true" />
-            <element signature="e#582#583#0" expanded="true" />
-            <element signature="e#624#625#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapUnit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
->>>>>>> map
-          <folding />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java">
-=======
-    <entry file="file://$PROJECT_DIR$/controller/AndroidController/src/hkccpacmanrobot/controller/androidcontroller/connection/PositionSAO.java">
->>>>>>> messenger
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38391504" vertical-offset="20912" max-vertical-offset="38386">
-          <caret line="1300" column="25" selection-start-line="1300" selection-start-column="25" selection-end-line="1300" selection-end-column="25" />
-=======
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/io/Serializable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.740516" vertical-offset="0" max-vertical-offset="2601">
-          <caret line="168" column="17" selection-start-line="168" selection-start-column="17" selection-end-line="168" selection-end-column="17" />
->>>>>>> map
-          <folding />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/concurrent/Semaphore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35811836" vertical-offset="4235" max-vertical-offset="10965">
-          <caret line="311" column="16" selection-start-line="311" selection-start-column="16" selection-end-line="311" selection-end-column="16" />
-=======
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/jre/lib/rt.jar!/sun/misc/Unsafe.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323217" vertical-offset="4099" max-vertical-offset="6630">
-          <caret line="300" column="32" selection-start-line="300" selection-start-column="32" selection-end-line="300" selection-end-column="32" />
->>>>>>> map
-          <folding />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/lang/Cloneable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7481032" vertical-offset="0" max-vertical-offset="659">
-          <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
-=======
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/lang/UnsupportedOperationException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323217" vertical-offset="87" max-vertical-offset="1207">
-          <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
->>>>>>> map
-          <folding />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/AbstractMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state vertical-scroll-proportion="0.0" vertical-offset="8094" max-vertical-offset="13056">
-          <caret line="548" column="21" selection-start-line="548" selection-start-column="21" selection-end-line="548" selection-end-column="21" />
-=======
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38391504" vertical-offset="20912" max-vertical-offset="38386">
-          <caret line="1300" column="25" selection-start-line="1300" selection-start-column="25" selection-end-line="1300" selection-end-column="25" />
->>>>>>> map
-          <folding />
-=======
-        <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="480">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
->>>>>>> messenger
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/controller/AndroidController/src/hkccpacmanrobot/controller/androidcontroller/connection/PositionSAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26243567" vertical-offset="0" max-vertical-offset="583">
-          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-=======
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/concurrent/Semaphore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35811836" vertical-offset="4235" max-vertical-offset="10965">
-          <caret line="311" column="16" selection-start-line="311" selection-start-column="16" selection-end-line="311" selection-end-column="16" />
->>>>>>> map
-          <folding />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/Set.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323217" vertical-offset="818" max-vertical-offset="6698">
-          <caret line="84" column="41" selection-start-line="84" selection-start-column="41" selection-end-line="84" selection-end-column="41" />
-=======
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/lang/Cloneable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7481032" vertical-offset="0" max-vertical-offset="659">
-          <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
->>>>>>> map
-=======
-    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/Sever.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1696,7 +1224,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="47" max-vertical-offset="990">
           <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1704,7 +1231,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
           <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1712,271 +1238,202 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1326">
           <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/JavaController/src/hkccpacmanrobot/controller/javacontroller/Launcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/share/scala/lib/scala-library.jar!/scala/Serializable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.024271844" vertical-offset="0" max-vertical-offset="618">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/default/src.zip!/java/awt/geom/Point2D.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.9315705" vertical-offset="4727" max-vertical-offset="5955">
+          <caret line="41" column="22" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/ConnectionInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
+          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1350">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/MapDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
+          <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/ControlCommandListener.scala">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.8" vertical-offset="0" max-vertical-offset="270">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/listener/NewDeviceListener.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41133454" vertical-offset="0" max-vertical-offset="547">
+          <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Maths.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Config.scala">
+      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
-          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
->>>>>>> messenger
+          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/Map.java">
+    <entry file="jar:///usr/lib/jvm/default/src.zip!/java/net/Socket.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323217" vertical-offset="5442" max-vertical-offset="19771">
-          <caret line="359" column="4" selection-start-line="359" selection-start-column="4" selection-end-line="359" selection-end-column="4" />
-=======
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/AbstractMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="8094" max-vertical-offset="13056">
-          <caret line="548" column="21" selection-start-line="548" selection-start-column="21" selection-end-line="548" selection-end-column="21" />
->>>>>>> map
+        <state vertical-scroll-proportion="0.0" vertical-offset="2443" max-vertical-offset="25290">
+          <caret line="207" column="11" selection-start-line="207" selection-start-column="11" selection-end-line="207" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/HashMap.java">
+    <entry file="jar:///usr/share/scala/lib/scala-library.jar!/scala/Predef.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9403" max-vertical-offset="39372">
-          <caret line="609" column="13" selection-start-line="609" selection-start-column="13" selection-end-line="609" selection-end-column="13" />
-          <folding>
-            <element signature="e#24298#24299#0" expanded="true" />
-            <element signature="e#24363#24364#0" expanded="true" />
-=======
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapContent.java">
+        <state vertical-scroll-proportion="-7.92" vertical-offset="1737" max-vertical-offset="2445">
+          <caret line="129" column="55" selection-start-line="129" selection-start-column="55" selection-end-line="129" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/share/scala/lib/scala-library.jar!/scala/Byte.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
-          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+        <state vertical-scroll-proportion="-0.6" vertical-offset="0" max-vertical-offset="1965">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/PositionDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.94957983" vertical-offset="155" max-vertical-offset="810">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/default/src.zip!/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2938" max-vertical-offset="8055">
+          <caret line="235" column="28" selection-start-line="235" selection-start-column="28" selection-end-line="235" selection-end-column="28" />
           <folding>
-            <element signature="e#519#520#0" expanded="true" />
-            <element signature="e#576#577#0" expanded="true" />
->>>>>>> map
+            <element signature="e#10065#10066#0" expanded="true" />
+            <element signature="e#10148#10149#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ServerMapUnit.java">
+    <entry file="jar:///usr/lib/jvm/default/src.zip!/java/lang/Class.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="87" max-vertical-offset="816">
-          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-=======
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
-          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
-          <folding>
-            <element signature="e#436#437#0" expanded="true" />
->>>>>>> map
-=======
-    <entry file="file://$PROJECT_DIR$/controller/JavaController/src/hkccpacmanrobot/controller/javacontroller/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="18703" max-vertical-offset="53025">
+          <caret line="1335" column="18" selection-start-line="1335" selection-start-column="18" selection-end-line="1335" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_20/src.zip!/java/lang/Thread.java">
+    <entry file="jar:///usr/lib/jvm/default/src.zip!/java/io/Serializable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="13012" max-vertical-offset="33422">
-          <caret line="834" column="22" selection-start-line="834" selection-start-column="22" selection-end-line="834" selection-end-column="22" />
-          <folding>
-            <element signature="e#14796#14797#0" expanded="true" />
-            <element signature="e#14860#14861#0" expanded="true" />
->>>>>>> messenger
-          </folding>
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapUnit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-=======
-    <entry file="file://$PROJECT_DIR$/controller/AndroidController/src/hkccpacmanrobot/controller/androidcontroller/connection/PositionSAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26243567" vertical-offset="0" max-vertical-offset="583">
-          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
->>>>>>> map
-=======
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_20/src.zip!/java/io/ObjectInputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="59364">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
->>>>>>> messenger
-          <folding />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/MapContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1289833" vertical-offset="0" max-vertical-offset="659">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-=======
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/Set.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323217" vertical-offset="818" max-vertical-offset="6698">
-          <caret line="84" column="41" selection-start-line="84" selection-start-column="41" selection-end-line="84" selection-end-column="41" />
->>>>>>> map
-=======
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_20/src.zip!/java/io/Serializable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8037518" vertical-offset="1908" max-vertical-offset="2601">
+        <state vertical-scroll-proportion="2.6858108" vertical-offset="585" max-vertical-offset="2295">
           <caret line="168" column="17" selection-start-line="168" selection-start-column="17" selection-end-line="168" selection-end-column="17" />
->>>>>>> messenger
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/Map.java">
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/AbstractMessage.scala">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state vertical-scroll-proportion="0.1289833" vertical-offset="0" max-vertical-offset="659">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-=======
-        <state vertical-scroll-proportion="0.3323217" vertical-offset="5442" max-vertical-offset="19771">
-          <caret line="359" column="4" selection-start-line="359" selection-start-column="4" selection-end-line="359" selection-end-column="4" />
->>>>>>> map
-=======
-    <entry file="jar://F:/tool/portableapps/PortableApps/GitPortable/Data/home/lib/java/scala-library-2.9.2.jar!/scala/Serializable.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0254491" vertical-offset="0" max-vertical-offset="668">
-          <caret line="1" column="68" selection-start-line="1" selection-start-column="68" selection-end-line="1" selection-end-column="68" />
->>>>>>> messenger
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/Server/src/hkccpacmanrobot/server/map/ObstacleMepServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
-          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
-=======
     <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/MovementCommand.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
->>>>>>> messenger
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+          <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/DeviceInfo.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
           <folding>
-            <element signature="e#415#416#0" expanded="true" />
-            <element signature="e#466#467#0" expanded="true" />
-=======
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/HashMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9403" max-vertical-offset="39372">
-          <caret line="609" column="13" selection-start-line="609" selection-start-column="13" selection-end-line="609" selection-end-column="13" />
-          <folding>
-            <element signature="e#24298#24299#0" expanded="true" />
-            <element signature="e#24363#24364#0" expanded="true" />
->>>>>>> map
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/function/BiConsumer.java">
+    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/ObstacleMap.scala">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state vertical-scroll-proportion="0.0" vertical-offset="327" max-vertical-offset="986">
-          <caret line="44" column="17" selection-start-line="44" selection-start-column="17" selection-end-line="44" selection-end-column="17" />
-=======
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
-          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
-=======
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/Position.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/core/ObstacleMapUnit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot/Robot/src/hkccpacmanrobot/robot/utils/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="21" max-vertical-offset="1122">
-          <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Device.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-          <caret line="13" column="98" selection-start-line="13" selection-start-column="98" selection-end-line="13" selection-end-column="98" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+          <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/Messenger.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
->>>>>>> messenger
+        <state vertical-scroll-proportion="0.0" vertical-offset="518" max-vertical-offset="1335">
+          <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="jar://E:/tool/jdk/jdk1.8.0_20/src.zip!/java/util/function/BiConsumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="986">
-          <caret line="66" column="22" selection-start-line="66" selection-start-column="12" selection-end-line="66" selection-end-column="22" />
->>>>>>> map
-=======
     <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/message/GameState.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12265512" vertical-offset="0" max-vertical-offset="693">
-          <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
->>>>>>> messenger
+        <state vertical-scroll-proportion="0.4814189" vertical-offset="0" max-vertical-offset="592">
+          <caret line="19" column="2" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/src/hkccpacmanrobot/utils/map/ObstacleMapManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state vertical-scroll-proportion="0.5159332" vertical-offset="357" max-vertical-offset="1224">
-          <caret line="41" column="59" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
-=======
-        <state vertical-scroll-proportion="0.20637329" vertical-offset="0" max-vertical-offset="1207">
-          <caret line="8" column="31" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="31" />
->>>>>>> map
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2011,7 +1468,7 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
-          <last-edited>java</last-edited>
+          <last-edited>scala-sdk-2.9.2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -2035,11 +1492,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-<<<<<<< HEAD
-          <last-edited>AssignmentRobot</last-edited>
-=======
           <last-edited>Utils</last-edited>
->>>>>>> messenger
           <splitter-proportions>
             <option name="proportions">
               <list>
