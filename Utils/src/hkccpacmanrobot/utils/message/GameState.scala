@@ -5,7 +5,7 @@ import hkccpacmanrobot.utils.Config
 /**
  * Created by 13058456a on 3/21/2015.
  */
-object GameState  extends  AbstractMessage{
+object GameState extends Message {
   override val port: Int = Config.PORT_GAME_STATUS
 
   val STATE_SETUP: Byte = 0x01

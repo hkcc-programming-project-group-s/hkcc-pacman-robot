@@ -3,7 +3,7 @@ package hkccpacmanrobot.utils.map
 /**
  * Created by beenotung on 3/21/15.
  */
-class MapContent(var time: Long=0L, var preservedLong: Long=0L) {
+class MapContent(var time: Long = 0L, var preservedLong: Long = 0L) {
 
   def set(mapContent: MapContent) {
     time = mapContent.time

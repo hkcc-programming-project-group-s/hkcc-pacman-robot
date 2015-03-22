@@ -5,75 +5,71 @@ package hkccpacmanrobot.utils.map
  */
 
 
-import java.util.List
 import java.util.concurrent.Semaphore
 import java.util.function.BiConsumer
 
-//remove if not needed
-import scala.collection.JavaConversions._
-
-object ObstacleMapManager {
-
-  trait ShouldUpdateOperator {
-
-    def mapCompare(obstacleMapManager: ObstacleMapManager, key: MapKey, value: MapContent): Boolean
-  }
-}
-
-class ObstacleMapManager {
+trait ObstacleMapManager {
 
   var map: ObstacleMap = _
 
-  private var semaphore: Semaphore = new Semaphore(1, true)
+  private val semaphore: Semaphore = new Semaphore(1, true)
 
   private var lastSendMapTime: Long = _
 
   private var lastReceiveMapTime: Long = _
 
-  def getMap(): ObstacleMap = {
-    semaphore.tryAcquire()
-    val bufferedMap = map.clone().asInstanceOf[ObstacleMap]
-    semaphore.release()
+  def getMap: ObstacleMap = {
+    semaphore.tryAcquire
+    val bufferedMap = map.clone.asInstanceOf[ObstacleMap]
+    semaphore.release
     bufferedMap
   }
 
-  protected def getDeltaMap(operator: ShouldUpdateOperator): ObstacleMap = {
-    semaphore.tryAcquire()
-    val bufferedMap = new ObstacleMap()
-    map.forEach(new BiConsumer[MapKey, MapContent]() {
-
-      override def accept(key: MapKey, value: MapContent) {
-        if (operator.mapCompare(ObstacleMapManager.this, key, value)) bufferedMap.put(key, value)
+  protected def getDeltaUpdatedMap(shouldUpdate: (MapKey, MapContent) => Boolean): ObstacleMap = {
+    semaphore.tryAcquire
+    val bufferedMap = new ObstacleMap
+    map.forEach(new BiConsumer[MapKey, MapContent] {
+      override def accept(key: MapKey, value: MapContent) = {
+        if (shouldUpdate(key, value))
+          bufferedMap.put(key.clone.asInstanceOf[MapKey], value.asInstanceOf[MapContent])
       }
     })
-    semaphore.release()
+    semaphore.release
     bufferedMap
   }
 
-  protected def sendMap(operator: ShouldUpdateOperator) {
-    val bufferedMap = getDeltaMap(operator)
-    lastSendMapTime = System.currentTimeMillis()
+  def shouldUpdate(key: MapKey, value: MapContent): Boolean
+
+  protected def sendMap = {
+    val bufferedMap = getDeltaUpdatedMap(shouldUpdate)
+    lastSendMapTime = System.currentTimeMillis
+    //TODO networking
+  }
+
+  protected def receiveMap = {
+    //TODO networking
+    lastReceiveMapTime = System.currentTimeMillis
   }
 
   def addMap(deltaObstacleMap: ObstacleMap) {
-    semaphore.tryAcquire()
+    semaphore.tryAcquire
     map.putAll(deltaObstacleMap)
-    semaphore.release()
+    semaphore.release
   }
 
   def addMap(mapUnits: List[MapUnit]) {
-    semaphore.tryAcquire()
-    semaphore.release()
+    semaphore.tryAcquire
+    semaphore.release
   }
 
   def remove(key: MapKey) {
-    semaphore.tryAcquire()
+    semaphore.tryAcquire
     map.remove(key)
-    semaphore.release()
+    semaphore.release
   }
 
   def remove(deltaObstacleMap: ObstacleMap) {
-    semaphore.tryAcquire()
-    semaphore.release()
+    semaphore.tryAcquire
+    semaphore.release
   }
 }

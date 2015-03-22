@@ -6,7 +6,7 @@ import hkccpacmanrobot.utils.{Config, Maths}
 /**
  * Created by beenotung on 2/10/15.
  */
-object MovementCommand extends  AbstractMessage{
+object MovementCommand extends Message {
   override val port: Int = Config.PORT_MOVEMENT_COMMAND
 
   val MODE_POLAR: Byte = 0x01
@@ -17,5 +17,5 @@ object MovementCommand extends  AbstractMessage{
 * POLAR: d1 = degree (in radian), d2 = distance
 * RECTANGULAR:: d1 =x, d2 = y
 * */
-class MovementCommand(mode: Byte,  point2D:Maths.Point2D) extends Serializable
+class MovementCommand(mode: Byte, point2D: Maths.Point2D) extends Serializable
 
