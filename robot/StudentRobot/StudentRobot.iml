@@ -8,9 +8,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-<<<<<<< HEAD
-=======
     <orderEntry type="module" module-name="Robot" />
->>>>>>> master
   </component>
 </module>

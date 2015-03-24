@@ -4,6 +4,7 @@ import com.sun.deploy.util.SessionState;
 import com.sun.security.ntlm.Client;
 import hkccpacmanrobot.utils.Position;
 
+import java.awt.geom.Point2D;
 import java.sql.Timestamp;
 
 
@@ -18,7 +19,7 @@ public class Sever {
     }
 
     public void sendNextPosition() {
-        Position nextPosition = null;
+        Point2D nextPosition = null;
         /*
         Listen to remote control
         getMap the Next Position of student robot
