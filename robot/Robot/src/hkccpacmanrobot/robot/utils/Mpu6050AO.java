@@ -1,3 +1,4 @@
+package hkccpacmanrobot.robot.utils;
 //reference python demo http://blog.bitify.co.uk/2013/11/reading-data-from-mpu-6050-on-raspberry.html
 
 import com.pi4j.io.i2c.I2CBus;
