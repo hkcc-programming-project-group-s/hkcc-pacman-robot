@@ -10,10 +10,6 @@
 <<<<<<< HEAD
 =======
     <orderEntry type="library" name="utils" level="project" />
-<<<<<<< HEAD
-    <orderEntry type="library" name="scala-sdk-2.9.2" level="application" />
-=======
->>>>>>> AI-linux
     <orderEntry type="library" name="scala-sdk-2.11.5" level="application" />
 >>>>>>> master
   </component>

@@ -2,18 +2,6 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-    </content>
-    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    <orderEntry type="library" name="scala-sdk-2.9.2" level="application" />
-=======
->>>>>>> AI-linux
-    <orderEntry type="library" name="scala-sdk-2.11.5" level="application" />
->>>>>>> master
   </component>
 </module>
