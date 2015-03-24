@@ -1,98 +1,91 @@
 package com.example.student.joystickconsole;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.os.Handler;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.app.Activity;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
-public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
-
-    private Context _context;
-    private GameThread _thread;
-    private GameControls _controls;
-    private GameJoystick _joystick;
-    private Bitmap _pointer;
-
-    public GameSurface(Context context) {
-        super(context);
-        // TODO Auto-generated constructor stub
-        _context = context;
-        init();
-    }
-
-    private void init() {
-        //initialize our screen holder
-        SurfaceHolder holder = getHolder();
-        holder.addCallback(this);
-
-        //initialize our game engine
-
-        //initialize our Thread class. A call will be made to start it later
-        _thread = new GameThread(holder, _context, new Handler(), this);
-        setFocusable(true);
-
-        _joystick = new GameJoystick(getContext().getResources());
-        _pointer = (Bitmap) BitmapFactory.decodeResource(getResources(), R.drawable.ball);
-        //controls
-        _controls = new GameControls();
-        setOnTouchListener(_controls);
-    }
-
-
-    public void doDraw(Canvas canvas) {
-
-        //update the pointer
-        _controls.update(null);
-
-        //draw the pointer
-        canvas.drawBitmap(_pointer, _controls._pointerPosition.x, _controls._pointerPosition.y, null);
-
-        //draw the joystick background
-        canvas.drawBitmap(_joystick.get_joystickBg(), 495, 915, null);
-
-        //draw the draggable joystick
-        canvas.drawBitmap(_joystick.get_joystick(), _controls._touchingPoint.x - 26, _controls._touchingPoint.y - 26, null);
-    }
-
-    //these methods are overridden from the SurfaceView super class. They are automatically called
-    //when a SurfaceView is created, resumed or suspended.
-    @Override
-    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
-    }
-
-    private boolean retry;
+public class GameControls extends Activity implements OnTouchListener {
+    public float init_x = 514;
+    public float init_y = 934;
+    public Point _touchingPoint = new Point(514, 934);
+    public Point _pointerPosition = new Point(0, 0);
+    private Boolean _dragging = false;
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder arg0) {
-        retry = true;
-        //code to end game loop
-        _thread.state = GameThread.STOPPED;
-        while (retry) {
-            try {
-                //code to kill Thread
-                _thread.join();
-                retry = false;
-            } catch (InterruptedException e) {
-            }
-        }
+    public boolean onTouch(View v, MotionEvent event) {
+        update(event);
+        return true;
     }
 
-    @Override
-    public void surfaceCreated(SurfaceHolder arg0) {
-        if (_thread.state == GameThread.PAUSED) {
-            //When game is opened again in the Android OS
-            _thread = new GameThread(getHolder(), _context, new Handler(), this);
-            _thread.start();
+    private MotionEvent lastEvent;
+
+    public void update(MotionEvent event) {
+        if (event == null && lastEvent == null) {
+            return;
+        } else if (event == null && lastEvent != null) {
+            event = lastEvent;
         } else {
-            //creating the game Thread for the first time
-            _thread.start();
+            lastEvent = event;
         }
-    }
+        //drag drop
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            _dragging = true;
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            _dragging = false;
+        }
 
-    public void Update() {
-        // TODO Auto-generated method stub
+        if (_dragging) {
+            // get the position
+            _touchingPoint.x = (int) event.getX();
+            _touchingPoint.y = (int) event.getY();
+
+            // bound to a box
+/*
+            if (_touchingPoint.x < 400) {
+                _touchingPoint.x = 400;
+            }
+            if (_touchingPoint.x > 450) {
+                _touchingPoint.x = 450;
+            }
+            if (_touchingPoint.y < 240) {
+                _touchingPoint.y = 240;
+            }
+            if (_touchingPoint.y > 290) {
+                _touchingPoint.y = 290;
+            }
+*/
+            //get the angle
+            double angle = Math.atan2(_touchingPoint.y - init_y, _touchingPoint.x - init_x) / (Math.PI / 180);
+
+            // Move the beetle in proportion to how far
+            // the joystick is dragged from its center
+            _pointerPosition.y += Math.sin(angle * (Math.PI / 180)) * (_touchingPoint.x / 70);
+            _pointerPosition.x += Math.cos(angle * (Math.PI / 180)) * (_touchingPoint.x / 70);
+
+/*            //make the pointer go thru
+               if (_pointerPosition.x > 480) {
+                _pointerPosition.x = 0;
+            }
+
+            if (_pointerPosition.x < 0) {
+                _pointerPosition.x = 480;
+            }
+
+            if (_pointerPosition.y > 320) {
+                _pointerPosition.y = 0;
+            }
+            if (_pointerPosition.y < 0) {
+                _pointerPosition.y = 320;
+            }
+*/
+        } else if (!_dragging) {
+            // Snap back to center when the joystick is released
+            _touchingPoint.x = (int) init_x;
+            _touchingPoint.y = (int) init_y;
+            // shaft.alpha = 0;
+        }
     }
 }
