@@ -1,25 +1,33 @@
 package hkccpacmanrobot.controller.javacontroller;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
+import hkccpacmanrobot.controller.Controller;
 
 import javax.swing.*;
 
-public class ControllerJavaApplication {
+public class ControllerJavaApplication extends Controller{
     public JFrame mainFrame;
+    public KeyboardSettings keyboardSettings = new KeyboardSettings();
+    public KeyboardHandler keyboardHandler = new KeyboardHandler(keyboardSettings);
     private JTextArea jTextArea;
 
-    public void setup(){
-        mainFrame=new JFrame();
+    public ControllerJavaApplication() {
+        super();
+        setupGUI();
+    }
+
+    public void setupGUI() {
+        mainFrame = new JFrame();
         mainFrame.setVisible(false);
         jTextArea = new JTextArea();
         mainFrame.getContentPane().add(jTextArea);
-    }
-    public ControllerJavaApplication(){
-     setup();
+        mainFrame.setBounds(10, 10, 800, 600);
+        jTextArea.addKeyListener(keyboardHandler);
     }
 
-    public void start (){
-mainFrame.setVisible(true);
+
+    public void start() {
+        mainFrame.setVisible(true);
     }
+
+
 }
