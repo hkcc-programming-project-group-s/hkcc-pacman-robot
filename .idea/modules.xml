@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/controller/Controller/src/hkccpacmanrobot/controller/Controller.iml" filepath="$PROJECT_DIR$/controller/Controller/src/hkccpacmanrobot/controller/Controller.iml" />
       <module fileurl="file://$PROJECT_DIR$/robot/DeadlineRobot/DeadlineRobot.iml" filepath="$PROJECT_DIR$/robot/DeadlineRobot/DeadlineRobot.iml" />
       <module fileurl="file://$PROJECT_DIR$/controller/JavaController/JavaController.iml" filepath="$PROJECT_DIR$/controller/JavaController/JavaController.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.iml" filepath="$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.iml" />
       <module fileurl="file://$PROJECT_DIR$/robot/Robot/Robot.iml" filepath="$PROJECT_DIR$/robot/Robot/Robot.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/Server.iml" filepath="$PROJECT_DIR$/Server/Server.iml" />
       <module fileurl="file://$PROJECT_DIR$/robot/StudentRobot/StudentRobot.iml" filepath="$PROJECT_DIR$/robot/StudentRobot/StudentRobot.iml" />
