@@ -2,8 +2,9 @@ package hkccpacmanrobot.robot.core;
 
 
 public abstract class Robot {
-    public boolean gameOver = true;
+    boolean gameOver = true;
     public PositionSAO positionSAO;
+
     //public ObstacleMap<RobotMapUnit> map = new ObstacleMap<RobotMapUnit>();
 
 

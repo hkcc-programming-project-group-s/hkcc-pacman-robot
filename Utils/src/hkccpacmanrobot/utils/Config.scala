@@ -8,5 +8,6 @@ object Config {
   val PORT_GAME_STATUS: Int = 1235
   val PORT_MOVEMENT_COMMAND: Int = 1236
   val PORT_DEVICE_INFO: Int = 1247
+  val PORT_POSITION: Int = 1248
   var serverAddress: String = "127.0.0.1"
 }

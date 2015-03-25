@@ -10,6 +10,6 @@ object Maths {
   * POLAR: d1 = degree (in radian), d2 = distance
   * RECTANGULAR:: d1 =x, d2 = y
   */
-  class Point2D(d1: Double, d2: Double)
+  class Point2D(var d1: Double=0d, var d2: Double=0d)
 
 }
