@@ -27,12 +27,12 @@ class Server {
   //loop wait for incoming connection
   def pairUpNewDevice = {
     while (!gameStarted) {
-      //get client socket
+      //getMap client socket
       //add to gameStatusMessengers
     }
   }
 
-  //continuously get remote command
+  //continuously getMap remote command
   //timeout check connection
   def listenToRemoteController = {
     // loop , check when controller is paired up

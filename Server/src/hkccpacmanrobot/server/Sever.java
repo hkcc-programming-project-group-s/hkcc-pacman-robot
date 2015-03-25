@@ -4,6 +4,7 @@ import com.sun.deploy.util.SessionState;
 import com.sun.security.ntlm.Client;
 import hkccpacmanrobot.utils.Position;
 
+import java.awt.geom.Point2D;
 import java.sql.Timestamp;
 
 
@@ -18,10 +19,10 @@ public class Sever {
     }
 
     public void sendNextPosition() {
-        Position nextPosition = null;
+        Point2D nextPosition = null;
         /*
         Listen to remote control
-        get the Next Position of student robot
+        getMap the Next Position of student robot
          */
     }
 
@@ -35,7 +36,7 @@ public class Sever {
 
     public void gameEnd() {
     /*
-    get the position of the robot from database in ?? time.
+    getMap the position of the robot from database in ?? time.
     if(isNear)
       using function which is in connection class send message to robot to stop the game.
     */
@@ -43,7 +44,7 @@ public class Sever {
 
     public boolean compareThePosition() {
     /*
-    get the position of different robot from database(x1:student x2=deadline x3=assignment...)
+    getMap the position of different robot from database(x1:student x2=deadline x3=assignment...)
     compare the position
 
     If deadline is near then student( |x1-x2| <= ?? && |y1-y2| <= ??),
@@ -71,11 +72,11 @@ public class Sever {
 
     public void compareUpdateTime() {
     /*
-    get the update time of different robot from database
+    getMap the update time of different robot from database
     do{
     int robotNo=1;
     Timestamp time2 = getUpdateTime();(robotNo=1 student robotNo=2 deadline robotNo=3 assignment)
-    Timestamp time1 = (function to get a now time);
+    Timestamp time1 = (function to getMap a now time);
     compare the time to real time
     if( time1 - time2 >= ??)
     { [sendSpecificMessage()]----> Message Class
@@ -92,7 +93,7 @@ public class Sever {
         It is for sever
 		
 		Timestamp time;
-		get the update time of different robot to sever from database use SQL;
+		getMap the update time of different robot to sever from database use SQL;
 		(robotNo=1 student robotNo=2 deadline robotNo=3 assignment)
 		 
 		return time;
