@@ -2,15 +2,14 @@
   <library name="lib-java-myutils">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/lib/java-myutils/lib" />
-      <root url="jar://$PROJECT_DIR$/lib/java-myutils/lib/opengl/disruptor.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/java-myutils/lib/opengl/lwjgl.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib/java-myutils/lib/opengl" />
     </CLASSES>
     <JAVADOC />
     <NATIVE>
-      <root url="file://$PROJECT_DIR$/lib/java-myutils/lib/opengl/native/windows/x64" />
-      <root url="file://$PROJECT_DIR$/lib/java-myutils/lib/opengl/native/windows/x64" />
+      <root url="file://$PROJECT_DIR$/lib/java-myutils/lib/opengl/native/linux/x64" />
     </NATIVE>
     <SOURCES />
     <jarDirectory url="file://$PROJECT_DIR$/lib/java-myutils/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/java-myutils/lib/opengl" recursive="false" />
   </library>
 </component>
