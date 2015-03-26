@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_studentrobot" default="compile.module.studentrobot">
+  <dirname property="module.studentrobot.basedir" file="${ant.file.module_studentrobot}"/>
+  
+  <property name="module.jdk.home.studentrobot" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.studentrobot" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.studentrobot" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.studentrobot" value="-encoding UTF-8 -source 8 ${compiler.args}"/>
+  
+  <property name="studentrobot.output.dir" value="${module.studentrobot.basedir}/../../out/production/StudentRobot"/>
+  <property name="studentrobot.testoutput.dir" value="${module.studentrobot.basedir}/../../out/test/StudentRobot"/>
+  
+  <path id="studentrobot.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="studentrobot.module.production.classpath">
+    <path refid="${module.jdk.classpath.studentrobot}"/>
+    <pathelement location="${robot.output.dir}"/>
+    <path refid="library.scala-sdk.classpath"/>
+    <pathelement location="${utils.output.dir}"/>
+  </path>
+  
+  <path id="studentrobot.runtime.production.module.classpath">
+    <pathelement location="${studentrobot.output.dir}"/>
+    <path refid="robot.runtime.production.module.classpath"/>
+    <path refid="library.scala-sdk.classpath"/>
+    <path refid="utils.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="studentrobot.module.classpath">
+    <path refid="${module.jdk.classpath.studentrobot}"/>
+    <pathelement location="${studentrobot.output.dir}"/>
+    <pathelement location="${robot.testoutput.dir}"/>
+    <pathelement location="${robot.output.dir}"/>
+    <path refid="library.scala-sdk.classpath"/>
+    <pathelement location="${utils.testoutput.dir}"/>
+    <pathelement location="${utils.output.dir}"/>
+  </path>
+  
+  <path id="studentrobot.runtime.module.classpath">
+    <pathelement location="${studentrobot.testoutput.dir}"/>
+    <pathelement location="${studentrobot.output.dir}"/>
+    <path refid="robot.runtime.module.classpath"/>
+    <path refid="library.scala-sdk.classpath"/>
+    <path refid="utils.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.studentrobot">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.studentrobot">
+    <patternset refid="excluded.from.module.studentrobot"/>
+  </patternset>
+  
+  <path id="studentrobot.module.sourcepath">
+    <dirset dir="${module.studentrobot.basedir}">
+      <include name="src"/>
+      <include name="lib"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.studentrobot" depends="compile.module.studentrobot.production,compile.module.studentrobot.tests" description="Compile module StudentRobot"/>
+  
+  <target name="compile.module.studentrobot.production" depends="register.custom.compilers,compile.module.robot,compile.module.utils" description="Compile module StudentRobot; production classes">
+    <mkdir dir="${studentrobot.output.dir}"/>
+    <javac2 destdir="${studentrobot.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.studentrobot}/javac">
+      <compilerarg line="${compiler.args.studentrobot}"/>
+      <bootclasspath refid="studentrobot.module.bootclasspath"/>
+      <classpath refid="studentrobot.module.production.classpath"/>
+      <src refid="studentrobot.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.studentrobot"/>
+    </javac2>
+    
+    <copy todir="${studentrobot.output.dir}">
+      <fileset dir="${module.studentrobot.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.studentrobot.basedir}/lib">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.studentrobot.tests" depends="register.custom.compilers,compile.module.studentrobot.production" description="compile module StudentRobot; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.studentrobot" description="cleanup module">
+    <delete dir="${studentrobot.output.dir}"/>
+    <delete dir="${studentrobot.testoutput.dir}"/>
+  </target>
+</project>

@@ -6,6 +6,10 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/robot/StudentRobot/META-INF/MANIFEST.MF" />
       </element>
+      <element id="artifact" artifact-name="robot" />
+      <element id="artifact" artifact-name="utils" />
+      <element id="library" level="project" name="pi4j" />
+      <element id="library" level="application" name="scala-sdk" />
     </root>
   </artifact>
 </component>

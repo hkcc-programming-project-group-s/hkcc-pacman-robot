@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_deadlinerobot" default="compile.module.deadlinerobot">
+  <dirname property="module.deadlinerobot.basedir" file="${ant.file.module_deadlinerobot}"/>
+  
+  <property name="module.jdk.home.deadlinerobot" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.deadlinerobot" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.deadlinerobot" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.deadlinerobot" value="-encoding UTF-8 -source 8 ${compiler.args}"/>
+  
+  <property name="deadlinerobot.output.dir" value="${module.deadlinerobot.basedir}/../../out/production/DeadlineRobot"/>
+  <property name="deadlinerobot.testoutput.dir" value="${module.deadlinerobot.basedir}/../../out/test/DeadlineRobot"/>
+  
+  <path id="deadlinerobot.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="deadlinerobot.module.production.classpath">
+    <path refid="${module.jdk.classpath.deadlinerobot}"/>
+  </path>
+  
+  <path id="deadlinerobot.runtime.production.module.classpath">
+    <pathelement location="${deadlinerobot.output.dir}"/>
+  </path>
+  
+  <path id="deadlinerobot.module.classpath">
+    <path refid="${module.jdk.classpath.deadlinerobot}"/>
+    <pathelement location="${deadlinerobot.output.dir}"/>
+  </path>
+  
+  <path id="deadlinerobot.runtime.module.classpath">
+    <pathelement location="${deadlinerobot.testoutput.dir}"/>
+    <pathelement location="${deadlinerobot.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.deadlinerobot">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.deadlinerobot">
+    <patternset refid="excluded.from.module.deadlinerobot"/>
+  </patternset>
+  
+  <path id="deadlinerobot.module.sourcepath">
+    <dirset dir="${module.deadlinerobot.basedir}">
+      <include name="src"/>
+      <include name="lib"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.deadlinerobot" depends="compile.module.deadlinerobot.production,compile.module.deadlinerobot.tests" description="Compile module DeadlineRobot"/>
+  
+  <target name="compile.module.deadlinerobot.production" depends="register.custom.compilers" description="Compile module DeadlineRobot; production classes">
+    <mkdir dir="${deadlinerobot.output.dir}"/>
+    <javac2 destdir="${deadlinerobot.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.deadlinerobot}/javac">
+      <compilerarg line="${compiler.args.deadlinerobot}"/>
+      <bootclasspath refid="deadlinerobot.module.bootclasspath"/>
+      <classpath refid="deadlinerobot.module.production.classpath"/>
+      <src refid="deadlinerobot.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.deadlinerobot"/>
+    </javac2>
+    
+    <copy todir="${deadlinerobot.output.dir}">
+      <fileset dir="${module.deadlinerobot.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.deadlinerobot.basedir}/lib">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.deadlinerobot.tests" depends="register.custom.compilers,compile.module.deadlinerobot.production" description="compile module DeadlineRobot; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.deadlinerobot" description="cleanup module">
+    <delete dir="${deadlinerobot.output.dir}"/>
+    <delete dir="${deadlinerobot.testoutput.dir}"/>
+  </target>
+</project>

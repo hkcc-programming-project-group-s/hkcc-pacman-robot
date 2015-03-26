@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="utils" level="project" />
+    <orderEntry type="library" name="scala-sdk" level="application" />
   </component>
 </module>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hkcc-pacman-robot" default="all">
+  
+  
+  <property file="hkcc-pacman-robot.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="../default/jre/lib/jsse.jar"/>
+      <include name="../default/jre/lib/resources.jar"/>
+      <include name="../default/jre/lib/deploy.jar"/>
+      <include name="../default/jre/lib/jce.jar"/>
+      <include name="../default/jre/lib/javaws.jar"/>
+      <include name="../default/jre/lib/plugin.jar"/>
+      <include name="../default/jre/lib/management-agent.jar"/>
+      <include name="../default/jre/lib/jfr.jar"/>
+      <include name="../default/jre/lib/jfxswt.jar"/>
+      <include name="../default/jre/lib/rt.jar"/>
+      <include name="../default/jre/lib/charsets.jar"/>
+      <include name="../default/jre/lib/ext/jfxrt.jar"/>
+      <include name="../default/jre/lib/ext/sunjce_provider.jar"/>
+      <include name="../default/jre/lib/ext/cldrdata.jar"/>
+      <include name="../default/jre/lib/ext/nashorn.jar"/>
+      <include name="../default/jre/lib/ext/sunpkcs11.jar"/>
+      <include name="../default/jre/lib/ext/zipfs.jar"/>
+      <include name="../default/jre/lib/ext/dnsns.jar"/>
+      <include name="../default/jre/lib/ext/sunec.jar"/>
+      <include name="../default/jre/lib/ext/localedata.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="jdk.bin.android_api_19_platform" value="${jdk.home.android_api_19_platform}/../../usr/lib/jvm/java-8-jdk/bin"/>
+  <path id="jdk.classpath.android_api_19_platform">
+    <fileset dir="${jdk.home.android_api_19_platform}">
+      <include name="platforms/android-19/android.jar"/>
+      <include name="platforms/android-19/data/res"/>
+      <include name="tools/support/annotations.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.lib-java-myutils.classpath">
+    <fileset dir="${basedir}/lib/java-myutils/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <fileset dir="${basedir}/lib/java-myutils/lib/opengl">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="library.pi4j.classpath">
+    <fileset dir="${basedir}/robot/Robot/lib/pi4j">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="library.utils.classpath">
+    <pathelement location="${basedir}/out/artifacts/utils/utils.jar"/>
+  </path>
+  
+  
+  <!-- Global Libraries -->
+  
+  <path id="library.scala-sdk.classpath">
+    <pathelement location="/usr/share/scala/lib/scala-actors.jar"/>
+    <pathelement location="/usr/share/scala/lib/scala-library.jar"/>
+    <pathelement location="/usr/share/scala/lib/scala-parser-combinators_2.11-1.0.3.jar"/>
+    <pathelement location="/usr/share/scala/lib/scala-reflect.jar"/>
+    <pathelement location="/usr/share/scala/lib/scala-swing_2.11-1.0.1.jar"/>
+    <pathelement location="/usr/share/scala/lib/scala-xml_2.11-1.0.3.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  <import file="${basedir}/controller/AndroidController/module_androidcontroller.xml"/>
+  
+  <import file="${basedir}/robot/AssignmentRobot/module_assignmentrobot.xml"/>
+  
+  <import file="${basedir}/Database/module_database.xml"/>
+  
+  <import file="${basedir}/robot/DeadlineRobot/module_deadlinerobot.xml"/>
+  
+  <import file="${basedir}/lib/java-myutils/module_java-myutils.xml"/>
+  
+  <import file="${basedir}/lib/NeuroEvolution/module_neuroevolution.xml"/>
+  
+  <import file="${basedir}/Server/module_server.xml"/>
+  
+  <import file="${basedir}/Utils/module_utils.xml"/>
+  
+  <import file="${basedir}/controller/Controller/src/hkccpacmanrobot/controller/module_controller.xml"/>
+  
+  <import file="${basedir}/robot/Robot/module_robot.xml"/>
+  
+  <import file="${basedir}/controller/JavaController/module_javacontroller.xml"/>
+  
+  <import file="${basedir}/robot/StudentRobot/module_studentrobot.xml"/>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.androidcontroller, clean.module.assignmentrobot, clean.module.database, clean.module.deadlinerobot, clean.module.java-myutils, clean.module.neuroevolution, clean.module.server, clean.module.utils, clean.module.controller, clean.module.robot, clean.module.javacontroller, clean.module.studentrobot" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.androidcontroller, compile.module.assignmentrobot, compile.module.database, compile.module.deadlinerobot, compile.module.java-myutils, compile.module.neuroevolution, compile.module.server, compile.module.utils, compile.module.controller, compile.module.robot, compile.module.javacontroller, compile.module.studentrobot" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.robot" value="${basedir}/out/artifacts/robot"/>
+    <property name="artifact.output.studentrobot" value="${basedir}/out/artifacts/studentrobot"/>
+    <property name="artifact.output.utils" value="${basedir}/out/artifacts/utils"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.robot.jar" value="${artifacts.temp.dir}/robot.jar"/>
+    <property name="temp.jar.path.studentrobot.jar" value="${artifacts.temp.dir}/studentrobot.jar"/>
+    <property name="temp.jar.path.utils.jar" value="${artifacts.temp.dir}/utils.jar"/>
+  </target>
+  
+  <target name="artifact.robot" depends="init.artifacts, compile.module.robot" description="Build &#39;robot&#39; artifact">
+    <property name="artifact.temp.output.robot" value="${artifacts.temp.dir}/robot"/>
+    <mkdir dir="${artifact.temp.output.robot}"/>
+    <jar destfile="${temp.jar.path.robot.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${robot.output.dir}"/>
+      <zipfileset file="${basedir}/robot/Robot/META-INF/MANIFEST.MF" prefix="META-INF"/>
+    </jar>
+    <copy file="${temp.jar.path.robot.jar}" tofile="${artifact.temp.output.robot}/robot.jar"/>
+  </target>
+  
+  <target name="artifact.studentrobot" depends="init.artifacts, compile.module.studentrobot, artifact.robot, artifact.utils" description="Build &#39;studentrobot&#39; artifact">
+    <property name="artifact.temp.output.studentrobot" value="${artifacts.temp.dir}/studentrobot"/>
+    <mkdir dir="${artifact.temp.output.studentrobot}"/>
+    <jar destfile="${temp.jar.path.studentrobot.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${studentrobot.output.dir}"/>
+      <zipfileset file="${basedir}/robot/StudentRobot/META-INF/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset dir="${artifact.temp.output.robot}"/>
+      <zipfileset dir="${artifact.temp.output.utils}"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/junit.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-core.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-device.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-example.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-service.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-core-javadoc.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-core-sources.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-device-javadoc.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-device-sources.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-gpio-extension.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-example-javadoc.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-example-sources.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-service-javadoc.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-service-sources.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-gpio-extension-javadoc.jar"/>
+      <zipfileset file="${basedir}/robot/Robot/lib/pi4j/pi4j-gpio-extension-sources.jar"/>
+      <zipfileset file="${basedir}/../../../../../usr/share/scala/lib/scala-parser-combinators_2.11-1.0.3.jar"/>
+      <zipfileset file="${basedir}/../../../../../usr/share/scala/lib/scala-swing_2.11-1.0.1.jar"/>
+      <zipfileset file="${basedir}/../../../../../usr/share/scala/lib/scala-library.jar"/>
+      <zipfileset file="${basedir}/../../../../../usr/share/scala/lib/scala-xml_2.11-1.0.3.jar"/>
+      <zipfileset file="${basedir}/../../../../../usr/share/scala/lib/scala-actors.jar"/>
+      <zipfileset file="${basedir}/../../../../../usr/share/scala/lib/scala-reflect.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.studentrobot.jar}" tofile="${artifact.temp.output.studentrobot}/studentrobot.jar"/>
+  </target>
+  
+  <target name="artifact.utils" depends="init.artifacts, compile.module.utils" description="Build &#39;utils&#39; artifact">
+    <property name="artifact.temp.output.utils" value="${artifacts.temp.dir}/utils"/>
+    <mkdir dir="${artifact.temp.output.utils}"/>
+    <jar destfile="${temp.jar.path.utils.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${utils.output.dir}"/>
+      <zipfileset file="${basedir}/Utils/META-INF/MANIFEST.MF" prefix="META-INF"/>
+    </jar>
+    <copy file="${temp.jar.path.utils.jar}" tofile="${artifact.temp.output.utils}/utils.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.robot, artifact.studentrobot, artifact.utils" description="Build all artifacts">
+    <mkdir dir="${artifact.output.robot}"/>
+    <copy todir="${artifact.output.robot}">
+      <fileset dir="${artifact.temp.output.robot}"/>
+    </copy>
+    <mkdir dir="${artifact.output.studentrobot}"/>
+    <copy todir="${artifact.output.studentrobot}">
+      <fileset dir="${artifact.temp.output.studentrobot}"/>
+    </copy>
+    <mkdir dir="${artifact.output.utils}"/>
+    <copy todir="${artifact.output.utils}">
+      <fileset dir="${artifact.temp.output.utils}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_assignmentrobot" default="compile.module.assignmentrobot">
+  <dirname property="module.assignmentrobot.basedir" file="${ant.file.module_assignmentrobot}"/>
+  
+  <property name="module.jdk.home.assignmentrobot" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.assignmentrobot" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.assignmentrobot" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.assignmentrobot" value="-encoding UTF-8 -source 8 ${compiler.args}"/>
+  
+  <property name="assignmentrobot.output.dir" value="${module.assignmentrobot.basedir}/../../out/production/AssignmentRobot"/>
+  <property name="assignmentrobot.testoutput.dir" value="${module.assignmentrobot.basedir}/../../out/test/AssignmentRobot"/>
+  
+  <path id="assignmentrobot.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="assignmentrobot.module.production.classpath">
+    <path refid="${module.jdk.classpath.assignmentrobot}"/>
+  </path>
+  
+  <path id="assignmentrobot.runtime.production.module.classpath">
+    <pathelement location="${assignmentrobot.output.dir}"/>
+  </path>
+  
+  <path id="assignmentrobot.module.classpath">
+    <path refid="${module.jdk.classpath.assignmentrobot}"/>
+    <pathelement location="${assignmentrobot.output.dir}"/>
+  </path>
+  
+  <path id="assignmentrobot.runtime.module.classpath">
+    <pathelement location="${assignmentrobot.testoutput.dir}"/>
+    <pathelement location="${assignmentrobot.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.assignmentrobot">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.assignmentrobot">
+    <patternset refid="excluded.from.module.assignmentrobot"/>
+  </patternset>
+  
+  <path id="assignmentrobot.module.sourcepath">
+    <dirset dir="${module.assignmentrobot.basedir}">
+      <include name="src"/>
+      <include name="lib"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.assignmentrobot" depends="compile.module.assignmentrobot.production,compile.module.assignmentrobot.tests" description="Compile module AssignmentRobot"/>
+  
+  <target name="compile.module.assignmentrobot.production" depends="register.custom.compilers" description="Compile module AssignmentRobot; production classes">
+    <mkdir dir="${assignmentrobot.output.dir}"/>
+    <javac2 destdir="${assignmentrobot.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.assignmentrobot}/javac">
+      <compilerarg line="${compiler.args.assignmentrobot}"/>
+      <bootclasspath refid="assignmentrobot.module.bootclasspath"/>
+      <classpath refid="assignmentrobot.module.production.classpath"/>
+      <src refid="assignmentrobot.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.assignmentrobot"/>
+    </javac2>
+    
+    <copy todir="${assignmentrobot.output.dir}">
+      <fileset dir="${module.assignmentrobot.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.assignmentrobot.basedir}/lib">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.assignmentrobot.tests" depends="register.custom.compilers,compile.module.assignmentrobot.production" description="compile module AssignmentRobot; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.assignmentrobot" description="cleanup module">
+    <delete dir="${assignmentrobot.output.dir}"/>
+    <delete dir="${assignmentrobot.testoutput.dir}"/>
+  </target>
+</project>

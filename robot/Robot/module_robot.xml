@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_robot" default="compile.module.robot">
+  <dirname property="module.robot.basedir" file="${ant.file.module_robot}"/>
+  
+  <property name="module.jdk.home.robot" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.robot" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.robot" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.robot" value="-encoding UTF-8 -source 8 ${compiler.args}"/>
+  
+  <property name="robot.output.dir" value="${module.robot.basedir}/../../out/production/Robot"/>
+  <property name="robot.testoutput.dir" value="${module.robot.basedir}/../../out/test/Robot"/>
+  
+  <path id="robot.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="robot.module.production.classpath">
+    <path refid="${module.jdk.classpath.robot}"/>
+    <pathelement location="${utils.output.dir}"/>
+    <path refid="library.scala-sdk.classpath"/>
+    <path refid="library.pi4j.classpath"/>
+  </path>
+  
+  <path id="robot.runtime.production.module.classpath">
+    <pathelement location="${robot.output.dir}"/>
+    <path refid="utils.runtime.production.module.classpath"/>
+    <path refid="library.scala-sdk.classpath"/>
+    <path refid="library.pi4j.classpath"/>
+  </path>
+  
+  <path id="robot.module.classpath">
+    <path refid="${module.jdk.classpath.robot}"/>
+    <pathelement location="${robot.output.dir}"/>
+    <pathelement location="${utils.testoutput.dir}"/>
+    <pathelement location="${utils.output.dir}"/>
+    <path refid="library.scala-sdk.classpath"/>
+    <path refid="library.pi4j.classpath"/>
+  </path>
+  
+  <path id="robot.runtime.module.classpath">
+    <pathelement location="${robot.testoutput.dir}"/>
+    <pathelement location="${robot.output.dir}"/>
+    <path refid="utils.runtime.module.classpath"/>
+    <path refid="library.scala-sdk.classpath"/>
+    <path refid="library.pi4j.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.robot">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.robot">
+    <patternset refid="excluded.from.module.robot"/>
+  </patternset>
+  
+  <path id="robot.module.sourcepath">
+    <dirset dir="${module.robot.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.robot" depends="compile.module.robot.production,compile.module.robot.tests" description="Compile module Robot"/>
+  
+  <target name="compile.module.robot.production" depends="register.custom.compilers,compile.module.utils" description="Compile module Robot; production classes">
+    <mkdir dir="${robot.output.dir}"/>
+    <javac2 destdir="${robot.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.robot}/javac">
+      <compilerarg line="${compiler.args.robot}"/>
+      <bootclasspath refid="robot.module.bootclasspath"/>
+      <classpath refid="robot.module.production.classpath"/>
+      <src refid="robot.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.robot"/>
+    </javac2>
+    
+    <copy todir="${robot.output.dir}">
+      <fileset dir="${module.robot.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.robot.tests" depends="register.custom.compilers,compile.module.robot.production" description="compile module Robot; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.robot" description="cleanup module">
+    <delete dir="${robot.output.dir}"/>
+    <delete dir="${robot.testoutput.dir}"/>
+  </target>
+</project>
