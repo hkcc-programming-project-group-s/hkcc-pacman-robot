@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="robot">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/out/artifacts/robot/robot.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
