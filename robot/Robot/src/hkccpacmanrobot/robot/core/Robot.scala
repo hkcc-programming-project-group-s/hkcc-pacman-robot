@@ -9,5 +9,8 @@ import hkccpacmanrobot.utils.message.{MovementCommand, Messenger}
  */
 abstract class Robot extends Device{
     //public ObstacleMap<RobotMapUnit> map = new ObstacleMap<RobotMapUnit>();
-  val motor:L298NAO=new L298NAO
+
+  override def setup={
+    L298NAO.motor_stop()
+  }
 }

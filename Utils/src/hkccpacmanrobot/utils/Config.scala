@@ -9,5 +9,5 @@ object Config {
   val PORT_MOVEMENT_COMMAND: Int = 1236
   val PORT_DEVICE_INFO: Int = 1247
   val PORT_POSITION: Int = 1248
-  var serverAddress: String = "127.0.0.1"
+  var serverAddress: String = "192.168.43.1"
 }

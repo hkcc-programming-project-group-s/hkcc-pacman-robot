@@ -25,6 +25,7 @@ class MovementCommandMessenger extends Messenger[MovementCommand](MovementComman
   def getMovementCommand: MovementCommand = {
     semaphore.tryAcquire
     val result: MovementCommand = movementCommand.clone
+    movementCommand=MovementCommand.stop
     semaphore.release
     result
   }
