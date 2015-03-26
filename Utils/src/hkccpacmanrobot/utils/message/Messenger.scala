@@ -4,38 +4,25 @@ import java.io.{ObjectInputStream, ObjectOutputStream}
 import java.net.Socket
 import java.util.concurrent.ConcurrentLinkedQueue
 
-import hkccpacmanrobot.utils.map.ObstacleMap
-import hkccpacmanrobot.utils.{Config, DeviceInfo}
+import hkccpacmanrobot.utils.Config
 
 /**
  * Created by beenotung on 2/10/15.
  */
 
 object Messenger {
-  val RESET: Byte = 0x01
-
-  def getPort(messageTypeName: String): Int = {
-    if (messageTypeName.equals(new ObstacleMap().getClass.getTypeName))
-      Config.PORT_MAP
-    else
-    if (messageTypeName.equals(new MovementCommand(0x00, null).getClass.getTypeName))
-      Config.PORT_MOVEMENT_COMMAND
-    else
-    if (messageTypeName.equals(new DeviceInfo(null, null).getClass.getTypeName))
-      Config.PORT_DEVICE_INFO
-    else
-    if (messageTypeName.equals(new GameState(0x00).getClass.getTypeName))
-      Config.PORT_GAME_STATUS
-    else
-      throw new ClassNotFoundException()
+  def create[Type](message: Message): Messenger[Type] = {
+    def autoGet():Unit={}
+    new Messenger[Type](message.port,autoGet)
   }
-
-  def create[T](message: AbstractMessage):Messenger[T]={
-    new Messenger[T](message.port)
+  def create[Type](message: Message,autoGet:()=>Unit): Messenger[Type] = {
+    new Messenger[Type](message.port,autoGet)
   }
 }
 
-class Messenger[Type](val socket: Socket) extends Thread {
+class Messenger[Type](val socket: Socket,var autoGet:()=>Unit) extends Thread {
+  val sendInterval:Long=1
+  val autoGetInterval:Long=1
   val inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
   val outputStream: ObjectOutputStream = new ObjectOutputStream(socket.getOutputStream)
   val inputThread: Thread = new Thread(new Runnable {
@@ -45,15 +32,18 @@ class Messenger[Type](val socket: Socket) extends Thread {
   })
   val outputThread: Thread = new Thread(new Runnable {
     override def run = {
-      sendMessage
+      while (true){
+        sendMessage
+        Thread.sleep(sendInterval)
+      }
     }
   })
   val outputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
   val inputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
   var active: Boolean = false
 
-  def this(port: Int) = {
-    this(new Socket(Config.serverAddress, port))
+  def this(port: Int,autoGet:()=>Unit) = {
+    this(new Socket(Config.serverAddress, port),autoGet)
   }
 
   override def start: Unit = {
@@ -66,24 +56,25 @@ class Messenger[Type](val socket: Socket) extends Thread {
     outputThread.interrupt
   }
 
-  def sendMessage(): Unit = {
+  private def sendMessage: Unit = {
     if (!outputQueue.isEmpty)
-      outputStream.writeObject(outputQueue.poll())
+      outputStream.writeObject(outputQueue.poll)
   }
 
-  def receiveMessage(): Unit = {
-    inputQueue.add(inputStream.readObject().asInstanceOf[Type])
+  private def receiveMessage: Unit = {
+    inputQueue.add(inputStream.readObject.asInstanceOf[Type])
+    autoGet()
   }
-
 
   def sendMessage(content: Type): Unit = {
     outputQueue.add(content)
   }
 
 
-  def getMessage(): Type = {
+  def getMessage: Type = {
     while (inputQueue.isEmpty)
       Thread.sleep(1)
     inputQueue.poll
   }
+  def hasMessage:Boolean={!inputQueue.isEmpty}
 }
