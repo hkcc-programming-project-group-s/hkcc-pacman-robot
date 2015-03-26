@@ -9,7 +9,7 @@ import sun.plugin2.message.Message
  * Created by beenotung on 3/26/15.
  */
 class StudentRobot extends hkccpacmanrobot.robot.core.Robot{
-  val movementCommandMessenger:Messenger[MovementCommand]=Messenger.create[MovementCommand]()
+  val movementCommandMessenger:MovementCommandMessenger=new MovementCommandMessenger
   override def gameSetup: Unit = ???
 
   override def gameResume: Unit = ???
@@ -21,4 +21,8 @@ class StudentRobot extends hkccpacmanrobot.robot.core.Robot{
   override def gameStart: Unit = ???
 
   override def gameStop: Unit = ???
+
+  override def loop: Unit = {
+    L2
+  }
 }

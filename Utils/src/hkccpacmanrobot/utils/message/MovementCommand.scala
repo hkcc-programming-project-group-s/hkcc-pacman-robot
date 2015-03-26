@@ -1,5 +1,6 @@
 package hkccpacmanrobot.utils.message
 
+import hkccpacmanrobot.utils.Maths.Point2D
 import hkccpacmanrobot.utils.{Config, Maths}
 
 
@@ -11,13 +12,19 @@ object MovementCommand extends Message {
 
   val MODE_POLAR: Byte = 0x01
   val MODE_RECTANGULAR: Byte = 0x02
+  def stop:MovementCommand={
+    new MovementCommand(MODE_POLAR,new Point2D)
+  }
 }
 
 /*
 * POLAR: d1 = degree (in radian), d2 = distance
 * RECTANGULAR:: d1 =x, d2 = y
 * */
-class MovementCommand(mode: Byte, point2D: Maths.Point2D) extends Message {
+class MovementCommand(mode: Byte, point2D: Maths.Point2D) extends Message with Cloneable{
   override val port: Int = MovementCommand.port
+  override def clone:MovementCommand={
+    new MovementCommand(mode.clone.asInstanceOf[Byte], point2D.clone)
+  }
 }
 

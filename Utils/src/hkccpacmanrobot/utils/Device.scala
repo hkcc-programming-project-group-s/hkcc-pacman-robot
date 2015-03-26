@@ -7,7 +7,8 @@ import hkccpacmanrobot.utils.message.{GameStatus, Messenger}
  */
 
 abstract class Device extends Thread {
-  private val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](GameStatus,{gameStatus:GameStatus =>
+  val deviceInfo:DeviceInfo=_
+  val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](GameStatus, { gameStatus: GameStatus =>
     gameStatus.status match {
       case GameStatus.STATE_SETUP => gameSetup
       case GameStatus.STATE_START => gameStart
@@ -16,8 +17,9 @@ abstract class Device extends Thread {
       case GameStatus.STATE_STOP => gameStop
     }
   })
-
-
+  val deviceInfoMessenger:Messenger[DeviceInfo]=Messenger.create[DeviceInfo](DeviceInfo,
+  {newDeviceInfo:DeviceInfo =>deviceInfo.set(newDeviceInfo) })
+  var gameStatus: GameStatus = _
 
   def gameSetup
 
@@ -29,28 +31,11 @@ abstract class Device extends Thread {
 
   def gameStop
 
+  def setup
 
-  var gameStatus: GameStatus = _
-
-def setup
-
-  override def run() = {
-    new Thread(new Runnable {
-      override def run(): Unit = {
-        while(true){
-          if (gameStatusMessenger.hasMessage) {
-            gameStatus = gameStatusMessenger.getMessage
-            gameStatus.status match {
-              case GameStatus.STATE_SETUP => gameSetup
-              case GameStatus.STATE_START => gameStart
-              case GameStatus.STATE_PAUSE => gamePause
-              case GameStatus.STATE_RESUME => gameResume
-              case GameStatus.STATE_STOP => gameStop
-            }
-          }
-          Thread.sleep(1000)
-        }
-      }
-    }).start()
+  override def start={
+    setup
+    super.start
   }
+  def loop
 }

@@ -46,6 +46,11 @@ abstract class Messenger[MessageType:Message](val socket: Socket) extends Thread
     this(new Socket(Config.serverAddress, port))
   }
 
+  def this(message: Message) = {
+    this(message.port)
+  }
+  
+
   abstract def autoGet(message: MessageType): Unit
 
   override def start: Unit = {
