@@ -1,7 +1,7 @@
 package studentrobot.code
 
 
-import java.io.{ObjectInputStream, ObjectOutputStream}
+import java.io.{IOException, ObjectInputStream, ObjectOutputStream}
 import java.net.{Socket, SocketException}
 import java.util.Calendar
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -43,22 +43,33 @@ object Messenger {
 }
 
 abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends Thread {
-  val SEND_INTERVAL: Long = 1
-  val GET_INTERVAL: Long = 1
+  val SEND_INTERVAL: Long = 50
+  val GET_INTERVAL: Long = 50
   var inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
   var outputStream: ObjectOutputStream = new ObjectOutputStream(socket.getOutputStream)
   val inputThread: Thread = new Thread(new Runnable {
     override def run = {
       while (true) {
-        receiveMessage
+        try {
+          receiveMessage
+        }
+        catch {
+          case e: IOException => socket.close()
+        }
       }
     }
   })
   val outputThread: Thread = new Thread(new Runnable {
     override def run = {
       while (true) {
-        sendMessage
-        Thread.sleep(SEND_INTERVAL)
+        try {
+          sendMessage
+          Thread.sleep(SEND_INTERVAL)
+        }
+        catch {
+          case e: IOException => socket.close()
+        }
+
       }
     }
   })

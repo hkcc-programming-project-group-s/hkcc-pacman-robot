@@ -71,7 +71,7 @@ public class L298NAO {
     }
 
     public static void move(double direction, double distance) {
-        System.out.printf("motor move: \t%.2f,\t%.2f\n", direction, distance);
+        //System.out.printf("motor move: \t%.2f,\t%.2f\n", direction, distance);
         if (distance <= 0) {
             both_stop();
             return;
