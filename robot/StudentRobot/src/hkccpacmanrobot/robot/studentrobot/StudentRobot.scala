@@ -1,6 +1,9 @@
 package hkccpacmanrobot.robot.studentrobot
 
+import java.net.Socket
+
 import hkccpacmanrobot.robot.utils.L298NAO
+import hkccpacmanrobot.utils.Config
 import hkccpacmanrobot.utils.message.MovementCommand
 
 /**
@@ -18,6 +21,14 @@ class StudentRobot extends hkccpacmanrobot.robot.core.Robot {
   override def gameStart: Unit = ???
 
   override def gameStop: Unit = ???
+
+  override def run = {
+    while (true) {
+      if ((!movementCommandMessenger.socket.isConnected) || movementCommandMessenger.socket.isClosed)
+        movementCommandMessenger.socket = new Socket(Config.serverAddress, MovementCommand.port)
+      loop
+    }
+  }
 
   override def loop: Unit = {
     val movementCommand: MovementCommand = movementCommandMessenger.getMovementCommand

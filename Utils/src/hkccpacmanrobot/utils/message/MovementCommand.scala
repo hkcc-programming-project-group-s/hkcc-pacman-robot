@@ -24,7 +24,7 @@ object MovementCommand extends Message {
 class MovementCommand(val mode: Byte, val point2D: Maths.Point2D) extends Message with Cloneable{
   override val port: Int = MovementCommand.port
   override def clone:MovementCommand={
-    new MovementCommand(mode.clone.asInstanceOf[Byte], point2D.clone)
+    new MovementCommand(mode.toByte, point2D.clone)
   }
 }
 

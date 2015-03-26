@@ -7,7 +7,7 @@ import hkccpacmanrobot.utils.message.{GameStatus, Messenger}
  */
 
 abstract class Device extends Thread {
-  val deviceInfo:DeviceInfo=_
+  val deviceInfo:DeviceInfo=new DeviceInfo()
   val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](GameStatus, { gameStatus: GameStatus =>
     gameStatus.status match {
       case GameStatus.STATE_SETUP => gameSetup

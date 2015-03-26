@@ -15,11 +15,15 @@ object DeviceInfo extends Message {
   val DEVICE_TYPE_SERVER: Byte = 5
 }
 
-class DeviceInfo(var name: String, var IP: String,var id:Long, var lastConnectionTime: Long = 0) extends Serializable {
+class DeviceInfo(var name: String, var IP: String, var id: Long, var lastConnectionTime: Long = 0) extends Serializable {
   def set(newInfo: DeviceInfo): Unit = {
-    name=newInfo.name
-    IP=newInfo.IP
-    id=newInfo.id
-    lastConnectionTime=newInfo.lastConnectionTime
+    name = newInfo.name
+    IP = newInfo.IP
+    id = newInfo.id
+    lastConnectionTime = newInfo.lastConnectionTime
+  }
+
+  def this() = {
+    this("self", "127.0.0.1", 0, 0)
   }
 }

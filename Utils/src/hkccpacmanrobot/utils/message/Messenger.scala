@@ -12,7 +12,7 @@ import hkccpacmanrobot.utils.Config
  */
 
 object Messenger {
-  def create[MessageType:Message](message: Message, autoGetFunc: (MessageType) => Unit = message => {}): Messenger[MessageType] = {
+  def create[MessageType](message: Message, autoGetFunc: (MessageType) => Unit = (message:MessageType) => {}): Messenger[MessageType] = {
     new Messenger[MessageType](message.port) {
       override def autoGet(message: MessageType): Unit = {
         autoGetFunc(message)
@@ -21,7 +21,7 @@ object Messenger {
   }
 }
 
-abstract class Messenger[MessageType:Message](val socket: Socket) extends Thread {
+abstract class Messenger[MessageType](var socket: Socket) extends Thread {
   val SEND_INTERVAL: Long = 1
   val GET_INTERVAL: Long = 1
   val inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
@@ -52,7 +52,7 @@ abstract class Messenger[MessageType:Message](val socket: Socket) extends Thread
   }
   
 
-  abstract def autoGet(message: MessageType): Unit
+   def autoGet(message: MessageType): Unit
 
   override def start: Unit = {
     inputThread.start
