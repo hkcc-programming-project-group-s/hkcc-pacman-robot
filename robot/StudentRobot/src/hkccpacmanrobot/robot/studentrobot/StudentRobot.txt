@@ -1,3 +1,5 @@
+package hkccpacmanrobot.robot.studentrobot;
+
 import hkccpacmanrobot.robot.core.Robot;
 
 public class StudentRobot extends Robot {

@@ -1,11 +1,23 @@
-package hkccpacmanrobot.utils.message
+package hkccpacmanrobot.utils
+
+import hkccpacmanrobot.utils.message.{GameStatus, Messenger}
 
 /**
  * Created by beenotung on 3/23/15.
  */
 
 abstract class Device extends Thread {
-  private val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](GameStatus)
+  private val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](GameStatus,{gameStatus:GameStatus =>
+    gameStatus.status match {
+      case GameStatus.STATE_SETUP => gameSetup
+      case GameStatus.STATE_START => gameStart
+      case GameStatus.STATE_PAUSE => gamePause
+      case GameStatus.STATE_RESUME => gameResume
+      case GameStatus.STATE_STOP => gameStop
+    }
+  })
+
+
 
   def gameSetup
 
@@ -19,6 +31,8 @@ abstract class Device extends Thread {
 
 
   var gameStatus: GameStatus = _
+
+def setup
 
   override def run() = {
     new Thread(new Runnable {

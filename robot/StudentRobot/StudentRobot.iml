@@ -9,5 +9,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Robot" />
+    <orderEntry type="library" name="scala-sdk-2.11.6" level="application" />
+    <orderEntry type="module" module-name="Utils" />
   </component>
 </module>

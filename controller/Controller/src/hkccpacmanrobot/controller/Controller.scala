@@ -1,6 +1,7 @@
 package hkccpacmanrobot.controller
 
-import hkccpacmanrobot.utils.message.{Device, Messenger, MovementCommand}
+import hkccpacmanrobot.utils.Device
+import hkccpacmanrobot.utils.message.{Messenger, MovementCommand}
 
 /**
  * Created by beenotung on 3/23/15.

@@ -11,18 +11,18 @@ import hkccpacmanrobot.utils.Config
  */
 
 object Messenger {
-  def create[Type](message: Message): Messenger[Type] = {
-    def autoGet():Unit={}
-    new Messenger[Type](message.port,autoGet)
-  }
-  def create[Type](message: Message,autoGet:()=>Unit): Messenger[Type] = {
-    new Messenger[Type](message.port,autoGet)
+  def create[MessageType:Message](message: Message, autoGetFunc: (MessageType) => Unit = message => {}): Messenger[MessageType] = {
+    new Messenger[MessageType](message.port) {
+      override def autoGet(message: MessageType): Unit = {
+        autoGetFunc(message)
+      }
+    }
   }
 }
 
-class Messenger[Type](val socket: Socket,var autoGet:()=>Unit) extends Thread {
-  val sendInterval:Long=1
-  val autoGetInterval:Long=1
+abstract class Messenger[MessageType:Message](val socket: Socket) extends Thread {
+  val SEND_INTERVAL: Long = 1
+  val GET_INTERVAL: Long = 1
   val inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
   val outputStream: ObjectOutputStream = new ObjectOutputStream(socket.getOutputStream)
   val inputThread: Thread = new Thread(new Runnable {
@@ -32,19 +32,21 @@ class Messenger[Type](val socket: Socket,var autoGet:()=>Unit) extends Thread {
   })
   val outputThread: Thread = new Thread(new Runnable {
     override def run = {
-      while (true){
+      while (true) {
         sendMessage
-        Thread.sleep(sendInterval)
+        Thread.sleep(SEND_INTERVAL)
       }
     }
   })
-  val outputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
-  val inputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
+  val outputQueue: ConcurrentLinkedQueue[MessageType] = new ConcurrentLinkedQueue[MessageType]
+  val inputQueue: ConcurrentLinkedQueue[MessageType] = new ConcurrentLinkedQueue[MessageType]
   var active: Boolean = false
 
-  def this(port: Int,autoGet:()=>Unit) = {
-    this(new Socket(Config.serverAddress, port),autoGet)
+  def this(port: Int) = {
+    this(new Socket(Config.serverAddress, port))
   }
+
+  abstract def autoGet(message: MessageType): Unit
 
   override def start: Unit = {
     inputThread.start
@@ -56,25 +58,27 @@ class Messenger[Type](val socket: Socket,var autoGet:()=>Unit) extends Thread {
     outputThread.interrupt
   }
 
+  def sendMessage(content: MessageType): Unit = {
+    outputQueue.add(content)
+  }
+
+  def getMessage: MessageType = {
+    while (inputQueue.isEmpty)
+      Thread.sleep(GET_INTERVAL)
+    inputQueue.poll
+  }
+
+  def hasMessage: Boolean = {
+    !inputQueue.isEmpty
+  }
+
   private def sendMessage: Unit = {
     if (!outputQueue.isEmpty)
       outputStream.writeObject(outputQueue.poll)
   }
 
   private def receiveMessage: Unit = {
-    inputQueue.add(inputStream.readObject.asInstanceOf[Type])
-    autoGet()
+    inputQueue.add(inputStream.readObject.asInstanceOf[MessageType])
+    autoGet(getMessage)
   }
-
-  def sendMessage(content: Type): Unit = {
-    outputQueue.add(content)
-  }
-
-
-  def getMessage: Type = {
-    while (inputQueue.isEmpty)
-      Thread.sleep(1)
-    inputQueue.poll
-  }
-  def hasMessage:Boolean={!inputQueue.isEmpty}
 }
