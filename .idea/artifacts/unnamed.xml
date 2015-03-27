@@ -6,7 +6,6 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
-      <element id="library" level="project" name="pi4j" />
       <element id="library" level="project" name="SBT: org.scala-lang:scala-library:2.11.6:jar" />
     </root>
   </artifact>

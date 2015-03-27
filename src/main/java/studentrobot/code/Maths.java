@@ -19,16 +19,16 @@ public class Maths {
     public static boolean isBetween(double lower, double target, double upper) {
         return ((lower <= target) && (target <= upper));
     }
-    public static boolean isInRange(double a,double b,double range) {
-        return                 Math.abs(a-b)<=range;
-    }
-    public static final double DEFAULT_RANGE=Math.PI/8d;
-    public static boolean isInRange(double a,double b) {
-        return                 Math.abs(a-b)<=DEFAULT_RANGE;
+
+    public static boolean isInRange(double a, double b, double range) {
+        return Math.abs(a - b) <= range;
     }
 
+    public static final double DEFAULT_RANGE = Math.PI / 8d;
 
-
+    public static boolean isInRange(double a, double b) {
+        return Math.abs(a - b) <= DEFAULT_RANGE;
+    }
 
 
     /*

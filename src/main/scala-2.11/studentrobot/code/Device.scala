@@ -6,16 +6,18 @@ package studentrobot.code
 
 abstract class Device extends Thread {
   val deviceInfo: DeviceInfo = new DeviceInfo()
-  /*val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](GameStatus, { gameStatus: GameStatus =>
+  val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](GameStatus, { gameStatus: GameStatus =>
+  {
+    this.gameStatus=gameStatus
     gameStatus.status match {
-      case GameStatus.STATE_SETUP => gameSetup
-      case GameStatus.STATE_START => gameStart
-      case GameStatus.STATE_PAUSE => gamePause
-      case GameStatus.STATE_RESUME => gameResume
-      case GameStatus.STATE_STOP => gameStop
-    }
+    case GameStatus.STATE_SETUP => gameSetup
+    case GameStatus.STATE_START => gameStart
+    case GameStatus.STATE_PAUSE => gamePause
+    case GameStatus.STATE_RESUME => gameResume
+    case GameStatus.STATE_STOP => gameStop
+  }}
   })
-  val deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create[DeviceInfo](DeviceInfo, { newDeviceInfo: DeviceInfo => deviceInfo.set(newDeviceInfo) })*/
+  val deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create[DeviceInfo](DeviceInfo, { newDeviceInfo: DeviceInfo => deviceInfo.set(newDeviceInfo) })
   var gameStatus: GameStatus = _
 
   def gameSetup
