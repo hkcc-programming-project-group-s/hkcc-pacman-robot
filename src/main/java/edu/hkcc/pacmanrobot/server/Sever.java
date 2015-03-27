@@ -1,12 +1,7 @@
-package hkccpacmanrobot.server;
+package edu.hkcc.pacmanrobot.server;
 
-import com.sun.deploy.util.SessionState;
-import com.sun.security.ntlm.Client;
-import hkccpacmanrobot.utils.Position;
 
-import java.awt.geom.Point2D;
-import java.sql.Timestamp;
-
+import edu.hkcc.pacmanrobot.utils.Maths;
 
 public class Sever {
     private boolean gameRun = true;
@@ -19,7 +14,7 @@ public class Sever {
     }
 
     public void sendNextPosition() {
-        Point2D nextPosition = null;
+        Maths.Point2D nextPosition = null;
         /*
         Listen to remote control
         getMap the Next Position of student robot

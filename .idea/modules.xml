@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot.iml" filepath="$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot-build.iml" filepath="$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot-build.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sbt_robot.iml" filepath="$PROJECT_DIR$/.idea/modules/sbt_robot.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sbt_robot-build.iml" filepath="$PROJECT_DIR$/.idea/modules/sbt_robot-build.iml" />
     </modules>
   </component>
 </project>

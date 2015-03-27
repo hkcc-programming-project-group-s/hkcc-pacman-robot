@@ -1,11 +1,12 @@
-package hkccpacmanrobot.server.map;
+package edu.hkcc.pacmanrobot.server.map;
 
 
 
 /**
  * Created by 13058456a on 3/17/2015.
  */
-public class ObstacleMepServer {
+
+public class ObstacleMepServer extends ObstacleMap {
     private double x,y;
     ServerMapUnit map = new ServerMapUnit(x,y);
 

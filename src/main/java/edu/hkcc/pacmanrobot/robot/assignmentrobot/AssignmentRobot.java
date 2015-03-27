@@ -1,6 +1,6 @@
-package hkccpacmanrobot.robot.assignmentrobot;
+package edu.hkcc.pacmanrobot.robot.assignmentrobot;
 
-import hkccpacmanrobot.robot.core.Robot;
+import edu.hkcc.pacmanrobot.robot.Robot;
 
 public class AssignmentRobot extends Robot{
 

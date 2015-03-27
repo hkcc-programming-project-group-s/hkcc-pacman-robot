@@ -1,13 +1,11 @@
-package hkccpacmanrobot.robot.utils;
+package edu.hkcc.pacmanrobot.robot.utils;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.RaspiPin;
-import hkccpacmanrobot.utils.message.MovementCommand;
-import hkccpacmanrobot.utils.message.MovementCommand$;
 
-import static hkccpacmanrobot.utils.Maths.*;
+import static edu.hkcc.pacmanrobot.utils.Maths.*;
 
 /**
  * Created by beenotung on 3/3/15.
@@ -61,45 +59,29 @@ public class L298NAO {
         }
     }
 
-    public static void setGpioPair_TF(GpioPinDigitalOutput trueGpio, GpioPinDigitalOutput falseGpio) {
-        trueGpio.high();
-        falseGpio.low();
-    }
 
     public static void setGpioPair_FT(GpioPinDigitalOutput falseGpio, GpioPinDigitalOutput trueGpio) {
-        falseGpio.low();
-        trueGpio.high();
+        if (falseGpio.isHigh()) falseGpio.low();
+        if (trueGpio.isLow()) trueGpio.high();
     }
 
-
-    public static void move(double direction, double distance) {
-        if (distance <= 0) {
-            motor_stop();
-            return;
-        }
-        if (isForward(direction)) {
-            left_forward();
-            right_forward();
-        } else if (isBackward(direction)) {
-            left_backward();
-            right_backward();
-        } else if (isForwardRight(direction)) {
-            left_backward();
-            right_stop();
-        } else if (isBackwardRight(direction)) {
-            left_backward();
-            right_stop();
-        } else if (isBackwardLeft(direction)) {
-            left_stop();
-            right_backward();
-        } else {
-            left_stop();
-            right_forward();
-        }
-    }
-
-    public static void motor_stop(){
+    public static void both_stop() {
         left_stop();
         right_stop();
     }
+
+    public static void move(double direction, double distance) {
+        //System.out.printf("motor move: \t%.2f,\t%.2f\n", direction, distance);
+        if (distance <= 0) {
+            both_stop();
+            return;
+        }
+        if (isInRange(direction, B_L) || isInRange(direction, B) || isInRange(direction, R)) left_backward();
+        else if (isInRange(direction, F_R) || isInRange(direction, B_R)) left_stop();
+        else left_forward();
+        if (isInRange(direction, L) || isInRange(direction, B) || isInRange(direction, B_R)) right_backward();
+        else if (isInRange(direction, F_L) || isInRange(direction, B_L)) right_stop();
+        else right_forward();
+    }
+
 }

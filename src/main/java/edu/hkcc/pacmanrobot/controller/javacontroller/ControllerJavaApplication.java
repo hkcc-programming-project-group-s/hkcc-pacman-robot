@@ -1,6 +1,6 @@
-package hkccpacmanrobot.controller.javacontroller;
+package edu.hkcc.pacmanrobot.controller.javacontroller;
 
-import hkccpacmanrobot.controller.Controller;
+import edu.hkcc.pacmanrobot.Controller;
 
 import javax.swing.*;
 

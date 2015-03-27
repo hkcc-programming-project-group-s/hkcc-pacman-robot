@@ -1,6 +1,6 @@
-package hkccpacmanrobot.robot.deadlinerobot;
+package edu.hkcc.pacmanrobot.robot.deadlinerobot;
 
-import hkccpacmanrobot.robot.core.Robot;
+import edu.hkcc.pacmanrobot.robot.Robot;
 import hkccpacmanrobot.robot.utils.Position;
 import hkccpacmanrobot.utils.PositionDAO;
 import hkccpacmanrobot.utils.PositionMessageManager;

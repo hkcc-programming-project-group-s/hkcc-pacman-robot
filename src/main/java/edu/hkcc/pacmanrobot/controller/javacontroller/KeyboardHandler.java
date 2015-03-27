@@ -1,4 +1,4 @@
-package hkccpacmanrobot.controller.javacontroller;
+package edu.hkcc.pacmanrobot.controller.javacontroller;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

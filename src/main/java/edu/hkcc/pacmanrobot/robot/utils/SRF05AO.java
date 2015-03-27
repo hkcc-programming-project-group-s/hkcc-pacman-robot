@@ -1,4 +1,4 @@
-/**
+package edu.hkcc.pacmanrobot.robot.utils; /**
  * Class to monitor distance measured by an HC-SR04 distance sensor on a 
  * Raspberry Pi.
  *

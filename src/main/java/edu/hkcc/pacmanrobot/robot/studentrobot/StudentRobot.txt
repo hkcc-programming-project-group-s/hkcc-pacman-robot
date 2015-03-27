@@ -1,6 +1,6 @@
-package hkccpacmanrobot.robot.studentrobot;
+package hkccpacmanrobot.robot.edu.hkcc.pacmanrobot.utils.studentrobot;
 
-import hkccpacmanrobot.robot.core.Robot;
+import edu.hkcc.pacmanrobot.robot.Robot;
 
 public class StudentRobot extends Robot {
 

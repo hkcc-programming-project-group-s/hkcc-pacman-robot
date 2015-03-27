@@ -1,8 +1,6 @@
-package hkccpacmanrobot.server.map;
+package edu.hkcc.pacmanrobot.server.map;
 
-import hkccpacmanrobot.utils.map.MapContent;
-import hkccpacmanrobot.utils.map.MapKey;
-import hkccpacmanrobot.utils.map.MapUnit;
+
 
 /**
  * Created by 13058456a on 3/14/2015.
