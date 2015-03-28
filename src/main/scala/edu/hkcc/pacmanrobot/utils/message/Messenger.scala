@@ -5,8 +5,9 @@ import java.io.{IOException, ObjectInputStream, ObjectOutputStream}
 import java.net.{Socket, SocketException}
 import java.util.Calendar
 import java.util.concurrent.ConcurrentLinkedQueue
+import edu.hkcc.pacmanrobot.utils.Config
+import edu.hkcc.pacmanrobot.utils.Config.RECONNECTION_TIMEOUT
 
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.Config.RECONNECTION_TIMEOUT
 
 /**
  * Created by beenotung on 2/10/15.
@@ -54,7 +55,7 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends
           receiveMessage
         }
         catch {
-          case e: IOException => socket.close()
+          case e: IOException => reconnect
         }
       }
     }
@@ -67,7 +68,7 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends
           Thread.sleep(SEND_INTERVAL)
         }
         catch {
-          case e: IOException => socket.close()
+          case e: IOException => reconnect
         }
 
       }
@@ -77,6 +78,12 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends
   val inputQueue: ConcurrentLinkedQueue[MessageType] = new ConcurrentLinkedQueue[MessageType]
   var active: Boolean = false
 
+  def reconnect={
+    socket.close()
+    socket = Messenger.connect(socket.getPort)
+    inputStream = new ObjectInputStream(socket.getInputStream)
+    outputStream = new ObjectOutputStream(socket.getOutputStream)
+  }
   def this(port: Int) = {
     this(Messenger.connect(port), port)
   }

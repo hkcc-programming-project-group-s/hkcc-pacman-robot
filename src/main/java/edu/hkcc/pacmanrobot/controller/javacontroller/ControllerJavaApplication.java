@@ -1,5 +1,7 @@
 package edu.hkcc.pacmanrobot.controller.javacontroller;
 
+import edu.hkcc.pacmanrobot.controller.Controller;
+
 import javax.swing.*;
 
 public class ControllerJavaApplication extends Controller {
@@ -27,5 +29,14 @@ public class ControllerJavaApplication extends Controller {
         mainFrame.setVisible(true);
     }
 
+    @Override
+    public void loop() {
 
+    }
+
+
+    @Override
+    public void setup() {
+
+    }
 }

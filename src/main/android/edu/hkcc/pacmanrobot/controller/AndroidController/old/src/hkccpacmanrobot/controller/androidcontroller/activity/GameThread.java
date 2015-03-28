@@ -1,13 +1,5 @@
 package edu.hkcc.pacmanrobot.controller.AndroidController.old.src.hkccpacmanrobot.controller.androidcontroller.activity;
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.os.Handler;
-import android.util.Log;
-import android.view.SurfaceHolder;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

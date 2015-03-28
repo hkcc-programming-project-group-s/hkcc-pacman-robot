@@ -1,8 +1,39 @@
 package edu.hkcc.pacmanrobot.robot.deadlinerobot;
 
 
+import edu.hkcc.pacmanrobot.robot.core.Robot;
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.Position;
+
+import java.sql.Timestamp;
+
+
 public class DeadlineRobot extends Robot {
-    public PositionDAO student = new PositionDAO();
+
+
+    @Override
+    public void gameSetup() {
+
+    }
+
+    @Override
+    public void gameStart() {
+
+    }
+
+    @Override
+    public void gamePause() {
+
+    }
+
+    @Override
+    public void gameResume() {
+
+    }
+
+    @Override
+    public void gameStop() {
+
+    }
 
     @Override
     public void setup() {
@@ -16,11 +47,7 @@ public class DeadlineRobot extends Robot {
         getTargetPosition();
     }
 
-    @Override
-    public void save() {
-        // TODO Auto-generated method stub
 
-    }
 
     // public void listenToRemoteController() {
     //It is false???
@@ -30,9 +57,12 @@ public class DeadlineRobot extends Robot {
         int studentID = 01;
         double x, y, z;
         x = y = z = 0;
-        Position targetPosition = new position(x, y, z);
-        targetPosition = student.getTargetPosition(studentID);
-
+        Position targetPosition = new Position(x, y, z,new Timestamp(System.currentTimeMillis()));
+        targetPosition = null;//TODO student.getTargetPosition(studentID);
     }
 
+    @Override
+    public void loop() {
+
+    }
 }

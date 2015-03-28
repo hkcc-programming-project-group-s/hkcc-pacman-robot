@@ -1,4 +1,4 @@
-package hkccpacmanrobot.utils.map
+package edu.hkcc.pacmanrobot.utils.map
 
 /**
  * Created by beenotung on 3/21/15.
@@ -8,14 +8,42 @@ package hkccpacmanrobot.utils.map
 import java.util.concurrent.Semaphore
 import java.util.function.BiConsumer
 
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{MapContent, MapKey, MapUnit, ObstacleMap}
+import edu.hkcc.pacmanrobot.utils.Config
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.Messenger
+
 
 /**
  * Created by beenotung on 3/27/15.
  */
-trait ObstacleMapManager {
+public
 
-  var map: ObstacleMap = _
+abstract class ObstacleMapManager extends Thread {
+
+  val messenger: Messenger[ObstacleMap] = Messenger.create[ObstacleMap](Config.PORT_MAP)
+
+  val inputThread: Thread = new Thread(new Runnable {
+    override def run(): Unit = {
+      while (true) {
+        receiveMap
+        Thread.sleep(Config.SYNC_MAP_CYCLE_INTERVAL)
+      }
+    }
+  })
+  val outThread: Thread = new Thread(new Runnable {
+    override def run(): Unit = {
+      while (true) {
+        sendMap
+        Thread.sleep(Config.SYNC_MAP_CYCLE_INTERVAL)
+      }
+    }
+  })
+
+  override def run = {
+    inputThread.start
+    outThread.start
+  }
+
+  var map: ObstacleMap = new ObstacleMap
 
   private val semaphore: Semaphore = new Semaphore(1, true)
 
@@ -45,16 +73,21 @@ trait ObstacleMapManager {
 
   def shouldUpdate(key: MapKey, value: MapContent): Boolean
 
+
   protected def sendMap = {
     val bufferedMap = getDeltaUpdatedMap(shouldUpdate)
     lastSendMapTime = System.currentTimeMillis
-    //TODO networking
+    messenger.sendMessage(bufferedMap);
+    //TODO call messenger
   }
 
-  protected def receiveMap = {
-    //TODO networking
+  def receiveMap = {
     lastReceiveMapTime = System.currentTimeMillis
+    myReceiveMap
   }
+
+  //TODO get all from queue
+  protected def myReceiveMap
 
   def addMap(deltaObstacleMap: ObstacleMap) {
     semaphore.tryAcquire

@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.studentrobot.code
+package edu.hkcc.pacmanrobot.utils.map
 
 /**
  * Created by beenotung on 3/21/15.

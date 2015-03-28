@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.studentrobot.code
+package edu.hkcc.pacmanrobot.utils.map
 
 /**
  * Created by beenotung on 3/21/15.
@@ -6,6 +6,8 @@ package edu.hkcc.pacmanrobot.utils.studentrobot.code
 
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
+
+import edu.hkcc.pacmanrobot.utils.Config
 
 
 class ObstacleMap extends ConcurrentHashMap[MapKey, MapContent] with Cloneable with Message {

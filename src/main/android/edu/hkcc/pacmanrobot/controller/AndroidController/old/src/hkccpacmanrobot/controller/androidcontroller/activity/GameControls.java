@@ -1,11 +1,5 @@
 package edu.hkcc.pacmanrobot.controller.AndroidController.old.src.hkccpacmanrobot.controller.androidcontroller.activity;
 
-import android.app.Activity;
-import android.graphics.Point;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-
 public class GameControls extends Activity implements OnTouchListener {
     public float init_x = 514;
     public float init_y = 934;
