@@ -1,10 +1,10 @@
 package com.pi4j.gpio.extension.mcp;
 
-import java.util.EnumSet;
-
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.impl.PinImpl;
+
+import java.util.EnumSet;
 
 /*
  * #%L
@@ -35,17 +35,16 @@ import com.pi4j.io.gpio.impl.PinImpl;
 /**
  * <p>
  * This GPIO provider implements the MCP4725 12-Bit Digital-to-Analog Converter as native Pi4J GPIO pins.
- * More information about the board can be found here: 
+ * More information about the board can be found here:
  * http://http://www.adafruit.com/product/935
  * </p>
- * 
+ * <p>
  * <p>
  * The MCP4725 is connected via SPI connection to the Raspberry Pi and provides 1 GPIO analog output pin.
  * </p>
- * 
+ *
  * @author Christian Wehrli
  * @version 1.0, Feb 11, 2014
- * 
  */
 public class MCP4725Pin {
 

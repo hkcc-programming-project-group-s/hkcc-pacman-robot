@@ -4,7 +4,7 @@ package com.pi4j.component.sensor;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  DistanceSensor.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -28,24 +28,31 @@ package com.pi4j.component.sensor;
  */
 
 
-import java.util.Date;
-
 import com.pi4j.component.ObserveableComponent;
 
+import java.util.Date;
+
 public interface DistanceSensor extends ObserveableComponent {
-    
+
     Date getLastDistanceTimestamp();
-    
+
     double getDistance();
+
     double getDistance(double value);
+
     boolean isDistance(double distance);
+
     boolean isDistanceInRange(double min, double max);
+
     void addCalibrationCoordinate(double value, double distance);
-    
+
     double getValue();
+
     boolean isValue(double value);
+
     boolean isValueInRange(double min, double max);
-    
+
     void addListener(DistanceSensorListener... listener);
+
     void removeListener(DistanceSensorListener... listener);
 }

@@ -4,7 +4,7 @@ package com.pi4j.device.fireplace;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  FireplaceTimeoutEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -38,11 +38,11 @@ public class FireplaceTimeoutEvent extends EventObject {
         super(fireplaceComponent);
     }
 
-    public void setHandled(boolean handled){
+    public void setHandled(boolean handled) {
         this.handled = handled;
     }
 
-    public boolean isHandled(){
+    public boolean isHandled() {
         return this.handled;
     }
 }

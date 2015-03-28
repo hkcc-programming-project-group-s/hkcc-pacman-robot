@@ -43,7 +43,7 @@ public class GpioPinAnalogValueChangeEvent extends GpioPinEvent {
 
     /**
      * Default event constructor
-     * 
+     *
      * @param obj   Ignore this parameter
      * @param pin   GPIO pin number (not header pin number; not wiringPi pin number)
      * @param value New GPIO pin value.
@@ -55,7 +55,7 @@ public class GpioPinAnalogValueChangeEvent extends GpioPinEvent {
 
     /**
      * Get the new pin value raised in this event.
-     * 
+     *
      * @return GPIO pin value
      */
     public double getValue() {

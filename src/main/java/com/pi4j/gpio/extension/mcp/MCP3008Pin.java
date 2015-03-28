@@ -33,16 +33,15 @@ import java.util.EnumSet;
  */
 
 /**
- * 
  * <p>
  * This GPIO provider implements the MCP3008 SPI GPIO expansion board as native Pi4J GPIO pins. It is a 10-bit ADC providing 8 input
  * channels. More information about the board can be found here: * http://ww1.microchip.com/downloads/en/DeviceDoc/21295d.pdf
  * </p>
- * 
+ * <p>
  * <p>
  * The MCP3008 is connected via SPI connection to the Raspberry Pi and provides 8 GPIO pins that can be used for analog input pins.
  * </p>
- * 
+ *
  * @author pojd
  */
 public class MCP3008Pin {
@@ -56,14 +55,14 @@ public class MCP3008Pin {
     public static final Pin CH6 = createAnalogInputPin(3, "ANALOG INPUT 6");
     public static final Pin CH7 = createAnalogInputPin(3, "ANALOG INPUT 7");
 
-    public static Pin[] ALL = { MCP3008Pin.CH0,
-                                MCP3008Pin.CH1,
-                                MCP3008Pin.CH2,
-                                MCP3008Pin.CH3,
-                                MCP3008Pin.CH4,
-                                MCP3008Pin.CH5,
-                                MCP3008Pin.CH6,
-                                MCP3008Pin.CH7 };
+    public static Pin[] ALL = {MCP3008Pin.CH0,
+            MCP3008Pin.CH1,
+            MCP3008Pin.CH2,
+            MCP3008Pin.CH3,
+            MCP3008Pin.CH4,
+            MCP3008Pin.CH5,
+            MCP3008Pin.CH6,
+            MCP3008Pin.CH7};
 
     private static Pin createAnalogInputPin(int channel, String name) {
         return new PinImpl(MCP3008GpioProvider.NAME, channel, name, EnumSet.of(PinMode.ANALOG_INPUT));

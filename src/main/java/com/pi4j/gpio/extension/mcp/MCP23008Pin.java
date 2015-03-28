@@ -40,14 +40,13 @@ import java.util.EnumSet;
  * http://ww1.microchip.com/downloads/en/DeviceDoc/21919e.pdf
  * http://learn.adafruit.com/mcp230xx-gpio-expander-on-the-raspberry-pi/overview
  * </p>
- * 
+ * <p>
  * <p>
  * The MCP23008 is connected via I2C connection to the Raspberry Pi and provides
  * 8 GPIO pins that can be used for either digital input or digital output pins.
  * </p>
- * 
+ *
  * @author Robert Savage
- * 
  */
 public class MCP23008Pin {
 
@@ -60,12 +59,12 @@ public class MCP23008Pin {
     public static final Pin GPIO_06 = createDigitalPin(64, "GPIO 6");
     public static final Pin GPIO_07 = createDigitalPin(128, "GPIO 7");
 
-    public static Pin[] ALL = { MCP23008Pin.GPIO_00, MCP23008Pin.GPIO_01, MCP23008Pin.GPIO_02, MCP23008Pin.GPIO_03,
-                                MCP23008Pin.GPIO_04, MCP23008Pin.GPIO_05, MCP23008Pin.GPIO_06, MCP23008Pin.GPIO_07 };
-    
+    public static Pin[] ALL = {MCP23008Pin.GPIO_00, MCP23008Pin.GPIO_01, MCP23008Pin.GPIO_02, MCP23008Pin.GPIO_03,
+            MCP23008Pin.GPIO_04, MCP23008Pin.GPIO_05, MCP23008Pin.GPIO_06, MCP23008Pin.GPIO_07};
+
     private static Pin createDigitalPin(int address, String name) {
-        return new PinImpl(MCP23008GpioProvider.NAME, address, name, 
-                    EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.DIGITAL_OUTPUT),
-                    EnumSet.of(PinPullResistance.PULL_UP, PinPullResistance.OFF));
-    }       
+        return new PinImpl(MCP23008GpioProvider.NAME, address, name,
+                EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.DIGITAL_OUTPUT),
+                EnumSet.of(PinPullResistance.PULL_UP, PinPullResistance.OFF));
+    }
 }

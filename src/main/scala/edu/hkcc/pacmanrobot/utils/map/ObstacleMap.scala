@@ -7,10 +7,8 @@ package edu.hkcc.pacmanrobot.utils.studentrobot.code
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
-import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.message.Message
 
-class ObstacleMap extends ConcurrentHashMap[MapKey, MapContent] with Cloneable  with Message{
+class ObstacleMap extends ConcurrentHashMap[MapKey, MapContent] with Cloneable with Message {
   def isExist(target: MapUnit): Boolean = {
     keySet.contains(target.key)
   }

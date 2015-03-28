@@ -31,17 +31,17 @@ import com.pi4j.util.NativeLibraryLoader;
 
 /**
  * <h1>I2C Communication</h1>
- * 
+ * <p>
  * <p>
  * Set of native methods for interacting with i2c bus on RPi.
  * </p>
- * 
+ * <p>
  * <p>
  * Note: The file descriptor (fd) returned is a standard Linux filehandle. You can use the standard
- * read(), write(), etc. system calls on this filehandle as required. 
+ * read(), write(), etc. system calls on this filehandle as required.
  * </p>
- * 
- * @author Daniel Sendula 
+ *
+ * @author Daniel Sendula
  */
 public class I2C {
 

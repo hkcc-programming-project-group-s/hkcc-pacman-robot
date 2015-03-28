@@ -1,12 +1,15 @@
 package edu.hkcc.pacmanrobot.server;
 
 
+import edu.hkcc.pacmanrobot.utils.Device;
 import edu.hkcc.pacmanrobot.utils.Maths;
 
-public class Sever {
+import java.sql.Timestamp;
+
+public class Sever extends Device {
     private boolean gameRun = true;
 
-    public void listenToRemotecontroller(){
+    public void listenToRemotecontroller() {
         /*
         listen to android control
         if android say start the game, gameStart()
@@ -22,11 +25,35 @@ public class Sever {
     }
 
 
+    @Override
+    public void gameSetup() {
+
+    }
 
     public void gameStart() {
     /*
     send message to robot to start game which function is in connection class
     */
+    }
+
+    @Override
+    public void gamePause() {
+
+    }
+
+    @Override
+    public void gameResume() {
+
+    }
+
+    @Override
+    public void gameStop() {
+
+    }
+
+    @Override
+    public void setup() {
+
     }
 
     public void gameEnd() {

@@ -4,7 +4,7 @@ package com.pi4j.component.sensor.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  GpioSensorComponent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -37,35 +37,34 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 public class GpioSensorComponent extends SensorBase {
-    
+
     // internal class members
     private GpioPinDigitalInput pin = null;
     private PinState openState = PinState.LOW;
     private PinState closedState = PinState.HIGH;
     private final Sensor sensor = this;
-    
+
     // create internal pin listener
     private GpioPinListenerDigital pinListener = new GpioPinListenerDigital() {
 
         @Override
         public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-            
+
             // notify any sensor state change listeners
-            if(event.getState() == openState) {
+            if (event.getState() == openState) {
                 notifyListeners(new SensorStateChangeEvent(sensor, SensorState.CLOSED, SensorState.OPEN));
-            }
-            else if(event.getState() == closedState) {
+            } else if (event.getState() == closedState) {
                 notifyListeners(new SensorStateChangeEvent(sensor, SensorState.OPEN, SensorState.CLOSED));
             }
         }
     };
-    
+
     /**
-     * using this constructor requires that the consumer 
-     *  define the SENSOR OPEN and SENSOR CLOSED pin states 
-     *  
-     * @param pin GPIO digital input pin
-     * @param openState pin state to set when SENSOR is OPEN
+     * using this constructor requires that the consumer
+     * define the SENSOR OPEN and SENSOR CLOSED pin states
+     *
+     * @param pin         GPIO digital input pin
+     * @param openState   pin state to set when SENSOR is OPEN
      * @param closedState pin state to set when SENSOR is CLOSED
      */
     public GpioSensorComponent(GpioPinDigitalInput pin, PinState openState, PinState closedState) {
@@ -76,9 +75,9 @@ public class GpioSensorComponent extends SensorBase {
 
     /**
      * default constructor; using this constructor assumes that:
-     *  (1) a pin state of HIGH is SENSOR CLOSED
-     *  (2) a pin state of LOW  is SENSOR OPEN
-     *  
+     * (1) a pin state of HIGH is SENSOR CLOSED
+     * (2) a pin state of LOW  is SENSOR OPEN
+     *
      * @param pin GPIO digital input pin
      */
     public GpioSensorComponent(GpioPinDigitalInput pin) {
@@ -87,16 +86,16 @@ public class GpioSensorComponent extends SensorBase {
     }
 
     /**
-     * Return the current sensor state based on the  
+     * Return the current sensor state based on the
      * GPIO digital output pin state.
-     *  
-     * @return PowerState 
+     *
+     * @return PowerState
      */
     @Override
     public SensorState getState() {
-        if(pin.isState(openState))
+        if (pin.isState(openState))
             return SensorState.OPEN;
-        else 
+        else
             return SensorState.CLOSED;
     }
 }

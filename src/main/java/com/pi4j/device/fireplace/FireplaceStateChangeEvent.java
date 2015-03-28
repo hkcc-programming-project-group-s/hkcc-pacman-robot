@@ -4,7 +4,7 @@ package com.pi4j.device.fireplace;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  FireplaceStateChangeEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -37,14 +37,14 @@ public class FireplaceStateChangeEvent extends EventObject {
 
     public FireplaceStateChangeEvent(Fireplace fireplaceComponent, FireplaceState oldState, FireplaceState newState) {
         super(fireplaceComponent);
-        this.oldState = oldState;        
+        this.oldState = oldState;
         this.newState = newState;
     }
 
     public Fireplace getFireplace() {
-        return (Fireplace)getSource();
+        return (Fireplace) getSource();
     }
-    
+
     public FireplaceState getOldState() {
         return oldState;
     }

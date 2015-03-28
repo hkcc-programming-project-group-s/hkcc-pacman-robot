@@ -4,7 +4,7 @@ package com.pi4j.component.servo;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  ServoDriver.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -33,7 +33,7 @@ import com.pi4j.io.gpio.Pin;
 /**
  * This interface represents a driver hardware to produce pulses needed for driving
  * a servo.
- * 
+ *
  * @author Daniel Sendula
  */
 public interface ServoDriver {
@@ -44,26 +44,26 @@ public interface ServoDriver {
      * may define undefined situation when this abstraction didn't get
      * initial value yet and there is no way telling what real, hardware
      * or software driver is sending.
-     * 
+     *
      * @return current servo pulse this driver is producing
      */
     int getServoPulseWidth();
-    
+
     /**
      * Sets servo pulse width in resolution provided by {@link #getServoPulseResolution()}.
      * Zero value may mean that this driver is currently not producing pulse.
      * Negative values may, generally, be invalid.
-     * 
+     *
      * @param width pulse width in resolution read from {@link #getServoPulseResolution()}
      */
     void setServoPulseWidth(int width);
-    
+
     /**
      * This is read only value driver is to provide to users of this class.
      * It defines resolution {@link #getServoPulseWidth()} and {@link #setServoPulseWidth(int)}
      * methods are operating in. Resolution is provided in 1/n (ms) where value returned
      * from this method is n.
-     * 
+     *
      * @return resolution of servo pulse widths used in this interface
      */
     int getServoPulseResolution();

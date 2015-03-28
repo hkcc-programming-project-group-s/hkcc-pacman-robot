@@ -4,7 +4,7 @@ package com.pi4j.component.switches;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  SwitchStateChangeEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -38,14 +38,14 @@ public class SwitchStateChangeEvent extends EventObject {
 
     public SwitchStateChangeEvent(Switch switchComponent, SwitchState oldState, SwitchState newState) {
         super(switchComponent);
-        this.oldState = oldState;        
+        this.oldState = oldState;
         this.newState = newState;
     }
 
     public Switch getSwitch() {
-        return (Switch)getSource();
+        return (Switch) getSource();
     }
-    
+
     public SwitchState getOldState() {
         return oldState;
     }

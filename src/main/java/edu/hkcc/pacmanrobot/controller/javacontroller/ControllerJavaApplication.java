@@ -1,10 +1,8 @@
 package edu.hkcc.pacmanrobot.controller.javacontroller;
 
-import edu.hkcc.pacmanrobot.Controller;
-
 import javax.swing.*;
 
-public class ControllerJavaApplication extends Controller{
+public class ControllerJavaApplication extends Controller {
     public JFrame mainFrame;
     public KeyboardSettings keyboardSettings = new KeyboardSettings();
     public KeyboardHandler keyboardHandler = new KeyboardHandler(keyboardSettings);

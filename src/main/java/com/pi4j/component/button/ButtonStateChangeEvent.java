@@ -4,7 +4,7 @@ package com.pi4j.component.button;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  ButtonStateChangeEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -48,15 +48,17 @@ public class ButtonStateChangeEvent extends ButtonEvent {
     }
 
     @Override
-    public boolean isPressed(){
+    public boolean isPressed() {
         return newState == ButtonState.PRESSED;
     }
 
     @Override
-    public boolean isReleased(){
+    public boolean isReleased() {
         return newState == ButtonState.RELEASED;
     }
 
     @Override
-    public boolean isState(ButtonState state){ return getNewState() == state; }
+    public boolean isState(ButtonState state) {
+        return getNewState() == state;
+    }
 }

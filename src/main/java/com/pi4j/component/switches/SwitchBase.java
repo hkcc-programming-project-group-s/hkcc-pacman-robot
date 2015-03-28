@@ -7,7 +7,7 @@ import com.pi4j.component.ObserveableComponentBase;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  SwitchBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -32,7 +32,7 @@ import com.pi4j.component.ObserveableComponentBase;
 
 
 public abstract class SwitchBase extends ObserveableComponentBase implements Switch {
-    
+
     @Override
     public boolean isOn() {
         return (getState() == SwitchState.ON);
@@ -45,12 +45,12 @@ public abstract class SwitchBase extends ObserveableComponentBase implements Swi
 
     @Override
     public abstract SwitchState getState();
-    
+
     @Override
     public boolean isState(SwitchState state) {
         return getState().equals(state);
     }
-    
+
     @Override
     public void addListener(SwitchListener... listener) {
         super.addListener(listener);
@@ -62,8 +62,8 @@ public abstract class SwitchBase extends ObserveableComponentBase implements Swi
     }
 
     protected synchronized void notifyListeners(SwitchStateChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((SwitchListener)listener).onStateChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((SwitchListener) listener).onStateChange(event);
         }
-    }        
+    }
 }

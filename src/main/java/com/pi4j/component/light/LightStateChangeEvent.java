@@ -4,7 +4,7 @@ package com.pi4j.component.light;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  LightStateChangeEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -37,13 +37,13 @@ public class LightStateChangeEvent extends EventObject {
 
     public LightStateChangeEvent(Light light, boolean isOn) {
         super(light);
-        this.isOn = isOn;        
+        this.isOn = isOn;
     }
 
     public Light getLight() {
-        return (Light)getSource();
+        return (Light) getSource();
     }
-    
+
     public boolean isOn() {
         return isOn;
     }

@@ -4,7 +4,7 @@ package com.pi4j.component.potentiometer.microchip.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  DeviceControllerChannel.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -33,68 +33,68 @@ import com.pi4j.component.potentiometer.microchip.MicrochipPotentiometerChannel;
  * The wiper - used for devices knowing more than one wiper.
  */
 enum DeviceControllerChannel {
-	
-	A(MicrochipPotentiometerDeviceController.MEMADDR_WIPER0, MicrochipPotentiometerDeviceController.MEMADDR_WIPER0_NV,
-			MicrochipPotentiometerDeviceController.MEMADDR_TCON01, MicrochipPotentiometerDeviceController.TCON_RH02HW,
-			MicrochipPotentiometerDeviceController.TCON_RH02A, MicrochipPotentiometerDeviceController.TCON_RH02B, MicrochipPotentiometerDeviceController.TCON_RH02W),
-	B(MicrochipPotentiometerDeviceController.MEMADDR_WIPER1, MicrochipPotentiometerDeviceController.MEMADDR_WIPER1_NV,
-			MicrochipPotentiometerDeviceController.MEMADDR_TCON01, MicrochipPotentiometerDeviceController.TCON_RH13HW,
-			MicrochipPotentiometerDeviceController.TCON_RH13A, MicrochipPotentiometerDeviceController.TCON_RH13B, MicrochipPotentiometerDeviceController.TCON_RH13W),
-	C(MicrochipPotentiometerDeviceController.MEMADDR_WIPER2, MicrochipPotentiometerDeviceController.MEMADDR_WIPER2_NV,
-			MicrochipPotentiometerDeviceController.MEMADDR_TCON23, MicrochipPotentiometerDeviceController.TCON_RH02HW,
-			MicrochipPotentiometerDeviceController.TCON_RH02A, MicrochipPotentiometerDeviceController.TCON_RH02B, MicrochipPotentiometerDeviceController.TCON_RH02W),
-	D(MicrochipPotentiometerDeviceController.MEMADDR_WIPER3, MicrochipPotentiometerDeviceController.MEMADDR_WIPER3_NV,
-			MicrochipPotentiometerDeviceController.MEMADDR_TCON23, MicrochipPotentiometerDeviceController.TCON_RH13HW,
-			MicrochipPotentiometerDeviceController.TCON_RH13A, MicrochipPotentiometerDeviceController.TCON_RH13B, MicrochipPotentiometerDeviceController.TCON_RH13W);
-	
-	private byte volatileMemoryAddress;
-	private byte nonVolatileMemoryAddress;
-	private byte terminalControllAddress;
-	private int hardwareConfigControlBit;
-	private int terminalAConnectControlBit;
-	private int terminalBConnectControlBit;
-	private int wiperConnectControlBit;
-	
-	private DeviceControllerChannel(byte volatileMemoryAddress,
+
+    A(MicrochipPotentiometerDeviceController.MEMADDR_WIPER0, MicrochipPotentiometerDeviceController.MEMADDR_WIPER0_NV,
+            MicrochipPotentiometerDeviceController.MEMADDR_TCON01, MicrochipPotentiometerDeviceController.TCON_RH02HW,
+            MicrochipPotentiometerDeviceController.TCON_RH02A, MicrochipPotentiometerDeviceController.TCON_RH02B, MicrochipPotentiometerDeviceController.TCON_RH02W),
+    B(MicrochipPotentiometerDeviceController.MEMADDR_WIPER1, MicrochipPotentiometerDeviceController.MEMADDR_WIPER1_NV,
+            MicrochipPotentiometerDeviceController.MEMADDR_TCON01, MicrochipPotentiometerDeviceController.TCON_RH13HW,
+            MicrochipPotentiometerDeviceController.TCON_RH13A, MicrochipPotentiometerDeviceController.TCON_RH13B, MicrochipPotentiometerDeviceController.TCON_RH13W),
+    C(MicrochipPotentiometerDeviceController.MEMADDR_WIPER2, MicrochipPotentiometerDeviceController.MEMADDR_WIPER2_NV,
+            MicrochipPotentiometerDeviceController.MEMADDR_TCON23, MicrochipPotentiometerDeviceController.TCON_RH02HW,
+            MicrochipPotentiometerDeviceController.TCON_RH02A, MicrochipPotentiometerDeviceController.TCON_RH02B, MicrochipPotentiometerDeviceController.TCON_RH02W),
+    D(MicrochipPotentiometerDeviceController.MEMADDR_WIPER3, MicrochipPotentiometerDeviceController.MEMADDR_WIPER3_NV,
+            MicrochipPotentiometerDeviceController.MEMADDR_TCON23, MicrochipPotentiometerDeviceController.TCON_RH13HW,
+            MicrochipPotentiometerDeviceController.TCON_RH13A, MicrochipPotentiometerDeviceController.TCON_RH13B, MicrochipPotentiometerDeviceController.TCON_RH13W);
+
+    private byte volatileMemoryAddress;
+    private byte nonVolatileMemoryAddress;
+    private byte terminalControllAddress;
+    private int hardwareConfigControlBit;
+    private int terminalAConnectControlBit;
+    private int terminalBConnectControlBit;
+    private int wiperConnectControlBit;
+
+    private DeviceControllerChannel(byte volatileMemoryAddress,
                                     byte nonVolatileMemoryAddress, byte terminalControllAddress,
                                     int hardwareConfigControlBit, int terminalAConnectControlBit,
                                     int terminalBConnectControlBit, int wiperConnectControlBit) {
-		this.volatileMemoryAddress = volatileMemoryAddress;
-		this.nonVolatileMemoryAddress = nonVolatileMemoryAddress;
-		this.terminalControllAddress = terminalControllAddress;
-		this.hardwareConfigControlBit = hardwareConfigControlBit;
-		this.terminalAConnectControlBit = terminalAConnectControlBit;
-		this.terminalBConnectControlBit = terminalBConnectControlBit;
-		this.wiperConnectControlBit = wiperConnectControlBit;
-	}
-	
-	byte getVolatileMemoryAddress() {
-		return volatileMemoryAddress;
-	}
-	
-	byte getNonVolatileMemoryAddress() {
-		return nonVolatileMemoryAddress;
-	}
-	
-	byte getTerminalControllAddress() {
-		return terminalControllAddress;
-	}
-	
-	int getHardwareConfigControlBit() {
-		return hardwareConfigControlBit;
-	}
-	
-	int getTerminalAConnectControlBit() {
-		return terminalAConnectControlBit;
-	}
-	
-	int getTerminalBConnectControlBit() {
-		return terminalBConnectControlBit;
-	}
-	
-	int getWiperConnectControlBit() {
-		return wiperConnectControlBit;
-	}
+        this.volatileMemoryAddress = volatileMemoryAddress;
+        this.nonVolatileMemoryAddress = nonVolatileMemoryAddress;
+        this.terminalControllAddress = terminalControllAddress;
+        this.hardwareConfigControlBit = hardwareConfigControlBit;
+        this.terminalAConnectControlBit = terminalAConnectControlBit;
+        this.terminalBConnectControlBit = terminalBConnectControlBit;
+        this.wiperConnectControlBit = wiperConnectControlBit;
+    }
+
+    byte getVolatileMemoryAddress() {
+        return volatileMemoryAddress;
+    }
+
+    byte getNonVolatileMemoryAddress() {
+        return nonVolatileMemoryAddress;
+    }
+
+    byte getTerminalControllAddress() {
+        return terminalControllAddress;
+    }
+
+    int getHardwareConfigControlBit() {
+        return hardwareConfigControlBit;
+    }
+
+    int getTerminalAConnectControlBit() {
+        return terminalAConnectControlBit;
+    }
+
+    int getTerminalBConnectControlBit() {
+        return terminalBConnectControlBit;
+    }
+
+    int getWiperConnectControlBit() {
+        return wiperConnectControlBit;
+    }
 
 
     static DeviceControllerChannel valueOf(final MicrochipPotentiometerChannel channel) {

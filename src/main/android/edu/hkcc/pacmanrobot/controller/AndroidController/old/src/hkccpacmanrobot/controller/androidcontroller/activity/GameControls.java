@@ -2,7 +2,6 @@ package edu.hkcc.pacmanrobot.controller.AndroidController.old.src.hkccpacmanrobo
 
 import android.app.Activity;
 import android.graphics.Point;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;

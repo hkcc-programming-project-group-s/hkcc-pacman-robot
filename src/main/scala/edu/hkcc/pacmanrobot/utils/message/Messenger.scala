@@ -13,9 +13,9 @@ import edu.hkcc.pacmanrobot.utils.studentrobot.code.Config.RECONNECTION_TIMEOUT
  */
 
 object Messenger {
-  def create[MessageType](message: Message, autoGetFunc: (MessageType) => Unit = (message: MessageType) => {}): Messenger[MessageType] = {
-    println("try to connect to " + Config.serverAddress + ":" + message.port)
-    new Messenger[MessageType](message.port) {
+  def create[MessageType](port: Int, autoGetFunc: (MessageType) => Unit = (message: MessageType) => {}): Messenger[MessageType] = {
+    println("try to connect to " + Config.serverAddress + ":" + port)
+    new Messenger[MessageType](port) {
       override def autoGet(message: MessageType): Unit = {
         autoGetFunc(message)
       }

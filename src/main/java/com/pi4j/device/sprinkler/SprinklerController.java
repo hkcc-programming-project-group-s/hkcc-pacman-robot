@@ -4,7 +4,7 @@ package com.pi4j.device.sprinkler;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  SprinklerController.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -33,18 +33,26 @@ import java.util.List;
 public interface SprinklerController {
 
     int getZoneCount();
+
     List<SprinklerZone> getZones();
 
     boolean isOn();
+
     boolean isOff();
+
     boolean isOn(int zone);
+
     boolean isOff(int zone);
-    
+
     void on(int zone);
+
     void onAllZones();
+
     void off(int zone);
+
     void offAllZones();
+
     void setState(int zone, boolean on);
-    
+
     boolean isRaining();
 }

@@ -19,7 +19,7 @@ public class Main extends Activity {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 }

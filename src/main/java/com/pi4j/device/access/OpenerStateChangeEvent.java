@@ -4,7 +4,7 @@ package com.pi4j.device.access;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  OpenerStateChangeEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -38,14 +38,14 @@ public class OpenerStateChangeEvent extends EventObject {
 
     public OpenerStateChangeEvent(Opener opener, OpenerState oldState, OpenerState newState) {
         super(opener);
-        this.oldState = oldState;        
+        this.oldState = oldState;
         this.newState = newState;
     }
 
     public Opener getOpener() {
-        return (Opener)getSource();
+        return (Opener) getSource();
     }
-    
+
     public OpenerState getOldState() {
         return oldState;
     }

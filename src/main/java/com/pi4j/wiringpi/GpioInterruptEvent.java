@@ -32,7 +32,7 @@ import java.util.EventObject;
 
 /**
  * <p> This class provides the event object for GPIO interrupt state changes. </p>
- * 
+ * <p>
  * <p>
  * Before using the Pi4J library, you need to ensure that the Java VM in configured with access to
  * the following system libraries:
@@ -44,10 +44,10 @@ import java.util.EventObject;
  * Gordon Henderson @ <a href="http://wiringpi.com/">http://wiringpi.com/</a>)
  * </blockquote>
  * </p>
- * 
- * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
+ *
  * @author Robert Savage (<a
  *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
+ * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
  */
 public class GpioInterruptEvent extends EventObject {
 
@@ -57,9 +57,9 @@ public class GpioInterruptEvent extends EventObject {
 
     /**
      * <h1>Default event constructor</h1>
-     * 
-     * @param obj Ignore this parameter
-     * @param pin GPIO pin number (not header pin number; not wiringPi pin number)
+     *
+     * @param obj   Ignore this parameter
+     * @param pin   GPIO pin number (not header pin number; not wiringPi pin number)
      * @param state New GPIO pin state.
      */
     public GpioInterruptEvent(Object obj, int pin, boolean state) {
@@ -70,7 +70,7 @@ public class GpioInterruptEvent extends EventObject {
 
     /**
      * Get the pin number that changed and raised this event.
-     * 
+     *
      * @return GPIO pin number (not header pin number; not wiringPi pin number)
      */
     public int getPin() {
@@ -79,7 +79,7 @@ public class GpioInterruptEvent extends EventObject {
 
     /**
      * Get the new pin state raised in this event.
-     * 
+     *
      * @return GPIO pin state (HIGH=true, LOW=false)
      */
     public boolean getState() {
@@ -88,7 +88,7 @@ public class GpioInterruptEvent extends EventObject {
 
     /**
      * Get the new pin state value raised in this event.
-     * 
+     *
      * @return GPIO pin state (HIGH=1, LOW=0)
      */
     public int getStateValue() {

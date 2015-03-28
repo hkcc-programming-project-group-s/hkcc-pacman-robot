@@ -4,7 +4,7 @@ package com.pi4j.component.temperature;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  TemperatureChangeEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -38,14 +38,14 @@ public class TemperatureChangeEvent extends EventObject {
 
     public TemperatureChangeEvent(TemperatureSensor sensor, double oldTemperature, double newTemperature) {
         super(sensor);
-        this.oldTemperature = oldTemperature;        
+        this.oldTemperature = oldTemperature;
         this.newTemperature = newTemperature;
     }
 
     public TemperatureSensor getTemperatureSensor() {
-        return (TemperatureSensor)getSource();
+        return (TemperatureSensor) getSource();
     }
-    
+
     public double getOldTemperature() {
         return oldTemperature;
     }
@@ -57,5 +57,5 @@ public class TemperatureChangeEvent extends EventObject {
     public double getTemperatureChange() {
         return (newTemperature - oldTemperature);
     }
-    
+
 }

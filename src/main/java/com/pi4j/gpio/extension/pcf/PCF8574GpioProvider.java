@@ -44,14 +44,13 @@ import java.util.BitSet;
  * More information about the board can be found here: *
  * http://www.ti.com/lit/ds/symlink/pcf8574.pdf
  * </p>
- * 
+ * <p>
  * <p>
  * The PCF8574 is connected via I2C connection to the Raspberry Pi and provides
  * 8 GPIO pins that can be used for either digital input or digital output pins.
  * </p>
- * 
+ *
  * @author Robert Savage
- * 
  */
 public class PCF8574GpioProvider extends GpioProviderBase implements GpioProvider {
 
@@ -76,7 +75,7 @@ public class PCF8574GpioProvider extends GpioProviderBase implements GpioProvide
     public static final int PCF8574A_0x3D = 0x3D; // 101
     public static final int PCF8574A_0x3E = 0x3E; // 110
     public static final int PCF8574A_0x3F = 0x3F; // 111
-    
+
     public static final int PCF8574_MAX_IO_PINS = 8;
 
     private boolean i2cBusOwner = false;
@@ -104,7 +103,7 @@ public class PCF8574GpioProvider extends GpioProviderBase implements GpioProvide
             getPinCache(pin).setState(PinState.HIGH);
             currentStates.set(pin.getAddress(), true);
         }
-        
+
         // start monitoring thread            
         monitor = new PCF8574GpioProvider.GpioStateMonitor(device);
         monitor.start();
@@ -164,7 +163,7 @@ public class PCF8574GpioProvider extends GpioProviderBase implements GpioProvide
     public void shutdown() {
 
         // prevent reentrant invocation
-        if(isShutdown())
+        if (isShutdown())
             return;
 
         // perform shutdown login in base
@@ -179,7 +178,7 @@ public class PCF8574GpioProvider extends GpioProviderBase implements GpioProvide
             }
 
             // if we are the owner of the I2C bus, then close it
-            if(i2cBusOwner) {
+            if (i2cBusOwner) {
                 // close the I2C bus communication
                 bus.close();
             }
@@ -188,15 +187,14 @@ public class PCF8574GpioProvider extends GpioProviderBase implements GpioProvide
         }
     }
 
-    
+
     /**
      * This class/thread is used to to actively monitor for GPIO interrupts
-     * 
+     *
      * @author Robert Savage
-     * 
      */
     private class GpioStateMonitor extends Thread {
-        
+
         private I2CDevice device;
         private boolean shuttingDown = false;
 
@@ -215,7 +213,7 @@ public class PCF8574GpioProvider extends GpioProviderBase implements GpioProvide
                     byte[] buffer = new byte[1];
                     device.read(buffer, 0, 1);
                     BitSet pinStates = BitSet.valueOf(buffer);
-                    
+
                     // determine if there is a pin state difference
                     for (int index = 0; index < pinStates.size(); index++) {
                         if (pinStates.get(index) != currentStates.get(index)) {
@@ -225,7 +223,7 @@ public class PCF8574GpioProvider extends GpioProviderBase implements GpioProvide
                             // cache state
                             getPinCache(pin).setState(newState);
                             currentStates.set(index, pinStates.get(index));
-                            
+
                             // only dispatch events for input pins
                             if (getMode(pin) == PinMode.DIGITAL_INPUT) {
                                 // change detected for INPUT PIN

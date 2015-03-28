@@ -1,9 +1,4 @@
-package edu.hkcc.pacmanrobot.AndroidController;
-
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+package edu.hkcc.pacmanrobot.androidcontroller;
 
 
 public class SettingActivity extends ActionBarActivity {

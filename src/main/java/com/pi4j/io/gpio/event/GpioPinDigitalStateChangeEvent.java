@@ -44,10 +44,10 @@ public class GpioPinDigitalStateChangeEvent extends GpioPinEvent {
 
     /**
      * Default event constructor
-     * 
-     * @param obj    Ignore this parameter
-     * @param pin    GPIO pin number (not header pin number; not wiringPi pin number)
-     * @param state  New GPIO pin state.
+     *
+     * @param obj   Ignore this parameter
+     * @param pin   GPIO pin number (not header pin number; not wiringPi pin number)
+     * @param state New GPIO pin state.
      */
     public GpioPinDigitalStateChangeEvent(Object obj, GpioPin pin, PinState state) {
         super(obj, pin, PinEventType.DIGITAL_STATE_CHANGE);
@@ -56,7 +56,7 @@ public class GpioPinDigitalStateChangeEvent extends GpioPinEvent {
 
     /**
      * Get the new pin state raised in this event.
-     * 
+     *
      * @return GPIO pin state (HIGH, LOW)
      */
     public PinState getState() {

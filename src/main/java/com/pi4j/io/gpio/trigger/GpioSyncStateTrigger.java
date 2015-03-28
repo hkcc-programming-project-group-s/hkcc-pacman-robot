@@ -36,26 +36,26 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class GpioSyncStateTrigger extends OutputTargetedGpioTrigger {
 
-	public GpioSyncStateTrigger(GpioPinDigitalOutput targetPin) {
-		super(targetPin);
-	}
+    public GpioSyncStateTrigger(GpioPinDigitalOutput targetPin) {
+        super(targetPin);
+    }
 
-	public GpioSyncStateTrigger(PinState state, GpioPinDigitalOutput targetPin) {
-		super(state, targetPin);
-	}
+    public GpioSyncStateTrigger(PinState state, GpioPinDigitalOutput targetPin) {
+        super(state, targetPin);
+    }
 
-	public GpioSyncStateTrigger(PinState[] states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioSyncStateTrigger(PinState[] states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	public GpioSyncStateTrigger(List<PinState> states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioSyncStateTrigger(List<PinState> states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	@Override
-	public void invoke(GpioPin pin, PinState state) {
-		if (targetPin != null) {
-			targetPin.setState(state);
-		}
-	}
+    @Override
+    public void invoke(GpioPin pin, PinState state) {
+        if (targetPin != null) {
+            targetPin.setState(state);
+        }
+    }
 }

@@ -4,7 +4,7 @@ package com.pi4j.device.gate.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  GateOpenerDevice.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -34,13 +34,12 @@ import com.pi4j.component.sensor.SensorState;
 import com.pi4j.component.switches.Switch;
 import com.pi4j.device.access.impl.OpenerDevice;
 
-public class GateOpenerDevice extends OpenerDevice
-{
+public class GateOpenerDevice extends OpenerDevice {
     public GateOpenerDevice(Relay relay, Sensor gateSensor, SensorState gateOpenSensorState) {
         super(relay, gateSensor, gateOpenSensorState);
     }
 
     public GateOpenerDevice(Relay relay, Sensor gateSensor, SensorState gateOpenSensorState, Switch lock) {
         super(relay, gateSensor, gateOpenSensorState, lock);
-    }       
+    }
 }

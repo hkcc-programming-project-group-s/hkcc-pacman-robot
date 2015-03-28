@@ -4,7 +4,7 @@ package com.pi4j.component.sensor;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Sensor.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,12 +31,16 @@ package com.pi4j.component.sensor;
 import com.pi4j.component.ObserveableComponent;
 
 public interface Sensor extends ObserveableComponent {
-    
+
     boolean isOpen();
+
     boolean isClosed();
+
     SensorState getState();
+
     boolean isState(SensorState state);
 
     void addListener(SensorListener... listener);
+
     void removeListener(SensorListener... listener);
 }

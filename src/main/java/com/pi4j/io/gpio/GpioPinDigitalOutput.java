@@ -40,21 +40,37 @@ import java.util.concurrent.Future;
 public interface GpioPinDigitalOutput extends GpioPinDigital, GpioPinOutput {
 
     void high();
-    void low();    
+
+    void low();
+
     void toggle();
+
     Future<?> blink(long delay);
+
     Future<?> blink(long delay, PinState blinkState);
+
     Future<?> blink(long delay, long duration);
+
     Future<?> blink(long delay, long duration, PinState blinkState);
+
     Future<?> pulse(long duration);
+
     Future<?> pulse(long duration, Callable<Void> callback);
+
     Future<?> pulse(long duration, boolean blocking);
+
     Future<?> pulse(long duration, boolean blocking, Callable<Void> callback);
+
     Future<?> pulse(long duration, PinState pulseState);
+
     Future<?> pulse(long duration, PinState pulseState, Callable<Void> callback);
+
     Future<?> pulse(long duration, PinState pulseState, boolean blocking);
+
     Future<?> pulse(long duration, PinState pulseState, boolean blocking, Callable<Void> callback);
+
     void setState(PinState state);
+
     void setState(boolean state);
 
 }

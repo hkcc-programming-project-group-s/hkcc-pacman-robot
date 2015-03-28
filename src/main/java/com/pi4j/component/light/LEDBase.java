@@ -4,7 +4,7 @@ package com.pi4j.component.light;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  LEDBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,7 +31,7 @@ import com.pi4j.component.ComponentListener;
 import com.pi4j.component.ObserveableComponentBase;
 
 public abstract class LEDBase extends ObserveableComponentBase implements LED {
-    
+
     @Override
     public abstract void on();
 
@@ -45,15 +45,15 @@ public abstract class LEDBase extends ObserveableComponentBase implements LED {
     public boolean isOff() {
         return (!isOn());
     }
-    
+
     @Override
-    public void toggle(){
-        if(isOn())
+    public void toggle() {
+        if (isOn())
             off();
         else
             on();
     }
-     
+
     @Override
     public void addListener(LightListener... listener) {
         super.addListener(listener);
@@ -65,8 +65,8 @@ public abstract class LEDBase extends ObserveableComponentBase implements LED {
     }
 
     protected synchronized void notifyListeners(LightStateChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((LightListener)listener).onStateChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((LightListener) listener).onStateChange(event);
         }
-    }     
+    }
 }

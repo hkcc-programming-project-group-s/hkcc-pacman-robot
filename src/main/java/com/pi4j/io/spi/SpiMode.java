@@ -40,13 +40,13 @@ public enum SpiMode {
         return mode;
     }
 
-    public static SpiMode getByNumber(short modeNumber){
-        return getByNumber((int)modeNumber);
+    public static SpiMode getByNumber(short modeNumber) {
+        return getByNumber((int) modeNumber);
     }
 
-    public static SpiMode getByNumber(int modeNumber){
-        for(SpiMode item : SpiMode.values()){
-            if(item.getMode() == modeNumber){
+    public static SpiMode getByNumber(int modeNumber) {
+        for (SpiMode item : SpiMode.values()) {
+            if (item.getMode() == modeNumber) {
                 return item;
             }
         }

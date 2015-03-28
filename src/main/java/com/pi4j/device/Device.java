@@ -6,8 +6,8 @@ import java.util.Map;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
- * FILENAME      :  Device.java  
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
+ * FILENAME      :  GameDevice.java
  * 
  * This file is part of the Pi4J project. More information about 
  * this project can be found here:  http://www.pi4j.com/
@@ -31,19 +31,27 @@ import java.util.Map;
 
 
 public interface Device {
-    
+
     void setName(String name);
+
     String getName();
-    
+
     void setTag(Object tag);
+
     Object getTag();
-    
+
     void setProperty(String key, String value);
+
     boolean hasProperty(String key);
+
     String getProperty(String key, String defaultValue);
+
     String getProperty(String key);
-    Map<String,String> getProperties();
+
+    Map<String, String> getProperties();
+
     void removeProperty(String key);
-    void clearProperties();    
-    
+
+    void clearProperties();
+
 }

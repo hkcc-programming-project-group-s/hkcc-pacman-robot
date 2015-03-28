@@ -8,6 +8,8 @@ package hkccpacmanrobot.utils.map
 import java.util.concurrent.Semaphore
 import java.util.function.BiConsumer
 
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.{MapContent, MapKey, MapUnit, ObstacleMap}
+
 /**
  * Created by beenotung on 3/27/15.
  */

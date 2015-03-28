@@ -4,7 +4,7 @@ package com.pi4j.component.relay;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Relay.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,18 +31,28 @@ package com.pi4j.component.relay;
 import com.pi4j.component.ObserveableComponent;
 
 public interface Relay extends ObserveableComponent {
-    
+
     void open();
+
     void close();
+
     boolean isOpen();
+
     boolean isClosed();
+
     RelayState getState();
+
     void setState(RelayState state);
+
     boolean isState(RelayState state);
+
     void toggle();
+
     void pulse();
+
     void pulse(int milliseconds);
 
     void addListener(RelayListener... listener);
-    void removeListener(RelayListener... listener);    
+
+    void removeListener(RelayListener... listener);
 }

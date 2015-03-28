@@ -8,7 +8,7 @@ import java.io.IOException;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Potentiometer.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -36,70 +36,70 @@ import java.io.IOException;
  */
 public interface Potentiometer extends Component {
 
-	/**
-	 * @return The maximum wiper-value supported by the device
-	 */
-	int getMaxValue();
-	
-	/**
-	 * @return Whether the device is a potentiometer or a rheostat
-	 */
-	boolean isRheostat();
-	
-	/**
-	 * Set wiper's value. Values from 0 to 'maxValue' are valid. Values above or
-	 * below this boundaries are corrected quietly. 
-	 * 
-	 * @param value The wiper's value.
-	 * @throws IOException If communication with the device fails
-	 * @see #getMaxValue()
-	 */
-	void setCurrentValue(final int value) throws IOException;
-	
-	/**
-	 * The implementation should cache to wiper's value and therefore should
-	 * avoid accessing the device to often.
-	 * 
-	 * @return The wiper's current value.
-	 * @throws IOException If communication with the device fails
-	 */
-	int getCurrentValue() throws IOException;
-	
-	/**
-	 * Increase the wiper's value by one step. It is not an error if the wiper
-	 * already hit the upper boundary. In this situation the wiper doesn't change.
-	 * 
-	 * @throws IOException If communication with the device fails
-	 * @see #getMaxValue()
-	 */
-	void increase() throws IOException;
-	
-	/**
-	 * Increase the wiper's value by n steps. It is not an error if the wiper
-	 * hits or already hit the upper boundary. In such situations the wiper
-	 * sticks to the upper boundary or doesn't change.
-	 * 
-	 * @param steps How many steps to increase.
-	 * @throws IOException If communication with the device fails
-	 */
-	void increase(final int steps) throws IOException;
-	
-	/**
-	 * Decrease the wiper's value by one step. It is not an error if the wiper
-	 * already hit the lower boundary (0). In this situation the wiper doesn't change.
-	 * 
-	 * @throws IOException If communication with the device fails
-	 */
-	void decrease() throws IOException;
-	
-	/**
-	 * Decrease the wiper's value by n steps. It is not an error if the wiper
-	 * hits or already hit the lower boundary (0). In such situations the wiper
-	 * sticks to the lower boundary or doesn't change.
-	 * 
-	 * @param steps How many steps to decrease.
-	 * @throws IOException If communication with the device fails
-	 */
-	void decrease(final int steps) throws IOException;
-	
+    /**
+     * @return The maximum wiper-value supported by the device
+     */
+    int getMaxValue();
+
+    /**
+     * @return Whether the device is a potentiometer or a rheostat
+     */
+    boolean isRheostat();
+
+    /**
+     * Set wiper's value. Values from 0 to 'maxValue' are valid. Values above or
+     * below this boundaries are corrected quietly.
+     *
+     * @param value The wiper's value.
+     * @throws IOException If communication with the device fails
+     * @see #getMaxValue()
+     */
+    void setCurrentValue(final int value) throws IOException;
+
+    /**
+     * The implementation should cache to wiper's value and therefore should
+     * avoid accessing the device to often.
+     *
+     * @return The wiper's current value.
+     * @throws IOException If communication with the device fails
+     */
+    int getCurrentValue() throws IOException;
+
+    /**
+     * Increase the wiper's value by one step. It is not an error if the wiper
+     * already hit the upper boundary. In this situation the wiper doesn't change.
+     *
+     * @throws IOException If communication with the device fails
+     * @see #getMaxValue()
+     */
+    void increase() throws IOException;
+
+    /**
+     * Increase the wiper's value by n steps. It is not an error if the wiper
+     * hits or already hit the upper boundary. In such situations the wiper
+     * sticks to the upper boundary or doesn't change.
+     *
+     * @param steps How many steps to increase.
+     * @throws IOException If communication with the device fails
+     */
+    void increase(final int steps) throws IOException;
+
+    /**
+     * Decrease the wiper's value by one step. It is not an error if the wiper
+     * already hit the lower boundary (0). In this situation the wiper doesn't change.
+     *
+     * @throws IOException If communication with the device fails
+     */
+    void decrease() throws IOException;
+
+    /**
+     * Decrease the wiper's value by n steps. It is not an error if the wiper
+     * hits or already hit the lower boundary (0). In such situations the wiper
+     * sticks to the lower boundary or doesn't change.
+     *
+     * @param steps How many steps to decrease.
+     * @throws IOException If communication with the device fails
+     */
+    void decrease(final int steps) throws IOException;
+
 }

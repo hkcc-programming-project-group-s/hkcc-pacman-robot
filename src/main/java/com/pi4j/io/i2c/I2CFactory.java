@@ -36,35 +36,31 @@ import java.io.IOException;
  *         href="http://www.savagehomeautomation.com">http://www
  *         .savagehomeautomation.com</a>)
  */
-public class I2CFactory
-{
+public class I2CFactory {
 
-	volatile static I2CFactoryProvider provider = new I2CFactoryProviderRaspberry();
+    volatile static I2CFactoryProvider provider = new I2CFactoryProviderRaspberry();
 
-	// private constructor
-	private I2CFactory()
-	{
-		// forbid object construction
-	}
+    // private constructor
+    private I2CFactory() {
+        // forbid object construction
+    }
 
-	/**
-	 * Create new I2CBus instance
-	 * 
-	 * @return Return a new I2CBus impl instance.
-	 * 
-	 * @throws IOException
-	 */
-	public static I2CBus getInstance(int busNumber) throws IOException
-	{
-		return provider.getBus(busNumber);
-	}
+    /**
+     * Create new I2CBus instance
+     *
+     * @return Return a new I2CBus impl instance.
+     * @throws IOException
+     */
+    public static I2CBus getInstance(int busNumber) throws IOException {
+        return provider.getBus(busNumber);
+    }
 
-	/**
-	 * allow changing the provider for the factory
-	 * @param factoryProvider
-	 */
-	public static void setFactory(I2CFactoryProvider factoryProvider)
-	{
-		provider = factoryProvider;
-	}
+    /**
+     * allow changing the provider for the factory
+     *
+     * @param factoryProvider
+     */
+    public static void setFactory(I2CFactoryProvider factoryProvider) {
+        provider = factoryProvider;
+    }
 }

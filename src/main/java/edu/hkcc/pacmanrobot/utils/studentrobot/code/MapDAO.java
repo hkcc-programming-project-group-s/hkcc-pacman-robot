@@ -1,5 +1,7 @@
 package edu.hkcc.pacmanrobot.utils.studentrobot.code;
 
+import edu.hkcc.pacmanrobot.utils.DAO;
+
 public class MapDAO {
     public static final String TABLE_NAME = "map";
     public static final String TABLE_COL_X = "x";

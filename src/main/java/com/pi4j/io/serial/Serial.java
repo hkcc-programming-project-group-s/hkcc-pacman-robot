@@ -30,7 +30,7 @@ package com.pi4j.io.serial;
 
 /**
  * <p>This interface provides a set of functions for 'Serial' communication.</p>
- * 
+ * <p>
  * <p>
  * Before using the Pi4J library, you need to ensure that the Java VM in configured with access to
  * the following system libraries:
@@ -42,21 +42,20 @@ package com.pi4j.io.serial;
  * Gordon Henderson @ <a href="http://wiringpi.com/">http://wiringpi.com/</a>)
  * </blockquote>
  * </p>
- * 
+ *
+ * @author Robert Savage (<a
+ *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  * @see com.pi4j.io.serial.SerialFactory
  * @see com.pi4j.io.serial.SerialDataEvent
  * @see com.pi4j.io.serial.SerialDataListener
- * 
  * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
- * @author Robert Savage (<a
- *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  */
 @SuppressWarnings("unused")
 public interface Serial {
 
     /**
      * The default hardware COM port provided via the Raspberry Pi GPIO header.
-     * 
+     *
      * @see #open(String, int)
      */
     public static final String DEFAULT_COM_PORT = "/dev/ttyAMA0";
@@ -64,15 +63,13 @@ public interface Serial {
 
     /**
      * This method is call to open a serial port for communication.
-     * 
-     * @see #DEFAULT_COM_PORT
-     * 
-     * @param device The device address of the serial port to access. You can use constant
-     *            'DEFAULT_COM_PORT' if you wish to access the default serial port provided via the
-     *            GPIO header.
+     *
+     * @param device   The device address of the serial port to access. You can use constant
+     *                 'DEFAULT_COM_PORT' if you wish to access the default serial port provided via the
+     *                 GPIO header.
      * @param baudRate The baud rate to use with the serial port.
-     *            
      * @throws SerialPortException Exception thrown on any error.
+     * @see #DEFAULT_COM_PORT
      */
     public void open(String device, int baudRate) throws SerialPortException;
 
@@ -83,20 +80,20 @@ public interface Serial {
 
     /**
      * This method is called to determine if the serial port is already open.
-     * 
-     * @see #open(String, int)
+     *
      * @return a value of 'true' is returned if the serial port is already open.
+     * @see #open(String, int)
      */
     public boolean isOpen();
 
     /**
      * This method is called to determine if the serial port is already closed.
-     * 
-     * @see #open(String, int)
+     *
      * @return a value of 'true' is returned if the serial port is already in the closed state.
+     * @see #open(String, int)
      */
     public boolean isClosed();
-    
+
     /**
      * This method is called to immediately flush the serial data transmit buffer and force any
      * pending data to be sent to the serial port immediately.
@@ -111,7 +108,7 @@ public interface Serial {
      * received data from the serial port receive buffer and the received data will be available on
      * via the event.</b>
      * </p>
-     * 
+     *
      * @return next available character in the serial data buffer
      */
     public char read() throws IllegalStateException;
@@ -119,71 +116,71 @@ public interface Serial {
     /**
      * This method is called to submit a single character of data to the serial port transmit
      * buffer.
-     * 
+     *
      * @param data A single character to be transmitted.
      */
     public void write(char data) throws IllegalStateException;
 
     /**
      * This method is called to submit a character array of data to the serial port transmit buffer.
-     * 
-     * @param data  A character array of data to be transmitted.
+     *
+     * @param data A character array of data to be transmitted.
      */
     public void write(char data[]) throws IllegalStateException;
 
     /**
      * This method is called to submit a single byte of data to the serial port transmit buffer.
-     * 
-     * @param data  A single byte to be transmitted.
+     *
+     * @param data A single byte to be transmitted.
      */
     public void write(byte data) throws IllegalStateException;
 
     /**
      * This method is called to submit a byte array of data to the serial port transmit buffer.
-     * 
+     *
      * @param data A byte array of data to be transmitted.
      */
     public void write(byte data[]) throws IllegalStateException;
 
     /**
      * This method is called to submit a string of data to the serial port transmit buffer.
-     * 
-     * @param data  A string of data to be transmitted.
+     *
+     * @param data A string of data to be transmitted.
      */
     public void write(String data) throws IllegalStateException;
 
     /**
      * This method is called to submit a string of data with trailing CR + LF characters to the
      * serial port transmit buffer.
-     * 
-     * @param data  A string of data to be transmitted.
+     *
+     * @param data A string of data to be transmitted.
      */
     public void writeln(String data) throws IllegalStateException;
 
     /**
      * This method is called to submit a string of formatted data to the serial port transmit
      * buffer.
-     * 
-     * @param data  A string of formatted data to be transmitted.
-     * @param args  A series of arguments that can be included for the format string variable
-     *            replacements.
+     *
+     * @param data A string of formatted data to be transmitted.
+     * @param args A series of arguments that can be included for the format string variable
+     *             replacements.
      */
     public void write(String data, String... args) throws IllegalStateException;
 
     /**
      * This method is called to submit a string of formatted data with trailing CR + LF characters
      * to the serial port transmit buffer.
-     * 
-     * @param data  A string of formatted data to be transmitted.
-     * @param args  A series of arguments that can be included for the format string variable
-     *            replacements.
+     *
+     * @param data A string of formatted data to be transmitted.
+     * @param args A series of arguments that can be included for the format string variable
+     *             replacements.
      */
     public void writeln(String data, String... args) throws IllegalStateException;
 
     /**
      * This method is called to determine if and how many bytes are available on the serial received
      * data buffer.
-     * 
+     *
      * @return The number of available bytes pending in the serial received buffer is returned.
      */
     public int availableBytes() throws IllegalStateException;
@@ -193,33 +190,31 @@ public interface Serial {
      * Java consumer code can call this method to register itself as a listener for serial data
      * events.
      * </p>
-     * 
+     *
+     * @param listener A class instance that implements the SerialListener interface.
      * @see com.pi4j.io.serial.SerialDataListener
      * @see com.pi4j.io.serial.SerialDataEvent
-     * 
-     * @param listener  A class instance that implements the SerialListener interface.
      */
     public void addListener(SerialDataListener... listener);
 
     /**
      * <p> Java consumer code can call this method to unregister itself as a listener for serial data
      * events. </p>
-     * 
+     *
+     * @param listener A class instance that implements the SerialListener interface.
      * @see com.pi4j.io.serial.SerialDataListener
      * @see com.pi4j.io.serial.SerialDataEvent
-     * 
-     * @param listener A class instance that implements the SerialListener interface.
      */
     public void removeListener(SerialDataListener... listener);
-        
+
     /**
      * This method returns TRUE if the serial interface has been shutdown.
-     * 
+     *
      * @return shutdown state
      */
     public boolean isShutdown();
-    
-    
+
+
     /**
      * This method can be called to forcefully shutdown all serial data monitoring threads.
      */
@@ -227,6 +222,7 @@ public interface Serial {
 
     /**
      * This method returns the serial data receive monitor delay interval in milliseconds.
+     *
      * @return interval milliseconds
      */
     public int getMonitorInterval();

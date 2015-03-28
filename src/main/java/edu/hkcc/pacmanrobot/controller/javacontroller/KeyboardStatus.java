@@ -5,7 +5,7 @@ package edu.hkcc.pacmanrobot.controller.javacontroller;
  */
 public class KeyboardStatus {
     public Integer code;
-    public boolean isPressed=false;
+    public boolean isPressed = false;
 
     public KeyboardStatus(Integer code) {
         this.code = code;

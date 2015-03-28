@@ -4,7 +4,7 @@ package com.pi4j.component.relay;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  RelayState.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -29,15 +29,15 @@ package com.pi4j.component.relay;
 
 
 public enum RelayState {
-    
+
     OPEN,
     CLOSED;
-    
+
     public static RelayState getInverseState(RelayState state) {
-        if(state.equals(OPEN))
+        if (state.equals(OPEN))
             return CLOSED;
         else
             return OPEN;
     }
-    
+
 }

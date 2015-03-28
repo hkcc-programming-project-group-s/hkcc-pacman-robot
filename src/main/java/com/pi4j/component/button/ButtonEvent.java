@@ -4,7 +4,7 @@ package com.pi4j.component.button;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  ButtonEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -37,18 +37,18 @@ public class ButtonEvent extends EventObject {
     }
 
     public Button getButton() {
-        return (Button)getSource();
+        return (Button) getSource();
     }
 
-    public boolean isPressed(){
+    public boolean isPressed() {
         return getButton().isPressed();
     }
 
-    public boolean isReleased(){
+    public boolean isReleased() {
         return getButton().isReleased();
     }
 
-    public boolean isState(ButtonState state){
+    public boolean isState(ButtonState state) {
         return getButton().isState(state);
     }
 

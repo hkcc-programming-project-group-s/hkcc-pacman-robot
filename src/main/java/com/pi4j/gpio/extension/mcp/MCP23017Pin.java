@@ -1,11 +1,11 @@
 package com.pi4j.gpio.extension.mcp;
 
-import java.util.EnumSet;
-
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.impl.PinImpl;
+
+import java.util.EnumSet;
 
 /*
  * #%L
@@ -40,17 +40,16 @@ import com.pi4j.io.gpio.impl.PinImpl;
  * http://ww1.microchip.com/downloads/en/DeviceDoc/21952b.pdf
  * http://learn.adafruit.com/mcp230xx-gpio-expander-on-the-raspberry-pi/overview
  * </p>
- * 
+ * <p>
  * <p>
  * The MCP23017 is connected via I2C connection to the Raspberry Pi and provides
  * 16 GPIO pins that can be used for either digital input or digital output pins.
  * </p>
- * 
+ *
  * @author Robert Savage
- * 
  */
 public class MCP23017Pin {
-    
+
     public static final Pin GPIO_A0 = createDigitalPin(1, "GPIO A0");
     public static final Pin GPIO_A1 = createDigitalPin(2, "GPIO A1");
     public static final Pin GPIO_A2 = createDigitalPin(4, "GPIO A2");
@@ -67,22 +66,22 @@ public class MCP23017Pin {
     public static final Pin GPIO_B5 = createDigitalPin(1032, "GPIO B5");
     public static final Pin GPIO_B6 = createDigitalPin(1064, "GPIO B6");
     public static final Pin GPIO_B7 = createDigitalPin(1128, "GPIO B7");
-    
-    public static Pin[] ALL_A_PINS = { MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A3,
-                                       MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A7 };
-    
-    public static Pin[] ALL_B_PINS = { MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B2, MCP23017Pin.GPIO_B3,
-                                       MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B5, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B7 };
-    
-    public static Pin[] ALL = { MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A3,
-                                MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A7,
-                                MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B2, MCP23017Pin.GPIO_B3,
-                                MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B5, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B7 };
-    
+
+    public static Pin[] ALL_A_PINS = {MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A3,
+            MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A7};
+
+    public static Pin[] ALL_B_PINS = {MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B2, MCP23017Pin.GPIO_B3,
+            MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B5, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B7};
+
+    public static Pin[] ALL = {MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A3,
+            MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A7,
+            MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B2, MCP23017Pin.GPIO_B3,
+            MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B5, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B7};
+
     private static Pin createDigitalPin(int address, String name) {
-        return new PinImpl(MCP23017GpioProvider.NAME, address, name, 
-                    EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.DIGITAL_OUTPUT),
-                    EnumSet.of(PinPullResistance.PULL_UP, PinPullResistance.OFF));    
-    }    
+        return new PinImpl(MCP23017GpioProvider.NAME, address, name,
+                EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.DIGITAL_OUTPUT),
+                EnumSet.of(PinPullResistance.PULL_UP, PinPullResistance.OFF));
+    }
 
 }

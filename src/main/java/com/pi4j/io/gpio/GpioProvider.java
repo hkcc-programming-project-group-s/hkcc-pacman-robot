@@ -39,33 +39,44 @@ import com.pi4j.io.gpio.event.PinListener;
 public interface GpioProvider {
 
     String getName();
-    
+
     boolean hasPin(Pin pin);
 
     void export(Pin pin, PinMode mode, PinState defaultState);
+
     void export(Pin pin, PinMode mode);
+
     boolean isExported(Pin pin);
+
     void unexport(Pin pin);
 
     void setMode(Pin pin, PinMode mode);
-    PinMode getMode(Pin pin);    
-        
+
+    PinMode getMode(Pin pin);
+
     void setPullResistance(Pin pin, PinPullResistance resistance);
+
     PinPullResistance getPullResistance(Pin pin);
 
     void setState(Pin pin, PinState state);
+
     PinState getState(Pin pin);
-    
+
     void setValue(Pin pin, double value);
-    double getValue(Pin pin);    
+
+    double getValue(Pin pin);
 
     void setPwm(Pin pin, int value);
-    int getPwm(Pin pin);    
-    
+
+    int getPwm(Pin pin);
+
     void addListener(Pin pin, PinListener listener);
+
     void removeListener(Pin pin, PinListener listener);
+
     void removeAllListeners();
 
     void shutdown();
+
     boolean isShutdown();
 }

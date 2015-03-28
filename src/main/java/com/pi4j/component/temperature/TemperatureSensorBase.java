@@ -9,7 +9,7 @@ import com.pi4j.temperature.TemperatureScale;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  TemperatureSensorBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -39,12 +39,12 @@ public abstract class TemperatureSensorBase extends ObserveableComponentBase imp
 
     @Override
     public abstract TemperatureScale getScale();
-    
+
     @Override
     public double getTemperature(TemperatureScale scale) {
         return TemperatureConversion.convert(getScale(), scale, getTemperature());
-    }    
-    
+    }
+
     @Override
     public void addListener(TemperatureListener... listener) {
         super.addListener(listener);
@@ -56,8 +56,8 @@ public abstract class TemperatureSensorBase extends ObserveableComponentBase imp
     }
 
     protected synchronized void notifyListeners(TemperatureChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((TemperatureListener)listener).onTemperatureChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((TemperatureListener) listener).onTemperatureChange(event);
         }
-    } 
+    }
 }

@@ -13,6 +13,7 @@ public class KeyboardSettings {
     public KeyboardSettings() {
         this(MODE_ARROW);
     }
+
     public KeyboardSettings(String mode) {
         switch (mode) {
             case MODE_ARROW:

@@ -1,5 +1,7 @@
 package edu.hkcc.pacmanrobot.utils;
 
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.Position;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,25 +19,6 @@ public class DAO {
                 "root", "rootpw");
     }
 
-    public static class Position {
-        public double x, y, z;
-        public Timestamp time;
-
-        public Position(double x, double y, double z, Timestamp time) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.time = time;
-        }
-
-        public Position(double x, double y, double z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            time = null;
-        }
-
-    }
 
     //Sever Access Object
     public static class PositionManager extends Thread {

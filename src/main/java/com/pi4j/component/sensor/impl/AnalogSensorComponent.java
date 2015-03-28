@@ -4,7 +4,7 @@ package com.pi4j.component.sensor.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  AnalogSensorComponent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -35,11 +35,11 @@ import com.pi4j.io.gpio.event.GpioPinAnalogValueChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerAnalog;
 
 public class AnalogSensorComponent extends AnalogSensorBase {
-    
+
     // internal class members
     private GpioPinAnalogInput pin = null;
     private final AnalogSensor sensor = this;
-    
+
     // create internal pin listener
     private GpioPinListenerAnalog pinListener = new GpioPinListenerAnalog() {
 
@@ -49,22 +49,21 @@ public class AnalogSensorComponent extends AnalogSensorBase {
             notifyListeners(new AnalogSensorValueChangeEvent(sensor, sensor.getValue(), event.getValue()));
         }
     };
-    
+
     /**
-     * default constructor 
-     *  
+     * default constructor
+     *
      * @param pin analog input pin
      */
     public AnalogSensorComponent(GpioPinAnalogInput pin) {
         this.pin = pin;
-        
+
         // add pin listener
         this.pin.addListener(pinListener);
     }
 
     @Override
-    public double getValue()
-    {
+    public double getValue() {
         return pin.getValue();
     }
 }

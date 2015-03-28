@@ -4,7 +4,7 @@ package com.pi4j.component.lcd;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  LCD.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,43 +31,68 @@ package com.pi4j.component.lcd;
 import com.pi4j.component.Component;
 
 public interface LCD extends Component {
- 
+
     int getRowCount();
+
     int getColumnCount();
 
     void clear();
+
     void clear(int row);
+
     void clear(int row, int column, int length);
-    
+
     void setCursorHome();
+
     void setCursorPosition(int row);
+
     void setCursorPosition(int row, int column);
-    
+
     void write(String data);
-    void write(String data, Object...arguments);
+
+    void write(String data, Object... arguments);
+
     void write(char[] data);
+
     void write(byte[] data);
+
     void write(char data);
+
     void write(byte data);
 
     void write(int row, String data, LCDTextAlignment alignment);
-    void write(int row, String data, LCDTextAlignment alignment, Object...arguments);
+
+    void write(int row, String data, LCDTextAlignment alignment, Object... arguments);
+
     void write(int row, String data);
-    void write(int row, String data, Object...arguments);
+
+    void write(int row, String data, Object... arguments);
+
     void write(int row, char[] data);
+
     void write(int row, byte[] data);
+
     void write(int row, char data);
+
     void write(int row, byte data);
-    
+
     void write(int row, int column, String data);
-    void write(int row, int column, String data, Object...arguments);
+
+    void write(int row, int column, String data, Object... arguments);
+
     void write(int row, int column, char[] data);
+
     void write(int row, int column, byte[] data);
+
     void write(int row, int column, char data);
+
     void write(int row, int column, byte data);
-    
+
     void writeln(int row, String data);
-    void writeln(int row, String data, Object...arguments);
+
+    void writeln(int row, String data, Object... arguments);
+
     void writeln(int row, String data, LCDTextAlignment alignment);
-    void writeln(int row, String data, LCDTextAlignment alignment, Object...arguments);    
+
+    void writeln(int row, String data, LCDTextAlignment alignment, Object... arguments);
 }

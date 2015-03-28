@@ -55,19 +55,19 @@ public class GpioEventDispatchTaskImpl implements Runnable {
                 PinState state = ((PinDigitalStateChangeEvent) event).getState();
 
                 // create a copy of the listeners collection
-                Collection<GpioPinListener> listeners  = new ArrayList<GpioPinListener>(pin.getListeners());
+                Collection<GpioPinListener> listeners = new ArrayList<GpioPinListener>(pin.getListeners());
 
                 // process event callbacks for digital listeners
                 for (GpioPinListener listener : listeners) {
-                    if(listener != null && listener instanceof GpioPinListenerDigital) {
+                    if (listener != null && listener instanceof GpioPinListenerDigital) {
                         ((GpioPinListenerDigital) listener)
-                            .handleGpioPinDigitalStateChangeEvent(new GpioPinDigitalStateChangeEvent(
-                                    event.getSource(), pin, state));
+                                .handleGpioPinDigitalStateChangeEvent(new GpioPinDigitalStateChangeEvent(
+                                        event.getSource(), pin, state));
                     }
                 }
 
                 // create a copy of the triggers collection
-                Collection<GpioTrigger> triggers  = new ArrayList<GpioTrigger>(pin.getTriggers());
+                Collection<GpioTrigger> triggers = new ArrayList<GpioTrigger>(pin.getTriggers());
 
                 // process triggers
                 for (GpioTrigger trigger : triggers) {
@@ -79,14 +79,14 @@ public class GpioEventDispatchTaskImpl implements Runnable {
                 double value = ((PinAnalogValueChangeEvent) event).getValue();
 
                 // create a copy of the listeners collection
-                Collection<GpioPinListener> listeners  = new ArrayList<GpioPinListener>(pin.getListeners());
+                Collection<GpioPinListener> listeners = new ArrayList<GpioPinListener>(pin.getListeners());
 
                 // process event callbacks for analog listeners
                 for (GpioPinListener listener : listeners) {
                     if (listener != null && listener instanceof GpioPinListenerAnalog) {
                         ((GpioPinListenerAnalog) listener)
-                            .handleGpioPinAnalogValueChangeEvent(new GpioPinAnalogValueChangeEvent(
-                                    event.getSource(), pin, value));
+                                .handleGpioPinAnalogValueChangeEvent(new GpioPinAnalogValueChangeEvent(
+                                        event.getSource(), pin, value));
                     }
                 }
             }

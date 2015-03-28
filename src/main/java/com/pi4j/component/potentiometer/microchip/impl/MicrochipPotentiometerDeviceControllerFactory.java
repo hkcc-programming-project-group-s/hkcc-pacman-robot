@@ -8,7 +8,7 @@ import java.io.IOException;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  MicrochipPotentiometerDeviceControllerFactory.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -35,17 +35,17 @@ import java.io.IOException;
  * Factory which builds controller-instances. Usually the user does
  * not need to know about the controller-factory. It is used to
  * build testable potentiometers used by the JUnit-tests.
- * 
+ *
  * @author <a href="http://raspelikan.blogspot.co.at">Raspelikan</a>
  */
 public interface MicrochipPotentiometerDeviceControllerFactory {
 
-	/**
-	 * @param i2cDevice The underlying I2CDevice
-	 * @return The controller built
-	 * @throws IOException Thrown if any communication to the device fails
-	 */
-	public MicrochipPotentiometerDeviceController getController(final I2CDevice i2cDevice)
-			throws IOException;
-	
+    /**
+     * @param i2cDevice The underlying I2CDevice
+     * @return The controller built
+     * @throws IOException Thrown if any communication to the device fails
+     */
+    public MicrochipPotentiometerDeviceController getController(final I2CDevice i2cDevice)
+            throws IOException;
+
 }

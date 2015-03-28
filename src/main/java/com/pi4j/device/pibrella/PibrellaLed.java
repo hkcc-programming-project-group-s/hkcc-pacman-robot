@@ -4,7 +4,7 @@ package com.pi4j.device.pibrella;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  PibrellaLed.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -34,12 +34,12 @@ public enum PibrellaLed {
     GREEN(2);   // Broadcom GPIO pin #04
 
     private int index = -1;
-    
-    private PibrellaLed(int index){
+
+    private PibrellaLed(int index) {
         this.index = index;
     }
-    
-    public int getIndex(){
+
+    public int getIndex() {
         return index;
     }
 }

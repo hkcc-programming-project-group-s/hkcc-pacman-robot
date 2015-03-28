@@ -31,9 +31,8 @@ import java.io.IOException;
 
 /**
  * This is abstraction of i2c bus. This interface allows bus to return i2c device.
- * 
- * @author Daniel Sendula
  *
+ * @author Daniel Sendula
  */
 
 public interface I2CBus {
@@ -43,20 +42,20 @@ public interface I2CBus {
 
     /**
      * Returns i2c device.
+     *
      * @param address i2c device's address
      * @return i2c device
-     * 
      * @throws IOException thrown in case this bus cannot return i2c device.
      */
     I2CDevice getDevice(int address) throws IOException;
-    
+
     String getFileName();
-    
+
     int getFileDescriptor();
-    
+
     /**
      * Closes this bus. This usually means closing underlying file.
-     * 
+     *
      * @throws IOException thrown in case there are problems closing this i2c bus.
      */
     void close() throws IOException;

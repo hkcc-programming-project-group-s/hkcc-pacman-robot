@@ -4,7 +4,7 @@ package com.pi4j.component.light;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  LightLevelChangeEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -36,13 +36,13 @@ public class LightLevelChangeEvent extends EventObject {
 
     public LightLevelChangeEvent(DimmableLight light, int level) {
         super(light);
-        this.level = level;        
+        this.level = level;
     }
 
     public DimmableLight getLight() {
-        return (DimmableLight)getSource();
+        return (DimmableLight) getSource();
     }
-    
+
     public int getLevel() {
         return level;
     }

@@ -4,7 +4,7 @@ package com.pi4j.component.motor;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  StepperMotor.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -30,11 +30,18 @@ package com.pi4j.component.motor;
 public interface StepperMotor extends Motor {
 
     float getStepsPerRevolution();
-    void setStepsPerRevolution(int steps);    
+
+    void setStepsPerRevolution(int steps);
+
     void setStepInterval(long milliseconds);
+
     void setStepInterval(long milliseconds, int nanoseconds);
+
     void setStepSequence(byte[] sequence);
+
     byte[] getStepSequence();
+
     void rotate(double revolutions);
+
     void step(long steps);
 }

@@ -4,7 +4,7 @@ package com.pi4j.component.sensor.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  DistanceSensorComponent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -35,11 +35,11 @@ import com.pi4j.io.gpio.event.GpioPinAnalogValueChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerAnalog;
 
 public class DistanceSensorComponent extends DistanceSensorBase {
-    
+
     // internal class members
     private GpioPinAnalogInput pin = null;
     private final DistanceSensor sensor = this;
-    
+
     // create internal pin listener
     private GpioPinListenerAnalog pinListener = new GpioPinListenerAnalog() {
 
@@ -52,19 +52,18 @@ public class DistanceSensorComponent extends DistanceSensorBase {
 
     /**
      * default constructor
-     *  
+     *
      * @param pin analog input pin
      */
     public DistanceSensorComponent(GpioPinAnalogInput pin) {
         this.pin = pin;
-        
+
         // add pin listener
-        this.pin.addListener(pinListener); 
+        this.pin.addListener(pinListener);
     }
 
     @Override
-    public double getValue()
-    {
+    public double getValue() {
         return pin.getValue();
     }
 }

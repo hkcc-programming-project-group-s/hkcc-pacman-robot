@@ -26,9 +26,6 @@ package com.pi4j.gpio.extension.pca;
  * limitations under the License.
  * #L%
  */
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import com.pi4j.io.gpio.GpioProvider;
 import com.pi4j.io.gpio.GpioProviderBase;
@@ -41,6 +38,10 @@ import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * <p>
  * This GPIO provider implements the PCA9685 16-channel, 12-bit PWM I2C-bus LED/Servo controller as native Pi4J GPIO pins.
@@ -52,7 +53,7 @@ import com.pi4j.io.i2c.I2CFactory;
  * ...and especially about the board here:<br>
  * <a href="http://www.adafruit.com/products/815">Adafruit 16-Channel 12-bit PWM/Servo Driver</a>
  * </p>
- * 
+ *
  * @author Christian Wehrli
  */
 public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvider {
@@ -67,7 +68,7 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
      */
     public static final BigDecimal ANALOG_SERVO_FREQUENCY = new BigDecimal("45.454");
     /**
-     * This would result in a period duration of ~11ms which is recommended when using digital servos ONLY! 
+     * This would result in a period duration of ~11ms which is recommended when using digital servos ONLY!
      */
     public static final BigDecimal DIGITAL_SERVO_FREQUENCY = new BigDecimal("90.909");
     public static final BigDecimal DEFAULT_FREQUENCY = ANALOG_SERVO_FREQUENCY;
@@ -111,8 +112,8 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
 
     /**
      * Target frequency (accuracy is around +/- 5%!)
-     * 
-     * @param frequency desired PWM frequency 
+     *
+     * @param frequency desired PWM frequency
      * @see #setFrequency(int, BigDecimal)
      */
     public void setFrequency(BigDecimal frequency) {
@@ -129,8 +130,8 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
      * target freq: 50Hz<br>
      * actual freq: 52.93Hz<br>
      * correction factor: 52.93 / 50 = 1.0586<br>
-     *   
-     * @param targetFrequency desired frequency
+     *
+     * @param targetFrequency           desired frequency
      * @param frequencyCorrectionFactor 'actual frequency' / 'target frequency'
      */
     public void setFrequency(BigDecimal targetFrequency, BigDecimal frequencyCorrectionFactor) {
@@ -157,8 +158,8 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
     /**
      * Set pulse duration in microseconds.<br>
      * Make sure duration doesn't exceed period time(1'000'000/freq)!
-     * 
-     * @param pin represents channel 0..15
+     *
+     * @param pin      represents channel 0..15
      * @param duration pulse duration in microseconds
      */
     @Override
@@ -175,9 +176,9 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
      * asynchronous to the internal oscillator, we want to ensure that we do not see any visual
      * artifacts of changing the ON and OFF values. This is achieved by updating the changes at
      * the end of the LOW cycle.
-     * 
-     * @param pin represents channel 0..15
-     * @param onPosition value between 0 and 4095
+     *
+     * @param pin         represents channel 0..15
+     * @param onPosition  value between 0 and 4095
      * @param offPosition value between 0 and 4095
      */
     public void setPwm(Pin pin, int onPosition, int offPosition) {
@@ -202,7 +203,7 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
     /**
      * Permanently sets the output to High (no PWM anymore).<br>
      * The LEDn_ON_H output control bit 4, when set to logic 1, causes the output to be always ON.
-     *  
+     *
      * @param pin represents channel 0..15
      */
     public void setAlwaysOn(Pin pin) {
@@ -223,9 +224,9 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
 
     /**
      * Permanently sets the output to Low (no PWM anymore).<br>
-     * The LEDn_OFF_H output control bit 4, when set to logic 1, causes the output to be always OFF. 
+     * The LEDn_OFF_H output control bit 4, when set to logic 1, causes the output to be always OFF.
      * In this case the values in the LEDn_ON registers are ignored.
-     *  
+     *
      * @param pin represents channel 0..15
      */
     public void setAlwaysOff(Pin pin) {
@@ -254,7 +255,7 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
 
     /**
      * Calculates the OFF position for a certain pulse duration.
-     * 
+     *
      * @param duration pulse duration in microseconds
      * @return OFF position(value between 1 and 4095)
      */
@@ -367,7 +368,7 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
         reset();
         try {
             // if we are the owner of the I2C bus, then close it
-            if(i2cBusOwner) {
+            if (i2cBusOwner) {
                 // close the I2C bus communication
                 bus.close();
             }

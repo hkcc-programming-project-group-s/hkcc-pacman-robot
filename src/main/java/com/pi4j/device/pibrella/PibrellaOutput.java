@@ -4,7 +4,7 @@ package com.pi4j.device.pibrella;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  PibrellaOutput.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -43,15 +43,16 @@ public enum PibrellaOutput {
     private int index = -1;
     private Pin pin = null;
 
-    private PibrellaOutput(int index, Pin pin){
+    private PibrellaOutput(int index, Pin pin) {
         this.index = index;
         this.pin = pin;
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return index;
     }
-    public Pin getPin(){
+
+    public Pin getPin() {
         return pin;
     }
 }

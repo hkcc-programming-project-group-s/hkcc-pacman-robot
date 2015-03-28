@@ -13,5 +13,5 @@ public class Config {
 
     public static long RECONNECTION_TIMEOUT = 500;
     public static long MOVEMENT_COMMAND_INTERVAL = 50;
-    public static long MOTOR_CYCLE_INTERVAL=500;
+    public static long MOTOR_CYCLE_INTERVAL = 500;
 }

@@ -1,8 +1,6 @@
 package edu.hkcc.pacmanrobot.robot.assignmentrobot;
 
-import edu.hkcc.pacmanrobot.robot.Robot;
-
-public class AssignmentRobot extends Robot{
+public class AssignmentRobot extends Robot {
 
     @Override
     public void setup() {

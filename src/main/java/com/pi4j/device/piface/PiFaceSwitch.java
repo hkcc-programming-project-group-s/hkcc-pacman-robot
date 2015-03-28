@@ -4,7 +4,7 @@ package com.pi4j.device.piface;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  PiFaceSwitch.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -33,14 +33,14 @@ public enum PiFaceSwitch {
     S2(1),
     S3(2),
     S4(3);
-    
+
     private int index = -1;
-    
-    private PiFaceSwitch(int index){
+
+    private PiFaceSwitch(int index) {
         this.index = index;
     }
-    
-    public int getIndex(){
+
+    public int getIndex() {
         return index;
     }
 }

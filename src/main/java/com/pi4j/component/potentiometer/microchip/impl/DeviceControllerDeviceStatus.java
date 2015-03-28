@@ -4,7 +4,7 @@ package com.pi4j.component.potentiometer.microchip.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  DeviceControllerDeviceStatus.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,50 +31,50 @@ package com.pi4j.component.potentiometer.microchip.impl;
  * The device's status
  */
 class DeviceControllerDeviceStatus {
-	
-	private boolean eepromWriteActive;
-	private boolean eepromWriteProtected;
-	private boolean channelALocked;
-	private boolean channelBLocked;
-	
-	public DeviceControllerDeviceStatus(boolean eepromWriteActive, boolean eepromWriteProtected,
+
+    private boolean eepromWriteActive;
+    private boolean eepromWriteProtected;
+    private boolean channelALocked;
+    private boolean channelBLocked;
+
+    public DeviceControllerDeviceStatus(boolean eepromWriteActive, boolean eepromWriteProtected,
                                         boolean channelALocked, boolean channelBLocked) {
-		this.eepromWriteActive = eepromWriteActive;
-		this.eepromWriteProtected = eepromWriteProtected;
-		this.channelALocked = channelALocked;
-		this.channelBLocked = channelBLocked;
-	}
+        this.eepromWriteActive = eepromWriteActive;
+        this.eepromWriteProtected = eepromWriteProtected;
+        this.channelALocked = channelALocked;
+        this.channelBLocked = channelBLocked;
+    }
 
-	/**
-	 * Writing to EEPROM takes a couple of cycles. During this time
-	 * any actions taken on non-volatile wipers fail due to active
-	 * writing.
-	 * 
-	 * @return Whether writing to EEPROM is active
-	 */
-	public boolean isEepromWriteActive() {
-		return eepromWriteActive;
-	}
+    /**
+     * Writing to EEPROM takes a couple of cycles. During this time
+     * any actions taken on non-volatile wipers fail due to active
+     * writing.
+     *
+     * @return Whether writing to EEPROM is active
+     */
+    public boolean isEepromWriteActive() {
+        return eepromWriteActive;
+    }
 
-	/**
-	 * @return Whether EEPROM write-protection is enabled
-	 */
-	public boolean isEepromWriteProtected() {
-		return eepromWriteProtected;
-	}
+    /**
+     * @return Whether EEPROM write-protection is enabled
+     */
+    public boolean isEepromWriteProtected() {
+        return eepromWriteProtected;
+    }
 
-	/**
-	 * @return Whether wiper of channel 'A' is locked
-	 */
-	public boolean isChannelALocked() {
-		return channelALocked;
-	}
+    /**
+     * @return Whether wiper of channel 'A' is locked
+     */
+    public boolean isChannelALocked() {
+        return channelALocked;
+    }
 
-	/**
-	 * @return Whether wiper of channel 'B' is locked
-	 */
-	public boolean isChannelBLocked() {
-		return channelBLocked;
-	}
-	
+    /**
+     * @return Whether wiper of channel 'B' is locked
+     */
+    public boolean isChannelBLocked() {
+        return channelBLocked;
+    }
+
 }

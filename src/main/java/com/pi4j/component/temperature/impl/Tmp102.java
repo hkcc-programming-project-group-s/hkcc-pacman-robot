@@ -5,7 +5,6 @@
  */
 
 
-
 package com.pi4j.component.temperature.impl;
 
 //~--- non-JDK imports --------------------------------------------------------
@@ -14,7 +13,7 @@ package com.pi4j.component.temperature.impl;
 * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Tmp102.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -36,65 +35,62 @@ package com.pi4j.component.temperature.impl;
  * limitations under the License.
  * #L%
  */
+
 import com.pi4j.component.temperature.TemperatureSensor;
 import com.pi4j.component.temperature.TemperatureSensorBase;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
 import com.pi4j.temperature.TemperatureScale;
 
-//~--- JDK imports ------------------------------------------------------------
-
 import java.io.IOException;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+//~--- JDK imports ------------------------------------------------------------
 
 //~--- classes ----------------------------------------------------------------
 
 /**
- *
  * @author andy
  */
 public class Tmp102 extends TemperatureSensorBase implements TemperatureSensor {
-    int       i2cAddr;
+    int i2cAddr;
     I2CDevice dev;
 
     /**
      * Constructs ...
      *
-     *
      * @param i2cBus
      * @param i2cAddr
-     *
      * @throws IOException
      */
     public Tmp102(int i2cBus, int i2cAddr) throws IOException {
         this.i2cAddr = i2cAddr;
-        this.dev     = I2CFactory.getInstance(i2cBus).getDevice(i2cAddr);
+        this.dev = I2CFactory.getInstance(i2cBus).getDevice(i2cAddr);
     }
 
     @Override
     public double getTemperature() {
-        double retVal     = 0;
-        int    temp       = 0;
+        double retVal = 0;
+        int temp = 0;
         byte[] tempBuffer = new byte[2];
 
         try {
             dev.read(tempBuffer, 0, 2);
 
             int msb = (tempBuffer[0] < 0)
-                      ? 256 + tempBuffer[0]
-                      : tempBuffer[0];
+                    ? 256 + tempBuffer[0]
+                    : tempBuffer[0];
             int lsb = (tempBuffer[1] < 0)
-                      ? 256 + tempBuffer[1]
-                      : tempBuffer[1];
+                    ? 256 + tempBuffer[1]
+                    : tempBuffer[1];
 
             msb = msb << 4;
             lsb = lsb >> 4;
 
             int count = msb | lsb;
 
-            retVal =  count * 0.0625;
+            retVal = count * 0.0625;
         } catch (IOException ex) {
             Logger.getLogger(Tmp102.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -103,7 +99,7 @@ public class Tmp102 extends TemperatureSensorBase implements TemperatureSensor {
     }
 
     public double getTemperature(TemperatureScale t) {
-        double retVal  = 0;
+        double retVal = 0;
         double rawTemp = getTemperature();
 
         if (TemperatureScale.FARENHEIT == t) {

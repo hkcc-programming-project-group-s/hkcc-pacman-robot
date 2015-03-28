@@ -4,7 +4,7 @@ package com.pi4j.component.temperature;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  TemperatureSensor.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -34,9 +34,12 @@ import com.pi4j.temperature.TemperatureScale;
 public interface TemperatureSensor extends ObserveableComponent {
 
     double getTemperature();
+
     double getTemperature(TemperatureScale scale);
+
     TemperatureScale getScale();
-    
+
     void addListener(TemperatureListener... listener);
+
     void removeListener(TemperatureListener... listener);
 }

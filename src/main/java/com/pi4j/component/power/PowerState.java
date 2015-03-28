@@ -4,7 +4,7 @@ package com.pi4j.component.power;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  PowerState.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -29,9 +29,9 @@ package com.pi4j.component.power;
 
 
 public enum PowerState {
-    
+
     UNKNOWN,
     ON,
     OFF
-    
+
 }

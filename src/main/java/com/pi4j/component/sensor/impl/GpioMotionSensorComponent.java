@@ -4,7 +4,7 @@ package com.pi4j.component.sensor.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  GpioMotionSensorComponent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -37,55 +37,55 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 public class GpioMotionSensorComponent extends MotionSensorBase {
-    
+
     // internal class members
     private GpioPinDigitalInput pin = null;
     private PinState motionDetectedState = PinState.HIGH;
     private final MotionSensor sensor = this;
-    
+
     // create internal pin listener
     private GpioPinListenerDigital pinListener = new GpioPinListenerDigital() {
 
         @Override
-        public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {            
+        public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
             // notify any motion sensor change listeners
-            notifyListeners(new MotionSensorChangeEvent(sensor, (event.getState() == motionDetectedState)));                
+            notifyListeners(new MotionSensorChangeEvent(sensor, (event.getState() == motionDetectedState)));
         }
     };
-    
+
     /**
-     * using this constructor requires that the consumer 
-     *  define the MOTION DETECTED pin state 
-     *  
-     * @param pin GPIO digital input pin
+     * using this constructor requires that the consumer
+     * define the MOTION DETECTED pin state
+     *
+     * @param pin                 GPIO digital input pin
      * @param motionDetectedState pin state to set when SENSOR DETECTS MOTION
      */
     public GpioMotionSensorComponent(GpioPinDigitalInput pin, PinState motionDetectedState) {
         this.pin = pin;
         this.motionDetectedState = motionDetectedState;
-        
+
         // add pin listener
         this.pin.addListener(pinListener);
     }
 
     /**
      * default constructor; using this constructor assumes that:
-     *  (1) a pin state of HIGH is MOTION DETECTED
-     *  
+     * (1) a pin state of HIGH is MOTION DETECTED
+     *
      * @param pin GPIO digital input pin
      */
     public GpioMotionSensorComponent(GpioPinDigitalInput pin) {
         this.pin = pin;
-        
+
         // add pin listener
-        this.pin.addListener(pinListener); 
+        this.pin.addListener(pinListener);
     }
 
     /**
-     * Return 'true' if motion is currently detected   
+     * Return 'true' if motion is currently detected
      * based on the GPIO digital input pin state.
-     *  
-     * @return motion detected status 
+     *
+     * @return motion detected status
      */
     @Override
     public boolean isMotionDetected() {

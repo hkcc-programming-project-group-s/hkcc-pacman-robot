@@ -20,7 +20,7 @@ package com.pi4j.component.sensor.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  SRF02DistanceSensorI2C.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -51,19 +51,17 @@ import com.pi4j.io.i2c.I2CFactory;
 import java.io.IOException;
 
 /**
- *
  * @author andy
- *
- *
- *  TODO:  Implement a polling thread to raise value change events!
- *
+ *         <p>
+ *         <p>
+ *         TODO:  Implement a polling thread to raise value change events!
  */
-public class SRF02DistanceSensorI2C extends DistanceSensorBase{
+public class SRF02DistanceSensorI2C extends DistanceSensorBase {
 
-    private static final byte COMMAND_REGISTER          = 0x00;
-    private static final byte COMMAND_RANGE_INCHES      = 0x50;
+    private static final byte COMMAND_REGISTER = 0x00;
+    private static final byte COMMAND_RANGE_INCHES = 0x50;
     private static final byte COMMAND_RANGE_CENTIMETERS = 0x51;
-    private byte[]            buffer;
+    private byte[] buffer;
 
     public static final int DEFAULT_ADDRESS = 0x70;
 
@@ -84,10 +82,10 @@ public class SRF02DistanceSensorI2C extends DistanceSensorBase{
         device = bus.getDevice(device_address);
         buffer = new byte[10];
     }
-    
+
     @Override
     public double getValue() {
-        short result  = -1;
+        short result = -1;
         boolean bSuccess = false;
 
         try {
@@ -110,7 +108,7 @@ public class SRF02DistanceSensorI2C extends DistanceSensorBase{
 
                 if (buffer[0] != 0xFF) {
                     bSuccess = true;
-                    result = (short)((buffer[2] >> 8) + (buffer[3]&0xFF));
+                    result = (short) ((buffer[2] >> 8) + (buffer[3] & 0xFF));
                 } else {
                     try {
                         Thread.currentThread().sleep(10);    // takes up to 66ms after you initiate ranging so slow loop down
@@ -137,5 +135,5 @@ public class SRF02DistanceSensorI2C extends DistanceSensorBase{
         address = newAddress;
         device = bus.getDevice(address);
     }
-    
+
 }

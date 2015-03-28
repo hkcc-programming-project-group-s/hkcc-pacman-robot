@@ -4,7 +4,7 @@ package com.pi4j.component.sensor;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  MotionSensorBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -28,17 +28,17 @@ package com.pi4j.component.sensor;
  */
 
 
-import java.util.Date;
-
 import com.pi4j.component.ComponentListener;
 import com.pi4j.component.ObserveableComponentBase;
 
+import java.util.Date;
+
 
 public abstract class MotionSensorBase extends ObserveableComponentBase implements MotionSensor {
-    
+
     protected Date lastMotionTimestamp = null;
     protected Date lastInactivityTimestamp = null;
-    
+
     @Override
     public Date getLastMotionTimestamp() {
         return lastMotionTimestamp;
@@ -48,7 +48,7 @@ public abstract class MotionSensorBase extends ObserveableComponentBase implemen
     public Date getLastInactivityTimestamp() {
         return lastInactivityTimestamp;
     }
-    
+
     @Override
     public abstract boolean isMotionDetected();
 
@@ -64,14 +64,14 @@ public abstract class MotionSensorBase extends ObserveableComponentBase implemen
 
     protected synchronized void notifyListeners(MotionSensorChangeEvent event) {
         // cache last detected timestamp
-        if(event.isMotionDetected())
+        if (event.isMotionDetected())
             lastMotionTimestamp = event.timestamp;
         else
             lastInactivityTimestamp = event.timestamp;
-        
+
         // raise events to listeners
-        for(ComponentListener listener : super.listeners) {
-            ((MotionSensorListener)listener).onMotionStateChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((MotionSensorListener) listener).onMotionStateChange(event);
         }
-    }  
+    }
 }

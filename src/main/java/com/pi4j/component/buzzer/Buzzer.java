@@ -4,7 +4,7 @@ package com.pi4j.component.buzzer;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Buzzer.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -42,7 +42,7 @@ public interface Buzzer {
      * start the buzzer at a specific frequency for a specified duration in milliseconds
      *
      * @param frequency
-     * @param duration number of milliseconds
+     * @param duration  number of milliseconds
      */
     public void buzz(int frequency, int duration);
 

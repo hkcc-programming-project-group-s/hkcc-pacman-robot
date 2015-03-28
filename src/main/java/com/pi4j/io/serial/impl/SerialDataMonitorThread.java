@@ -40,7 +40,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * This implementation class implements the 'Serial' monitoring thread to poll the serial received
  * buffer and notify registered event listeners when data is available.
  * </p>
- * 
+ * <p>
  * <p>
  * Before using the Pi4J library, you need to ensure that the Java VM in configured with access to
  * the following system libraries:
@@ -52,15 +52,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Gordon Henderson @ <a href="http://wiringpi.com/">http://wiringpi.com/</a>)
  * </blockquote>
  * </p>
- * 
+ *
+ * @author Robert Savage (<a
+ *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  * @see com.pi4j.io.serial.Serial
  * @see com.pi4j.io.serial.SerialDataEvent
  * @see com.pi4j.io.serial.SerialDataListener
  * @see com.pi4j.io.serial.SerialFactory
- * 
  * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
- * @author Robert Savage (<a
- *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  */
 public class SerialDataMonitorThread extends Thread {
 
@@ -71,9 +70,9 @@ public class SerialDataMonitorThread extends Thread {
     /**
      * <p> Default constructor </p>
      * <p> NOTE: This class is used internal to the Pi4J library by the SerialImpl class.</p>
-     * 
-     * @param serial  A class that implements the 'Serial' interface.
-     * @param listeners  A collection of class instances that implement the SerialListener interface.
+     *
+     * @param serial    A class that implements the 'Serial' interface.
+     * @param listeners A collection of class instances that implement the SerialListener interface.
      */
     public SerialDataMonitorThread(Serial serial, CopyOnWriteArrayList<SerialDataListener> listeners) {
         this.serial = serial;

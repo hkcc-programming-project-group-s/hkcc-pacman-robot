@@ -33,9 +33,9 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 public class GpioBlinkTaskImpl implements Runnable {
 
     private final GpioPinDigitalOutput pin;
-    
+
     public GpioBlinkTaskImpl(GpioPinDigitalOutput pin) {
-        this.pin = pin;        
+        this.pin = pin;
     }
 
     public void run() {

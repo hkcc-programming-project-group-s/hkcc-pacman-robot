@@ -6,7 +6,7 @@ import java.util.concurrent.Future;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  LED.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -30,10 +30,14 @@ import java.util.concurrent.Future;
  */
 
 public interface LED extends Light {
-    
+
     void toggle();
+
     Future<?> blink(long delay);
+
     Future<?> blink(long delay, long duration);
-    Future<?> pulse(long duration);    
-    Future<?> pulse(long duration, boolean blocking);    
+
+    Future<?> pulse(long duration);
+
+    Future<?> pulse(long duration, boolean blocking);
 }

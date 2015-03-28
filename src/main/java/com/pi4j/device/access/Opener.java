@@ -4,7 +4,7 @@ package com.pi4j.device.access;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Opener.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,16 +31,24 @@ package com.pi4j.device.access;
 import com.pi4j.device.ObserveableDevice;
 
 public interface Opener extends ObserveableDevice {
-    
+
     void open() throws OpenerLockedException;
+
     void close() throws OpenerLockedException;
+
     boolean isOpen();
+
     boolean isOpening();
+
     boolean isClosed();
+
     boolean isClosing();
+
     OpenerState getState();
+
     boolean isLocked();
-    
+
     void addListener(OpenerListener... listener);
-    void removeListener(OpenerListener... listener);    
+
+    void removeListener(OpenerListener... listener);
 }

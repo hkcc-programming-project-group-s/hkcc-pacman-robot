@@ -28,16 +28,16 @@ package com.pi4j.io.gpio.impl;
  */
 
 
-import java.util.EnumSet;
-
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.PinPullResistance;
 
+import java.util.EnumSet;
+
 public class PinImpl implements Pin {
 
     private final int address;
-    private final String name ;
+    private final String name;
     private final String provider;
     private final EnumSet<PinPullResistance> supportedPinPullResistance;
     private final EnumSet<PinMode> supportedPinModes;
@@ -53,12 +53,12 @@ public class PinImpl implements Pin {
     public PinImpl(String provider, int address, String name, EnumSet<PinMode> modes) {
         this(provider, address, name, modes, null);
     }
-    
+
     @Override
     public int getAddress() {
         return address;
     }
-    
+
     @Override
     public String getName() {
         return name;
@@ -68,7 +68,7 @@ public class PinImpl implements Pin {
     public String getProvider() {
         return provider;
     }
-    
+
     @Override
     public String toString() {
         return name;

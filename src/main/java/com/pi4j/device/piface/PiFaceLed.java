@@ -4,7 +4,7 @@ package com.pi4j.device.piface;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  PiFaceLed.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -37,14 +37,14 @@ public enum PiFaceLed {
     LED5(5),
     LED6(6),
     LED7(7);
-    
+
     private int index = -1;
-    
-    private PiFaceLed(int index){
+
+    private PiFaceLed(int index) {
         this.index = index;
     }
-    
-    public int getIndex(){
+
+    public int getIndex() {
         return index;
-    }                
+    }
 }

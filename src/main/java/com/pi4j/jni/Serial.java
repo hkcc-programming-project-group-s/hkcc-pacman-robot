@@ -28,13 +28,13 @@ package com.pi4j.jni;
  */
 
 /**
- *  THIS IS CURRENTLY A NO-IMPL STUB.
- *  THIS IS WHERE A NEW SERIAL LIBRARY IMPLEMENTATION IS PLANNED.
+ * THIS IS CURRENTLY A NO-IMPL STUB.
+ * THIS IS WHERE A NEW SERIAL LIBRARY IMPLEMENTATION IS PLANNED.
  */
 public class Serial {
 
     // private constructor 
-    private Serial()  {
+    private Serial() {
         // forbid object construction 
     }
 

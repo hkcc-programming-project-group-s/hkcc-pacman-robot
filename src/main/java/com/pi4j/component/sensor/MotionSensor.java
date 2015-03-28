@@ -4,7 +4,7 @@ package com.pi4j.component.sensor;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  MotionSensor.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -28,16 +28,19 @@ package com.pi4j.component.sensor;
  */
 
 
-import java.util.Date;
-
 import com.pi4j.component.ObserveableComponent;
 
+import java.util.Date;
+
 public interface MotionSensor extends ObserveableComponent {
-    
+
     Date getLastMotionTimestamp();
+
     Date getLastInactivityTimestamp();
+
     boolean isMotionDetected();
 
     void addListener(MotionSensorListener... listener);
+
     void removeListener(MotionSensorListener... listener);
 }

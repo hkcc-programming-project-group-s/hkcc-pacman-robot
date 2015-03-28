@@ -45,16 +45,12 @@ public class SpiDeviceImpl implements SpiDevice {
     protected final SpiMode mode;
 
     /**
-     * Creates the SPI Device at the given spi and input channel
+     * Creates the SPI GameDevice at the given spi and input channel
      *
-     * @param channel
-     *            spi channel to use
-     * @param speed
-     *            spi speed/rate (in Hertz) for channel to communicate at
-     *            (range is 500kHz - 32MHz)
-     * @param mode
-     *            spi mode (see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
-     *
+     * @param channel spi channel to use
+     * @param speed   spi speed/rate (in Hertz) for channel to communicate at
+     *                (range is 500kHz - 32MHz)
+     * @param mode    spi mode (see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
      */
     public SpiDeviceImpl(SpiChannel channel, int speed, SpiMode mode) throws IOException {
         this.channel = channel;
@@ -70,37 +66,32 @@ public class SpiDeviceImpl implements SpiDevice {
     }
 
     /**
-     * Creates the SPI Device at the given spi and input channel
+     * Creates the SPI GameDevice at the given spi and input channel
      *
-     * @param channel
-     *            spi channel to use
-     * @param speed
-     *            spi speed/rate (in Hertz) for channel to communicate at
-     *            (range is 500kHz - 32MHz)
+     * @param channel spi channel to use
+     * @param speed   spi speed/rate (in Hertz) for channel to communicate at
+     *                (range is 500kHz - 32MHz)
      */
     public SpiDeviceImpl(SpiChannel channel, int speed) throws IOException {
         this(channel, speed, DEFAULT_SPI_MODE);
     }
 
     /**
-     * Creates the SPI Device at the given SPI and input channel
+     * Creates the SPI GameDevice at the given SPI and input channel
      * (A default speed of 1 MHz will be used)
      *
-     * @param channel
-     *            spi channel to use
-     * @param mode
-     *            spi mode (see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
+     * @param channel spi channel to use
+     * @param mode    spi mode (see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
      */
     public SpiDeviceImpl(SpiChannel channel, SpiMode mode) throws IOException {
         this(channel, DEFAULT_SPI_SPEED, mode);
     }
 
     /**
-     * Creates the SPI Device at the given SPI and input channel
+     * Creates the SPI GameDevice at the given SPI and input channel
      * (A default speed of 1 MHz will be used)
      *
-     * @param channel
-     *            spi channel to use
+     * @param channel spi channel to use
      */
     public SpiDeviceImpl(SpiChannel channel) throws IOException {
         this(channel, DEFAULT_SPI_SPEED);
@@ -127,10 +118,9 @@ public class SpiDeviceImpl implements SpiDevice {
     public byte[] write(InputStream input) throws IOException {
 
         // ensure bytes are available
-        if(input.available() <= 0){
+        if (input.available() <= 0) {
             throw new IOException("No available bytes in input stream to write to SPI channel: " + channel.getChannel());
-        }
-        else if(input.available() > MAX_SUPPORTED_BYTES){
+        } else if (input.available() > MAX_SUPPORTED_BYTES) {
             throw new IOException("Number of bytes in stream exceed the maximum bytes allowed to write SPI channel in a single call");
         }
 
@@ -138,7 +128,7 @@ public class SpiDeviceImpl implements SpiDevice {
         byte[] buffer = new byte[MAX_SUPPORTED_BYTES];
 
         // read maximum number of supported bytes
-        int length = input.read(buffer, 0 , MAX_SUPPORTED_BYTES);
+        int length = input.read(buffer, 0, MAX_SUPPORTED_BYTES);
 
         // write bytes to SPI channel
         return write(buffer, 0, length);
@@ -182,11 +172,11 @@ public class SpiDeviceImpl implements SpiDevice {
         System.arraycopy(data, start, buffer, 0, length);
 
         synchronized (channel) {
-                // write the bytes from the temporary buffer to the SPI channel
-                if (Spi.wiringPiSPIDataRW(channel.getChannel(), buffer) <= 0) {
-                    throw new IOException("Failed to write data to SPI channel: " + channel.getChannel());
-                }
+            // write the bytes from the temporary buffer to the SPI channel
+            if (Spi.wiringPiSPIDataRW(channel.getChannel(), buffer) <= 0) {
+                throw new IOException("Failed to write data to SPI channel: " + channel.getChannel());
             }
+        }
         // return the updated byte buffer as the SPI read results
         return buffer;
     }

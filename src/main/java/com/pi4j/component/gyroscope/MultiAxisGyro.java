@@ -4,7 +4,7 @@ package com.pi4j.component.gyroscope;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  MultiAxisGyro.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -30,14 +30,15 @@ package com.pi4j.component.gyroscope;
 import java.io.IOException;
 
 public interface MultiAxisGyro {
-    
+
     Gyroscope init(Gyroscope triggeringAxis, int triggeringMode) throws IOException;
 
     void enable() throws IOException;
+
     void disable() throws IOException;
 
     void readGyro() throws IOException;
-    
+
     int getTimeDelta();
 
     void recalibrateOffset() throws IOException;

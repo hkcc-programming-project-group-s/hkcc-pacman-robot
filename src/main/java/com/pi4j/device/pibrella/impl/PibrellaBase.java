@@ -4,7 +4,7 @@ package com.pi4j.device.pibrella.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  PibrellaBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -38,7 +38,7 @@ import com.pi4j.device.pibrella.*;
 import com.pi4j.io.gpio.*;
 
 public abstract class PibrellaBase extends DeviceBase implements Pibrella {
-    
+
     private final GpioController gpio = GpioFactory.getInstance();
 
     private GpioPinDigitalInput inputPins[];
@@ -53,22 +53,22 @@ public abstract class PibrellaBase extends DeviceBase implements Pibrella {
     public PibrellaBase() {
 
         // provision gpio input pins
-        inputPins = new GpioPinDigitalInput[] {
-                                  gpio.provisionDigitalInputPin(PibrellaInput.A.getPin(), "INPUT A"),
-                                  gpio.provisionDigitalInputPin(PibrellaInput.B.getPin(), "INPUT B"),
-                                  gpio.provisionDigitalInputPin(PibrellaInput.C.getPin(), "INPUT C"),
-                                  gpio.provisionDigitalInputPin(PibrellaInput.D.getPin(), "INPUT D"),
-                                  gpio.provisionDigitalInputPin(PibrellaInput.Button.getPin(), "BUTTON")};
+        inputPins = new GpioPinDigitalInput[]{
+                gpio.provisionDigitalInputPin(PibrellaInput.A.getPin(), "INPUT A"),
+                gpio.provisionDigitalInputPin(PibrellaInput.B.getPin(), "INPUT B"),
+                gpio.provisionDigitalInputPin(PibrellaInput.C.getPin(), "INPUT C"),
+                gpio.provisionDigitalInputPin(PibrellaInput.D.getPin(), "INPUT D"),
+                gpio.provisionDigitalInputPin(PibrellaInput.Button.getPin(), "BUTTON")};
 
         // provision gpio output pins
-        outputPins = new GpioPinDigitalOutput[] {
-                                  gpio.provisionDigitalOutputPin(PibrellaOutput.E.getPin(), "OUTPUT E"),
-                                  gpio.provisionDigitalOutputPin(PibrellaOutput.F.getPin(), "OUTPUT F"),
-                                  gpio.provisionDigitalOutputPin(PibrellaOutput.G.getPin(), "OUTPUT G"),
-                                  gpio.provisionDigitalOutputPin(PibrellaOutput.H.getPin(), "OUTPUT H"),
-                                  gpio.provisionDigitalOutputPin(PibrellaOutput.LED_RED.getPin(), "RED LED"),
-                                  gpio.provisionDigitalOutputPin(PibrellaOutput.LED_YELLOW.getPin(), "YELLOW LED"),
-                                  gpio.provisionDigitalOutputPin(PibrellaOutput.LED_GREEN.getPin(), "GREEN LED")};
+        outputPins = new GpioPinDigitalOutput[]{
+                gpio.provisionDigitalOutputPin(PibrellaOutput.E.getPin(), "OUTPUT E"),
+                gpio.provisionDigitalOutputPin(PibrellaOutput.F.getPin(), "OUTPUT F"),
+                gpio.provisionDigitalOutputPin(PibrellaOutput.G.getPin(), "OUTPUT G"),
+                gpio.provisionDigitalOutputPin(PibrellaOutput.H.getPin(), "OUTPUT H"),
+                gpio.provisionDigitalOutputPin(PibrellaOutput.LED_RED.getPin(), "RED LED"),
+                gpio.provisionDigitalOutputPin(PibrellaOutput.LED_YELLOW.getPin(), "YELLOW LED"),
+                gpio.provisionDigitalOutputPin(PibrellaOutput.LED_GREEN.getPin(), "GREEN LED")};
 
         // provision gpio PWM pin (for buzzer)
         pwmOutput = gpio.provisionPwmOutputPin(PibrellaBuzzer.BUZZER.getPin());
@@ -86,9 +86,9 @@ public abstract class PibrellaBase extends DeviceBase implements Pibrella {
         button = new GpioButtonComponent(inputPins[4], PinState.LOW, PinState.HIGH);
 
         // create LED components
-        leds = new LED[] {        new GpioLEDComponent(outputPins[4]),
-                                  new GpioLEDComponent(outputPins[5]),
-                                  new GpioLEDComponent(outputPins[6])};
+        leds = new LED[]{new GpioLEDComponent(outputPins[4]),
+                new GpioLEDComponent(outputPins[5]),
+                new GpioLEDComponent(outputPins[6])};
 
         // create buzzer components
         buzzer = new PibrellaBuzzerImpl(pwmOutput);
@@ -99,43 +99,61 @@ public abstract class PibrellaBase extends DeviceBase implements Pibrella {
      * @return the gpio controller
      */
     @Override
-    public GpioController getGpio() { return gpio;}
+    public GpioController getGpio() {
+        return gpio;
+    }
 
     /**
      * @return the gpio controller
      */
     @Override
-    public GpioController gpio() { return getGpio(); }
+    public GpioController gpio() {
+        return getGpio();
+    }
 
     /**
      * @return the inputPins
      */
     @Override
-    public GpioPinDigitalInput[] getInputPins() { return inputPins; }
+    public GpioPinDigitalInput[] getInputPins() {
+        return inputPins;
+    }
 
     /**
      * @return an inputPin
      */
     @Override
-    public GpioPinDigitalInput getInputPin(int index) { return inputPins[index]; }
+    public GpioPinDigitalInput getInputPin(int index) {
+        return inputPins[index];
+    }
 
     /**
      * @return an inputPin
      */
     @Override
-    public GpioPinDigitalInput getInputPin(PibrellaInput input) { return getInputPin(input.getIndex()); }
+    public GpioPinDigitalInput getInputPin(PibrellaInput input) {
+        return getInputPin(input.getIndex());
+    }
 
     @Override
-    public GpioPinDigitalInput inputA() { return getInputPin(PibrellaInput.A); }
+    public GpioPinDigitalInput inputA() {
+        return getInputPin(PibrellaInput.A);
+    }
 
     @Override
-    public GpioPinDigitalInput inputB() { return getInputPin(PibrellaInput.B); }
+    public GpioPinDigitalInput inputB() {
+        return getInputPin(PibrellaInput.B);
+    }
 
     @Override
-    public GpioPinDigitalInput inputC() { return getInputPin(PibrellaInput.C); }
+    public GpioPinDigitalInput inputC() {
+        return getInputPin(PibrellaInput.C);
+    }
 
     @Override
-    public GpioPinDigitalInput inputD() { return getInputPin(PibrellaInput.D); }
+    public GpioPinDigitalInput inputD() {
+        return getInputPin(PibrellaInput.D);
+    }
 
     /**
      * @return the outputPins
@@ -149,25 +167,37 @@ public abstract class PibrellaBase extends DeviceBase implements Pibrella {
      * @return an outputPin
      */
     @Override
-    public GpioPinDigitalOutput getOutputPin(int index) { return outputPins[index]; }
+    public GpioPinDigitalOutput getOutputPin(int index) {
+        return outputPins[index];
+    }
 
     /**
      * @return an outputPin
      */
     @Override
-    public GpioPinDigitalOutput getOutputPin(PibrellaOutput output) { return getOutputPin(output.getIndex()); }
+    public GpioPinDigitalOutput getOutputPin(PibrellaOutput output) {
+        return getOutputPin(output.getIndex());
+    }
 
     @Override
-    public GpioPinDigitalOutput outputE() { return getOutputPin(PibrellaOutput.E); }
+    public GpioPinDigitalOutput outputE() {
+        return getOutputPin(PibrellaOutput.E);
+    }
 
     @Override
-    public GpioPinDigitalOutput outputF() { return getOutputPin(PibrellaOutput.F); }
+    public GpioPinDigitalOutput outputF() {
+        return getOutputPin(PibrellaOutput.F);
+    }
 
     @Override
-    public GpioPinDigitalOutput outputG() { return getOutputPin(PibrellaOutput.G); }
+    public GpioPinDigitalOutput outputG() {
+        return getOutputPin(PibrellaOutput.G);
+    }
 
     @Override
-    public GpioPinDigitalOutput outputH() { return getOutputPin(PibrellaOutput.H); }
+    public GpioPinDigitalOutput outputH() {
+        return getOutputPin(PibrellaOutput.H);
+    }
 
     /**
      * @return the leds
@@ -176,7 +206,7 @@ public abstract class PibrellaBase extends DeviceBase implements Pibrella {
     public LED[] getLeds() {
         return leds;
     }
-    
+
     /**
      * @return a led
      */
@@ -184,7 +214,7 @@ public abstract class PibrellaBase extends DeviceBase implements Pibrella {
     public LED getLed(int index) {
         return leds[index];
     }
-    
+
     /**
      * @return a led
      */
@@ -194,19 +224,29 @@ public abstract class PibrellaBase extends DeviceBase implements Pibrella {
     }
 
     @Override
-    public LED ledRed() { return getLed(PibrellaLed.RED.getIndex()); }
+    public LED ledRed() {
+        return getLed(PibrellaLed.RED.getIndex());
+    }
 
     @Override
-    public LED ledYellow() { return getLed(PibrellaLed.YELLOW.getIndex()); }
+    public LED ledYellow() {
+        return getLed(PibrellaLed.YELLOW.getIndex());
+    }
 
     @Override
-    public LED ledGreen() { return getLed(PibrellaLed.GREEN.getIndex()); }
+    public LED ledGreen() {
+        return getLed(PibrellaLed.GREEN.getIndex());
+    }
 
     @Override
-    public Button getButton() { return button; }
+    public Button getButton() {
+        return button;
+    }
 
     @Override
-    public Button button() { return getButton(); }
+    public Button button() {
+        return getButton();
+    }
 
     @Override
     public Buzzer getBuzzer() {
@@ -214,5 +254,7 @@ public abstract class PibrellaBase extends DeviceBase implements Pibrella {
     }
 
     @Override
-    public Buzzer buzzer() { return getBuzzer(); }
+    public Buzzer buzzer() {
+        return getBuzzer();
+    }
 }

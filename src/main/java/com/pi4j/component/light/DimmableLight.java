@@ -6,7 +6,7 @@ import com.pi4j.component.ObserveableComponent;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  DimmableLight.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,19 +31,28 @@ import com.pi4j.component.ObserveableComponent;
 
 
 public interface DimmableLight extends ObserveableComponent {
-    
+
     void setLevel(int level);
+
     int getLevel();
+
     float getLevelPercentage();
+
     float getLevelPercentage(int level);
+
     int getMinLevel();
-    int getMaxLevel();   
-    
+
+    int getMaxLevel();
+
     void on();
+
     void off();
+
     boolean isOn();
+
     boolean isOff();
-    
+
     void addListener(DimmableLightListener... listener);
-    void removeListener(DimmableLightListener... listener);     
+
+    void removeListener(DimmableLightListener... listener);
 }

@@ -4,7 +4,7 @@ package com.pi4j.device.fireplace.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  FireplaceDevice.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -45,7 +45,7 @@ public class FireplaceDevice extends FireplaceBase {
     protected final SensorState pilotLightOnState;
 
     public FireplaceDevice(final Relay fireplaceControlRelay,
-                           final Sensor pilotLightSensor){
+                           final Sensor pilotLightSensor) {
         this(fireplaceControlRelay, RelayState.CLOSED, pilotLightSensor, SensorState.CLOSED);
     }
 
@@ -53,12 +53,12 @@ public class FireplaceDevice extends FireplaceBase {
         this(fireplaceControlRelay, fireplaceOnRelayState, null, SensorState.CLOSED);
     }
 
-    public FireplaceDevice(final Relay fireplaceControlRelay){
+    public FireplaceDevice(final Relay fireplaceControlRelay) {
         this(fireplaceControlRelay, RelayState.CLOSED, null, SensorState.CLOSED);
     }
 
     public FireplaceDevice(final Relay fireplaceControlRelay, final RelayState fireplaceOnRelayState,
-                           final Sensor pilotLightSensor, final SensorState pilotLightOnState){
+                           final Sensor pilotLightSensor, final SensorState pilotLightOnState) {
         this.fireplaceControlRelay = fireplaceControlRelay;
         this.fireplaceOnRelayState = fireplaceOnRelayState;
         this.pilotLightSensor = pilotLightSensor;
@@ -68,11 +68,10 @@ public class FireplaceDevice extends FireplaceBase {
         fireplaceControlRelay.addListener(new RelayListener() {
             @Override
             public void onStateChange(RelayStateChangeEvent event) {
-                if(event.getNewState() == fireplaceOnRelayState){
+                if (event.getNewState() == fireplaceOnRelayState) {
                     notifyListeners(new FireplaceStateChangeEvent(FireplaceDevice.this,
                             FireplaceState.OFF, FireplaceState.ON));
-                }
-                else{
+                } else {
                     notifyListeners(new FireplaceStateChangeEvent(FireplaceDevice.this,
                             FireplaceState.ON, FireplaceState.OFF));
                 }
@@ -80,13 +79,13 @@ public class FireplaceDevice extends FireplaceBase {
         });
 
         // listen to fireplace pilot light sensor (if provided)
-        if(pilotLightSensor != null){
+        if (pilotLightSensor != null) {
             pilotLightSensor.addListener(new SensorListener() {
                 @Override
                 public void onStateChange(SensorStateChangeEvent event) {
                     // if the pilot light sensor no longer detects a flame,
                     // then turn off the fireplace!
-                    if(!pilotLightSensor.isState(pilotLightOnState)){
+                    if (!pilotLightSensor.isState(pilotLightOnState)) {
                         off();
                     }
 
@@ -99,7 +98,7 @@ public class FireplaceDevice extends FireplaceBase {
 
     @Override
     public FireplaceState getState() {
-        if(fireplaceControlRelay.isState(fireplaceOnRelayState))
+        if (fireplaceControlRelay.isState(fireplaceOnRelayState))
             return FireplaceState.ON;
         else
             return FireplaceState.OFF;
@@ -109,9 +108,9 @@ public class FireplaceDevice extends FireplaceBase {
     public void setState(FireplaceState state) throws FireplacePilotLightException {
 
         // turn fireplace OFF
-        if(state == FireplaceState.OFF){
+        if (state == FireplaceState.OFF) {
             // toggle the state of the relay if it's current in the ON state
-            if(fireplaceControlRelay.isState(fireplaceOnRelayState))
+            if (fireplaceControlRelay.isState(fireplaceOnRelayState))
                 fireplaceControlRelay.toggle();
         }
 
@@ -124,14 +123,14 @@ public class FireplaceDevice extends FireplaceBase {
             }
 
             // set the state of the relay to the ON state
-            if(!fireplaceControlRelay.isState(fireplaceOnRelayState))
+            if (!fireplaceControlRelay.isState(fireplaceOnRelayState))
                 fireplaceControlRelay.setState(fireplaceOnRelayState);
         }
     }
 
     @Override
     public boolean isPilotLightOn() {
-        if(pilotLightSensor == null) return false;
+        if (pilotLightSensor == null) return false;
         return pilotLightSensor.isState(pilotLightOnState);
     }
 

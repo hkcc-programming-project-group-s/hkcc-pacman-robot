@@ -4,7 +4,7 @@ package com.pi4j.device.gate;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  GateOpener.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,5 +31,5 @@ package com.pi4j.device.gate;
 import com.pi4j.device.access.Opener;
 
 public interface GateOpener extends Opener {
-    
+
 }

@@ -1,78 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="module_androidcontroller" default="compile.module.androidcontroller">
-  <dirname property="module.androidcontroller.basedir" file="${ant.file.module_androidcontroller}"/>
-  
-  <property name="module.jdk.home.androidcontroller" value="${jdk.home.android_api_19_platform}"/>
-  <property name="module.jdk.bin.androidcontroller" value="${jdk.bin.android_api_19_platform}"/>
-  <property name="module.jdk.classpath.androidcontroller" value="jdk.classpath.android_api_19_platform"/>
-  
-  <property name="compiler.args.androidcontroller" value="-encoding UTF-8 -source 8 ${compiler.args}"/>
-  
-  <property name="androidcontroller.output.dir" value="${module.androidcontroller.basedir}/../../out/production/AndroidController"/>
-  <property name="androidcontroller.testoutput.dir" value="${module.androidcontroller.basedir}/../../out/test/AndroidController"/>
-  
-  <path id="androidcontroller.module.bootclasspath">
-    <!-- Paths to be included in compilation bootclasspath -->
-  </path>
-  
-  <path id="androidcontroller.module.production.classpath">
-    <path refid="${module.jdk.classpath.androidcontroller}"/>
-  </path>
-  
-  <path id="androidcontroller.runtime.production.module.classpath">
-    <pathelement location="${androidcontroller.output.dir}"/>
-  </path>
-  
-  <path id="androidcontroller.module.classpath">
-    <path refid="${module.jdk.classpath.androidcontroller}"/>
-    <pathelement location="${androidcontroller.output.dir}"/>
-  </path>
-  
-  <path id="androidcontroller.runtime.module.classpath">
-    <pathelement location="${androidcontroller.testoutput.dir}"/>
-    <pathelement location="${androidcontroller.output.dir}"/>
-  </path>
-  
-  
-  <patternset id="excluded.from.module.androidcontroller">
-    <patternset refid="ignored.files"/>
-  </patternset>
-  
-  <patternset id="excluded.from.compilation.androidcontroller">
-    <patternset refid="excluded.from.module.androidcontroller"/>
-  </patternset>
-  
-  <path id="androidcontroller.module.sourcepath">
-    <dirset dir="${module.androidcontroller.basedir}">
-      <include name="gen"/>
-    </dirset>
-  </path>
-  
-  
-  <target name="compile.module.androidcontroller" depends="compile.module.androidcontroller.production,compile.module.androidcontroller.tests" description="Compile module AndroidController"/>
-  
-  <target name="compile.module.androidcontroller.production" depends="register.custom.compilers" description="Compile module AndroidController; production classes">
-    <mkdir dir="${androidcontroller.output.dir}"/>
-    <javac2 destdir="${androidcontroller.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.androidcontroller}/javac">
-      <compilerarg line="${compiler.args.androidcontroller}"/>
-      <bootclasspath refid="androidcontroller.module.bootclasspath"/>
-      <classpath refid="androidcontroller.module.production.classpath"/>
-      <src refid="androidcontroller.module.sourcepath"/>
-      <patternset refid="excluded.from.compilation.androidcontroller"/>
-    </javac2>
-    
-    <copy todir="${androidcontroller.output.dir}">
-      <fileset dir="${module.androidcontroller.basedir}/gen">
-        <patternset refid="compiler.resources"/>
-        <type type="file"/>
-      </fileset>
-    </copy>
-  </target>
-  
-  <target name="compile.module.androidcontroller.tests" depends="register.custom.compilers,compile.module.androidcontroller.production" description="compile module AndroidController; test classes" unless="skip.tests"/>
-  
-  <target name="clean.module.androidcontroller" description="cleanup module">
-    <delete dir="${androidcontroller.output.dir}"/>
-    <delete dir="${androidcontroller.testoutput.dir}"/>
-  </target>
+    <dirname property="module.androidcontroller.basedir" file="${ant.file.module_androidcontroller}"/>
+
+    <property name="module.jdk.home.androidcontroller" value="${jdk.home.android_api_19_platform}"/>
+    <property name="module.jdk.bin.androidcontroller" value="${jdk.bin.android_api_19_platform}"/>
+    <property name="module.jdk.classpath.androidcontroller" value="jdk.classpath.android_api_19_platform"/>
+
+    <property name="compiler.args.androidcontroller" value="-encoding UTF-8 -source 8 ${compiler.args}"/>
+
+    <property name="androidcontroller.output.dir"
+              value="${module.androidcontroller.basedir}/../../out/production/AndroidController"/>
+    <property name="androidcontroller.testoutput.dir"
+              value="${module.androidcontroller.basedir}/../../out/test/AndroidController"/>
+
+    <path id="androidcontroller.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="androidcontroller.module.production.classpath">
+        <path refid="${module.jdk.classpath.androidcontroller}"/>
+    </path>
+
+    <path id="androidcontroller.runtime.production.module.classpath">
+        <pathelement location="${androidcontroller.output.dir}"/>
+    </path>
+
+    <path id="androidcontroller.module.classpath">
+        <path refid="${module.jdk.classpath.androidcontroller}"/>
+        <pathelement location="${androidcontroller.output.dir}"/>
+    </path>
+
+    <path id="androidcontroller.runtime.module.classpath">
+        <pathelement location="${androidcontroller.testoutput.dir}"/>
+        <pathelement location="${androidcontroller.output.dir}"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.androidcontroller">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.androidcontroller">
+        <patternset refid="excluded.from.module.androidcontroller"/>
+    </patternset>
+
+    <path id="androidcontroller.module.sourcepath">
+        <dirset dir="${module.androidcontroller.basedir}">
+            <include name="gen"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.androidcontroller"
+            depends="compile.module.androidcontroller.production,compile.module.androidcontroller.tests"
+            description="Compile module AndroidController"/>
+
+    <target name="compile.module.androidcontroller.production" depends="register.custom.compilers"
+            description="Compile module AndroidController; production classes">
+        <mkdir dir="${androidcontroller.output.dir}"/>
+        <javac2 destdir="${androidcontroller.output.dir}" debug="${compiler.debug}"
+                nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
+                executable="${module.jdk.bin.androidcontroller}/javac">
+            <compilerarg line="${compiler.args.androidcontroller}"/>
+            <bootclasspath refid="androidcontroller.module.bootclasspath"/>
+            <classpath refid="androidcontroller.module.production.classpath"/>
+            <src refid="androidcontroller.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.androidcontroller"/>
+        </javac2>
+
+        <copy todir="${androidcontroller.output.dir}">
+            <fileset dir="${module.androidcontroller.basedir}/gen">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.androidcontroller.tests"
+            depends="register.custom.compilers,compile.module.androidcontroller.production"
+            description="compile module AndroidController; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.androidcontroller" description="cleanup module">
+        <delete dir="${androidcontroller.output.dir}"/>
+        <delete dir="${androidcontroller.testoutput.dir}"/>
+    </target>
 </project>

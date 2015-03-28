@@ -38,7 +38,7 @@ import java.util.concurrent.Callable;
 public class GpioCallbackTrigger extends GpioTriggerBase {
 
     private final Callable<Void> callback;
-    
+
     public GpioCallbackTrigger(Callable<Void> callback) {
         super();
         this.callback = callback;
@@ -58,7 +58,7 @@ public class GpioCallbackTrigger extends GpioTriggerBase {
         super(states);
         this.callback = callback;
     }
-    
+
     @Override
     public void invoke(GpioPin pin, PinState state) {
         if (callback != null) {

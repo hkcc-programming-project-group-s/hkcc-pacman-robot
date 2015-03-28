@@ -1,9 +1,5 @@
 package edu.hkcc.pacmanrobot.controller.AndroidController.old.src.hkccpacmanrobot.controller.androidcontroller.activity;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 public class GameJoystick {
 
     private Bitmap _joystick;

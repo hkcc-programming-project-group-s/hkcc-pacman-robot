@@ -4,7 +4,7 @@ package com.pi4j.device.pibrella.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  PibrellaBuzzerImpl.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -37,19 +37,17 @@ public class PibrellaBuzzerImpl implements Buzzer {
 
     protected final GpioPinPwmOutput pwm;
 
-    public PibrellaBuzzerImpl(GpioPinPwmOutput pwm){
+    public PibrellaBuzzerImpl(GpioPinPwmOutput pwm) {
         this.pwm = pwm;
         Gpio.pwmSetMode(Gpio.PWM_MODE_MS); // set PWM mode to MARK-SPACE
     }
 
     @Override
-    public void buzz(int frequency){
+    public void buzz(int frequency) {
         if (frequency == 0) {
             pwm.setPwm(frequency);
-        }
-        else
-        {
-            int range = 600000 / frequency ;
+        } else {
+            int range = 600000 / frequency;
             Gpio.pwmSetRange(range);
             pwm.setPwm(frequency / 2);
         }

@@ -4,7 +4,7 @@ package com.pi4j.device.piface.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  PiFaceBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -47,7 +47,7 @@ import com.pi4j.io.spi.SpiChannel;
 import java.io.IOException;
 
 public abstract class PiFaceBase extends DeviceBase implements PiFace {
-    
+
     private final GpioController gpio = GpioFactory.getInstance();
     private PiFaceGpioProvider gpioProvider;
     private GpioPinDigitalInput inputPins[];
@@ -63,51 +63,51 @@ public abstract class PiFaceBase extends DeviceBase implements PiFace {
 
     // default constructor
     public PiFaceBase(byte spiAddress, SpiChannel spiChannel) throws IOException {
-    
+
         // create Pi-Face GPIO provider
         gpioProvider = new PiFaceGpioProvider(spiAddress, spiChannel);
 
         // provision gpio input pins for the Pi-Face board 
-        inputPins = new GpioPinDigitalInput[] {
-                                  gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_00),
-                                  gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_01),
-                                  gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_02),
-                                  gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_03),
-                                  gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_04),
-                                  gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_05),
-                                  gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_06),
-                                  gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_07) };
-        
+        inputPins = new GpioPinDigitalInput[]{
+                gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_00),
+                gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_01),
+                gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_02),
+                gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_03),
+                gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_04),
+                gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_05),
+                gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_06),
+                gpio.provisionDigitalInputPin(gpioProvider, PiFacePin.INPUT_07)};
+
         // provision gpio output pins for the Pi-Face board    
-        outputPins = new GpioPinDigitalOutput[] {
-                                  gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_00),
-                                  gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_01),
-                                  gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_02),
-                                  gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_03),
-                                  gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_04),
-                                  gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_05),
-                                  gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_06),
-                                  gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_07) };
-        
+        outputPins = new GpioPinDigitalOutput[]{
+                gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_00),
+                gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_01),
+                gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_02),
+                gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_03),
+                gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_04),
+                gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_05),
+                gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_06),
+                gpio.provisionDigitalOutputPin(gpioProvider, PiFacePin.OUTPUT_07)};
+
         // create relay components for the first two output pins on the Pi-Face board
-        relays = new Relay[] {    new GpioRelayComponent(outputPins[0]),
-                                  new GpioRelayComponent(outputPins[1]) };
+        relays = new Relay[]{new GpioRelayComponent(outputPins[0]),
+                new GpioRelayComponent(outputPins[1])};
 
         // create switch components for the first four input pins on the Pi-Face board
-        switches = new Switch[] { new GpioSwitchComponent(inputPins[0], PinState.HIGH, PinState.LOW),
-                                  new GpioSwitchComponent(inputPins[1], PinState.HIGH, PinState.LOW),
-                                  new GpioSwitchComponent(inputPins[2], PinState.HIGH, PinState.LOW),
-                                  new GpioSwitchComponent(inputPins[3], PinState.HIGH, PinState.LOW) };
-        
+        switches = new Switch[]{new GpioSwitchComponent(inputPins[0], PinState.HIGH, PinState.LOW),
+                new GpioSwitchComponent(inputPins[1], PinState.HIGH, PinState.LOW),
+                new GpioSwitchComponent(inputPins[2], PinState.HIGH, PinState.LOW),
+                new GpioSwitchComponent(inputPins[3], PinState.HIGH, PinState.LOW)};
+
         // create LED components for the eight output pins on the Pi-Face board
-        leds = new LED[] {        new GpioLEDComponent(outputPins[0]),
-                                  new GpioLEDComponent(outputPins[1]),
-                                  new GpioLEDComponent(outputPins[2]),
-                                  new GpioLEDComponent(outputPins[3]),
-                                  new GpioLEDComponent(outputPins[4]),
-                                  new GpioLEDComponent(outputPins[5]),
-                                  new GpioLEDComponent(outputPins[6]),
-                                  new GpioLEDComponent(outputPins[7]) };
+        leds = new LED[]{new GpioLEDComponent(outputPins[0]),
+                new GpioLEDComponent(outputPins[1]),
+                new GpioLEDComponent(outputPins[2]),
+                new GpioLEDComponent(outputPins[3]),
+                new GpioLEDComponent(outputPins[4]),
+                new GpioLEDComponent(outputPins[5]),
+                new GpioLEDComponent(outputPins[6]),
+                new GpioLEDComponent(outputPins[7])};
 
     }
 
@@ -140,7 +140,7 @@ public abstract class PiFaceBase extends DeviceBase implements PiFace {
     public GpioPinDigitalInput getInputPin(int index) {
         return inputPins[index];
     }
-    
+
     /**
      * @return the outputPins
      */
@@ -156,7 +156,7 @@ public abstract class PiFaceBase extends DeviceBase implements PiFace {
     public GpioPinDigitalOutput getOutputPin(int index) {
         return outputPins[index];
     }
-    
+
     /**
      * @return the relays
      */
@@ -180,7 +180,7 @@ public abstract class PiFaceBase extends DeviceBase implements PiFace {
     public Relay getRelay(PiFaceRelay relay) {
         return relays[relay.getIndex()];
     }
-    
+
     /**
      * @return the switches
      */
@@ -204,7 +204,7 @@ public abstract class PiFaceBase extends DeviceBase implements PiFace {
     public Switch getSwitch(PiFaceSwitch switchValue) {
         return switches[switchValue.getIndex()];
     }
-    
+
     /**
      * @return the leds
      */
@@ -212,7 +212,7 @@ public abstract class PiFaceBase extends DeviceBase implements PiFace {
     public LED[] getLeds() {
         return leds;
     }
-    
+
     /**
      * @return a led
      */
@@ -220,12 +220,12 @@ public abstract class PiFaceBase extends DeviceBase implements PiFace {
     public LED getLed(int index) {
         return leds[index];
     }
-    
+
     /**
      * @return a led
      */
     @Override
     public LED getLed(PiFaceLed led) {
         return leds[led.getIndex()];
-    }    
+    }
 }

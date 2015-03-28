@@ -27,9 +27,9 @@ package com.pi4j.io.gpio.impl;
  * #L%
  */
 
+import com.pi4j.io.gpio.GpioPinShutdown;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.PinPullResistance;
-import com.pi4j.io.gpio.GpioPinShutdown;
 import com.pi4j.io.gpio.PinState;
 
 public class GpioPinShutdownImpl implements GpioPinShutdown {

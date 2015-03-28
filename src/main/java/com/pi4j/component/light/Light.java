@@ -4,7 +4,7 @@ package com.pi4j.component.light;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Light.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,12 +31,16 @@ package com.pi4j.component.light;
 import com.pi4j.component.ObserveableComponent;
 
 public interface Light extends ObserveableComponent {
-    
+
     void on();
+
     void off();
+
     boolean isOn();
+
     boolean isOff();
-    
+
     void addListener(LightListener... listener);
-    void removeListener(LightListener... listener);      
+
+    void removeListener(LightListener... listener);
 }

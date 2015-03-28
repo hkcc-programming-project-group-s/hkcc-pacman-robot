@@ -1,13 +1,5 @@
 package edu.hkcc.pacmanrobot.controller.AndroidController.old.src.hkccpacmanrobot.controller.androidcontroller.activity;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.os.Handler;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     private Context _context;

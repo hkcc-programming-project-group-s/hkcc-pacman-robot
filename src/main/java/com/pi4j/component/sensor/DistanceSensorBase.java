@@ -4,7 +4,7 @@ package com.pi4j.component.sensor;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  DistanceSensorBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -28,19 +28,19 @@ package com.pi4j.component.sensor;
  */
 
 
+import com.pi4j.component.ComponentListener;
+import com.pi4j.component.ObserveableComponentBase;
+
 import java.util.Date;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import com.pi4j.component.ComponentListener;
-import com.pi4j.component.ObserveableComponentBase;
-
 
 public abstract class DistanceSensorBase extends ObserveableComponentBase implements DistanceSensor {
-    
+
     protected Date lastDistanceTimestamp = null;
-    protected SortedMap<Double, Double> coordinates = new TreeMap<Double, Double>(); 
-    
+    protected SortedMap<Double, Double> coordinates = new TreeMap<Double, Double>();
+
     @Override
     public Date getLastDistanceTimestamp() {
         return lastDistanceTimestamp;
@@ -59,10 +59,10 @@ public abstract class DistanceSensorBase extends ObserveableComponentBase implem
     protected synchronized void notifyListeners(DistanceSensorChangeEvent event) {
         // cache last detected timestamp
         lastDistanceTimestamp = event.timestamp;
-        
+
         // raise events to listeners
-        for(ComponentListener listener : super.listeners) {
-            ((DistanceSensorListener)listener).onDistanceChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((DistanceSensorListener) listener).onDistanceChange(event);
         }
     }
 
@@ -72,33 +72,31 @@ public abstract class DistanceSensorBase extends ObserveableComponentBase implem
     }
 
     @Override
-    public boolean isValueInRange(double min, double max){
+    public boolean isValueInRange(double min, double max) {
         double value = getValue();
         return (value >= min && value <= max);
-    } 
+    }
 
     @Override
-    public double getDistance(){
+    public double getDistance() {
         return getDistance(getValue());
     }
 
     @Override
-    public double getDistance(double value){
+    public double getDistance(double value) {
         Double lower = null;
         Double upper = null;
-                
-        for(Double coordinate : coordinates.keySet()){
 
-            if(value == coordinate){
+        for (Double coordinate : coordinates.keySet()) {
+
+            if (value == coordinate) {
                 // return distance value
                 return coordinates.get(coordinate);
-            }
-            else if(value > coordinate){
+            } else if (value > coordinate) {
                 // set lower coordinate
                 lower = coordinate;
                 //System.out.println("LOWER: " + coordinate);
-            }
-            else if(value < coordinate){
+            } else if (value < coordinate) {
                 // set upper coordinate
                 upper = coordinate;
                 //System.out.println("UPPER: " + coordinate);
@@ -108,38 +106,38 @@ public abstract class DistanceSensorBase extends ObserveableComponentBase implem
 
 
         // out of range - below minimum distance
-        if(lower == null)
+        if (lower == null)
             return coordinates.get(coordinates.firstKey());
-        
+
         // out of range - over maximum distance
-        if(upper == null)         
+        if (upper == null)
             return coordinates.get(coordinates.lastKey());
-            
+
         // get the minimum and maximum distances in range
         Double minDistance = coordinates.get(lower);
         Double maxDistance = coordinates.get(upper);
-        
+
         // calculate the percentage difference
-        double diffPercentage = (value-lower)/(upper-lower);        
+        double diffPercentage = (value - lower) / (upper - lower);
         double diffDistance = (maxDistance - minDistance) * diffPercentage;
-        
+
         // return the minimum range distance plus the calculated percentage difference
         return minDistance + diffDistance;
     }
-    
+
     @Override
     public boolean isDistance(double distance) {
         return (getDistance() == distance);
     }
 
     @Override
-    public boolean isDistanceInRange(double min, double max){
+    public boolean isDistanceInRange(double min, double max) {
         double distance = getDistance();
         return (distance >= min && distance <= max);
-    }     
-    
+    }
+
     @Override
-    public void addCalibrationCoordinate(double value, double distance){
+    public void addCalibrationCoordinate(double value, double distance) {
         coordinates.put(value, distance);
     }
 }

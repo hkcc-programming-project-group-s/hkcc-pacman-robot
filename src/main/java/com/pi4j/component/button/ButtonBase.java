@@ -4,7 +4,7 @@ package com.pi4j.component.button;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  ButtonBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -90,18 +90,18 @@ public abstract class ButtonBase extends ObserveableComponentBase implements But
 
     @Override
     public void addListener(long delay, ButtonHoldListener... listener) {
-        for(ButtonHoldListener l : listener) {
+        for (ButtonHoldListener l : listener) {
             super.addListener(new ButtonHoldListenerWrapper(delay, l));
         }
     }
 
     @Override
-    public synchronized void removeListener(ButtonHoldListener ... listener) {
+    public synchronized void removeListener(ButtonHoldListener... listener) {
         List<ComponentListener> listeners_copy = new ArrayList<>(super.listeners);
-        for(ButtonHoldListener bhl : listener) {
-            for (ComponentListener cl : listeners_copy){
-                if(cl instanceof ButtonHoldListenerWrapper){
-                    if(((ButtonHoldListenerWrapper)cl).listener == bhl){
+        for (ButtonHoldListener bhl : listener) {
+            for (ComponentListener cl : listeners_copy) {
+                if (cl instanceof ButtonHoldListenerWrapper) {
+                    if (((ButtonHoldListenerWrapper) cl).listener == bhl) {
                         super.removeListener(cl);
                     }
                 }
@@ -115,7 +115,7 @@ public abstract class ButtonBase extends ObserveableComponentBase implements But
     protected synchronized void notifyListeners(final ButtonStateChangeEvent event) {
 
         // cancel any pending hold event futures
-        if(!holdEventFutures.isEmpty()) {
+        if (!holdEventFutures.isEmpty()) {
             for (ScheduledFuture future : holdEventFutures) {
                 future.cancel(false);
             }
@@ -123,20 +123,18 @@ public abstract class ButtonBase extends ObserveableComponentBase implements But
         }
 
         // iterate over all the subscribed listeners
-        for(ComponentListener listener : super.listeners) {
+        for (ComponentListener listener : super.listeners) {
 
-            if(listener instanceof ButtonStateChangeListener) {
+            if (listener instanceof ButtonStateChangeListener) {
                 ((ButtonStateChangeListener) listener).onStateChange((ButtonStateChangeEvent) event);
-            }
-            else if(event.isPressed() && listener instanceof ButtonPressedListener) {
+            } else if (event.isPressed() && listener instanceof ButtonPressedListener) {
                 ((ButtonPressedListener) listener).onButtonPressed(event);
-            }
-            else if(event.isReleased() && listener instanceof ButtonReleasedListener) {
+            } else if (event.isReleased() && listener instanceof ButtonReleasedListener) {
                 ((ButtonReleasedListener) listener).onButtonReleased(event);
             }
 
-            if(event.isPressed() && listener instanceof ButtonHoldListenerWrapper) {
-                final ButtonHoldListenerWrapper wrapper = (ButtonHoldListenerWrapper)listener;
+            if (event.isPressed() && listener instanceof ButtonHoldListenerWrapper) {
+                final ButtonHoldListenerWrapper wrapper = (ButtonHoldListenerWrapper) listener;
 
                 // register a new hold event future
                 ScheduledFuture scheduledFuture = executor.schedule(new Runnable() {
@@ -151,11 +149,11 @@ public abstract class ButtonBase extends ObserveableComponentBase implements But
         }
     }
 
-    private class ButtonHoldListenerWrapper implements ButtonListener{
+    private class ButtonHoldListenerWrapper implements ButtonListener {
         public final ButtonHoldListener listener;
         public final long delay;
 
-        public ButtonHoldListenerWrapper(long delay, ButtonHoldListener listener){
+        public ButtonHoldListenerWrapper(long delay, ButtonHoldListener listener) {
             this.listener = listener;
             this.delay = delay;
         }

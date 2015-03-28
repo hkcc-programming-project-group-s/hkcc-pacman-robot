@@ -34,29 +34,29 @@ import com.pi4j.util.NativeLibraryLoader;
  * <p>
  * WiringPi includes a library which can make it easier to use the Raspberry Pi’s on-board SPI interface.
  * </p>
- *
+ * <p>
  * <p>
  * Before you can use SPI interface, you may need to use the gpio utility to load the SPI drivers into the kernel:
- *  > gpio load spi
- *
+ * > gpio load spi
+ * <p>
  * If you need a buffer size of greater than 4KB, then you can specify the size (in KB) on the command line:
- *  > gpio load spi 100
- *
+ * > gpio load spi 100
+ * <p>
  * will allocate a 100KB buffer. (You should rarely need this though, the default is more than enough
  * for most applications).
  * </p>
- * 
+ * <p>
  * <p>
  * <blockquote> This library depends on the wiringPi native system library.</br> (developed by
  * Gordon Henderson @ <a href="http://wiringpi.com/">http://wiringpi.com</a>)
  * </blockquote>
  * </p>
- * 
- * @see <a href="http://www.pi4j.com/">http://www.pi4j.com</a>
- * @see <a
- *      href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
+ *
  * @author Robert Savage (<a
  *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
+ * @see <a href="http://www.pi4j.com/">http://www.pi4j.com</a>
+ * @see <a
+ * href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
  */
 public class Spi {
 
@@ -67,12 +67,12 @@ public class Spi {
     public static int MODE_1 = 1;
     public static int MODE_2 = 2;
     public static int MODE_3 = 3;
-    
+
     // private constructor 
-    private Spi()  {
+    private Spi() {
         // forbid object construction 
     }
-    
+
     static {
         // Load the platform library
         NativeLibraryLoader.load("libpi4j.so");
@@ -80,131 +80,126 @@ public class Spi {
 
     /**
      * <p>wiringPiSPISetup:</p>
-     *
+     * <p>
      * <p>
      * This is the way to initialise a channel (The Pi has 2 channels; 0 and 1). The speed parameter is an integer in
      * the range 500,000 through 32,000,000 and represents the SPI clock speed in Hz.
      * </p>
-     *
+     * <p>
      * <p>
      * The returned value is the Linux file-descriptor for the device, or -1 on error. If an error has happened, you
      * may use the standard errno global variable to see why.
      * </p>
      *
-     * @see <a
-     *      href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      * @param channel SPI channel
-     * @param speed SPI speed
+     * @param speed   SPI speed
      * @return return -1 on error
+     * @see <a
+     * href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      */
     public static native int wiringPiSPISetup(int channel, int speed);
 
 
     /**
      * <p>wiringPiSPISetupMode:</p>
-     *
+     * <p>
      * <p>
      * This is the way to initialise a channel (The Pi has 2 channels; 0 and 1). The speed parameter is an integer in
      * the range 500,000 through 32,000,000 and represents the SPI clock speed in Hz.
      * </p>
-     *
+     * <p>
      * <p>
      * The returned value is the Linux file-descriptor for the device, or -1 on error. If an error has happened, you
      * may use the standard errno global variable to see why.
      * </p>
      *
-     * @see <a
-     *      href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
-     * @see <a
-     *      hfref="http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers">http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers</a>
      * @param channel SPI channel
-     * @param speed SPI speed
-     * @param mode SPI mode (Mode is 0, 1, 2 or 3; see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
+     * @param speed   SPI speed
+     * @param mode    SPI mode (Mode is 0, 1, 2 or 3; see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
      * @return return -1 on error
+     * @see <a
+     * href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
+     * @see <a
+     * hfref="http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers">http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers</a>
      */
-    public static native int wiringPiSPISetupMode (int channel, int speed, int mode);
+    public static native int wiringPiSPISetupMode(int channel, int speed, int mode);
 
     /**
      * <p>wiringPiSPIGetFd:</p>
-     * 
+     * <p>
      * <p>
      * Return the file-descriptor for the given channel
      * </p>
      *
-     * @see <a
-     *      href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      * @param channel SPI channel
      * @return file-descriptor for the given channel
+     * @see <a
+     * href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      */
     public static native int wiringPiSPIGetFd(int channel);
 
     /**
      * <p>wiringPiSPIDataRW:</p>
-     * 
+     * <p>
      * <p>
      * This performs a simultaneous write/read transaction over the selected SPI bus. Data that was in your buffer is
      * overwritten by data returned from the SPI bus.
      * </p>
-     *
+     * <p>
      * <p>
      * (ATTENTION: the 'data' argument can only be a maximum of 1024 characters.)
      * </p>
      *
-     * @see <a
-     *      href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      * @param channel SPI channel</p>
-     * @param data string data payload
-     * @param len length of characters in string
+     * @param data    string data payload
+     * @param len     length of characters in string
      * @return return -1 on error
+     * @see <a
+     * href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      */
     public static native int wiringPiSPIDataRW(int channel, String data, int len);
 
     /**
      * <p>wiringPiSPIDataRW:</p>
-     *
+     * <p>
      * <p>
      * This performs a simultaneous write/read transaction over the selected SPI bus. Data that was in your buffer is
      * overwritten by data returned from the SPI bus.
      * </p>
-     *
+     * <p>
      * <p>
      * (ATTENTION: the 'data' argument can only be a maximum of 1024 characters.)
      * </p>
      *
-     * @see <a
-     *      href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
-     * @param channel
-     *             SPI channel
-     * @param data
-     *             byte array data payload
-     * @param len
-     *             length of bytes in data array argument
+     * @param channel SPI channel
+     * @param data    byte array data payload
+     * @param len     length of bytes in data array argument
      * @return return -1 on error
+     * @see <a
+     * href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      */
     public static native int wiringPiSPIDataRW(int channel, byte[] data, int len);
 
 
     /**
      * <p>wiringPiSPIDataRW:</p>
-     *
+     * <p>
      * <p>
      * This performs a simultaneous write/read transaction over the selected SPI bus. Data that was in your buffer is
      * overwritten by data returned from the SPI bus.
      * </p>
-     *
+     * <p>
      * <p>
      * (ATTENTION: the 'data' argument can only be a maximum of 1024 characters.)
      * </p>
      *
-     * @see <a
-     *      href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
-     * @param channel
-     *             SPI channel
-     * @param data
-     *             byte array data payload
+     * @param channel SPI channel
+     * @param data    byte array data payload
      * @return return -1 on error
+     * @see <a
+     * href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      */
-    public static int wiringPiSPIDataRW(int channel, byte[] data){
+    public static int wiringPiSPIDataRW(int channel, byte[] data) {
         return wiringPiSPIDataRW(channel, data, data.length);
     }
 
@@ -212,21 +207,18 @@ public class Spi {
      * <p>
      * wiringPiSPIDataRW:
      * </p>
-     *
+     * <p>
      * <p>
      * This performs a simultaneous write/read transaction over the selected SPI bus. The data argument is passed into the wiringPI function as the argument and the output from Spi is returned by this
      * method
      * </p>
      *
-     * @see <a href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
-     * @param channel
-     *            SPI channel
-     * @param data
-     *            short array data payload. Note that wiringPi uses unsigned char for the data transmission. That is 8-bit. in other words values 0-255. So make sure the values in data do not exceed
-     *            this range, otherwise the numbers would overflow in the native code and unexpected results would yield
-     * @param len
-     *             length of bytes in data array argument
+     * @param channel SPI channel
+     * @param data    short array data payload. Note that wiringPi uses unsigned char for the data transmission. That is 8-bit. in other words values 0-255. So make sure the values in data do not exceed
+     *                this range, otherwise the numbers would overflow in the native code and unexpected results would yield
+     * @param len     length of bytes in data array argument
      * @return return -1 on error
+     * @see <a href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      */
     public static native int wiringPiSPIDataRW(int channel, short[] data, int len);
 
@@ -234,21 +226,19 @@ public class Spi {
      * <p>
      * wiringPiSPIDataRW:
      * </p>
-     *
+     * <p>
      * <p>
      * This performs a simultaneous write/read transaction over the selected SPI bus. The data argument is passed into the wiringPI function as the argument and the output from Spi is returned by this
      * method
      * </p>
      *
-     * @see <a href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
-     * @param channel
-     *            SPI channel
-     * @param data
-     *            short array data payload. Note that wiringPi uses unsigned char for the data transmission. That is 8-bit. in other words values 0-255. So make sure the values in data do not exceed
-     *            this range, otherwise the numbers would overflow in the native code and unexpected results would yield
+     * @param channel SPI channel
+     * @param data    short array data payload. Note that wiringPi uses unsigned char for the data transmission. That is 8-bit. in other words values 0-255. So make sure the values in data do not exceed
+     *                this range, otherwise the numbers would overflow in the native code and unexpected results would yield
      * @return return -1 on error
+     * @see <a href="http://wiringpi.com/reference/spi-library/">http://wiringpi.com/reference/spi-library</a>
      */
-    public static int wiringPiSPIDataRW(int channel, short[] data){
+    public static int wiringPiSPIDataRW(int channel, short[] data) {
         return wiringPiSPIDataRW(channel, data, data.length);
     }
 }

@@ -4,7 +4,7 @@ package com.pi4j.component.light;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  DimmableLightBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -45,24 +45,22 @@ public abstract class DimmableLightBase extends ObserveableComponentBase impleme
     public abstract void setLevel(int level);
 
     @Override
-    public float getLevelPercentage()
-    {
+    public float getLevelPercentage() {
         return getLevelPercentage(getLevel());
     }
 
     @Override
-    public float getLevelPercentage(int level)
-    {
-        int min = Math.min(getMinLevel(),getMaxLevel());
-        int max = Math.max(getMinLevel(),getMaxLevel());
+    public float getLevelPercentage(int level) {
+        int min = Math.min(getMinLevel(), getMaxLevel());
+        int max = Math.max(getMinLevel(), getMaxLevel());
         int range = max - min;
-        float percentage = ((level * 100) / range);  
+        float percentage = ((level * 100) / range);
         return percentage;
     }
-    
+
     @Override
     public void on() {
-        setLevel(getMaxLevel()); 
+        setLevel(getMaxLevel());
     }
 
     @Override
@@ -79,7 +77,7 @@ public abstract class DimmableLightBase extends ObserveableComponentBase impleme
     public boolean isOff() {
         return getLevel() <= getMinLevel();
     }
- 
+
     @Override
     public void addListener(LightListener... listener) {
         super.addListener(listener);
@@ -101,14 +99,14 @@ public abstract class DimmableLightBase extends ObserveableComponentBase impleme
     }
 
     protected synchronized void notifyListeners(LightStateChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((LightListener)listener).onStateChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((LightListener) listener).onStateChange(event);
         }
     }
-    
+
     protected synchronized void notifyListeners(LightLevelChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((DimmableLightListener)listener).onLevelChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((DimmableLightListener) listener).onLevelChange(event);
         }
-    }       
+    }
 }

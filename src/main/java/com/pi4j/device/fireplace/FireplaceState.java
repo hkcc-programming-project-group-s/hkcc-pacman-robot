@@ -4,7 +4,7 @@ package com.pi4j.device.fireplace;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  FireplaceState.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -27,7 +27,7 @@ package com.pi4j.device.fireplace;
  * #L%
  */
 
-public enum FireplaceState  {
+public enum FireplaceState {
     ON,
     OFF;
 }

@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.AndroidController;
+package edu.hkcc.pacmanrobot.androidcontroller;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

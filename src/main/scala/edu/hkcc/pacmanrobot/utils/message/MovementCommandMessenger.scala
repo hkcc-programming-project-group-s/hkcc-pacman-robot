@@ -2,13 +2,13 @@ package edu.hkcc.pacmanrobot.robot.edu.hkcc.pacmanrobot.utils.studentrobot
 
 import java.util.concurrent.Semaphore
 
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{MovementCommand, Messenger}
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.{Config, Messenger, MovementCommand}
 
 
 /**
  * Created by beenotung on 3/26/15.
  */
-class MovementCommandMessenger extends Messenger[MovementCommand](MovementCommand) {
+class MovementCommandMessenger extends Messenger[MovementCommand](Config.PORT_MOVEMENT_COMMAND) {
   val semaphore: Semaphore = new Semaphore(1)
   private var movementCommand: MovementCommand = MovementCommand.stop
 
@@ -18,22 +18,9 @@ class MovementCommandMessenger extends Messenger[MovementCommand](MovementComman
 
   override def getMessage: MovementCommand = {
     if (inputQueue.isEmpty)
-      MovementCommand.stop
+      movementCommand = MovementCommand.stop
     else
-      inputQueue.poll
-  }
-
-  def getMovementCommand: MovementCommand = {
-    semaphore.tryAcquire
-    val result: MovementCommand = movementCommand.clone
-    movementCommand = MovementCommand.stop
-    semaphore.release
-    result
-  }
-
-  def setMovementCommand(newMovementCommand: MovementCommand) = {
-    semaphore.tryAcquire
-    movementCommand = newMovementCommand
-    semaphore.release
+      movementCommand = inputQueue.poll
+    movementCommand
   }
 }

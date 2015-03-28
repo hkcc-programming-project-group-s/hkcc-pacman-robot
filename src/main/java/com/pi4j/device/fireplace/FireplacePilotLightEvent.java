@@ -4,7 +4,7 @@ package com.pi4j.device.fireplace;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  FireplacePilotLightEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -40,12 +40,13 @@ public class FireplacePilotLightEvent extends EventObject {
     }
 
     public Fireplace getFireplace() {
-        return (Fireplace)getSource();
+        return (Fireplace) getSource();
     }
-    
+
     public boolean isPilotLightOn() {
         return isPilotLightOn;
     }
+
     public boolean isPilotLightOff() {
         return !isPilotLightOn;
     }

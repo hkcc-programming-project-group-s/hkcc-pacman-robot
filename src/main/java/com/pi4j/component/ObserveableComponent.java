@@ -4,7 +4,7 @@ package com.pi4j.component;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  ObserveableComponent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,5 +31,5 @@ package com.pi4j.component;
 public interface ObserveableComponent extends Component {
 
     void removeAllListeners();
-    
+
 }

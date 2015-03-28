@@ -4,7 +4,7 @@ package com.pi4j.component.sensor;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  MotionSensorChangeEvent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -28,7 +28,6 @@ package com.pi4j.component.sensor;
  */
 
 
-
 import java.util.Date;
 import java.util.EventObject;
 
@@ -41,25 +40,25 @@ public class MotionSensorChangeEvent extends EventObject {
     public MotionSensorChangeEvent(MotionSensor sensor, boolean motion, Date timestamp) {
         super(sensor);
         this.motion = motion;
-        this.timestamp = timestamp;        
+        this.timestamp = timestamp;
     }
 
     public MotionSensorChangeEvent(MotionSensor sensor, boolean motion) {
         super(sensor);
         this.motion = motion;
-        this.timestamp = new Date();        
+        this.timestamp = new Date();
     }
-    
+
     public MotionSensor getSensor() {
-        return (MotionSensor)getSource();
+        return (MotionSensor) getSource();
     }
-    
+
     public Date getTimestamp() {
         return timestamp;
     }
-    
+
     public boolean isMotionDetected() {
         return motion;
     }
-    
+
 }

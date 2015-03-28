@@ -37,16 +37,15 @@ import java.io.IOException;
 /**
  * <p>
  * This GPIO provider implements the MCP4725 12-Bit Digital-to-Analog Converter as native Pi4J GPIO pins.
- * More information about the board can be found here: 
+ * More information about the board can be found here:
  * http://http://www.adafruit.com/product/935
  * </p>
- * 
+ * <p>
  * <p>
  * The MCP4725 is connected via SPI connection to the Raspberry Pi and provides 1 GPIO analog output pin.
  * </p>
- * 
+ *
  * @author Christian Wehrli
- * 
  */
 public class MCP4725GpioProvider extends GpioProviderBase {
 
@@ -128,7 +127,7 @@ public class MCP4725GpioProvider extends GpioProviderBase {
             resetOutput();
 
             // if we are the owner of the I2C bus, then close it
-            if(i2cBusOwner) {
+            if (i2cBusOwner) {
                 // close the I2C bus communication
                 bus.close();
             }

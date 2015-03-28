@@ -38,10 +38,10 @@ import java.util.EnumSet;
 @SuppressWarnings("unused")
 public enum PinMode {
 
-    DIGITAL_INPUT(0, "input", PinDirection.IN), 
+    DIGITAL_INPUT(0, "input", PinDirection.IN),
     DIGITAL_OUTPUT(1, "output", PinDirection.OUT),
     PWM_OUTPUT(2, "pwm_output", PinDirection.OUT),
-    ANALOG_INPUT(3, "analog_input", PinDirection.IN), 
+    ANALOG_INPUT(3, "analog_input", PinDirection.IN),
     ANALOG_OUTPUT(4, "analog_output", PinDirection.OUT);
 
     private final int value;
@@ -65,33 +65,33 @@ public enum PinMode {
     public PinDirection getDirection() {
         return direction;
     }
-    
+
     @Override
     public String toString() {
-        return name.toUpperCase();        
-    }    
-    
+        return name.toUpperCase();
+    }
+
     public static EnumSet<PinMode> allDigital() {
         return EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.DIGITAL_OUTPUT);
-    }    
+    }
 
     public static EnumSet<PinMode> allAnalog() {
         return EnumSet.of(PinMode.ANALOG_INPUT, PinMode.ANALOG_OUTPUT);
-    }    
+    }
 
     public static EnumSet<PinMode> all() {
-        return EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.DIGITAL_OUTPUT, 
-                          PinMode.ANALOG_INPUT, PinMode.ANALOG_OUTPUT,
-                          PinMode.PWM_OUTPUT);
-    }    
+        return EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.DIGITAL_OUTPUT,
+                PinMode.ANALOG_INPUT, PinMode.ANALOG_OUTPUT,
+                PinMode.PWM_OUTPUT);
+    }
 
     public static EnumSet<PinMode> allInputs() {
         return EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.ANALOG_INPUT);
-    }    
+    }
 
     public static EnumSet<PinMode> allOutput() {
-        return EnumSet.of(PinMode.DIGITAL_OUTPUT, 
-                          PinMode.ANALOG_OUTPUT,
-                          PinMode.PWM_OUTPUT);
-    }        
+        return EnumSet.of(PinMode.DIGITAL_OUTPUT,
+                PinMode.ANALOG_OUTPUT,
+                PinMode.PWM_OUTPUT);
+    }
 }

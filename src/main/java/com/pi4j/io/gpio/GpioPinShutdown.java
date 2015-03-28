@@ -37,12 +37,19 @@ package com.pi4j.io.gpio;
 public interface GpioPinShutdown {
 
     void setUnexport(Boolean unexport);
+
     Boolean getUnexport();
+
     void setMode(PinMode mode);
+
     PinMode getMode();
+
     void setPullResistor(PinPullResistance resistance);
+
     PinPullResistance getPullResistor();
+
     void setState(PinState state);
+
     PinState getState();
 
 }

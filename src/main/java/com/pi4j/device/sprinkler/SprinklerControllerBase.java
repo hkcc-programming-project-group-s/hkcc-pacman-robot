@@ -4,7 +4,7 @@ package com.pi4j.device.sprinkler;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  SprinklerControllerBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -28,15 +28,15 @@ package com.pi4j.device.sprinkler;
  */
 
 
+import com.pi4j.device.DeviceBase;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.pi4j.device.DeviceBase;
 
 public abstract class SprinklerControllerBase extends DeviceBase implements SprinklerController {
 
     protected List<SprinklerZone> zones = new ArrayList<SprinklerZone>();
-    
+
     @Override
     public int getZoneCount() {
         return zones.size();
@@ -49,8 +49,8 @@ public abstract class SprinklerControllerBase extends DeviceBase implements Spri
 
     @Override
     public boolean isOn() {
-        for(SprinklerZone zone : zones)
-            if(zone.isOn())
+        for (SprinklerZone zone : zones)
+            if (zone.isOn())
                 return true;
         return false;
     }
@@ -61,46 +61,39 @@ public abstract class SprinklerControllerBase extends DeviceBase implements Spri
     }
 
     @Override
-    public boolean isOn(int zone)
-    {
+    public boolean isOn(int zone) {
         return zones.get(zone).isOn();
     }
 
     @Override
-    public boolean isOff(int zone)
-    {
+    public boolean isOff(int zone) {
         return zones.get(zone).isOff();
     }
 
     @Override
-    public void on(int zone)
-    {
+    public void on(int zone) {
         zones.get(zone).on();
     }
 
     @Override
-    public void onAllZones()
-    {
-        for(SprinklerZone zone : zones)
+    public void onAllZones() {
+        for (SprinklerZone zone : zones)
             zone.on();
     }
 
     @Override
-    public void off(int zone)
-    {
+    public void off(int zone) {
         zones.get(zone).off();
     }
 
     @Override
-    public void offAllZones()
-    {
-        for(SprinklerZone zone : zones)
+    public void offAllZones() {
+        for (SprinklerZone zone : zones)
             zone.off();
     }
-    
+
     @Override
-    public void setState(int zone, boolean on)
-    {
+    public void setState(int zone, boolean on) {
         zones.get(zone).setState(on);
     }
 

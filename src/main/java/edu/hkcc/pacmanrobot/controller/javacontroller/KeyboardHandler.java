@@ -2,7 +2,6 @@ package edu.hkcc.pacmanrobot.controller.javacontroller;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import hkccpacmanrobot.utils.Maths.Point2D;
 
 
 /**

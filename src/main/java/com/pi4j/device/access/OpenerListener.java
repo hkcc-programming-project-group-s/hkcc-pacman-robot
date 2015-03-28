@@ -4,7 +4,7 @@ package com.pi4j.device.access;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  OpenerListener.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -32,5 +32,6 @@ import com.pi4j.device.DeviceListener;
 
 public interface OpenerListener extends DeviceListener {
     void onStateChange(OpenerStateChangeEvent event);
+
     void onLockChange(OpenerLockChangeEvent event);
 }

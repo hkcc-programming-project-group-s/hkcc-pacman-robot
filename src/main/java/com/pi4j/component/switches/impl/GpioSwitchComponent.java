@@ -4,7 +4,7 @@ package com.pi4j.component.switches.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  GpioSwitchComponent.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -37,71 +37,70 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 public class GpioSwitchComponent extends SwitchBase {
-    
+
     // internal class members
     private GpioPinDigitalInput pin = null;
     private PinState offState = PinState.LOW;
     private PinState onState = PinState.HIGH;
     private final Switch switchComponent = this;
-    
+
     // create internal pin listener
     private GpioPinListenerDigital pinListener = new GpioPinListenerDigital() {
 
         @Override
         public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-            
+
             // notify any switch state change listeners
-            if(event.getState() == onState) {
-                notifyListeners(new SwitchStateChangeEvent(switchComponent, SwitchState.OFF, SwitchState.ON));                
-            }
-            else if(event.getState() == offState) {
+            if (event.getState() == onState) {
+                notifyListeners(new SwitchStateChangeEvent(switchComponent, SwitchState.OFF, SwitchState.ON));
+            } else if (event.getState() == offState) {
                 notifyListeners(new SwitchStateChangeEvent(switchComponent, SwitchState.ON, SwitchState.OFF));
             }
         }
     };
-    
+
     /**
-     * using this constructor requires that the consumer 
-     *  define the SWITCH OPEN/OFF and SWITCH CLOSED/ON pin states 
-     *  
-     * @param pin GPIO digital input pin
+     * using this constructor requires that the consumer
+     * define the SWITCH OPEN/OFF and SWITCH CLOSED/ON pin states
+     *
+     * @param pin      GPIO digital input pin
      * @param offState pin state to set when SWITCH is OPEN/OFF
-     * @param onState pin state to set when SWITCH is CLOSED/ON
+     * @param onState  pin state to set when SWITCH is CLOSED/ON
      */
     public GpioSwitchComponent(GpioPinDigitalInput pin, PinState offState, PinState onState) {
         this.pin = pin;
         this.onState = onState;
         this.offState = offState;
-        
+
         // add pin listener
         this.pin.addListener(pinListener);
     }
 
     /**
      * default constructor; using this constructor assumes that:
-     *  (1) a pin state of HIGH is SWITCH CLOSED/ON
-     *  (2) a pin state of LOW  is SWITCH OPEN/OFF
-     *  
+     * (1) a pin state of HIGH is SWITCH CLOSED/ON
+     * (2) a pin state of LOW  is SWITCH OPEN/OFF
+     *
      * @param pin GPIO digital input pin
      */
     public GpioSwitchComponent(GpioPinDigitalInput pin) {
         this.pin = pin;
-        
+
         // add pin listener
-        this.pin.addListener(pinListener); 
+        this.pin.addListener(pinListener);
     }
 
     /**
-     * Return the current switch state based on the  
+     * Return the current switch state based on the
      * GPIO digital output pin state.
-     *  
-     * @return SwitchState 
+     *
+     * @return SwitchState
      */
     @Override
     public SwitchState getState() {
-        if(pin.isState(onState))
+        if (pin.isState(onState))
             return SwitchState.ON;
-        else 
+        else
             return SwitchState.OFF;
     }
 }

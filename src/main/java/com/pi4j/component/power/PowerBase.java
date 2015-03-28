@@ -7,7 +7,7 @@ import com.pi4j.component.ObserveableComponentBase;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  PowerBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -32,7 +32,7 @@ import com.pi4j.component.ObserveableComponentBase;
 
 
 public abstract class PowerBase extends ObserveableComponentBase implements Power {
-    
+
     @Override
     public void on() {
         setState(PowerState.ON);
@@ -58,7 +58,7 @@ public abstract class PowerBase extends ObserveableComponentBase implements Powe
 
     @Override
     public abstract void setState(PowerState state);
-    
+
     @Override
     public void addListener(PowerListener... listener) {
         super.addListener(listener);
@@ -70,8 +70,8 @@ public abstract class PowerBase extends ObserveableComponentBase implements Powe
     }
 
     protected synchronized void notifyListeners(PowerStateChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((PowerListener)listener).onStateChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((PowerListener) listener).onStateChange(event);
         }
-    }    
+    }
 }

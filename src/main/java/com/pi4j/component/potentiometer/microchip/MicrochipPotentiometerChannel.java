@@ -5,7 +5,7 @@ package com.pi4j.component.potentiometer.microchip;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  MicrochipPotentiometerChannel.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -30,38 +30,38 @@ package com.pi4j.component.potentiometer.microchip;
 
 /**
  * A channel an instance of MCP45XX_MCP46XX_Potentiometer can be configured for.
- * 
- * @see com.pi4j.component.potentiometer.microchip.impl.MicrochipPotentiometerBase
+ *
  * @author <a href="http://raspelikan.blogspot.co.at">Raspelikan</a>
+ * @see com.pi4j.component.potentiometer.microchip.impl.MicrochipPotentiometerBase
  */
 public enum MicrochipPotentiometerChannel {
-	
-	/**
-	 * Pins P0A, P0W, P0B
-	 */
-	A,
-	
-	/**
-	 * Pins P1A, P1W, P1B
-	 */
-	B,
 
-	/**
-	 * Pins P2A, P2W, P2B
-	 */
-	C,
+    /**
+     * Pins P0A, P0W, P0B
+     */
+    A,
 
-	/**
-	 * Pins P3A, P3W, P3B
-	 */
-	D;
+    /**
+     * Pins P1A, P1W, P1B
+     */
+    B,
 
-	@Override
-	public String toString() {
+    /**
+     * Pins P2A, P2W, P2B
+     */
+    C,
 
-		final StringBuffer result = new StringBuffer(getClass().getName());
-		result.append(".").append(name());
-		return result.toString();
+    /**
+     * Pins P3A, P3W, P3B
+     */
+    D;
 
-	}
+    @Override
+    public String toString() {
+
+        final StringBuffer result = new StringBuffer(getClass().getName());
+        result.append(".").append(name());
+        return result.toString();
+
+    }
 }

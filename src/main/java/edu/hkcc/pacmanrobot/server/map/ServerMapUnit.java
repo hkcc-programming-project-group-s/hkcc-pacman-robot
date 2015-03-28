@@ -1,7 +1,6 @@
 package edu.hkcc.pacmanrobot.server.map;
 
 
-
 /**
  * Created by 13058456a on 3/14/2015.
  */
@@ -18,10 +17,12 @@ public class ServerMapUnit extends MapUnit {
 
     @Override
 
-    public long getLatestTime() {return value.time;}
+    public long getLatestTime() {
+        return value.time;
+    }
 
 //    public long getServerTime() {
-  //      return time;
+    //      return time;
 //    }
 
     public long getRobotId() {
@@ -30,16 +31,18 @@ public class ServerMapUnit extends MapUnit {
 
     //public long getMap(){return x,y;}
 
-    public void setTime(long localTime,long robotId){
-        value.time=localTime;
-        value.preservedLong=robotId;
-    };
+    public void setTime(long localTime, long robotId) {
+        value.time = localTime;
+        value.preservedLong = robotId;
+    }
+
+    ;
 
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        ServerMapUnit result=new ServerMapUnit(key,value);
-        result.setTime(getLatestTime(),getRobotId());
+        ServerMapUnit result = new ServerMapUnit(key, value);
+        result.setTime(getLatestTime(), getRobotId());
         return result;
     }
 }

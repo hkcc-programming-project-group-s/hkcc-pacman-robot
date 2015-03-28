@@ -4,7 +4,7 @@ package com.pi4j.component.switches;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Switch.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,12 +31,16 @@ package com.pi4j.component.switches;
 import com.pi4j.component.ObserveableComponent;
 
 public interface Switch extends ObserveableComponent {
-    
+
     boolean isOn();
+
     boolean isOff();
+
     SwitchState getState();
+
     boolean isState(SwitchState state);
- 
+
     void addListener(SwitchListener... listener);
+
     void removeListener(SwitchListener... listener);
 }

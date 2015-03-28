@@ -38,8 +38,11 @@ package com.pi4j.io.gpio;
 public interface GpioPinDigital extends GpioPin {
 
     boolean isHigh();
+
     boolean isLow();
+
     PinState getState();
+
     boolean isState(PinState state);
 
 }

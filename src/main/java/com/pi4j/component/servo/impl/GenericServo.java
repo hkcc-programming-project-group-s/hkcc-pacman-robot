@@ -4,7 +4,7 @@ package com.pi4j.component.servo.impl;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  GenericServo.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -27,13 +27,13 @@ package com.pi4j.component.servo.impl;
  * #L%
  */
 
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.pi4j.component.ComponentBase;
 import com.pi4j.component.servo.Servo;
 import com.pi4j.component.servo.ServoDriver;
 import com.pi4j.io.gpio.exception.ValidationException;
+
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Christian Wehrli
@@ -43,7 +43,7 @@ public class GenericServo extends ComponentBase implements Servo {
     public enum Orientation {
         LEFT, RIGHT
     }
-        
+
     public static final float PWM_MIN = 900; // in micro seconds
     public static final float PWM_NEUTRAL = 1500; // in micro seconds
     public static final float PWM_MAX = 2100; // in micro seconds
@@ -59,7 +59,7 @@ public class GenericServo extends ComponentBase implements Servo {
     public GenericServo(ServoDriver servoDriver, String name) {
         this(servoDriver, name, null);
     }
-    
+
     public GenericServo(ServoDriver servoDriver, String name, Map<String, String> properties) {
         setServoDriver(servoDriver);
         setName(name);
@@ -122,15 +122,15 @@ public class GenericServo extends ComponentBase implements Servo {
         }
         float endPointValue = Float.parseFloat(getProperty(propertyName, PROP_END_POINT_DEFAULT));
         validateEndPoint(endPointValue, propertyName);
-        
+
         float calculatedPwmDuration;
         if (orientation == Orientation.LEFT) {
             calculatedPwmDuration = calculateNeutralPwmDuration() - ((PWM_MAX - PWM_NEUTRAL) / 150 * endPointValue);
         } else {
             calculatedPwmDuration = calculateNeutralPwmDuration() + ((PWM_MAX - PWM_NEUTRAL) / 150 * endPointValue);
         }
-        
-        
+
+
         if (calculatedPwmDuration < PWM_MIN) {
             result = PWM_MIN;
         } else if (calculatedPwmDuration > PWM_MAX) {
@@ -160,13 +160,13 @@ public class GenericServo extends ComponentBase implements Servo {
             position = -position;
         }
         if (position < 0) {
-            result = (int)(pwmDurationNeutral + (pwmDurationNeutral - pwmDurationEndPointLeft) * position / 100.00);
+            result = (int) (pwmDurationNeutral + (pwmDurationNeutral - pwmDurationEndPointLeft) * position / 100.00);
         } else if (position > 0) {
-            result = (int)(pwmDurationNeutral + (pwmDurationEndPointRight - pwmDurationNeutral) * position / 100.00);
+            result = (int) (pwmDurationNeutral + (pwmDurationEndPointRight - pwmDurationNeutral) * position / 100.00);
         } else {
-            result = (int)pwmDurationNeutral;
+            result = (int) pwmDurationNeutral;
         }
-        return (int)((result * servoDriver.getServoPulseResolution()) / 1000);
+        return (int) ((result * servoDriver.getServoPulseResolution()) / 1000);
     }
 
     @Override

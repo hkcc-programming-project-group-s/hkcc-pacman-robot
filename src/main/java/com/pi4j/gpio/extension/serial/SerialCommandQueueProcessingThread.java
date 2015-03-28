@@ -28,8 +28,9 @@ package com.pi4j.gpio.extension.serial;
  */
 
 
-import java.util.concurrent.LinkedTransferQueue;
 import com.pi4j.io.serial.Serial;
+
+import java.util.concurrent.LinkedTransferQueue;
 
 
 public class SerialCommandQueueProcessingThread extends Thread {
@@ -66,7 +67,7 @@ public class SerialCommandQueueProcessingThread extends Thread {
     public void put(String data) {
         queue.add(data);
     }
-    
+
     /**
      * <p>
      * This method is called when this monitoring thread starts
@@ -78,12 +79,12 @@ public class SerialCommandQueueProcessingThread extends Thread {
                 // wait for a small interval before attempting next transmission
                 try {
                     String data = queue.take();
-                    
+
                     if (serial.isOpen()) {
                         serial.write(data);
                         serial.flush();
                     }
-                    
+
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {
                     //e.printStackTrace();

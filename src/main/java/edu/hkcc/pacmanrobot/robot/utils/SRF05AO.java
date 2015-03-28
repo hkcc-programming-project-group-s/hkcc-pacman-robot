@@ -1,7 +1,7 @@
 package edu.hkcc.pacmanrobot.robot.utils; /**
- * Class to monitor distance measured by an HC-SR04 distance sensor on a 
+ * Class to monitor distance measured by an HC-SR04 distance sensor on a
  * Raspberry Pi.
- *
+ * <p>
  * The main method assumes the trig pin is connected to the pin # 7 and the echo
  * pin is connected to pin # 11.  Output of the program are comma separated lines
  * where the first value is the number of milliseconds since unix epoch, and the

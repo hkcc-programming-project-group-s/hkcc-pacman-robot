@@ -6,7 +6,7 @@ import java.util.Map;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Component.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -31,19 +31,27 @@ import java.util.Map;
 
 
 public interface Component {
-    
+
     void setName(String name);
+
     String getName();
-    
+
     void setTag(Object tag);
+
     Object getTag();
-    
+
     void setProperty(String key, String value);
+
     boolean hasProperty(String key);
+
     String getProperty(String key, String defaultValue);
+
     String getProperty(String key);
-    Map<String,String> getProperties();
+
+    Map<String, String> getProperties();
+
     void removeProperty(String key);
-    void clearProperties();    
-    
+
+    void clearProperties();
+
 }

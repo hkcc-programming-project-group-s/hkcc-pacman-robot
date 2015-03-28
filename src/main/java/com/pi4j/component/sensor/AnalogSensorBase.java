@@ -7,7 +7,7 @@ import com.pi4j.component.ObserveableComponentBase;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  AnalogSensorBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -32,7 +32,7 @@ import com.pi4j.component.ObserveableComponentBase;
 
 
 public abstract class AnalogSensorBase extends ObserveableComponentBase implements AnalogSensor {
-        
+
     @Override
     public void addListener(AnalogSensorListener... listener) {
         super.addListener(listener);
@@ -44,22 +44,20 @@ public abstract class AnalogSensorBase extends ObserveableComponentBase implemen
     }
 
     protected synchronized void notifyListeners(AnalogSensorValueChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((AnalogSensorListener)listener).onValueChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((AnalogSensorListener) listener).onValueChange(event);
         }
     }
 
     @Override
-    public boolean isValue(double value)
-    {
+    public boolean isValue(double value) {
         return (getValue() == value);
     }
 
     @Override
-    public boolean isValueInRange(double min, double max)
-    {
+    public boolean isValueInRange(double min, double max) {
         double value = getValue();
         return (value >= min && value <= max);
-    }    
-  
+    }
+
 }

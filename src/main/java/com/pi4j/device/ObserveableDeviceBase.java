@@ -4,7 +4,7 @@ package com.pi4j.device;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  ObserveableDeviceBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -32,10 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObserveableDeviceBase extends DeviceBase implements ObserveableDevice {
-    
-    protected final List<DeviceListener> listeners = new ArrayList<DeviceListener>();;
- 
-    protected synchronized void addListener(DeviceListener... listener){
+
+    protected final List<DeviceListener> listeners = new ArrayList<DeviceListener>();
+    ;
+
+    protected synchronized void addListener(DeviceListener... listener) {
         if (listener == null || listener.length == 0) {
             throw new IllegalArgumentException("Missing listener argument.");
         }
@@ -58,7 +59,7 @@ public class ObserveableDeviceBase extends DeviceBase implements ObserveableDevi
     @Override
     public synchronized void removeAllListeners() {
         List<DeviceListener> listeners_copy = new ArrayList<>(listeners);
-        for (int index = (listeners_copy.size()-1); index >= 0; index --) {
+        for (int index = (listeners_copy.size() - 1); index >= 0; index--) {
             DeviceListener listener = listeners_copy.get(index);
             removeListener(listener);
         }

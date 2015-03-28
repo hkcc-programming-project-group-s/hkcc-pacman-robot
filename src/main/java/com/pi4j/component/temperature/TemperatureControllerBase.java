@@ -7,7 +7,7 @@ import com.pi4j.temperature.TemperatureScale;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  TemperatureControllerBase.java  
  * 
  * This file is part of the Pi4J project. More information about 

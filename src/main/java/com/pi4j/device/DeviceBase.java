@@ -4,7 +4,7 @@ package com.pi4j.device;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  DeviceBase.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -32,11 +32,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class DeviceBase implements Device {
-    
+
     private String name = null;
     private Object tag = null;
     private final Map<String, String> properties = new ConcurrentHashMap<String, String>();
-    
+
     @Override
     public void setName(String name) {
         this.name = name;
@@ -46,7 +46,7 @@ public abstract class DeviceBase implements Device {
     public String getName() {
         return name;
     }
-    
+
     @Override
     public void setTag(Object tag) {
         this.tag = tag;
@@ -70,7 +70,7 @@ public abstract class DeviceBase implements Device {
     @Override
     public String getProperty(String key, String defaultValue) {
         if (properties.containsKey(key)) {
-            if(properties.get(key) == null || properties.get(key).isEmpty())
+            if (properties.get(key) == null || properties.get(key).isEmpty())
                 return defaultValue;
             else
                 return properties.get(key);
@@ -98,6 +98,6 @@ public abstract class DeviceBase implements Device {
     @Override
     public void clearProperties() {
         properties.clear();
-    }    
-    
+    }
+
 }

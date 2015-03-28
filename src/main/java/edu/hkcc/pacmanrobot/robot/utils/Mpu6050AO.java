@@ -35,15 +35,15 @@ public class Mpu6050AO {
             mpu6050AO.writeMpu6050((byte) 0xff);
             mpu6050.write(power_mgmt_1, (byte) 0x00);
             while (true) {
-                String msg="";
+                String msg = "";
                 mpu6050AO.readGyro();
                 mpu6050AO.readAccel();
-                msg+=mpu6050AO.printGyro();
-                msg+="\n\n"+mpu6050AO.printAccel();
-                msg+="\n\n"+mpu6050AO.printRotation();
+                msg += mpu6050AO.printGyro();
+                msg += "\n\n" + mpu6050AO.printAccel();
+                msg += "\n\n" + mpu6050AO.printRotation();
                 clearConsole();
-                for(int i=0;i<35;i++)
-                    msg="\n"+msg;
+                for (int i = 0; i < 35; i++)
+                    msg = "\n" + msg;
                 System.out.print(msg);
                 try {
                     Thread.sleep(100);

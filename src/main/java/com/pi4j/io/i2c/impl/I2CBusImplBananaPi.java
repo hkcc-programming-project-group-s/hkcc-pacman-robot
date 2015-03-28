@@ -36,34 +36,41 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This is implementation of i2c bus. This class keeps underlying linux file descriptor of
- * particular bus. As all reads and writes from/to i2c bus are blocked I/Os current implementation uses only 
- * one file per bus for all devices. Device implementations use this class file handle.
- * 
- * @author Daniel Sendula
+ * particular bus. As all reads and writes from/to i2c bus are blocked I/Os current implementation uses only
+ * one file per bus for all devices. GameDevice implementations use this class file handle.
  *
+ * @author Daniel Sendula
  */
 public class I2CBusImplBananaPi extends I2CBusImpl {
 
-    /** Singleton instance of bus 0 */
+    /**
+     * Singleton instance of bus 0
+     */
     private static I2CBus bus0 = null;
 
-    /** Singleton instance of bus 1 */
+    /**
+     * Singleton instance of bus 1
+     */
     private static I2CBus bus1 = null;
 
-    /** Singleton instance of bus 1 */
+    /**
+     * Singleton instance of bus 1
+     */
     private static I2CBus bus2 = null;
 
-    /** Singleton instance of bus 1 */
+    /**
+     * Singleton instance of bus 1
+     */
     private static I2CBus bus3 = null;
 
-    /** 
+    /**
      * to lock the creation/destruction of the bus singletons
      */
     private final static Lock lock = new ReentrantLock(true);
 
     /**
      * Factory method that returns bus implementation.
-     * 
+     *
      * @param busNumber bus number
      * @return appropriate bus implementation
      * @throws IOException thrown in case there is a problem opening bus file or bus number is not 0 or 1.
@@ -104,9 +111,8 @@ public class I2CBusImplBananaPi extends I2CBusImpl {
 
     /**
      * Constructor of i2c bus implementation.
-     * 
+     *
      * @param filename file name of device to be opened.
-     * 
      * @throws IOException thrown in case that file cannot be opened
      */
     public I2CBusImplBananaPi(String filename) throws IOException {

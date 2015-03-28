@@ -4,7 +4,7 @@ package com.pi4j.component.motor;
  * #%L
  * **********************************************************************
  * ORGANIZATION  :  Pi4J
- * PROJECT       :  Pi4J :: Device Abstractions
+ * PROJECT       :  Pi4J :: GameDevice Abstractions
  * FILENAME      :  Motor.java  
  * 
  * This file is part of the Pi4J project. More information about 
@@ -32,13 +32,21 @@ import com.pi4j.component.Component;
 public interface Motor extends Component {
 
     void forward();
+
     void forward(long milleseconds);
+
     void reverse();
+
     void reverse(long milleseconds);
+
     void stop();
+
     MotorState getState();
+
     void setState(MotorState state);
+
     boolean isState(MotorState state);
+
     boolean isStopped();
 
 }

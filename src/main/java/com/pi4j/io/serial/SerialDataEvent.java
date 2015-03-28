@@ -32,7 +32,7 @@ import java.util.EventObject;
 
 /**
  * <p> This class provides the serial data event object.</p>
- * 
+ * <p>
  * <p>
  * Before using the Pi4J library, you need to ensure that the Java VM in configured with access to
  * the following system libraries:
@@ -44,14 +44,13 @@ import java.util.EventObject;
  * Gordon Henderson @ <a href="http://wiringpi.com/">http://wiringpi.com/</a>)
  * </blockquote>
  * </p>
- * 
+ *
+ * @author Robert Savage (<a
+ *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  * @see com.pi4j.io.serial.Serial
  * @see com.pi4j.io.serial.SerialDataListener
  * @see com.pi4j.io.serial.SerialFactory
- * 
  * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
- * @author Robert Savage (<a
- *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  */
 public class SerialDataEvent extends EventObject {
 
@@ -60,8 +59,8 @@ public class SerialDataEvent extends EventObject {
 
     /**
      * Default event constructor.
-     * 
-     * @param obj The com.pi4j.io.serial.Serial class instance that initiates this event.
+     *
+     * @param obj  The com.pi4j.io.serial.Serial class instance that initiates this event.
      * @param data The data received.
      */
     public SerialDataEvent(Object obj, String data) {
@@ -71,7 +70,7 @@ public class SerialDataEvent extends EventObject {
 
     /**
      * Get the data string received.
-     * 
+     *
      * @return The data string received.
      */
     public String getData() {
