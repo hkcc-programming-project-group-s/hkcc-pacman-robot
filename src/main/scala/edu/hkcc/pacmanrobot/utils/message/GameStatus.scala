@@ -1,5 +1,8 @@
 package edu.hkcc.pacmanrobot.utils.studentrobot.code
 
+import edu.hkcc.pacmanrobot.utils.Config
+import edu.hkcc.pacmanrobot.utils.map.Message
+
 /**
  * Created by 13058456a on 3/21/2015.
  */
@@ -23,4 +26,6 @@ object GameStatus extends Message {
 * message is not empty only when status is paused
 * */
 //class GameStatus(val status: GameStatus.GameStatusType,val message: String = "") extends Serializable
-class GameStatus(var status: Byte, var message: String = "") extends Message
+class GameStatus(var status: Byte, var message: String = "") extends Message {
+  override def port(): Int = Config.PORT_GAME_STATUS
+}

@@ -2,7 +2,8 @@ package edu.hkcc.pacmanrobot.robot.edu.hkcc.pacmanrobot.utils.studentrobot
 
 import java.util.concurrent.Semaphore
 
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{Config, Messenger, MovementCommand}
+import edu.hkcc.pacmanrobot.utils.Config
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.{Messenger, MovementCommand}
 
 
 /**

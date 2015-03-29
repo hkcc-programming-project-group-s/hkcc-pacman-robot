@@ -3,8 +3,8 @@ package edu.hkcc.pacmanrobot.robot.studentrobot
 import edu.hkcc.pacmanrobot.robot.core.Robot
 import edu.hkcc.pacmanrobot.robot.edu.hkcc.pacmanrobot.utils.studentrobot.MovementCommandMessenger
 import edu.hkcc.pacmanrobot.robot.utils.L298NAO
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.Config.MOTOR_CYCLE_INTERVAL
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.MovementCommand
+import edu.hkcc.pacmanrobot.utils.Config.MOTOR_CYCLE_INTERVAL
 
 
 /**
