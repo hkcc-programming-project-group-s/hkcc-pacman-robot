@@ -15,6 +15,7 @@ public class Maths {
     public static final double L = Math.PI * 1.5;
     public static final double F_L = Math.PI * 1.75;
     public static final double PI2 = Math.PI * 2d;
+    public static final double DEFAULT_RANGE = Math.PI / 8d;
 
     public static boolean isBetween(double lower, double target, double upper) {
         return ((lower <= target) && (target <= upper));
@@ -24,12 +25,13 @@ public class Maths {
         return Math.abs(a - b) <= range;
     }
 
-    public static final double DEFAULT_RANGE = Math.PI / 8d;
-
     public static boolean isInRange(double a, double b) {
         return Math.abs(a - b) <= DEFAULT_RANGE;
     }
 
+    public static double length(double x, double y) {
+        return Math.sqrt((x * x) + (y * y));
+    }
 
     /*
     * reserved for rectangular coordinate or polar coordinate
@@ -55,4 +57,26 @@ public class Maths {
             return String.format("[%.2f,%.2f]\n", d1, d2);
         }
     }
+
+    public static class Point3D implements Cloneable, Serializable {
+        public double x, y, z;
+
+        public Point3D(double x, double y, double z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
+
+        @Override
+        public Point3D clone() {
+            return new Point3D(x, y, z);
+        }
+
+        @Override
+        public String toString() {
+            return String.format("[%.2f,%.2f.%.2f]\n", x, y, z);
+        }
+    }
+
 }
