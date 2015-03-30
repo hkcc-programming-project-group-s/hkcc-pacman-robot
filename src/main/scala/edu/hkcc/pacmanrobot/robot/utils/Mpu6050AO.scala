@@ -10,15 +10,21 @@ import edu.hkcc.pacmanrobot.utils.maths.Point3D
  * Created by beenotung on 3/30/15.
  */
 object Mpu6050AO extends Thread {
-  val power_mgmt_1: Int = 0x6b
-  val power_mgmt_2: Int = 0x6c
+  private val power_mgmt_1: Int = 0x6b
+  private val power_mgmt_2: Int = 0x6c
   private val ONE_SECOND: Long = 1000000000L
-  var bg_z: Double = 0
-  var acceleration: Point3D = new Point3D()
-  var angularAcceleration: Point3D = new Point3D()
-  var rotation: Point3D = new Point3D()
-  var displacement: Point3D = new Point3D()
+  //default +- 2g per second
+  private val ACCEL_RATIO = 32768.0 / 2 / 9.80665 * 100
+  // in unit of cm
+  //default +- 250 deg per second
+  private val GYRO_RATION = 32768.0 / 250 / 180 * Math.PI
+  // in unit of rad
   var ready: Boolean = false
+  private var bg_z: Double = 0
+  private var acceleration: Point3D = new Point3D()
+  private var angularAcceleration: Point3D = new Point3D()
+  private var rotation: Point3D = new Point3D()
+  private var displacement: Point3D = new Point3D()
   private var TIME0: Long = 0L
   private var bus: I2CBus = null
   private var mpu6050: I2CDevice = null
@@ -35,16 +41,15 @@ object Mpu6050AO extends Thread {
   }
 
   def getAcceleration: Point3D = {
-    //acceleration.$div(16384.0)
-    acceleration / 16384.0
+    acceleration / ACCEL_RATIO
   }
 
   def getZRotaion: Double = {
-    getRotation.z
+    getRotation.z - (bg_z / GYRO_RATION)
   }
 
   def getRotation: Point3D = {
-    rotation - bg_z
+    rotation / GYRO_RATION
   }
 
   @throws(classOf[IOException])
