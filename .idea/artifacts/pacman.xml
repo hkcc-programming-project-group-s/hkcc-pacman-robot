@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="pacman">
+    <output-path>$PROJECT_DIR$/out/artifacts/pacman</output-path>
+    <root id="archive" name="pacman.jar">
+      <element id="module-output" name="hkcc-pacman-robot" />
+      <element id="library" level="project" name="SBT: org.scala-lang:scala-library:2.11.6:jar" />
+      <element id="module-output" name="hkcc-pacman-robot-build" />
+      <element id="library" level="module" name="SBT: sbt-and-plugins" module-name="hkcc-pacman-robot-build" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="library" level="project" name="pi4j" />
+    </root>
+  </artifact>
+</component>

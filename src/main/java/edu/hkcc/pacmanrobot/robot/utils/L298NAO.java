@@ -4,6 +4,7 @@ import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.RaspiPin;
+import edu.hkcc.pacmanrobot.utils.maths.Point2D;
 
 import static edu.hkcc.pacmanrobot.utils.Maths.*;
 
@@ -70,12 +71,17 @@ public class L298NAO {
         right_stop();
     }
 
+    public static void move(Point2D point2D) {
+        move(point2D._1(), point2D._2());
+    }
+
     public static void move(double direction, double distance) {
         //System.out.printf("motor move: \t%.2f,\t%.2f\n", direction, distance);
         if (distance <= 0) {
             both_stop();
             return;
         }
+        //if(isInRange())
         if (isInRange(direction, B_L) || isInRange(direction, B) || isInRange(direction, R)) left_backward();
         else if (isInRange(direction, F_R) || isInRange(direction, B_R)) left_stop();
         else left_forward();

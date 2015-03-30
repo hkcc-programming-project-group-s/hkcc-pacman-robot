@@ -2,7 +2,7 @@ package edu.hkcc.pacmanrobot.utils.studentrobot.code;
 
 
 import edu.hkcc.pacmanrobot.utils.Config;
-import edu.hkcc.pacmanrobot.utils.Maths.Point2D;
+import edu.hkcc.pacmanrobot.utils.maths.Point2D;
 import edu.hkcc.pacmanrobot.utils.map.Message;
 
 /**

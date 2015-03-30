@@ -4,7 +4,7 @@ import edu.hkcc.pacmanrobot.utils.Maths;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import static edu.hkcc.pacmanrobot.utils.Maths.Point2D;
+import  edu.hkcc.pacmanrobot.utils.maths.Point2D;
 
 /**
  * Created by beenotung on 3/23/15.

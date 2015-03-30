@@ -40,8 +40,8 @@ public class SRF05AO {
     }
 
     public static void main(String[] args) {
-        Pin trigPin = RaspiPin.GPIO_14; // PI4J custom numbering (pin 7)
-        Pin echoPin = RaspiPin.GPIO_15; // PI4J custom numbering (pin 11)
+        Pin trigPin = RaspiPin.GPIO_12; // PI4J custom numbering (pin 7)
+        Pin echoPin = RaspiPin.GPIO_13; // PI4J custom numbering (pin 11)
         SRF05AO monitor = new SRF05AO(trigPin, echoPin);
 
         while (true) {

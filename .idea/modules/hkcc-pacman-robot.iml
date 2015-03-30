@@ -23,6 +23,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.11.6:jar" level="project" />
+    <orderEntry type="library" name="pi4jnative" level="project" />
     <orderEntry type="library" name="pi4j" level="project" />
   </component>
 </module>

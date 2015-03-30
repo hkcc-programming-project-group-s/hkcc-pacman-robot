@@ -33,50 +33,8 @@ public class Maths {
         return Math.sqrt((x * x) + (y * y));
     }
 
-    /*
-    * reserved for rectangular coordinate or polar coordinate
-    * POLAR: d1 = degree (in radian), d2 = distance
-    * RECTANGULAR:: d1 =x, d2 = y
-    */
-    public static class Point2D implements Cloneable, Serializable {
-        public double d1;
-        public double d2;
-
-        public Point2D(double d1, double d2) {
-            this.d1 = d1;
-            this.d2 = d2;
-        }
-
-        @Override
-        public Point2D clone() {
-            return new Point2D(d1, d2);
-        }
-
-        @Override
-        public String toString() {
-            return String.format("[%.2f,%.2f]\n", d1, d2);
-        }
-    }
-
-    public static class Point3D implements Cloneable, Serializable {
-        public double x, y, z;
-
-        public Point3D(double x, double y, double z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
 
 
-        @Override
-        public Point3D clone() {
-            return new Point3D(x, y, z);
-        }
 
-        @Override
-        public String toString() {
-            return String.format("[%.2f,%.2f.%.2f]\n", x, y, z);
-        }
-    }
 
 }

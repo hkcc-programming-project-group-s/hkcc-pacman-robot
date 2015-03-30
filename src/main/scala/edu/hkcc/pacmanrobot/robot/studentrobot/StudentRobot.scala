@@ -36,7 +36,9 @@ class StudentRobot extends Robot {
   override def loop: Unit = {
     val movementCommand: MovementCommand = movementCommandMessenger.getMessage
     if (movementCommand.mode.equals(MovementCommand.MODE_POLAR)) {
-      L298NAO.move(movementCommand.point2D.d1, movementCommand.point2D.d2)
+      L298NAO.move(movementCommand.point2D)
+    }else{
+      //TODO calculate polar command from current location
     }
   }
 }
