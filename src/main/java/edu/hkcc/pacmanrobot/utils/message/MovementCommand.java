@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.studentrobot.code;
+package edu.hkcc.pacmanrobot.utils.message;
 
 
 import edu.hkcc.pacmanrobot.utils.Config;

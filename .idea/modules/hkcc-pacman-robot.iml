@@ -17,13 +17,17 @@
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/main" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/test/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/test" type="java-test-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/../../target/resolution-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/../../target/streams" />
+      <excludeFolder url="file://$MODULE_DIR$/../../target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.11.6:jar" level="project" />
-    <orderEntry type="library" name="pi4jnative" level="project" />
-    <orderEntry type="library" name="pi4j" level="project" />
+    <orderEntry type="module-library">
+      <library name="SBT: unmanaged-jars">
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

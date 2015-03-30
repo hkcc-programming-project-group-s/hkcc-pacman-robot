@@ -27,7 +27,8 @@ public class L298NAO {
     }
 
     public static void left_stop() {
-        setTwoGpio(L_F, L_B, false);
+        //setTwoGpio(L_F, L_B, false);
+        setTwoGpio(L_F, L_B, true);
     }
 
     public static void right_forward() {
@@ -39,7 +40,8 @@ public class L298NAO {
     }
 
     public static void right_stop() {
-        setTwoGpio(R_F, R_B, false);
+        //setTwoGpio(R_F, R_B, false);
+        setTwoGpio(R_F, R_B, true);
     }
 
 
@@ -71,6 +73,16 @@ public class L298NAO {
         right_stop();
     }
 
+    public static void both_forward() {
+        left_forward();
+        right_forward();
+    }
+
+    public static void both_backward() {
+        left_backward();
+        right_backward();
+    }
+
     public static void move(Point2D point2D) {
         move(point2D._1(), point2D._2());
     }
@@ -81,13 +93,30 @@ public class L298NAO {
             both_stop();
             return;
         }
-        //if(isInRange())
-        if (isInRange(direction, B_L) || isInRange(direction, B) || isInRange(direction, R)) left_backward();
-        else if (isInRange(direction, F_R) || isInRange(direction, B_R)) left_stop();
-        else left_forward();
-        if (isInRange(direction, L) || isInRange(direction, B) || isInRange(direction, B_R)) right_backward();
-        else if (isInRange(direction, F_L) || isInRange(direction, B_L)) right_stop();
-        else right_forward();
+        if (isInRange(direction, F_R)) {
+            left_forward();
+            right_stop();
+        } else if (isInRange(direction, R)) {
+            left_backward();
+            right_forward();
+        } else if (isInRange(direction, B_R)) {
+            left_backward();
+            right_stop();
+        } else if (isInRange(direction, B)) {
+            both_backward();
+        } else if (isInRange(direction, B_L)) {
+            left_stop();
+            right_backward();
+        } else if (isInRange(direction, L)) {
+            left_forward();
+            right_backward();
+        } else if (isInRange(direction, F_L)) {
+            left_stop();
+            right_forward();
+        } else //if (isInRange(direction,F))
+        {
+            both_forward();
+        }
     }
 
 }

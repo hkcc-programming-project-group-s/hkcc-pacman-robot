@@ -24,7 +24,7 @@ public class SRF05AO {
 
     private final static int TRIG_DURATION_IN_MICROS = 20; // min trigger duration of 10 micro s
     private final static int ECHO_DELAY_TIMEOUT_IN_MILLIS = 600; // max interval between trigger and echo of 50 milli s
-    private final static int ECHO_DURATION_TIMEOUT_IN_MILLIS = 60; // max echo duration of 30 milli s
+    private final static int ECHO_DURATION_TIMEOUT_IN_MILLIS = 1000; // max echo duration of 30 milli s
 
     private final static int WAIT_CYCLE_DURATION_IN_MILLIS = 60; // wait 60 milli s  (between each distance measure)
 
@@ -95,7 +95,7 @@ public class SRF05AO {
     private void waitForSignal() throws TimeoutException {
         long start = nanoTime();
         long end = start + ECHO_DELAY_TIMEOUT_IN_MILLIS * 1000 * 1000;
-        while (this.echoPin.isLow() && nanoTime() < end) {
+        while (this.echoPin.isLow() && (nanoTime() < end)) {
         }
         end = nanoTime();
 
@@ -112,7 +112,7 @@ public class SRF05AO {
     private long measureSignal() throws TimeoutException {
         long start = nanoTime();
         long end = start + ECHO_DURATION_TIMEOUT_IN_MILLIS * 1000 * 1000;
-        while (this.echoPin.isHigh() && nanoTime() < end) {
+        while (this.echoPin.isHigh() && (nanoTime() < end)) {
         }
         end = nanoTime();
 

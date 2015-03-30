@@ -2,8 +2,7 @@ package edu.hkcc.pacmanrobot.robot.utils
 
 import java.io.IOException
 
-
-import com.pi4j.io.i2c.{I2CFactory, I2CDevice, I2CBus}
+import com.pi4j.io.i2c.{I2CBus, I2CDevice, I2CFactory}
 import edu.hkcc.pacmanrobot.utils.Maths._
 import edu.hkcc.pacmanrobot.utils.maths.Point3D
 
@@ -19,48 +18,13 @@ object Mpu6050AO extends Thread {
   var angularAcceleration: Point3D = new Point3D()
   var rotation: Point3D = new Point3D()
   var displacement: Point3D = new Point3D()
+  var ready: Boolean = false
   private var TIME0: Long = 0L
   private var bus: I2CBus = null
   private var mpu6050: I2CDevice = null
   private var gyroTimer: Timer = new Timer()
   private var accelTimer: Timer = new Timer()
   private var bufferDouble: Double = .0
-
-  private def getXRotation(x: Double, y: Double, z: Double): Double = {
-    val rad: Double = Math.atan2(x, length(y, z))
-    -Math.toDegrees(rad)
-  }
-
-  private def getYRotation(x: Double, y: Double, z: Double): Double = {
-    val rad: Double = Math.atan2(y, length(x, z))
-    -Math.toDegrees(rad)
-  }
-
-  @throws(classOf[IOException])
-  private def readByte(addr: Int): Byte = {
-    mpu6050.read(addr).toByte
-  }
-
-  @throws(classOf[IOException])
-  private def setup {
-    Mpu6050AO.bus = I2CFactory.getInstance(I2CBus.BUS_1)
-    Mpu6050AO.mpu6050 = Mpu6050AO.bus.getDevice(0x68)
-    Mpu6050AO.mpu6050.write(Mpu6050AO.power_mgmt_1, 0x00.toByte)
-    val last_time: Long = 0
-    val now: Long = 0L
-    Mpu6050AO.TIME0 = System.nanoTime
-    var TIME1: Long = 0L
-    while (({
-      TIME1 = System.nanoTime;
-      TIME1
-    } - Mpu6050AO.TIME0) < 2147483647) {
-      writeMpu6050(0x01.toByte)
-      Mpu6050AO.bg_z += 1.0 * readWord2C(0x47)
-      writeMpu6050(0xff.toByte)
-    }
-    Mpu6050AO.bg_z /= 1.0 * TIME1 - Mpu6050AO.TIME0
-    System.out.println("bg_z=" + Mpu6050AO.bg_z)
-  }
 
   @throws(classOf[IOException])
   def loop {
@@ -75,11 +39,12 @@ object Mpu6050AO extends Thread {
     acceleration / 16384.0
   }
 
-  def getRotation: Point3D = {
-    rotation.clone
+  def getZRotaion: Double = {
+    getRotation.z
   }
-  def getZRotaion:Double={
-    rotation.z
+
+  def getRotation: Point3D = {
+    rotation - bg_z
   }
 
   @throws(classOf[IOException])
@@ -133,6 +98,43 @@ object Mpu6050AO extends Thread {
       }
     }
     System.out.println("Mpu6050AO end")
+  }
+
+  private def getXRotation(x: Double, y: Double, z: Double): Double = {
+    val rad: Double = Math.atan2(x, length(y, z))
+    -Math.toDegrees(rad)
+  }
+
+  private def getYRotation(x: Double, y: Double, z: Double): Double = {
+    val rad: Double = Math.atan2(y, length(x, z))
+    -Math.toDegrees(rad)
+  }
+
+  @throws(classOf[IOException])
+  private def readByte(addr: Int): Byte = {
+    mpu6050.read(addr).toByte
+  }
+
+  @throws(classOf[IOException])
+  private def setup {
+    Mpu6050AO.bus = I2CFactory.getInstance(I2CBus.BUS_1)
+    Mpu6050AO.mpu6050 = Mpu6050AO.bus.getDevice(0x68)
+    Mpu6050AO.mpu6050.write(Mpu6050AO.power_mgmt_1, 0x00.toByte)
+    val last_time: Long = 0
+    val now: Long = 0L
+    Mpu6050AO.TIME0 = System.nanoTime
+    var TIME1: Long = 0L
+    while (({
+      TIME1 = System.nanoTime;
+      TIME1
+    } - Mpu6050AO.TIME0) < 2147483647) {
+      writeMpu6050(0x01.toByte)
+      Mpu6050AO.bg_z += 1.0 * readWord2C(0x47)
+      writeMpu6050(0xff.toByte)
+    }
+    Mpu6050AO.bg_z /= 1.0 * TIME1 - Mpu6050AO.TIME0
+    System.out.println("bg_z=" + Mpu6050AO.bg_z)
+    ready = true
   }
 
   private def real(shiftedValue: Double, time1: Long): Double = {

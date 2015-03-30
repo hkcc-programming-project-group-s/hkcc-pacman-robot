@@ -23,7 +23,7 @@ abstract class Device extends Thread {
 
   var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
 
-  val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](Config.PORT_GAME_STATUS, { gameStatus: GameStatus => {
+  /*val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](Config.PORT_GAME_STATUS, { gameStatus: GameStatus => {
     this.gameStatus = gameStatus
     gameStatus.status match {
       case GameStatus.STATE_SETUP => gameSetup
@@ -33,13 +33,13 @@ abstract class Device extends Thread {
       case GameStatus.STATE_STOP => gameStop
     }
   }
-  })
+  })*/
 }
 
 abstract class GameDevice extends Device {
   val deviceInfo: DeviceInfo = new DeviceInfo()
 
-  val deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create[DeviceInfo](Config.PORT_DEVICE_INFO, { newDeviceInfo: DeviceInfo => deviceInfo.set(newDeviceInfo) })
+  //val deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create[DeviceInfo](Config.PORT_DEVICE_INFO, { newDeviceInfo: DeviceInfo => deviceInfo.set(newDeviceInfo) })
 
   override def start = {
     println(deviceInfo.name + " start ")

@@ -33,8 +33,4 @@ public class Maths {
         return Math.sqrt((x * x) + (y * y));
     }
 
-
-
-
-
 }

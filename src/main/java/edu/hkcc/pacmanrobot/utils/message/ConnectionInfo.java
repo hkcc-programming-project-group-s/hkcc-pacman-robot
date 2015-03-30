@@ -1,10 +1,13 @@
-package edu.hkcc.pacmanrobot.utils.studentrobot.code;
+package edu.hkcc.pacmanrobot.utils.message;
+
+import edu.hkcc.pacmanrobot.utils.Config;
+import edu.hkcc.pacmanrobot.utils.map.Message;
 
 /*
 there is for connection to each other like Sever send message to Robot to let Robot start the game.
 */
 @Deprecated
-public class ConnectionInfo {
+public class ConnectionInfo implements Message {
     public static final byte TYPE_POSITION_UPDATE = 1;
     public static final byte TYPE_PAUSE_NOTIFICATION = 2;
     public static final byte TYPE_GAME_START_NOTIFICATION = 3;
@@ -19,5 +22,10 @@ public class ConnectionInfo {
         this.srcAddr = srcAddr;
         this.destAddr = destAddr;
         this.type = type;
+    }
+public static final int PORT= Config.PORT_CONNECTION_INFO;
+    @Override
+    public int port() {
+        return PORT;
     }
 }
