@@ -112,11 +112,11 @@ public class L298NAO {
         right_backward();
     }
 
-    public static void move(Point2D point2D) {
+    public static void move(Point2D<Double> point2D) {
         move(point2D._1, point2D._2);
     }
 
-    public static void move_pwm(Point2D point2D) {
+    public static void move_pwm(Point2D<Double> point2D) {
         move_pwm(point2D._1, point2D._2);
     }
 
@@ -152,7 +152,7 @@ public class L298NAO {
         } else if (isInRange(direction, L)) {
             left_backward();
             right_forward();
-            
+
         } else if (isInRange(direction, F_L)) {
             left_stop();
             right_forward();

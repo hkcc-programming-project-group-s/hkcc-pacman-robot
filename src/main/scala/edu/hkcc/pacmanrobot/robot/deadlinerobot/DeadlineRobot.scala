@@ -9,7 +9,6 @@ import edu.hkcc.pacmanrobot.robot.utils.{L298NAO, Mpu6050AO}
 import edu.hkcc.pacmanrobot.utils.Maths._
 import edu.hkcc.pacmanrobot.utils.Point2D
 
-
 class DeadlineRobot extends Robot {
   def gameSetup {
   }
@@ -41,7 +40,7 @@ class DeadlineRobot extends Robot {
   }
 
   def loop: Unit = {
-    val dir: Point2D = getTargetPosition
+    val dir: Point2D[java.lang.Double] = getTargetPosition
     if (dir._1 > 0)
       dir._1 = R
     else if (dir._1 < 0)
@@ -49,11 +48,11 @@ class DeadlineRobot extends Robot {
     L298NAO.move(dir)
   }
 
-  def getTargetPosition: Point2D = {
-    new Point2D(range(Mpu6050AO.getZRotaion),5)
+  def getTargetPosition: Point2D[java.lang.Double] = {
+    new Point2D[java.lang.Double](range(Mpu6050AO.getZRotaion), 5)
   }
 
-  def range(d: Double) = {
+  def range(d: java.lang.Double): java.lang.Double = {
     println("\t turn to: " + d)
     d
   }

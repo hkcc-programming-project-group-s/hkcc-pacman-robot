@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
 <ivy-report version="1.0">
-	<info
-		organisation="default"
-		module="sbt_robot$sources_javadoc_2.11"
-		revision="1.0"
-		conf="optional"
-		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
-		date="20150327032241"/>
-	<dependencies>
-	</dependencies>
+    <info
+        conf="optional"
+        confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
+        date="20150327032241"
+        module="sbt_robot$sources_javadoc_2.11"
+        organisation="default"
+        revision="1.0"/>
+    <dependencies>
+    </dependencies>
 </ivy-report>
