@@ -57,6 +57,8 @@ object Mpu6050AO extends Thread {
     acceleration = new Point3D(readWord2C(0x3b), readWord2C(0x3d), readWord2C(0x3f))
     accelTimer.getDelta
     if (accelTimer.last != 0) {
+      acceleration.y = y * cos(radian) - x * sin(radian);
+      acceleration.x = y * sin(radian) + x * cos(radian);
       displacement += acceleration
     }
   }
