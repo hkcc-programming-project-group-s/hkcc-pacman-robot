@@ -37,14 +37,14 @@ public class FireplaceStateChangeEvent extends EventObject {
 
     public FireplaceStateChangeEvent(Fireplace fireplaceComponent, FireplaceState oldState, FireplaceState newState) {
         super(fireplaceComponent);
-        this.oldState = oldState;        
+        this.oldState = oldState;
         this.newState = newState;
     }
 
     public Fireplace getFireplace() {
-        return (Fireplace)getSource();
+        return (Fireplace) getSource();
     }
-    
+
     public FireplaceState getOldState() {
         return oldState;
     }

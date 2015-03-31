@@ -26,6 +26,7 @@ package com.pi4j.io.gpio.exception;
  * limitations under the License.
  * #L%
  */
+
 /**
  * @author Christian Wehrli
  */

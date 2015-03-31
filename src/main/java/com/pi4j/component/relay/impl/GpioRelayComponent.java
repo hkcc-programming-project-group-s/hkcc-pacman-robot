@@ -38,7 +38,7 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import java.util.Timer;
 
 public class GpioRelayComponent extends RelayBase {
-    
+
     // internal class members
     GpioPinDigitalOutput pin = null;
     PinState openState = PinState.LOW;
@@ -50,21 +50,21 @@ public class GpioRelayComponent extends RelayBase {
         @Override
         public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
             // notify any state change listeners
-            if(event.getState() == openState){
+            if (event.getState() == openState) {
                 notifyListeners(new RelayStateChangeEvent(GpioRelayComponent.this, RelayState.CLOSED, RelayState.OPEN));
             }
-            if(event.getState() == closedState){
+            if (event.getState() == closedState) {
                 notifyListeners(new RelayStateChangeEvent(GpioRelayComponent.this, RelayState.OPEN, RelayState.CLOSED));
             }
         }
     };
 
     /**
-     * using this constructor requires that the consumer 
-     *  define the RELAY OPEN and RELAY closed pin states 
-     *  
-     * @param pin GPIO digital output pin
-     * @param openState pin state to set when relay is OPEN
+     * using this constructor requires that the consumer
+     * define the RELAY OPEN and RELAY closed pin states
+     *
+     * @param pin         GPIO digital output pin
+     * @param openState   pin state to set when relay is OPEN
      * @param closedState pin state to set when relay is CLOSED
      */
     public GpioRelayComponent(GpioPinDigitalOutput pin, PinState openState, PinState closedState) {
@@ -75,9 +75,9 @@ public class GpioRelayComponent extends RelayBase {
 
     /**
      * default constructor; using this constructor assumes that:
-     *  (1) a pin state of HIGH is RELAY CLOSED
-     *  (2) a pin state of LOW  is RELAY OPEN
-     *  
+     * (1) a pin state of HIGH is RELAY CLOSED
+     * (2) a pin state of LOW  is RELAY OPEN
+     *
      * @param pin GPIO digital output pin
      */
     public GpioRelayComponent(GpioPinDigitalOutput pin) {
@@ -86,38 +86,38 @@ public class GpioRelayComponent extends RelayBase {
     }
 
     /**
-     * Return the current relay state based on the  
+     * Return the current relay state based on the
      * GPIO digital output pin state.
-     *  
-     * @return PowerState 
+     *
+     * @return PowerState
      */
     @Override
     public RelayState getState() {
-        if(pin.isState(openState))
+        if (pin.isState(openState))
             return RelayState.OPEN;
-        else 
+        else
             return RelayState.CLOSED;
     }
 
     /**
      * Set the current GPIO digital output pin state
      * based on the supplied power state
-     * 
+     *
      * @param state new power state to apply
      */
     @Override
     public void setState(RelayState state) {
 
         // apply the new pin state
-        switch(state) {
+        switch (state) {
             case OPEN: {
-                if(!isOpen()) {
+                if (!isOpen()) {
                     pin.setState(openState);
                 }
                 break;
             }
             case CLOSED: {
-                if(!isClosed()) {
+                if (!isClosed()) {
                     pin.setState(closedState);
                 }
                 break;

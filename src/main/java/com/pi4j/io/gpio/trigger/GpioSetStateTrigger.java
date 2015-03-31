@@ -36,36 +36,36 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class GpioSetStateTrigger extends OutputTargetedGpioTrigger {
 
-	private final PinState targetPinState;
+    private final PinState targetPinState;
 
-	public GpioSetStateTrigger(GpioPinDigitalOutput targetPin, PinState targetPinState) {
-		super(targetPin);
-		this.targetPinState = targetPinState;
-	}
+    public GpioSetStateTrigger(GpioPinDigitalOutput targetPin, PinState targetPinState) {
+        super(targetPin);
+        this.targetPinState = targetPinState;
+    }
 
-	public GpioSetStateTrigger(PinState state, GpioPinDigitalOutput targetPin, PinState targetPinState) {
-		super(state, targetPin);
-		this.targetPinState = targetPinState;
-	}
+    public GpioSetStateTrigger(PinState state, GpioPinDigitalOutput targetPin, PinState targetPinState) {
+        super(state, targetPin);
+        this.targetPinState = targetPinState;
+    }
 
-	public GpioSetStateTrigger(PinState[] states, GpioPinDigitalOutput targetPin, PinState targetPinState) {
-		super(states, targetPin);
-		this.targetPinState = targetPinState;
-	}
+    public GpioSetStateTrigger(PinState[] states, GpioPinDigitalOutput targetPin, PinState targetPinState) {
+        super(states, targetPin);
+        this.targetPinState = targetPinState;
+    }
 
-	public GpioSetStateTrigger(List<PinState> states, GpioPinDigitalOutput targetPin, PinState targetPinState) {
-		super(states, targetPin);
-		this.targetPinState = targetPinState;
-	}
+    public GpioSetStateTrigger(List<PinState> states, GpioPinDigitalOutput targetPin, PinState targetPinState) {
+        super(states, targetPin);
+        this.targetPinState = targetPinState;
+    }
 
-	public PinState getTargetPinState() {
-		return targetPinState;
-	}
+    public PinState getTargetPinState() {
+        return targetPinState;
+    }
 
-	@Override
-	public void invoke(GpioPin pin, PinState state) {
-		if (targetPin != null) {
-			targetPin.setState(targetPinState);
-		}
-	}
+    @Override
+    public void invoke(GpioPin pin, PinState state) {
+        if (targetPin != null) {
+            targetPin.setState(targetPinState);
+        }
+    }
 }

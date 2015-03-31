@@ -43,14 +43,13 @@ import java.io.IOException;
  * More information about the board can be found here: *
  * http://piface.openlx.org.uk/174770794
  * </p>
- * 
  * <p>
- * The Pi-FACE board used a MCP23S17 connected via SPI connection to the Raspberry Pi and provides 8 
- * GPIO digital input pins and 8 GPIO digital output pins. 
+ * <p>
+ * The Pi-FACE board used a MCP23S17 connected via SPI connection to the Raspberry Pi and provides 8
+ * GPIO digital input pins and 8 GPIO digital output pins.
  * </p>
- * 
+ *
  * @author Robert Savage
- * 
  */
 public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider {
 
@@ -63,7 +62,9 @@ public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider
     public static final byte ADDRESS_3 = 0b01000110; // 0x46 [0100 0110]
 
     public static final byte DEFAULT_ADDRESS = ADDRESS_0;
-
+    public static final int SPI_SPEED = 1000000;
+    public static final byte WRITE_FLAG = 0b00000000;    // 0x00
+    public static final byte READ_FLAG = 0b00000001;    // 0x01
     private static final byte REGISTER_IODIR_A = 0x00;
     private static final byte REGISTER_IODIR_B = 0x01;
     private static final byte REGISTER_GPINTEN_A = 0x04;
@@ -82,36 +83,25 @@ public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider
     private static final byte REGISTER_INTCAP_B = 0x11;
     private static final byte REGISTER_GPIO_A = 0x12;
     private static final byte REGISTER_GPIO_B = 0x13;
-
     private static final int GPIO_A_OFFSET = 0;
     private static final int GPIO_B_OFFSET = 1000;
-
-    private static final byte IOCON_UNUSED    = (byte)0x01;
-    private static final byte IOCON_INTPOL    = (byte)0x02;
-    private static final byte IOCON_ODR       = (byte)0x04;
-    private static final byte IOCON_HAEN      = (byte)0x08;
-    private static final byte IOCON_DISSLW    = (byte)0x10;
-    private static final byte IOCON_SEQOP     = (byte)0x20;
-    private static final byte IOCON_MIRROR    = (byte)0x40;
-    private static final byte IOCON_BANK_MODE = (byte)0x80;
-
+    private static final byte IOCON_UNUSED = (byte) 0x01;
+    private static final byte IOCON_INTPOL = (byte) 0x02;
+    private static final byte IOCON_ODR = (byte) 0x04;
+    private static final byte IOCON_HAEN = (byte) 0x08;
+    private static final byte IOCON_DISSLW = (byte) 0x10;
+    private static final byte IOCON_SEQOP = (byte) 0x20;
+    private static final byte IOCON_MIRROR = (byte) 0x40;
+    private static final byte IOCON_BANK_MODE = (byte) 0x80;
+    protected final SpiDevice spi;
     private int currentStatesA = 0b00000000;
     private int currentStatesB = 0b11111111;
     private int currentDirectionA = 0b00000000;
     private int currentDirectionB = 0b11111111;
     private int currentPullupA = 0b00000000;
     private int currentPullupB = 0b11111111;
-
     private byte address = DEFAULT_ADDRESS;
-
     private GpioStateMonitor monitor = null;
-    
-    public static final int SPI_SPEED = 1000000;    
-    public static final byte WRITE_FLAG = 0b00000000;    // 0x00
-    public static final byte READ_FLAG  = 0b00000001;    // 0x01
-
-
-    protected final SpiDevice spi;
 
     public PiFaceGpioProvider(byte spiAddress, SpiChannel spiChannel) throws IOException {
         this(spiAddress, spiChannel, SPI_SPEED);
@@ -161,8 +151,8 @@ public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider
         //
 
         // write IO configuration
-        write(REGISTER_IOCON_A, (byte)(IOCON_SEQOP|IOCON_HAEN));  // enable hardware address
-        write(REGISTER_IOCON_B, (byte)(IOCON_SEQOP|IOCON_HAEN));  // enable hardware address
+        write(REGISTER_IOCON_A, (byte) (IOCON_SEQOP | IOCON_HAEN));  // enable hardware address
+        write(REGISTER_IOCON_B, (byte) (IOCON_SEQOP | IOCON_HAEN));  // enable hardware address
 
         // read initial GPIO pin states
         currentStatesA = read(REGISTER_GPIO_A);
@@ -203,9 +193,9 @@ public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider
         write(REGISTER_INTCON_B, (byte) 0x00);
 
         // reset/clear interrupt flags
-        if(currentDirectionA > 0)
+        if (currentDirectionA > 0)
             read(REGISTER_INTCAP_A);
-        if(currentDirectionB > 0)
+        if (currentDirectionB > 0)
             read(REGISTER_INTCAP_B);
     }
 
@@ -232,7 +222,7 @@ public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider
         // (include the '& 0xFF' to ensure the bits in the unsigned byte are cast properly)
         return result[2] & 0xFF;
     }
-    
+
     @Override
     public String getName() {
         return NAME;
@@ -374,46 +364,46 @@ public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider
     @Override
     public PinState getState(Pin pin) {
         // call super method to perform validation on pin
-        PinState result  = super.getState(pin);
-        
+        PinState result = super.getState(pin);
+
         // determine A or B port based on pin address 
         if (pin.getAddress() < GPIO_B_OFFSET) {
             result = getStateA(pin); // get pin state
         } else {
             result = getStateB(pin); // get pin state
         }
-        
+
         // return pin state
         return result;
     }
-    
-    private PinState getStateA(Pin pin){
-        
+
+    private PinState getStateA(Pin pin) {
+
         // determine pin address
         int pinAddress = pin.getAddress() - GPIO_A_OFFSET;
-        
+
         // determine pin state
         PinState state = (currentStatesA & pinAddress) == pinAddress ? PinState.HIGH : PinState.LOW;
 
         // cache state
         getPinCache(pin).setState(state);
-        
+
         return state;
     }
-    
-    private PinState getStateB(Pin pin){
-        
+
+    private PinState getStateB(Pin pin) {
+
         // determine pin address
         int pinAddress = pin.getAddress() - GPIO_B_OFFSET;
-        
+
         // determine pin state
         PinState state = (currentStatesB & pinAddress) == pinAddress ? PinState.HIGH : PinState.LOW;
 
         // cache state
         getPinCache(pin).setState(state);
-        
+
         return state;
-    }    
+    }
 
     @Override
     public void setPullResistance(Pin pin, PinPullResistance resistance) {
@@ -474,32 +464,31 @@ public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider
     public PinPullResistance getPullResistance(Pin pin) {
         return super.getPullResistance(pin);
     }
-    
-    
+
+
     @Override
     public void shutdown() {
-        
+
         // prevent re-entrant invocation
-        if(isShutdown())
+        if (isShutdown())
             return;
-        
+
         // perform shutdown login in base
         super.shutdown();
-        
+
         // if a monitor is running, then shut it down now
         if (monitor != null) {
             // shutdown monitoring thread
             monitor.shutdown();
             monitor = null;
         }
-    }   
+    }
 
-    
+
     /**
      * This class/thread is used to to actively monitor for GPIO interrupts
-     * 
+     *
      * @author Robert Savage
-     * 
      */
     private class GpioStateMonitor extends Thread {
         private PiFaceGpioProvider provider;
@@ -529,11 +518,11 @@ public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider
                             // loop over the available pins on port B
                             for (Pin pin : PiFacePin.OUTPUTS) {
                                 int pinAddressA = pin.getAddress() - GPIO_A_OFFSET;
-                                
+
                                 // is there an interrupt flag on this pin?
                                 //if ((pinInterruptA & pinAddressA) > 0) {
-                                    // System.out.println("INTERRUPT ON PIN [" + pin.getName() + "]");
-                                    evaluatePinForChangeA(pin, pinInterruptState);
+                                // System.out.println("INTERRUPT ON PIN [" + pin.getName() + "]");
+                                evaluatePinForChangeA(pin, pinInterruptState);
                                 //}
                             }
                         }
@@ -555,8 +544,8 @@ public class PiFaceGpioProvider extends GpioProviderBase implements GpioProvider
 
                                 // is there an interrupt flag on this pin?
                                 //if ((pinInterruptB & pinAddressB) > 0) {
-                                    //System.out.println("INTERRUPT ON PIN [" + pin.getName() + "]");
-                                    evaluatePinForChangeB(pin, pinInterruptState);
+                                //System.out.println("INTERRUPT ON PIN [" + pin.getName() + "]");
+                                evaluatePinForChangeB(pin, pinInterruptState);
                                 //}
                             }
                         }

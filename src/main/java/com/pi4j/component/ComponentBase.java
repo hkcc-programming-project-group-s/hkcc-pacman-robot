@@ -32,29 +32,29 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class ComponentBase implements Component {
-    
+
+    private final Map<String, String> properties = new ConcurrentHashMap<String, String>();
     private String name = null;
     private Object tag = null;
-    private final Map<String, String> properties = new ConcurrentHashMap<String, String>();
-    
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
     @Override
     public void setName(String name) {
         this.name = name;
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-    
-    @Override
-    public void setTag(Object tag) {
-        this.tag = tag;
+    public Object getTag() {
+        return tag;
     }
 
     @Override
-    public Object getTag() {
-        return tag;
+    public void setTag(Object tag) {
+        this.tag = tag;
     }
 
     @Override
@@ -70,7 +70,7 @@ public abstract class ComponentBase implements Component {
     @Override
     public String getProperty(String key, String defaultValue) {
         if (properties.containsKey(key)) {
-            if(properties.get(key) == null || properties.get(key).isEmpty())
+            if (properties.get(key) == null || properties.get(key).isEmpty())
                 return defaultValue;
             else
                 return properties.get(key);
@@ -98,6 +98,6 @@ public abstract class ComponentBase implements Component {
     @Override
     public void clearProperties() {
         properties.clear();
-    }    
-    
+    }
+
 }

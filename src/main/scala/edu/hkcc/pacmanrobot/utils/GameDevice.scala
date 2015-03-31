@@ -1,6 +1,6 @@
 package edu.hkcc.pacmanrobot.utils
 
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{DeviceInfo, Messenger, GameStatus}
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.{DeviceInfo, GameStatus}
 
 
 /**
@@ -8,6 +8,8 @@ import edu.hkcc.pacmanrobot.utils.studentrobot.code.{DeviceInfo, Messenger, Game
  */
 
 abstract class Device extends Thread {
+
+  var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
 
   def gameSetup
 
@@ -20,8 +22,6 @@ abstract class Device extends Thread {
   def gameStop
 
   def setup
-
-  var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
 
   /*val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](Config.PORT_GAME_STATUS, { gameStatus: GameStatus => {
     this.gameStatus = gameStatus

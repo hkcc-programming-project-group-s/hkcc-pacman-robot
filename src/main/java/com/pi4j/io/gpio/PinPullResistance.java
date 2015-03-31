@@ -39,7 +39,7 @@ public enum PinPullResistance {
 
     OFF(0, "off"),
     PULL_DOWN(1, "down"),
-    PULL_UP(2, "up"); 
+    PULL_UP(2, "up");
 
     private final int value;
     private final String name;
@@ -49,6 +49,12 @@ public enum PinPullResistance {
         this.name = name;
     }
 
+    public static EnumSet<PinPullResistance> all() {
+        return EnumSet.of(PinPullResistance.OFF,
+                PinPullResistance.PULL_DOWN,
+                PinPullResistance.PULL_UP);
+    }
+
     public int getValue() {
         return value;
     }
@@ -56,15 +62,9 @@ public enum PinPullResistance {
     public String getName() {
         return name;
     }
-    
+
     @Override
     public String toString() {
-        return name.toUpperCase();        
-    }    
-    
-    public static EnumSet<PinPullResistance> all() {
-        return EnumSet.of(PinPullResistance.OFF, 
-                          PinPullResistance.PULL_DOWN,
-                          PinPullResistance.PULL_UP);
-    }     
+        return name.toUpperCase();
+    }
 }

@@ -37,15 +37,16 @@ public enum PibrellaBuzzer {
     private int index = -1;
     private Pin pin = null;
 
-    private PibrellaBuzzer(int index, Pin pin){
+    private PibrellaBuzzer(int index, Pin pin) {
         this.index = index;
         this.pin = pin;
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return index;
     }
-    public Pin getPin(){
+
+    public Pin getPin() {
         return pin;
     }
 

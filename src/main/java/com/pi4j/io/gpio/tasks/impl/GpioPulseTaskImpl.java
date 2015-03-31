@@ -47,7 +47,7 @@ public class GpioPulseTaskImpl implements Runnable {
     }
 
     public GpioPulseTaskImpl(GpioPinDigitalOutput pin, PinState inactiveState) {
-        this.pin = pin;        
+        this.pin = pin;
         this.inactiveState = inactiveState;
         this.callback = null;
     }
@@ -56,7 +56,7 @@ public class GpioPulseTaskImpl implements Runnable {
         pin.setState(inactiveState);
 
         // invoke callback if one was defined
-        if(callback != null){
+        if (callback != null) {
             try {
                 callback.call();
             } catch (Exception e) {

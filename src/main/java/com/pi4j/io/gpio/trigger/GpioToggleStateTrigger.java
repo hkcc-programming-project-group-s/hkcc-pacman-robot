@@ -36,38 +36,38 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class GpioToggleStateTrigger extends OutputTargetedGpioTrigger {
 
-	public GpioToggleStateTrigger(GpioPinDigitalOutput targetPin) {
-		super(targetPin);
-	}
+    public GpioToggleStateTrigger(GpioPinDigitalOutput targetPin) {
+        super(targetPin);
+    }
 
-	public GpioToggleStateTrigger(PinState state, GpioPinDigitalOutput targetPin) {
-		super(state, targetPin);
-	}
+    public GpioToggleStateTrigger(PinState state, GpioPinDigitalOutput targetPin) {
+        super(state, targetPin);
+    }
 
-	public GpioToggleStateTrigger(GpioPin pin, PinState state, GpioPinDigitalOutput targetPin) {
-		super(state, targetPin);
-	}
+    public GpioToggleStateTrigger(GpioPin pin, PinState state, GpioPinDigitalOutput targetPin) {
+        super(state, targetPin);
+    }
 
-	public GpioToggleStateTrigger(GpioPin pin, PinState[] states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioToggleStateTrigger(GpioPin pin, PinState[] states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	public GpioToggleStateTrigger(GpioPin pin, List<PinState> states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioToggleStateTrigger(GpioPin pin, List<PinState> states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	public GpioToggleStateTrigger(GpioPin[] pins, PinState[] states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioToggleStateTrigger(GpioPin[] pins, PinState[] states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	public GpioToggleStateTrigger(List<GpioPin> pins, List<PinState> states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioToggleStateTrigger(List<GpioPin> pins, List<PinState> states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	@Override
-	public void invoke(GpioPin pin, PinState state) {
-		if (targetPin != null) {
-			targetPin.toggle();
-		}
-	}
+    @Override
+    public void invoke(GpioPin pin, PinState state) {
+        if (targetPin != null) {
+            targetPin.toggle();
+        }
+    }
 }

@@ -36,13 +36,20 @@ package com.pi4j.io.gpio;
 @SuppressWarnings("unused")
 public interface GpioPinShutdown {
 
-    void setUnexport(Boolean unexport);
     Boolean getUnexport();
-    void setMode(PinMode mode);
+
+    void setUnexport(Boolean unexport);
+
     PinMode getMode();
-    void setPullResistor(PinPullResistance resistance);
+
+    void setMode(PinMode mode);
+
     PinPullResistance getPullResistor();
-    void setState(PinState state);
+
+    void setPullResistor(PinPullResistance resistance);
+
     PinState getState();
+
+    void setState(PinState state);
 
 }

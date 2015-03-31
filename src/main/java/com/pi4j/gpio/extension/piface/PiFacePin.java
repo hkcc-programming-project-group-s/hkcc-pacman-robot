@@ -28,12 +28,12 @@ package com.pi4j.gpio.extension.piface;
  */
 
 
-import java.util.EnumSet;
-
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.impl.PinImpl;
+
+import java.util.EnumSet;
 
 /**
  * Pi-Face pin definitions.
@@ -41,19 +41,17 @@ import com.pi4j.io.gpio.impl.PinImpl;
  * @author Robert Savage (<a
  *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  */
-public class PiFacePin  {
+public class PiFacePin {
 
     // OUTPUTS (Digital Output Pins)
-    public static final Pin OUTPUT_00 = createDigitalOutputPin(1,  "OUTPUT 1 (RELAY 1)");
-    public static final Pin OUTPUT_01 = createDigitalOutputPin(2,  "OUTPUT 2 (RELAY 2)");
-    public static final Pin OUTPUT_02 = createDigitalOutputPin(4,  "OUTPUT 3");
-    public static final Pin OUTPUT_03 = createDigitalOutputPin(8,  "OUTPUT 4");
+    public static final Pin OUTPUT_00 = createDigitalOutputPin(1, "OUTPUT 1 (RELAY 1)");
+    public static final Pin OUTPUT_01 = createDigitalOutputPin(2, "OUTPUT 2 (RELAY 2)");
+    public static final Pin OUTPUT_02 = createDigitalOutputPin(4, "OUTPUT 3");
+    public static final Pin OUTPUT_03 = createDigitalOutputPin(8, "OUTPUT 4");
     public static final Pin OUTPUT_04 = createDigitalOutputPin(16, "OUTPUT 5");
     public static final Pin OUTPUT_05 = createDigitalOutputPin(32, "OUTPUT 5");
     public static final Pin OUTPUT_06 = createDigitalOutputPin(64, "OUTPUT 6");
-    public static final Pin OUTPUT_07 = createDigitalOutputPin(128,"OUTPUT 8");
-    public static Pin[] OUTPUTS = { OUTPUT_00, OUTPUT_01, OUTPUT_02, OUTPUT_03, OUTPUT_04, OUTPUT_05, OUTPUT_06, OUTPUT_07 };    
-
+    public static final Pin OUTPUT_07 = createDigitalOutputPin(128, "OUTPUT 8");
     // INPUTS (Digital Input Pins)
     public static final Pin INPUT_00 = createDigitalInputPin(1001, "INPUT 1 (SWITCH 1)");
     public static final Pin INPUT_01 = createDigitalInputPin(1002, "INPUT 2 (SWITCH 2)");
@@ -62,18 +60,19 @@ public class PiFacePin  {
     public static final Pin INPUT_04 = createDigitalInputPin(1016, "INPUT 5");
     public static final Pin INPUT_05 = createDigitalInputPin(1032, "INPUT 6");
     public static final Pin INPUT_06 = createDigitalInputPin(1064, "INPUT 7");
-    public static final Pin INPUT_07 = createDigitalInputPin(1128, "INPUT 8");    
-    public static Pin[] INPUTS = { INPUT_00, INPUT_01, INPUT_02, INPUT_03, INPUT_04, INPUT_05, INPUT_06, INPUT_07 };
-    
+    public static final Pin INPUT_07 = createDigitalInputPin(1128, "INPUT 8");
+    public static Pin[] OUTPUTS = {OUTPUT_00, OUTPUT_01, OUTPUT_02, OUTPUT_03, OUTPUT_04, OUTPUT_05, OUTPUT_06, OUTPUT_07};
+    public static Pin[] INPUTS = {INPUT_00, INPUT_01, INPUT_02, INPUT_03, INPUT_04, INPUT_05, INPUT_06, INPUT_07};
+
     private static Pin createDigitalOutputPin(int address, String name) {
-        return new PinImpl(PiFaceGpioProvider.NAME, address, name, 
-                    EnumSet.of(PinMode.DIGITAL_OUTPUT),
-                    EnumSet.of(PinPullResistance.OFF));
+        return new PinImpl(PiFaceGpioProvider.NAME, address, name,
+                EnumSet.of(PinMode.DIGITAL_OUTPUT),
+                EnumSet.of(PinPullResistance.OFF));
     }
-        
+
     private static Pin createDigitalInputPin(int address, String name) {
-        return new PinImpl(PiFaceGpioProvider.NAME, address, name, 
-                    EnumSet.of(PinMode.DIGITAL_INPUT),
-                    EnumSet.of(PinPullResistance.PULL_UP));
-    }       
+        return new PinImpl(PiFaceGpioProvider.NAME, address, name,
+                EnumSet.of(PinMode.DIGITAL_INPUT),
+                EnumSet.of(PinPullResistance.PULL_UP));
+    }
 }

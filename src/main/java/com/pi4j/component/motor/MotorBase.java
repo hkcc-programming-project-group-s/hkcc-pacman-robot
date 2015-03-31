@@ -33,7 +33,7 @@ import com.pi4j.component.ComponentBase;
 public abstract class MotorBase extends ComponentBase implements Motor {
 
     @Override
-    public void forward()    {
+    public void forward() {
         setState(MotorState.FORWARD);
     }
 
@@ -43,8 +43,8 @@ public abstract class MotorBase extends ComponentBase implements Motor {
             forward();
             Thread.sleep(milleseconds);
             stop();
+        } catch (InterruptedException e) {
         }
-        catch (InterruptedException e) { }
     }
 
     @Override
@@ -53,13 +53,13 @@ public abstract class MotorBase extends ComponentBase implements Motor {
     }
 
     @Override
-    public void reverse(long milleseconds) {        
+    public void reverse(long milleseconds) {
         try {
             reverse();
             Thread.sleep(milleseconds);
             stop();
+        } catch (InterruptedException e) {
         }
-        catch (InterruptedException e) { }
     }
 
     @Override
@@ -74,12 +74,12 @@ public abstract class MotorBase extends ComponentBase implements Motor {
     public abstract void setState(MotorState state);
 
     @Override
-    public boolean isState(MotorState state){
+    public boolean isState(MotorState state) {
         return getState().equals(state);
     }
 
     @Override
     public boolean isStopped() {
         return getState().equals(MotorState.STOP);
-    }    
+    }
 }

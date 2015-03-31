@@ -30,10 +30,14 @@ import java.util.concurrent.Future;
  */
 
 public interface LED extends Light {
-    
+
     void toggle();
+
     Future<?> blink(long delay);
+
     Future<?> blink(long delay, long duration);
-    Future<?> pulse(long duration);    
-    Future<?> pulse(long duration, boolean blocking);    
+
+    Future<?> pulse(long duration);
+
+    Future<?> pulse(long duration, boolean blocking);
 }

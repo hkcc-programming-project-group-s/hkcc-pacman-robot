@@ -32,7 +32,7 @@ import com.pi4j.component.Component;
 
 /**
  * Represents characteristics/settings of an R/C-Servo.
- * 
+ *
  * @author Christian Wehrli
  */
 public interface Servo extends Component {
@@ -63,16 +63,16 @@ public interface Servo extends Component {
     //------------------------------------------------------------------------------------------------------------------
     // Properties
     //------------------------------------------------------------------------------------------------------------------
-    /** 
+    /**
      * Integer value between 0 and 150.<br>
-     *   0: no travel<br>
+     * 0: no travel<br>
      * 150: max. travel (0.9ms pulse)
      */
     String PROP_END_POINT_LEFT = "endPointLeft";
 
-    /** 
+    /**
      * Integer value between 0 and 150.<br>
-     *   0: no travel<br>
+     * 0: no travel<br>
      * 150: max. travel (2.1ms pulse)
      */
     String PROP_END_POINT_RIGHT = "endPointRight";
@@ -80,9 +80,9 @@ public interface Servo extends Component {
     /**
      * Value between -200 and +200<p>
      * -200: neutral position changed to 1.3ms<br>
-     *    0: neutral position unchanged at 1.5ms<br>
-     *  200: neutral position changed to 1.7ms<p>
-     *  Endpoints will be adjusted accordingly!
+     * 0: neutral position unchanged at 1.5ms<br>
+     * 200: neutral position changed to 1.7ms<p>
+     * Endpoints will be adjusted accordingly!
      */
     String PROP_SUBTRIM = "subtrim";
 
@@ -93,20 +93,22 @@ public interface Servo extends Component {
     String PROP_IS_REVERSE = "isReverse";
 
     /**
-     * Sets the servos desired position by providing a percentage value.<p>
-     * E.g.: a position value of -100 would force the servo to travel to its max. left position as defined in 
-     *       property {@link #PROP_END_POINT_LEFT}.
-     * @param position value between -100 and +100 according to {@link #POS_MAX_LEFT} respectively {@link #POS_MAX_RIGHT}.
-     */
-    void setPosition(float position);
-
-    /**
      * @return current position value between -100 and +100[%]
      */
     float getPosition();
 
     /**
+     * Sets the servos desired position by providing a percentage value.<p>
+     * E.g.: a position value of -100 would force the servo to travel to its max. left position as defined in
+     * property {@link #PROP_END_POINT_LEFT}.
+     *
+     * @param position value between -100 and +100 according to {@link #POS_MAX_LEFT} respectively {@link #POS_MAX_RIGHT}.
+     */
+    void setPosition(float position);
+
+    /**
      * Returns servo driver this servo is attached to
+     *
      * @return servo driver
      */
     ServoDriver getServoDriver();

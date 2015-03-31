@@ -29,7 +29,6 @@ package com.pi4j.io.i2c;
 
 import java.io.IOException;
 
-public interface I2CFactoryProvider
-{
-	I2CBus getBus(int busNumber) throws IOException;
+public interface I2CFactoryProvider {
+    I2CBus getBus(int busNumber) throws IOException;
 }

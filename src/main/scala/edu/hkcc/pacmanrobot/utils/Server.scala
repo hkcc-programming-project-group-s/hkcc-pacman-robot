@@ -12,6 +12,8 @@ import edu.hkcc.pacmanrobot.utils.studentrobot.code.Position
 
 class Server extends GameDevice {
 
+  var worker: ServerWorker = _
+
   def loop = {}
 
   def save = {}
@@ -19,7 +21,6 @@ class Server extends GameDevice {
   def sendNextPosition {
     val nextPosition: Position = null
   }
-
 
   def isNear(p1: Position, p2: Position): Boolean = {
     return true
@@ -54,8 +55,6 @@ class Server extends GameDevice {
   }
 
   override def gameStop: Unit = ???
-
-  var worker: ServerWorker = _
 
   override def setup: Unit = ???
 }

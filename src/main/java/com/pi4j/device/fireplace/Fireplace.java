@@ -34,27 +34,43 @@ import java.util.concurrent.TimeUnit;
 public interface Fireplace extends ObserveableDevice {
 
     public FireplaceState getState();
+
     public void setState(FireplaceState state) throws FireplacePilotLightException;
+
     public boolean isState(FireplaceState state);
 
     public boolean isOn();
+
     public boolean isOff();
+
     public boolean isPilotLightOn();
+
     public boolean isPilotLightOff();
 
     public void on() throws FireplacePilotLightException;
+
     public void on(long timeoutDelay, TimeUnit timeoutUnit) throws FireplacePilotLightException;
+
     public void off();
+
     public void setTimeout(long delay, TimeUnit unit);
+
     public void cancelTimeout();
+
     public long getTimeoutDelay();
+
     public TimeUnit getTimeoutUnit();
 
     void addListener(FireplaceStateChangeListener... listener);
+
     void removeListener(FireplaceStateChangeListener... listener);
+
     void addListener(FireplacePilotLightListener... listener);
+
     void removeListener(FireplacePilotLightListener... listener);
+
     void addListener(FireplaceTimeoutListener... listener);
+
     void removeListener(FireplaceTimeoutListener... listener);
 
     public void shutdown();

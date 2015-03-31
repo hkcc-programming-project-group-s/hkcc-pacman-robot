@@ -40,15 +40,15 @@ import com.pi4j.wiringpi.GpioUtil;
  */
 @SuppressWarnings("unused")
 public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider, GpioInterruptListener {
-    
+
     public static final String NAME = "RaspberryPi GPIO Provider";
-    
+
     public RaspiGpioProvider() {
         // set wiringPi interface for internal use
         // we will use the WiringPi pin number scheme with the wiringPi library
         com.pi4j.wiringpi.Gpio.wiringPiSetup();
     }
-    
+
     @Override
     public String getName() {
         return NAME;
@@ -75,20 +75,20 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
 
         // if a default state was provided and the direction is OUT, then override the
         // pin direction to include initial state value
-        if(defaultState != null && mode.getDirection() == PinDirection.OUT){
-            if(defaultState == PinState.LOW)
+        if (defaultState != null && mode.getDirection() == PinDirection.OUT) {
+            if (defaultState == PinState.LOW)
                 direction = GpioUtil.DIRECTION_LOW;
-            else if(defaultState == PinState.HIGH)
+            else if (defaultState == PinState.HIGH)
                 direction = GpioUtil.DIRECTION_HIGH;
         }
 
         // if not already exported, export the pin and set the pin direction
-        if(!com.pi4j.wiringpi.GpioUtil.isExported(pin.getAddress())){
+        if (!com.pi4j.wiringpi.GpioUtil.isExported(pin.getAddress())) {
             com.pi4j.wiringpi.GpioUtil.export(pin.getAddress(), direction);
         }
         // if the pin is already exported, then check its current configured direction
         // if the direction does not match, then set the new direction for the pin
-        else if(com.pi4j.wiringpi.GpioUtil.getDirection(pin.getAddress()) != mode.getDirection().getValue()){
+        else if (com.pi4j.wiringpi.GpioUtil.getDirection(pin.getAddress()) != mode.getDirection().getValue()) {
             com.pi4j.wiringpi.GpioUtil.setDirection(pin.getAddress(), direction);
         }
 
@@ -99,7 +99,7 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
     @Override
     public boolean isExported(Pin pin) {
         super.isExported(pin);
-        
+
         // return the pin exported state
         return com.pi4j.wiringpi.GpioUtil.isExported(pin.getAddress());
     }
@@ -117,7 +117,7 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
         super.setMode(pin, mode);
 
         com.pi4j.wiringpi.Gpio.pinMode(pin.getAddress(), mode.getValue());
-        
+
         // if this is an input pin, then configure edge detection
         if (PinMode.allInputs().contains(mode)) {
             com.pi4j.wiringpi.GpioUtil.setEdgeDetection(pin.getAddress(), PinEdge.BOTH.getValue());
@@ -129,7 +129,7 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
         // TODO : get actual pin mode from native impl
         return super.getMode(pin);
     }
-    
+
     @Override
     public void setPullResistance(Pin pin, PinPullResistance resistance) {
         super.setPullResistance(pin, resistance);
@@ -142,7 +142,7 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
         // TODO : get actual pin pull resistance from native impl
         return super.getPullResistance(pin);
     }
-    
+
     @Override
     public void setState(Pin pin, PinState state) {
         super.setState(pin, state);
@@ -152,7 +152,7 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
     @Override
     public PinState getState(Pin pin) {
         super.getState(pin);
-        
+
         // return pin state
         PinState state = null;
         int ret = com.pi4j.wiringpi.Gpio.digitalRead(pin.getAddress());
@@ -187,7 +187,7 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
     public int getPwm(Pin pin) {
         return super.getPwm(pin);
     }
-    
+
     // internal
     private void setPwmValue(Pin pin, int value) {
         // set pin PWM value
@@ -202,7 +202,7 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
             // if a matching pin address is found
             if (pin.getAddress() == event.getPin()) {
                 dispatchPinDigitalStateChangeEvent(pin, PinState.getState(event.getState()));
-            }            
+            }
         }
     }
 
@@ -211,17 +211,17 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
         super.addListener(pin, listener);
 
         // update the native interrupt listener thread for callbacks
-        updateInterruptListener(pin);        
+        updateInterruptListener(pin);
     }
-    
+
     @Override
     public void removeListener(Pin pin, PinListener listener) {
         super.removeListener(pin, listener);
-        
+
         // update the native interrupt listener thread for callbacks
-        updateInterruptListener(pin);        
+        updateInterruptListener(pin);
     }
-    
+
     // internal 
     private void updateInterruptListener(Pin pin) {
         if (listeners.size() > 0) {
@@ -237,5 +237,5 @@ public class RaspiGpioProvider extends GpioProviderBase implements GpioProvider,
                 com.pi4j.wiringpi.GpioInterrupt.removeListener(this);
             }
         }
-    }    
+    }
 }

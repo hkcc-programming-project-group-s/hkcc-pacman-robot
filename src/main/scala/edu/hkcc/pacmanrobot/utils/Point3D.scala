@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.maths
+package edu.hkcc.pacmanrobot.utils
 
 import java.io.Serializable
 
@@ -21,19 +21,26 @@ class Point3D(var x: Double = 0d, var y: Double = 0d, var z: Double = 0d) extend
     "[%.2f,%.2f.%.2f]\n".format(x, y, z)
   }
 
+
+  implicit def +(point3D: Point3D): Point3D = {
+    new Point3D(x + point3D.x, y + point3D.y, z + point3D.z)
+  }
+
   implicit def -(point3D: Point3D): Point3D = {
     new Point3D(x - point3D.x, y - point3D.y, z - point3D.z)
   }
 
-  implicit def +(point3D: Point3D): Point3D = {
-    new Point3D(x + point3D.x, y + point3D.y, z + point3D.z)
+  implicit def -(d: Double): Point3D = {
+    new Point3D(x - d, y - d, z - d)
+  }
+
+  implicit def *(multiply: Double): Point3D = {
+    new Point3D(x * multiply, y * multiply, z * multiply)
   }
 
   implicit def /(divider: Double): Point3D = {
     new Point3D(x / divider, y / divider, z / divider)
   }
 
-  implicit def -(d: Double): Point3D = {
-    new Point3D(x - d, y - d, z - d)
-  }
+
 }

@@ -31,11 +31,14 @@ package com.pi4j.component.sensor;
 import com.pi4j.component.ObserveableComponent;
 
 public interface AnalogSensor extends ObserveableComponent {
-    
+
     double getValue();
+
     boolean isValue(double value);
+
     boolean isValueInRange(double min, double max);
 
     void addListener(AnalogSensorListener... listener);
+
     void removeListener(AnalogSensorListener... listener);
 }

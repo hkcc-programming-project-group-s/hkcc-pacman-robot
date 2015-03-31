@@ -38,14 +38,14 @@ public class SwitchStateChangeEvent extends EventObject {
 
     public SwitchStateChangeEvent(Switch switchComponent, SwitchState oldState, SwitchState newState) {
         super(switchComponent);
-        this.oldState = oldState;        
+        this.oldState = oldState;
         this.newState = newState;
     }
 
     public Switch getSwitch() {
-        return (Switch)getSource();
+        return (Switch) getSource();
     }
-    
+
     public SwitchState getOldState() {
         return oldState;
     }

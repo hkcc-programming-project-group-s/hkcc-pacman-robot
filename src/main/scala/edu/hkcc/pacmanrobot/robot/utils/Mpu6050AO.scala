@@ -3,8 +3,7 @@ package edu.hkcc.pacmanrobot.robot.utils
 import java.io.IOException
 
 import com.pi4j.io.i2c.{I2CBus, I2CDevice, I2CFactory}
-import edu.hkcc.pacmanrobot.utils.Maths._
-import edu.hkcc.pacmanrobot.utils.maths.Point3D
+import edu.hkcc.pacmanrobot.utils.{Point3D, Maths}
 
 /**
  * Created by beenotung on 3/30/15.
@@ -14,10 +13,10 @@ object Mpu6050AO extends Thread {
   private val power_mgmt_2: Int = 0x6c
   private val ONE_SECOND: Long = 1000000000L
   //default +- 2g per second
-  private val ACCEL_RATIO = 32768.0 / 2 / 9.80665 * 100
+  private val ACCEL_RATIO = 1.0 / (32768 / 2 / 9.80665 * 100)
   // in unit of cm
   //default +- 250 deg per second
-  private val GYRO_RATION = 32768.0 / 250 / 180 * Math.PI
+  private val GYRO_RATION = 1.0 / (32768 / 250 / 180 * Math.PI)
   // in unit of rad
   var ready: Boolean = false
   private var bg_z: Double = 0
@@ -41,15 +40,15 @@ object Mpu6050AO extends Thread {
   }
 
   def getAcceleration: Point3D = {
-    acceleration / ACCEL_RATIO
+    acceleration * ACCEL_RATIO
   }
 
   def getZRotaion: Double = {
-    getRotation.z - (bg_z / GYRO_RATION)
+    getRotation.z - (bg_z * GYRO_RATION)
   }
 
   def getRotation: Point3D = {
-    rotation / GYRO_RATION
+    rotation * GYRO_RATION
   }
 
   @throws(classOf[IOException])
@@ -106,12 +105,12 @@ object Mpu6050AO extends Thread {
   }
 
   private def getXRotation(x: Double, y: Double, z: Double): Double = {
-    val rad: Double = Math.atan2(x, length(y, z))
+    val rad: Double = Math.atan2(x, Maths.length(y, z))
     -Math.toDegrees(rad)
   }
 
   private def getYRotation(x: Double, y: Double, z: Double): Double = {
-    val rad: Double = Math.atan2(y, length(x, z))
+    val rad: Double = Math.atan2(y, Maths.length(x, z))
     -Math.toDegrees(rad)
   }
 

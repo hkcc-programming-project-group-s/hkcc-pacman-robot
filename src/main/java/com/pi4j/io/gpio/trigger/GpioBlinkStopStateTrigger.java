@@ -36,39 +36,39 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class GpioBlinkStopStateTrigger extends OutputTargetedGpioTrigger {
 
-	public GpioBlinkStopStateTrigger(GpioPinDigitalOutput targetPin) {
-		super(targetPin);
-	}
+    public GpioBlinkStopStateTrigger(GpioPinDigitalOutput targetPin) {
+        super(targetPin);
+    }
 
-	public GpioBlinkStopStateTrigger(PinState state, GpioPinDigitalOutput targetPin) {
-		super(state, targetPin);
-	}
+    public GpioBlinkStopStateTrigger(PinState state, GpioPinDigitalOutput targetPin) {
+        super(state, targetPin);
+    }
 
-	public GpioBlinkStopStateTrigger(GpioPin pin, PinState state, GpioPinDigitalOutput targetPin) {
-		super(state, targetPin);
-	}
+    public GpioBlinkStopStateTrigger(GpioPin pin, PinState state, GpioPinDigitalOutput targetPin) {
+        super(state, targetPin);
+    }
 
-	public GpioBlinkStopStateTrigger(GpioPin pin, PinState[] states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioBlinkStopStateTrigger(GpioPin pin, PinState[] states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	public GpioBlinkStopStateTrigger(GpioPin pin, List<PinState> states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioBlinkStopStateTrigger(GpioPin pin, List<PinState> states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	public GpioBlinkStopStateTrigger(GpioPin[] pins, PinState[] states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioBlinkStopStateTrigger(GpioPin[] pins, PinState[] states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	public GpioBlinkStopStateTrigger(List<GpioPin> pins, List<PinState> states, GpioPinDigitalOutput targetPin) {
-		super(states, targetPin);
-	}
+    public GpioBlinkStopStateTrigger(List<GpioPin> pins, List<PinState> states, GpioPinDigitalOutput targetPin) {
+        super(states, targetPin);
+    }
 
-	@Override
-	public void invoke(GpioPin pin, PinState state) {
-		if (targetPin != null) {
-			targetPin.blink(0);
-			targetPin.low();
-		}
-	}
+    @Override
+    public void invoke(GpioPin pin, PinState state) {
+        if (targetPin != null) {
+            targetPin.blink(0);
+            targetPin.low();
+        }
+    }
 }

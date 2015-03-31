@@ -27,7 +27,7 @@ package com.pi4j.device.fireplace;
  * #L%
  */
 
-public enum FireplaceState  {
+public enum FireplaceState {
     ON,
     OFF;
 }

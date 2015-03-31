@@ -34,13 +34,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NetworkInfo  {
+public class NetworkInfo {
 
     // private constructor 
     private NetworkInfo() {
         // forbid object construction 
     }
-    
+
     public static String getHostname() throws IOException, InterruptedException {
         return ExecUtil.execute("hostname --short")[0];
     }
@@ -71,7 +71,7 @@ public class NetworkInfo  {
         }
         return result.toArray(new String[result.size()]);
     }
-    
+
 //    public static Map<String,NetworkInterface> getNetworkInterfaces() throws IOException, InterruptedException {
 //
 //        Map<String,NetworkInterface> interfaces = new HashMap<String, NetworkInterface>();

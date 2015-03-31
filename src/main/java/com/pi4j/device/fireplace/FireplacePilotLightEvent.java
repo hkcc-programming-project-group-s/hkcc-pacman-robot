@@ -40,12 +40,13 @@ public class FireplacePilotLightEvent extends EventObject {
     }
 
     public Fireplace getFireplace() {
-        return (Fireplace)getSource();
+        return (Fireplace) getSource();
     }
-    
+
     public boolean isPilotLightOn() {
         return isPilotLightOn;
     }
+
     public boolean isPilotLightOff() {
         return !isPilotLightOn;
     }

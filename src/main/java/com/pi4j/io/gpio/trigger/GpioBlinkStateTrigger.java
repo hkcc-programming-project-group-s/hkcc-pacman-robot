@@ -36,32 +36,32 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class GpioBlinkStateTrigger extends OutputTargetedGpioTrigger {
 
-	private final long milliseconds;
+    private final long milliseconds;
 
-	public GpioBlinkStateTrigger(GpioPinDigitalOutput targetPin, long milliseconds) {
-		super(targetPin);
-		this.milliseconds = milliseconds;
-	}
+    public GpioBlinkStateTrigger(GpioPinDigitalOutput targetPin, long milliseconds) {
+        super(targetPin);
+        this.milliseconds = milliseconds;
+    }
 
-	public GpioBlinkStateTrigger(PinState state, GpioPinDigitalOutput targetPin, long milliseconds) {
-		super(state, targetPin);
-		this.milliseconds = milliseconds;
-	}
+    public GpioBlinkStateTrigger(PinState state, GpioPinDigitalOutput targetPin, long milliseconds) {
+        super(state, targetPin);
+        this.milliseconds = milliseconds;
+    }
 
-	public GpioBlinkStateTrigger(PinState[] states, GpioPinDigitalOutput targetPin, long milliseconds) {
-		super(states, targetPin);
-		this.milliseconds = milliseconds;
-	}
+    public GpioBlinkStateTrigger(PinState[] states, GpioPinDigitalOutput targetPin, long milliseconds) {
+        super(states, targetPin);
+        this.milliseconds = milliseconds;
+    }
 
-	public GpioBlinkStateTrigger(List<PinState> states, GpioPinDigitalOutput targetPin, long milliseconds) {
-		super(states, targetPin);
-		this.milliseconds = milliseconds;
-	}
+    public GpioBlinkStateTrigger(List<PinState> states, GpioPinDigitalOutput targetPin, long milliseconds) {
+        super(states, targetPin);
+        this.milliseconds = milliseconds;
+    }
 
-	@Override
-	public void invoke(GpioPin pin, PinState state) {
-		if (targetPin != null) {
-			targetPin.blink(milliseconds);
-		}
-	}
+    @Override
+    public void invoke(GpioPin pin, PinState state) {
+        if (targetPin != null) {
+            targetPin.blink(milliseconds);
+        }
+    }
 }

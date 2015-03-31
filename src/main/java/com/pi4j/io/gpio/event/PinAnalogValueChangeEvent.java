@@ -43,10 +43,10 @@ public class PinAnalogValueChangeEvent extends PinEvent {
 
     /**
      * Default event constructor
-     * 
-     * @param obj Ignore this parameter
-     * @param pin GPIO pin number (not header pin number; not wiringPi pin number)
-     * @param value  New GPIO pin analog value.
+     *
+     * @param obj   Ignore this parameter
+     * @param pin   GPIO pin number (not header pin number; not wiringPi pin number)
+     * @param value New GPIO pin analog value.
      */
     public PinAnalogValueChangeEvent(Object obj, Pin pin, double value) {
         super(obj, pin, PinEventType.ANALOG_VALUE_CHANGE);
@@ -55,7 +55,7 @@ public class PinAnalogValueChangeEvent extends PinEvent {
 
     /**
      * Get the new pin value raised in this event.
-     * 
+     *
      * @return GPIO pin value
      */
     public double getValue() {

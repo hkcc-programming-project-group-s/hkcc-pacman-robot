@@ -31,7 +31,7 @@ import com.pi4j.component.ComponentListener;
 import com.pi4j.component.ObserveableComponentBase;
 
 public abstract class LightBase extends ObserveableComponentBase implements Light {
-    
+
     @Override
     public abstract void on();
 
@@ -45,7 +45,7 @@ public abstract class LightBase extends ObserveableComponentBase implements Ligh
     public boolean isOff() {
         return (!isOn());
     }
- 
+
     @Override
     public void addListener(LightListener... listener) {
         super.addListener(listener);
@@ -57,8 +57,8 @@ public abstract class LightBase extends ObserveableComponentBase implements Ligh
     }
 
     protected synchronized void notifyListeners(LightStateChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((LightListener)listener).onStateChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((LightListener) listener).onStateChange(event);
         }
-    }     
+    }
 }

@@ -39,12 +39,12 @@ public abstract class TemperatureSensorBase extends ObserveableComponentBase imp
 
     @Override
     public abstract TemperatureScale getScale();
-    
+
     @Override
     public double getTemperature(TemperatureScale scale) {
         return TemperatureConversion.convert(getScale(), scale, getTemperature());
-    }    
-    
+    }
+
     @Override
     public void addListener(TemperatureListener... listener) {
         super.addListener(listener);
@@ -56,8 +56,8 @@ public abstract class TemperatureSensorBase extends ObserveableComponentBase imp
     }
 
     protected synchronized void notifyListeners(TemperatureChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((TemperatureListener)listener).onTemperatureChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((TemperatureListener) listener).onTemperatureChange(event);
         }
-    } 
+    }
 }

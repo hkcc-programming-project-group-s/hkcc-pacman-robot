@@ -36,41 +36,41 @@ public abstract class StepperMotorBase extends MotorBase implements StepperMotor
 
     @Override
     public float getStepsPerRevolution() {
-        return stepsPerRevolution;        
+        return stepsPerRevolution;
     }
-    
+
     @Override
     public void setStepsPerRevolution(int steps) {
         stepsPerRevolution = steps;
     }
-    
+
     @Override
-    public void setStepInterval(long milliseconds){
-        stepIntervalMilliseconds = milliseconds;   
+    public void setStepInterval(long milliseconds) {
+        stepIntervalMilliseconds = milliseconds;
         stepIntervalNanoseconds = 0;
     }
 
     @Override
-    public void setStepInterval(long milliseconds, int nanoseconds){
+    public void setStepInterval(long milliseconds, int nanoseconds) {
         stepIntervalMilliseconds = milliseconds;
         stepIntervalNanoseconds = nanoseconds;
-    }
-    
-    @Override
-    public void setStepSequence(byte[] sequence) {
-        stepSequence = sequence;
     }
 
     @Override
     public byte[] getStepSequence() {
         return stepSequence;
     }
-    
+
+    @Override
+    public void setStepSequence(byte[] sequence) {
+        stepSequence = sequence;
+    }
+
     @Override
     public void rotate(double revolutions) {
         long steps = Math.round(stepsPerRevolution * revolutions);
         step(steps);
-    }    
+    }
 
     @Override
     public abstract void step(long steps);

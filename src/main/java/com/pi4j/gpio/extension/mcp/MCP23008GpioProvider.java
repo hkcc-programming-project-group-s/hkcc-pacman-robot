@@ -45,29 +45,27 @@ import java.io.IOException;
  * http://ww1.microchip.com/downloads/en/DeviceDoc/21919e.pdf
  * http://learn.adafruit.com/mcp230xx-gpio-expander-on-the-raspberry-pi/overview
  * </p>
- * 
+ * <p>
  * <p>
  * The MCP23008 is connected via I2C connection to the Raspberry Pi and provides
  * 8 GPIO pins that can be used for either digital input or digital output pins.
  * </p>
- * 
+ *
  * @author Robert Savage
- * 
  */
 public class MCP23008GpioProvider extends GpioProviderBase implements GpioProvider {
 
     public static final String NAME = "com.pi4j.gpio.extension.mcp.MCP23008GpioProvider";
     public static final String DESCRIPTION = "MCP23008 GPIO Provider";
-    
+
     public static final int REGISTER_IODIR = 0x00;
+    // private static final int REGISTER_INTCAP = 0x08;
+    public static final int REGISTER_GPIO = 0x09;
     private static final int REGISTER_GPINTEN = 0x02;
     private static final int REGISTER_DEFVAL = 0x03;
     private static final int REGISTER_INTCON = 0x04;
     private static final int REGISTER_GPPU = 0x06;
     private static final int REGISTER_INTF = 0x07;
-    // private static final int REGISTER_INTCAP = 0x08;
-    public static final int REGISTER_GPIO  = 0x09;
-
     private int currentStates = 0;
     private int currentDirection = 0;
     private int currentPullup = 0;
@@ -205,20 +203,20 @@ public class MCP23008GpioProvider extends GpioProviderBase implements GpioProvid
     @Override
     public PinState getState(Pin pin) {
         // call super method to perform validation on pin
-        PinState result  = super.getState(pin);
-                
+        PinState result = super.getState(pin);
+
         // determine pin address
         int pinAddress = pin.getAddress();
-        
+
         // determine pin state
         result = (currentStates & pinAddress) == pinAddress ? PinState.HIGH : PinState.LOW;
 
         // cache state
         getPinCache(pin).setState(result);
-        
+
         return result;
     }
-    
+
     @Override
     public void setPullResistance(Pin pin, PinPullResistance resistance) {
         // validate
@@ -254,18 +252,18 @@ public class MCP23008GpioProvider extends GpioProviderBase implements GpioProvid
     public PinPullResistance getPullResistance(Pin pin) {
         return super.getPullResistance(pin);
     }
-    
-    
+
+
     @Override
     public void shutdown() {
-        
+
         // prevent reentrant invocation
-        if(isShutdown())
+        if (isShutdown())
             return;
-        
+
         // perform shutdown login in base
         super.shutdown();
-        
+
         try {
             // if a monitor is running, then shut it down now
             if (monitor != null) {
@@ -275,21 +273,20 @@ public class MCP23008GpioProvider extends GpioProviderBase implements GpioProvid
             }
 
             // if we are the owner of the I2C bus, then close it
-            if(i2cBusOwner) {
+            if (i2cBusOwner) {
                 // close the I2C bus communication
                 bus.close();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }   
+    }
 
-    
+
     /**
      * This class/thread is used to to actively monitor for GPIO interrupts
-     * 
+     *
      * @author Robert Savage
-     * 
      */
     private class GpioStateMonitor extends Thread {
         private I2CDevice device;
@@ -299,7 +296,7 @@ public class MCP23008GpioProvider extends GpioProviderBase implements GpioProvid
             this.device = device;
         }
 
-        public void shutdown() {                        
+        public void shutdown() {
             shuttingDown = true;
         }
 
@@ -320,8 +317,8 @@ public class MCP23008GpioProvider extends GpioProviderBase implements GpioProvid
                             for (Pin pin : MCP23008Pin.ALL) {
                                 // is there an interrupt flag on this pin?
                                 //if ((pinInterrupt & pin.getAddress()) > 0) {
-                                    // System.out.println("INTERRUPT ON PIN [" + pin.getName() + "]");
-                                    evaluatePinForChange(pin, pinInterruptState);
+                                // System.out.println("INTERRUPT ON PIN [" + pin.getName() + "]");
+                                evaluatePinForChange(pin, pinInterruptState);
                                 //}
                             }
                         }

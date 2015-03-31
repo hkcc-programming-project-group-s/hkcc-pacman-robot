@@ -43,7 +43,7 @@ public abstract class FireplaceBase extends ObserveableDeviceBase implements Fir
     protected TimeUnit timeoutUnit = TimeUnit.MINUTES;
     protected ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
-    public FireplaceBase(){
+    public FireplaceBase() {
         // add a state change listener so that the timeout can be canceled if any state is changed
         addListener(new FireplaceStateChangeListener() {
             @Override
@@ -117,22 +117,22 @@ public abstract class FireplaceBase extends ObserveableDeviceBase implements Fir
     }
 
     @Override
-    public void on(long timeoutDelay, TimeUnit timeoutUnit) throws FireplacePilotLightException{
+    public void on(long timeoutDelay, TimeUnit timeoutUnit) throws FireplacePilotLightException {
         on();
         setTimeout(timeoutDelay, timeoutUnit);
     }
 
     @Override
-    public void cancelTimeout(){
+    public void cancelTimeout() {
         // cancel any pending task
         cancelTimeoutTask();
     }
 
     @Override
-    public void setTimeout(long delay, TimeUnit unit){
+    public void setTimeout(long delay, TimeUnit unit) {
 
         // validate that the fireplace is ON
-        if(isOff()){
+        if (isOff()) {
             throw new RuntimeException("Unable to set timeout when fireplace is off.");
         }
 
@@ -144,7 +144,7 @@ public abstract class FireplaceBase extends ObserveableDeviceBase implements Fir
         cancelTimeoutTask();
 
         // only create timeout task if the delay is greater than zero
-        if(this.timeoutDelay > 0) {
+        if (this.timeoutDelay > 0) {
             // create a scheduled executor future task to turn off the fireplace
             timeoutTask = executor.schedule(new Runnable() {
                 @Override
@@ -155,7 +155,7 @@ public abstract class FireplaceBase extends ObserveableDeviceBase implements Fir
                     notifyListeners(event);
 
                     // an event listener could override the impl and handle the timeout behavior
-                    if(!event.isHandled()) {
+                    if (!event.isHandled()) {
                         off(); // turn off fireplace
                     }
                 }
@@ -164,31 +164,35 @@ public abstract class FireplaceBase extends ObserveableDeviceBase implements Fir
     }
 
     @Override
-    public long getTimeoutDelay() { return timeoutDelay; }
+    public long getTimeoutDelay() {
+        return timeoutDelay;
+    }
 
     @Override
-    public TimeUnit getTimeoutUnit() { return timeoutUnit; }
+    public TimeUnit getTimeoutUnit() {
+        return timeoutUnit;
+    }
 
 
     protected synchronized void notifyListeners(FireplaceStateChangeEvent event) {
-        for(DeviceListener listener : super.listeners) {
-            if(listener instanceof FireplaceStateChangeListener) {
+        for (DeviceListener listener : super.listeners) {
+            if (listener instanceof FireplaceStateChangeListener) {
                 ((FireplaceStateChangeListener) listener).onStateChange(event);
             }
         }
     }
 
     protected synchronized void notifyListeners(FireplacePilotLightEvent event) {
-        for(DeviceListener listener : super.listeners) {
-            if(listener instanceof FireplacePilotLightListener) {
+        for (DeviceListener listener : super.listeners) {
+            if (listener instanceof FireplacePilotLightListener) {
                 ((FireplacePilotLightListener) listener).onChange(event);
             }
         }
     }
 
     protected synchronized void notifyListeners(FireplaceTimeoutEvent event) {
-        for(DeviceListener listener : super.listeners) {
-            if(listener instanceof FireplaceTimeoutListener) {
+        for (DeviceListener listener : super.listeners) {
+            if (listener instanceof FireplaceTimeoutListener) {
                 ((FireplaceTimeoutListener) listener).onTimeout(event);
             }
         }
@@ -204,7 +208,7 @@ public abstract class FireplaceBase extends ObserveableDeviceBase implements Fir
     }
 
     @Override
-    public void shutdown(){
+    public void shutdown() {
         cancelTimeoutTask();  // cancel any pending task
         off();                // turn off the fireplace
         executor.shutdown();  // shutdown the executor thread

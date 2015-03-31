@@ -29,8 +29,8 @@ package com.pi4j.component.switches;
 
 
 public enum SwitchState {
-    
+
     ON,
     OFF
-    
+
 }

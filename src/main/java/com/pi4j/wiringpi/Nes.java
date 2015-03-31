@@ -42,12 +42,12 @@ import com.pi4j.util.NativeLibraryLoader;
  * Gordon Henderson @ <a href="http://wiringpi.com/">http://wiringpi.com/</a>)
  * </blockquote>
  * </p>
- * 
- * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
- * @see <a
- *      href="http://wiringpi.com/dev-lib/">http://wiringpi.com/dev-lib/</a>
+ *
  * @author Robert Savage (<a
  *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
+ * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
+ * @see <a
+ * href="http://wiringpi.com/dev-lib/">http://wiringpi.com/dev-lib/</a>
  */
 public class Nes {
 
@@ -62,21 +62,21 @@ public class Nes {
     public static final int PULSE_TIME = 25;
     public static final int MAX_NES_JOYSTICKS = 8;
 
-    // private constructor 
-    private Nes() {
-        // forbid object construction 
-    }
-    
     static {
         // Load the platform library
         NativeLibraryLoader.load("libpi4j.so");
     }
 
+    // private constructor
+    private Nes() {
+        // forbid object construction
+    }
+
     /**
      * <p>setupNesJoystick:</p>
-     * 
+     * <p>
      * <p>Create a new NES joystick interface, program the pins, etc.</p>
-     * 
+     *
      * @param dPin data pin
      * @param cPin clock pin
      * @param lPin pin number
@@ -86,9 +86,9 @@ public class Nes {
 
     /**
      * <p>readNesJoystick:</p>
-     * 
+     * <p>
      * <p>Do a single scan of the NES Joystick.</p>
-     * 
+     *
      * @param joystick joystick handle
      * @return return value
      */

@@ -28,16 +28,7 @@ package com.pi4j.io.gpio.impl;
 
 import com.pi4j.io.gpio.GpioPinInput;
 import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.event.GpioPinListener;
-import com.pi4j.io.gpio.event.GpioPinAnalogValueChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerAnalog;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
-import com.pi4j.io.gpio.event.PinAnalogValueChangeEvent;
-import com.pi4j.io.gpio.event.PinEvent;
-import com.pi4j.io.gpio.event.PinEventType;
-import com.pi4j.io.gpio.event.PinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.PinListener;
+import com.pi4j.io.gpio.event.*;
 import com.pi4j.io.gpio.trigger.GpioTrigger;
 
 import java.util.ArrayList;
@@ -50,27 +41,27 @@ public class GpioEventMonitorImpl implements PinListener {
     public GpioEventMonitorImpl(GpioPinInput pin) {
         this.pin = pin;
     }
-    
+
     @Override
     public void handlePinEvent(PinEvent event) {
         // only process listeners and triggers if the received interrupt event
         // matches the pin number being tracked my this class instance 
         if (this.pin.getPin().equals(event.getPin())) {
             if (event.getEventType() == PinEventType.DIGITAL_STATE_CHANGE) {
-                PinState state = ((PinDigitalStateChangeEvent)event).getState();
+                PinState state = ((PinDigitalStateChangeEvent) event).getState();
 
                 // create a copy of the listeners collection
-                Collection<GpioPinListener> listeners  = new ArrayList<GpioPinListener>(pin.getListeners());
+                Collection<GpioPinListener> listeners = new ArrayList<GpioPinListener>(pin.getListeners());
 
                 // process event callbacks for digital listeners
                 for (GpioPinListener listener : listeners) {
                     if (listener != null && listener instanceof GpioPinListenerDigital) {
-                        ((GpioPinListenerDigital)listener).handleGpioPinDigitalStateChangeEvent(new GpioPinDigitalStateChangeEvent(event.getSource(), pin, state));
+                        ((GpioPinListenerDigital) listener).handleGpioPinDigitalStateChangeEvent(new GpioPinDigitalStateChangeEvent(event.getSource(), pin, state));
                     }
                 }
 
                 // create a copy of the triggers collection
-                Collection<GpioTrigger> triggers  = new ArrayList<GpioTrigger>(pin.getTriggers());
+                Collection<GpioTrigger> triggers = new ArrayList<GpioTrigger>(pin.getTriggers());
 
                 // process triggers
                 for (GpioTrigger trigger : triggers) {
@@ -78,16 +69,16 @@ public class GpioEventMonitorImpl implements PinListener {
                         trigger.invoke(pin, state);
                     }
                 }
-            } else if(event.getEventType() == PinEventType.ANALOG_VALUE_CHANGE) {
-                double value = ((PinAnalogValueChangeEvent)event).getValue();
+            } else if (event.getEventType() == PinEventType.ANALOG_VALUE_CHANGE) {
+                double value = ((PinAnalogValueChangeEvent) event).getValue();
 
                 // create a copy of the listeners collection
-                Collection<GpioPinListener> listeners  = new ArrayList<GpioPinListener>(pin.getListeners());
+                Collection<GpioPinListener> listeners = new ArrayList<GpioPinListener>(pin.getListeners());
 
                 // process event callbacks for analog listeners
                 for (GpioPinListener listener : listeners) {
                     if (listener != null && listener instanceof GpioPinListenerAnalog) {
-                        ((GpioPinListenerAnalog)listener).handleGpioPinAnalogValueChangeEvent(new GpioPinAnalogValueChangeEvent(event.getSource(), pin, value));
+                        ((GpioPinListenerAnalog) listener).handleGpioPinAnalogValueChangeEvent(new GpioPinAnalogValueChangeEvent(event.getSource(), pin, value));
                     }
                 }
             }

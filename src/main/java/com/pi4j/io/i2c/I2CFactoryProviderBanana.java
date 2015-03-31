@@ -31,11 +31,9 @@ import com.pi4j.io.i2c.impl.I2CBusImplBananaPi;
 
 import java.io.IOException;
 
-public class I2CFactoryProviderBanana implements I2CFactoryProvider
-{
+public class I2CFactoryProviderBanana implements I2CFactoryProvider {
 
-	public I2CBus getBus(int busNumber) throws IOException
-	{
-		return I2CBusImplBananaPi.getBus(busNumber);
-	}
+    public I2CBus getBus(int busNumber) throws IOException {
+        return I2CBusImplBananaPi.getBus(busNumber);
+    }
 }

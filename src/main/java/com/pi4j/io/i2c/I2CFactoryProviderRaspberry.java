@@ -31,11 +31,9 @@ import com.pi4j.io.i2c.impl.I2CBusImpl;
 
 import java.io.IOException;
 
-public class I2CFactoryProviderRaspberry implements I2CFactoryProvider
-{
+public class I2CFactoryProviderRaspberry implements I2CFactoryProvider {
 
-	public I2CBus getBus(int busNumber) throws IOException
-	{
-		return I2CBusImpl.getBus(busNumber);
-	}
+    public I2CBus getBus(int busNumber) throws IOException {
+        return I2CBusImpl.getBus(busNumber);
+    }
 }

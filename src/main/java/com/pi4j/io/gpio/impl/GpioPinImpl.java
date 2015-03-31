@@ -36,29 +36,28 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
-public class GpioPinImpl implements GpioPin, 
-                                    GpioPinDigitalInput, 
-                                    GpioPinDigitalOutput, 
-                                    GpioPinDigitalMultipurpose,
-                                    GpioPinAnalogInput, 
-                                    GpioPinAnalogOutput,
-                                    GpioPinPwmOutput,
-                                    GpioPinInput,
-                                    GpioPinOutput
-{
- 
-    @SuppressWarnings("unused")
-    private String name = null;
-    private Object tag = null;
+public class GpioPinImpl implements GpioPin,
+        GpioPinDigitalInput,
+        GpioPinDigitalOutput,
+        GpioPinDigitalMultipurpose,
+        GpioPinAnalogInput,
+        GpioPinAnalogOutput,
+        GpioPinPwmOutput,
+        GpioPinInput,
+        GpioPinOutput {
+
+    protected final int NO_DEBOUCE = 0;
     private final GpioProvider provider;
     private final Pin pin;
-    private PinListener monitor;
     private final GpioPinShutdownImpl shutdownOptions;
     private final Map<String, String> properties = new ConcurrentHashMap<>();
     private final List<GpioPinListener> listeners = new ArrayList<>();
     private final List<GpioTrigger> triggers = new ArrayList<>();
     private final Map<PinState, Integer> debounce = new HashMap<>();
-    protected final int NO_DEBOUCE = 0;
+    @SuppressWarnings("unused")
+    private String name = null;
+    private Object tag = null;
+    private PinListener monitor;
 
     @SuppressWarnings("unused")
     public GpioPinImpl(GpioController gpio, GpioProvider provider, Pin pin) {
@@ -76,11 +75,6 @@ public class GpioPinImpl implements GpioPin,
     public GpioProvider getProvider() {
         return this.provider;
     }
-    
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public String getName() {
@@ -89,15 +83,20 @@ public class GpioPinImpl implements GpioPin,
         }
         return name;
     }
-    
+
     @Override
-    public void setTag(Object tag) {
-        this.tag = tag;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public Object getTag() {
         return tag;
+    }
+
+    @Override
+    public void setTag(Object tag) {
+        this.tag = tag;
     }
 
     @Override
@@ -113,7 +112,7 @@ public class GpioPinImpl implements GpioPin,
     @Override
     public String getProperty(String key, String defaultValue) {
         if (properties.containsKey(key)) {
-            if(properties.get(key) == null || properties.get(key).isEmpty())
+            if (properties.get(key) == null || properties.get(key).isEmpty())
                 return defaultValue;
             else
                 return properties.get(key);
@@ -125,7 +124,7 @@ public class GpioPinImpl implements GpioPin,
     public String getProperty(String key) {
         return getProperty(key, null);
     }
-    
+
     @Override
     public Map<String, String> getProperties() {
         return properties;
@@ -167,13 +166,13 @@ public class GpioPinImpl implements GpioPin,
     }
 
     @Override
-    public void setMode(PinMode mode) {
-        provider.setMode(pin, mode);
+    public PinMode getMode() {
+        return provider.getMode(pin);
     }
 
     @Override
-    public PinMode getMode() {
-        return provider.getMode(pin);
+    public void setMode(PinMode mode) {
+        provider.setMode(pin, mode);
     }
 
     @Override
@@ -182,13 +181,13 @@ public class GpioPinImpl implements GpioPin,
     }
 
     @Override
-    public void setPullResistance(PinPullResistance resistance) {
-        provider.setPullResistance(pin, resistance);
+    public PinPullResistance getPullResistance() {
+        return provider.getPullResistance(pin);
     }
 
     @Override
-    public PinPullResistance getPullResistance() {
-        return provider.getPullResistance(pin);
+    public void setPullResistance(PinPullResistance resistance) {
+        provider.setPullResistance(pin, resistance);
     }
 
     @Override
@@ -236,7 +235,7 @@ public class GpioPinImpl implements GpioPin,
         // NOTE: a value of 0 milliseconds will stop the blinking
         return GpioScheduledExecutorImpl.blink(this, delay, duration, blinkState);
     }
-    
+
     @Override
     public Future<?> pulse(long duration) {
         return pulse(duration, false);
@@ -274,23 +273,22 @@ public class GpioPinImpl implements GpioPin,
 
     @Override
     public Future<?> pulse(long duration, PinState pulseState, boolean blocking, Callable<Void> callback) {
-        
+
         // validate duration argument
-        if(duration <= 0)
+        if (duration <= 0)
             throw new IllegalArgumentException("Pulse duration must be greater than 0 milliseconds.");
-        
+
         // if this is a blocking pulse, then execute the pulse 
         // and sleep the caller's thread to block the operation 
         // until the pulse is complete
-        if(blocking) {
+        if (blocking) {
             // start the pulse state
             setState(pulseState);
-            
+
             // block the current thread for the pulse duration 
             try {
                 Thread.sleep(duration);
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 throw new RuntimeException("Pulse blocking thread interrupted.", e);
             }
 
@@ -298,33 +296,27 @@ public class GpioPinImpl implements GpioPin,
             setState(PinState.getInverseState(pulseState));
 
             // invoke callback if one was defined
-            if(callback != null){
+            if (callback != null) {
                 try {
                     callback.call();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            
+
             // we are done; no future is returned for blocking pulses
             return null;
-        }
-        else {            
+        } else {
             // if this is not a blocking call, then setup the pulse 
             // instruction to be completed in a background worker
             // thread pool using a scheduled executor 
             return GpioScheduledExecutorImpl.pulse(this, duration, pulseState, callback);
         }
     }
-    
+
     @Override
     public void setState(PinState state) {
         provider.setState(pin, state);
-    }
-
-    @Override
-    public void setState(boolean state) {
-        provider.setState(pin, (state) ? PinState.HIGH : PinState.LOW);
     }
 
     @Override
@@ -343,6 +335,11 @@ public class GpioPinImpl implements GpioPin,
     }
 
     @Override
+    public void setState(boolean state) {
+        provider.setState(pin, (state) ? PinState.HIGH : PinState.LOW);
+    }
+
+    @Override
     public boolean isState(PinState state) {
         return (getState() == state);
     }
@@ -354,15 +351,15 @@ public class GpioPinImpl implements GpioPin,
 
     @Override
     public int getDebounce(PinState state) {
-        if(debounce.containsKey(state)){
+        if (debounce.containsKey(state)) {
             return debounce.get(state).intValue();
         }
         return NO_DEBOUCE;
     }
 
     @Override
-    public void setDebounce(int debounce, PinState ... state) {
-        for(PinState ps : state) {
+    public void setDebounce(int debounce, PinState... state) {
+        for (PinState ps : state) {
             this.debounce.put(ps, new Integer(debounce));
         }
     }
@@ -373,28 +370,28 @@ public class GpioPinImpl implements GpioPin,
     }
 
     @Override
+    public double getValue() {
+        return provider.getValue(pin);
+    }
+
+    @Override
     public void setValue(double value) {
         provider.setValue(pin, value);
     }
-    
+
     @Override
-    public double getValue() {
-        return provider.getValue(pin);
-    }    
+    public int getPwm() {
+        return provider.getPwm(pin);
+    }
 
     @Override
     public void setPwm(int value) {
         provider.setPwm(pin, value);
     }
-    
-    @Override
-    public int getPwm() {
-        return provider.getPwm(pin);
-    }  
-    
+
     private synchronized void updateInterruptListener() {
         if (listeners.size() > 0 || triggers.size() > 0) {
-            if (monitor == null) { 
+            if (monitor == null) {
                 // create new monitor and register for event callbacks
                 monitor = new GpioEventMonitorExecutorImpl(this);
                 provider.addListener(pin, monitor);
@@ -411,7 +408,6 @@ public class GpioPinImpl implements GpioPin,
     }
 
     /**
-     * 
      * @param listener gpio pin listener interface
      */
     public synchronized void addListener(GpioPinListener... listener) {
@@ -429,7 +425,7 @@ public class GpioPinImpl implements GpioPin,
     }
 
     /**
-     * 
+     *
      */
     public synchronized Collection<GpioPinListener> getListeners() {
         return listeners;
@@ -448,7 +444,7 @@ public class GpioPinImpl implements GpioPin,
 
         return true;
     }
-    
+
     public synchronized void removeListener(GpioPinListener... listener) {
         if (listener == null || listener.length == 0) {
             throw new IllegalArgumentException("Missing listener argument.");
@@ -456,7 +452,7 @@ public class GpioPinImpl implements GpioPin,
         for (GpioPinListener lsnr : listener) {
             listeners.remove(lsnr);
         }
-        
+
         updateInterruptListener();
     }
 
@@ -465,17 +461,17 @@ public class GpioPinImpl implements GpioPin,
             removeListener(listener);
         }
     }
-    
+
     public synchronized void removeAllListeners() {
         List<GpioPinListener> listeners_copy = new ArrayList<>(listeners);
-        for (int index = (listeners_copy.size()-1); index >= 0; index --) {
+        for (int index = (listeners_copy.size() - 1); index >= 0; index--) {
             GpioPinListener listener = listeners_copy.get(index);
             removeListener(listener);
         }
     }
 
     /**
-     * 
+     *
      */
     public synchronized Collection<GpioTrigger> getTriggers() {
         return triggers;
@@ -496,7 +492,6 @@ public class GpioPinImpl implements GpioPin,
     }
 
     /**
-     * 
      * @param trigger GPIO trigger interface
      */
     public synchronized void removeTrigger(GpioTrigger... trigger) {
@@ -506,7 +501,7 @@ public class GpioPinImpl implements GpioPin,
         for (GpioTrigger trgr : trigger) {
             triggers.remove(trgr);
         }
-        
+
         updateInterruptListener();
     }
 
@@ -539,6 +534,11 @@ public class GpioPinImpl implements GpioPin,
     }
 
     @Override
+    public void setShutdownOptions(Boolean unexport) {
+        setShutdownOptions(unexport, null);
+    }
+
+    @Override
     public void setShutdownOptions(GpioPinShutdown options) {
         shutdownOptions.setUnexport(options.getUnexport());
         shutdownOptions.setState(options.getState());
@@ -547,18 +547,12 @@ public class GpioPinImpl implements GpioPin,
     }
 
     @Override
-    public void setShutdownOptions(Boolean unexport) {
-        setShutdownOptions(unexport, null);
-    }
-
-    @Override
     public void setShutdownOptions(Boolean unexport, PinState state) {
         setShutdownOptions(unexport, state, null);
     }
 
     @Override
-    public void setShutdownOptions(Boolean unexport, PinState state, PinPullResistance resistance)
-    {
+    public void setShutdownOptions(Boolean unexport, PinState state, PinPullResistance resistance) {
         setShutdownOptions(unexport, state, resistance, null);
     }
 

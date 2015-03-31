@@ -34,20 +34,19 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExecUtil
-{
+public class ExecUtil {
     public static String[] execute(String command) throws IOException, InterruptedException {
         return execute(command, null);
     }
-    
+
     public static String[] execute(String command, String split) throws IOException, InterruptedException {
         List<String> result = new ArrayList<>();
         Process p = Runtime.getRuntime().exec(command);
         p.waitFor();
-                
-        if(p.exitValue() != 0)
+
+        if (p.exitValue() != 0)
             return null;
-        
+
         InputStreamReader isr = new InputStreamReader(p.getInputStream());
         BufferedReader reader = new BufferedReader(isr);
         String line = reader.readLine();
@@ -57,7 +56,7 @@ public class ExecUtil
                     result.add(line.trim());
                 } else {
                     String[] parts = line.trim().split(split);
-                    for(String part : parts) {
+                    for (String part : parts) {
                         if (part != null && !part.isEmpty()) {
                             result.add(part.trim());
                         }
@@ -66,7 +65,7 @@ public class ExecUtil
             }
             line = reader.readLine();
         }
-        
+
         // close readers and stream
         reader.close();
         isr.close();

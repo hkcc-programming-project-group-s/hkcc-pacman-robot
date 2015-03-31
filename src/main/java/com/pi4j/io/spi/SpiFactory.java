@@ -47,11 +47,8 @@ public class SpiFactory {
     /**
      * Create new SpiDevice instance with a default SPI speed of 1 MHz.
      *
-     * @param channel
-     *            spi channel to use
-     *
+     * @param channel spi channel to use
      * @return Return a new SpiDevice impl instance.
-     *
      * @throws java.io.IOException
      */
     public static SpiDevice getInstance(SpiChannel channel) throws IOException {
@@ -61,13 +58,9 @@ public class SpiFactory {
     /**
      * Create new SpiDevice instance
      *
-     * @param channel
-     *            spi channel to use
-     * @param mode
-     *            spi mode (see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
-     *
+     * @param channel spi channel to use
+     * @param mode    spi mode (see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
      * @return Return a new SpiDevice impl instance.
-     *
      * @throws java.io.IOException
      */
     public static SpiDevice getInstance(SpiChannel channel, SpiMode mode) throws IOException {
@@ -77,14 +70,10 @@ public class SpiFactory {
     /**
      * Create new SpiDevice instance
      *
-     * @param channel
-     *            spi channel to use
-     * @param speed
-     *            spi speed/rate (in Hertz) for channel to communicate at
-     *            (range is 500kHz - 32MHz)
-     *
+     * @param channel spi channel to use
+     * @param speed   spi speed/rate (in Hertz) for channel to communicate at
+     *                (range is 500kHz - 32MHz)
      * @return Return a new SpiDevice impl instance.
-     *
      * @throws java.io.IOException
      */
     public static SpiDevice getInstance(SpiChannel channel, int speed) throws IOException {
@@ -94,16 +83,11 @@ public class SpiFactory {
     /**
      * Create new SpiDevice instance
      *
-     * @param channel
-     *            spi channel to use
-     * @param speed
-     *            spi speed/rate (in Hertz) for channel to communicate at
-     *            (range is 500kHz - 32MHz)
-     * @param mode
-     *            spi mode (see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
-     *
+     * @param channel spi channel to use
+     * @param speed   spi speed/rate (in Hertz) for channel to communicate at
+     *                (range is 500kHz - 32MHz)
+     * @param mode    spi mode (see http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers)
      * @return Return a new SpiDevice impl instance.
-     *
      * @throws java.io.IOException
      */
     public static SpiDevice getInstance(SpiChannel channel, int speed, SpiMode mode) throws IOException {

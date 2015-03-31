@@ -12,7 +12,7 @@ public class ConnectionInfo implements Message {
     public static final byte TYPE_PAUSE_NOTIFICATION = 2;
     public static final byte TYPE_GAME_START_NOTIFICATION = 3;
     public static final byte TYPE_GAME_OVER_NOTIFICATION = 4;
-
+    public static final int PORT = Config.PORT_CONNECTION_INFO;
     //IP + port number
     public final String srcAddr;
     public final String destAddr;
@@ -23,7 +23,7 @@ public class ConnectionInfo implements Message {
         this.destAddr = destAddr;
         this.type = type;
     }
-public static final int PORT= Config.PORT_CONNECTION_INFO;
+
     @Override
     public int port() {
         return PORT;

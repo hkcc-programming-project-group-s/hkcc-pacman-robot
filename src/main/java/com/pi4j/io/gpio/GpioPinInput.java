@@ -43,11 +43,15 @@ import java.util.List;
 public interface GpioPinInput extends GpioPin {
 
     Collection<GpioTrigger> getTriggers();
+
     void addTrigger(GpioTrigger... trigger);
+
     void addTrigger(List<? extends GpioTrigger> triggers);
 
     void removeTrigger(GpioTrigger... trigger);
+
     void removeTrigger(List<? extends GpioTrigger> triggers);
+
     void removeAllTriggers();
 
 }

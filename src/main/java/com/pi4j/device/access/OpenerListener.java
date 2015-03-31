@@ -32,5 +32,6 @@ import com.pi4j.device.DeviceListener;
 
 public interface OpenerListener extends DeviceListener {
     void onStateChange(OpenerStateChangeEvent event);
+
     void onLockChange(OpenerLockChangeEvent event);
 }

@@ -38,14 +38,14 @@ public class PowerStateChangeEvent extends EventObject {
 
     public PowerStateChangeEvent(Power power, PowerState oldState, PowerState newState) {
         super(power);
-        this.oldState = oldState;        
+        this.oldState = oldState;
         this.newState = newState;
     }
 
     public Power getPower() {
-        return (Power)getSource();
+        return (Power) getSource();
     }
-    
+
     public PowerState getOldState() {
         return oldState;
     }

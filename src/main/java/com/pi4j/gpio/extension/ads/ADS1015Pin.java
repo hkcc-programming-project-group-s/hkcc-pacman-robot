@@ -28,29 +28,29 @@ package com.pi4j.gpio.extension.ads;
  */
 
 
-import java.util.EnumSet;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.impl.PinImpl;
+
+import java.util.EnumSet;
 
 
 /**
  * <p>
  * This GPIO provider implements the TI ADS1015 analog to digital converter chip as native Pi4J GPIO pins.
- * 
+ * <p>
  * More information about the board can be found here: *
  * http://www.ti.com/lit/ds/symlink/ads1015.pdf
  * http://adafruit.com/datasheets/ads1015.pdf
- * 
+ * <p>
  * </p>
- * 
+ * <p>
  * <p>
  * The ADS1015 is connected via I2C connection to the Raspberry Pi and provides
  * 2 GPIO pins that can be used for analog input pins.
  * </p>
- * 
+ *
  * @author Robert Savage
- * 
  */
 public class ADS1015Pin {
 
@@ -59,9 +59,9 @@ public class ADS1015Pin {
     public static final Pin INPUT_A2 = createAnalogInputPin(2, "ANALOG INPUT 2");
     public static final Pin INPUT_A3 = createAnalogInputPin(3, "ANALOG INPUT 3");
 
-    public static Pin[] ALL = { ADS1015Pin.INPUT_A0, ADS1015Pin.INPUT_A1, ADS1015Pin.INPUT_A2, ADS1015Pin.INPUT_A3 };
-    
+    public static Pin[] ALL = {ADS1015Pin.INPUT_A0, ADS1015Pin.INPUT_A1, ADS1015Pin.INPUT_A2, ADS1015Pin.INPUT_A3};
+
     private static Pin createAnalogInputPin(int address, String name) {
         return new PinImpl(ADS1015GpioProvider.NAME, address, name, EnumSet.of(PinMode.ANALOG_INPUT));
-    }       
+    }
 }

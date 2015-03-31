@@ -15,7 +15,7 @@ import edu.hkcc.pacmanrobot.utils.studentrobot.code.Messenger
 /**
  * Created by beenotung on 3/27/15.
  */
- abstract class ObstacleMapManager extends Thread {
+abstract class ObstacleMapManager extends Thread {
 
   val messenger: Messenger[ObstacleMap] = Messenger.create[ObstacleMap](Config.PORT_MAP)
 

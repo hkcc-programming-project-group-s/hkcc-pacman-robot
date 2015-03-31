@@ -41,7 +41,7 @@ public abstract class GpioTriggerBase implements GpioTrigger {
     public GpioTriggerBase() {
         addPinState(PinState.allStates());
     }
-    
+
     public GpioTriggerBase(PinState state) {
         addPinState(state);
     }
@@ -53,7 +53,7 @@ public abstract class GpioTriggerBase implements GpioTrigger {
     public GpioTriggerBase(List<PinState> states) {
         addPinState(states);
     }
-    
+
     public void addPinState(PinState... state) {
         if (state == null || state.length == 0) {
             throw new IllegalArgumentException("Missing pin state argument.");
@@ -70,7 +70,7 @@ public abstract class GpioTriggerBase implements GpioTrigger {
             addPinState(state);
         }
     }
-    
+
     public boolean hasPinState(PinState state) {
         return states.contains(state);
     }

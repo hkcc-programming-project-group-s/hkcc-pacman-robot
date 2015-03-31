@@ -32,10 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObserveableComponentBase extends ComponentBase implements ObserveableComponent {
-    
-    protected final List<ComponentListener> listeners = new ArrayList<ComponentListener>();;
- 
-    protected synchronized void addListener(ComponentListener... listener){
+
+    protected final List<ComponentListener> listeners = new ArrayList<ComponentListener>();
+    ;
+
+    protected synchronized void addListener(ComponentListener... listener) {
         if (listener == null || listener.length == 0) {
             throw new IllegalArgumentException("Missing listener argument.");
         }
@@ -58,7 +59,7 @@ public class ObserveableComponentBase extends ComponentBase implements Observeab
     @Override
     public synchronized void removeAllListeners() {
         List<ComponentListener> listeners_copy = new ArrayList<>(listeners);
-        for (int index = (listeners_copy.size()-1); index >= 0; index --) {
+        for (int index = (listeners_copy.size() - 1); index >= 0; index--) {
             ComponentListener listener = listeners_copy.get(index);
             removeListener(listener);
         }

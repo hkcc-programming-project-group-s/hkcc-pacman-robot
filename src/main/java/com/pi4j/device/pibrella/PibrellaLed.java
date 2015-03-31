@@ -34,12 +34,12 @@ public enum PibrellaLed {
     GREEN(2);   // Broadcom GPIO pin #04
 
     private int index = -1;
-    
-    private PibrellaLed(int index){
+
+    private PibrellaLed(int index) {
         this.index = index;
     }
-    
-    public int getIndex(){
+
+    public int getIndex() {
         return index;
     }
 }

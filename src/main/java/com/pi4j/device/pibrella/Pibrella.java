@@ -38,22 +38,31 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 public interface Pibrella extends Device {
 
     LED ledRed();
+
     LED ledYellow();
+
     LED ledGreen();
 
     GpioController gpio();
 
     Button button();
+
     Buzzer buzzer();
 
     GpioPinDigitalInput inputA();
+
     GpioPinDigitalInput inputB();
+
     GpioPinDigitalInput inputC();
+
     GpioPinDigitalInput inputD();
 
     GpioPinDigitalOutput outputE();
+
     GpioPinDigitalOutput outputF();
+
     GpioPinDigitalOutput outputG();
+
     GpioPinDigitalOutput outputH();
 
     /**
@@ -105,12 +114,12 @@ public interface Pibrella extends Device {
      * @return the leds
      */
     LED[] getLeds();
-    
+
     /**
      * @return a led
      */
     LED getLed(int index);
-    
+
     /**
      * @return a led
      */

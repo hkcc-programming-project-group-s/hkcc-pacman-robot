@@ -27,20 +27,20 @@ package com.pi4j.io.gpio.trigger;
  * #L%
  */
 
-import java.util.List;
-
 import com.pi4j.io.gpio.GpioPin;
 import com.pi4j.io.gpio.PinState;
+
+import java.util.List;
 
 @SuppressWarnings("unused")
 public interface GpioTrigger {
 
     void addPinState(PinState... state);
-    
+
     void addPinState(List<? extends PinState> states);
-    
+
     boolean hasPinState(PinState state);
-    
+
     void invoke(GpioPin pin, PinState state);
 
 }

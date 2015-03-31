@@ -29,7 +29,7 @@ package com.pi4j.device.access;
 
 
 public enum OpenerControlState {
-    
+
     OPEN,
     CLOSE
 }

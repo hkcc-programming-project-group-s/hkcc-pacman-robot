@@ -45,7 +45,7 @@ public class UnsupportedPinPullResistanceException extends RuntimeException {
     private final PinPullResistance resistance;
 
     public UnsupportedPinPullResistanceException(Pin pin, PinPullResistance resistance) {
-        super("This GPIO pin [" + pin.getName() + "] does not support the pull resistance specified [" + resistance.getName() + "]");        
+        super("This GPIO pin [" + pin.getName() + "] does not support the pull resistance specified [" + resistance.getName() + "]");
         this.pin = pin;
         this.resistance = resistance;
     }
@@ -53,7 +53,7 @@ public class UnsupportedPinPullResistanceException extends RuntimeException {
     public Pin getPin() {
         return pin;
     }
-    
+
     public PinPullResistance getPullResistance() {
         return resistance;
     }

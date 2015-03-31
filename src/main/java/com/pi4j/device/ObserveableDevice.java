@@ -30,5 +30,5 @@ package com.pi4j.device;
 public interface ObserveableDevice extends Device {
 
     void removeAllListeners();
-    
+
 }

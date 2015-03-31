@@ -21,10 +21,11 @@ import static java.time.Instant.now;
 public class SRF05AO {
 
     private final static float DURATION_RATIO = 340.29f / (2 * 10000);  // speed of sound in m/s
+    private final static double ULTRASONIC_RATIO = 1.0 / 58; //unit of distance in cm
 
     private final static int TRIG_DURATION_IN_MICROS = 20; // min trigger duration of 10 micro s
-    private final static int ECHO_DELAY_TIMEOUT_IN_MILLIS = 600; // max interval between trigger and echo of 50 milli s
-    private final static int ECHO_DURATION_TIMEOUT_IN_MILLIS = 1000; // max echo duration of 30 milli s
+    private final static int ECHO_DELAY_TIMEOUT_IN_MILLIS = 60; // max interval between trigger and echo of 50 milli s
+    private final static int ECHO_DURATION_TIMEOUT_IN_MILLIS = 40; // max echo duration of 36 milli s (normal 100us - 18 ms)
 
     private final static int WAIT_CYCLE_DURATION_IN_MILLIS = 60; // wait 60 milli s  (between each distance measure)
 
@@ -46,8 +47,10 @@ public class SRF05AO {
 
         while (true) {
             try {
-                System.out.println("\nstart measure: " + now());
-                System.out.printf("%1$d,%2$.3f%n", System.currentTimeMillis(), monitor.measureDistance());
+                double distance = monitor.measureDistance();
+                System.out.println("\nobstacle distance: " + now());
+                //System.out.printf("%2$.3f%n", distance);
+                System.out.printf("%.2f\n", distance);
             } catch (TimeoutException e) {
                 System.err.println(e);
             }
@@ -65,12 +68,13 @@ public class SRF05AO {
      *
      * @throws TimeoutException if a timeout occurs
      */
-    public float measureDistance() throws TimeoutException {
+    public double measureDistance() throws TimeoutException {
         this.triggerSensor();
         this.waitForSignal();
         long duration = this.measureSignal();
 
-        return duration * DURATION_RATIO;
+        //return duration * DURATION_RATIO;
+        return duration * ULTRASONIC_RATIO;
     }
 
     /**

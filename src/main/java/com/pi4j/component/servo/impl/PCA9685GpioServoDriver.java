@@ -28,11 +28,11 @@ package com.pi4j.component.servo.impl;
  */
 
 
-import java.math.BigDecimal;
-
 import com.pi4j.component.servo.ServoDriver;
 import com.pi4j.gpio.extension.pca.PCA9685GpioProvider;
 import com.pi4j.io.gpio.Pin;
+
+import java.math.BigDecimal;
 
 /**
  * @author Christian Wehrli
@@ -43,27 +43,27 @@ public class PCA9685GpioServoDriver implements ServoDriver {
     private Pin pin;
     private int position;
     private int resolution;
-    
+
     public PCA9685GpioServoDriver(PCA9685GpioProvider provider, Pin pin) {
         setProvider(provider);
         setPin(pin);
         updateResolution();
     }
 
-    protected void setProvider(PCA9685GpioProvider provider) {
-        this.provider = provider;
-    }
-
     public PCA9685GpioProvider getProvider() {
         return provider;
     }
 
-    protected void setPin(Pin pin) {
-        this.pin = pin;
+    protected void setProvider(PCA9685GpioProvider provider) {
+        this.provider = provider;
     }
 
     public Pin getPin() {
         return pin;
+    }
+
+    protected void setPin(Pin pin) {
+        this.pin = pin;
     }
 
     public int getServoPulseWidth() {
@@ -80,7 +80,7 @@ public class PCA9685GpioServoDriver implements ServoDriver {
     public int getServoPulseResolution() {
         return resolution;
     }
-    
+
     protected void updateResolution() {
         resolution = new BigDecimal(4096).divide(getProvider().getFrequency()).intValue();
     }

@@ -30,7 +30,7 @@ package com.pi4j.io.serial;
 
 /**
  * <p> This class represents Exception that might occur in Serial interface.</p>
- * 
+ * <p>
  * <p>
  * Before using the Pi4J library, you need to ensure that the Java VM in configured with access to
  * the following system libraries:
@@ -42,45 +42,44 @@ package com.pi4j.io.serial;
  * Gordon Henderson @ <a href="http://wiringpi.com/">http://wiringpi.com/</a>)
  * </blockquote>
  * </p>
- * 
- * @see com.pi4j.io.serial.Serial
- * 
- * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
+ *
  * @author Jakub Derda (<a
  *         href="http://www.ardeo.pl">http://www.ardeo.pl</a>)
+ * @see com.pi4j.io.serial.Serial
+ * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
  */
 @SuppressWarnings("unused")
 public class SerialPortException extends RuntimeException {
-	
-	/**
-	 * Default serial version ID
-	 */
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Default no argument constructor.
-	 */
+    /**
+     * Default serial version ID
+     */
+    private static final long serialVersionUID = 1L;
 
-	public SerialPortException() {
-		super();
-	}
-	
-	/**
-	 * Constructor with description.
-	 * 
-	 * @param message Description of error that occured.
-	 */
+    /**
+     * Default no argument constructor.
+     */
+
+    public SerialPortException() {
+        super();
+    }
+
+    /**
+     * Constructor with description.
+     *
+     * @param message Description of error that occured.
+     */
     public SerialPortException(String message) {
-		super(message);
-	}
-	
-	
-	/**
-	 * Constructor with cause.
-	 * 
-	 * @param cause Cause of SerialException.
-	 */
+        super(message);
+    }
+
+
+    /**
+     * Constructor with cause.
+     *
+     * @param cause Cause of SerialException.
+     */
     public SerialPortException(Throwable cause) {
-		super(cause);
-	}
+        super(cause);
+    }
 }

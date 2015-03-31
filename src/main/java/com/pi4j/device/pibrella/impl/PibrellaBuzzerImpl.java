@@ -37,19 +37,17 @@ public class PibrellaBuzzerImpl implements Buzzer {
 
     protected final GpioPinPwmOutput pwm;
 
-    public PibrellaBuzzerImpl(GpioPinPwmOutput pwm){
+    public PibrellaBuzzerImpl(GpioPinPwmOutput pwm) {
         this.pwm = pwm;
         Gpio.pwmSetMode(Gpio.PWM_MODE_MS); // set PWM mode to MARK-SPACE
     }
 
     @Override
-    public void buzz(int frequency){
+    public void buzz(int frequency) {
         if (frequency == 0) {
             pwm.setPwm(frequency);
-        }
-        else
-        {
-            int range = 600000 / frequency ;
+        } else {
+            int range = 600000 / frequency;
             Gpio.pwmSetRange(range);
             pwm.setPwm(frequency / 2);
         }
