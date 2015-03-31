@@ -1,7 +1,8 @@
 package edu.hkcc.pacmanrobot.controller
 
 import edu.hkcc.pacmanrobot.utils.GameDevice
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{Messenger, MovementCommand}
+import edu.hkcc.pacmanrobot.utils.message.MovementCommand
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.Messenger
 
 /**
  * Created by beenotung on 3/23/15.

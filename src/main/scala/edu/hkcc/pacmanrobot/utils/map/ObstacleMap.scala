@@ -11,6 +11,8 @@ import edu.hkcc.pacmanrobot.utils.Config
 
 
 class ObstacleMap extends ConcurrentHashMap[MapKey, MapContent] with Cloneable with Message {
+  override val port: Int = Config.PORT_MAP
+
   def isExist(target: MapUnit): Boolean = {
     keySet.contains(target.key)
   }
@@ -34,6 +36,4 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, MapContent] with Cloneable w
     })
     newInstance
   }
-
-  override val port: Int = Config.PORT_MAP
 }

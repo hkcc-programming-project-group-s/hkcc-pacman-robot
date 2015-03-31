@@ -4,7 +4,8 @@ package edu.hkcc.pacmanrobot.utils.studentrobot.code
 import java.io.{IOException, ObjectInputStream, ObjectOutputStream}
 import java.net.{Socket, SocketException}
 import java.util.Calendar
-import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.{ConcurrentLinkedQueue, Semaphore}
+
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.Config.RECONNECTION_TIMEOUT
 
@@ -78,32 +79,42 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends
   val inputQueue: ConcurrentLinkedQueue[MessageType] = new ConcurrentLinkedQueue[MessageType]
   var active: Boolean = false
 
-  def reconnect={
+  def reconnect = {
+    inputStream.close()
+    outputStream.close()
     socket.close()
     socket = Messenger.connect(socket.getPort)
     inputStream = new ObjectInputStream(socket.getInputStream)
     outputStream = new ObjectOutputStream(socket.getOutputStream)
   }
+
   def this(port: Int) = {
     this(Messenger.connect(port), port)
   }
 
+  val socketSemaphore: Semaphore = new Semaphore(1)
+
   def checkConnection = {
-    if (socket.isClosed) {
-      socket = Messenger.connect(socket.getPort)
-      inputStream = new ObjectInputStream(socket.getInputStream)
-      outputStream = new ObjectOutputStream(socket.getOutputStream)
+    socketSemaphore.tryAcquire()
+    try {
+      if (socket.isClosed) {
+        reconnect
+      }
+    } catch {
+      case e: SocketException => {}
     }
     try
       start
     catch {
       case e: IllegalThreadStateException => {}
     }
+    socketSemaphore.release()
   }
 
   def autoGet(message: MessageType): Unit
 
   override def run: Unit = {
+    checkConnection
     try
       inputThread.start
     catch {

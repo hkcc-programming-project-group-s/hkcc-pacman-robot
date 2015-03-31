@@ -3,8 +3,8 @@ package edu.hkcc.pacmanrobot.robot.studentrobot
 import edu.hkcc.pacmanrobot.robot.core.Robot
 import edu.hkcc.pacmanrobot.robot.edu.hkcc.pacmanrobot.utils.studentrobot.MovementCommandMessenger
 import edu.hkcc.pacmanrobot.robot.utils.L298NAO
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.MovementCommand
 import edu.hkcc.pacmanrobot.utils.Config.MOTOR_CYCLE_INTERVAL
+import edu.hkcc.pacmanrobot.utils.message.MovementCommand
 
 
 /**
@@ -13,8 +13,8 @@ import edu.hkcc.pacmanrobot.utils.Config.MOTOR_CYCLE_INTERVAL
 class StudentRobot extends Robot {
   val movementCommandMessenger: MovementCommandMessenger = new MovementCommandMessenger
 
+
   override def gameSetup: Unit = {
-    movementCommandMessenger.start
   }
 
   override def gameResume: Unit = ???
@@ -25,7 +25,9 @@ class StudentRobot extends Robot {
 
   override def gameStop: Unit = ???
 
+
   override def run = {
+    movementCommandMessenger.start
     while (true) {
       movementCommandMessenger.checkConnection
       loop
@@ -34,9 +36,13 @@ class StudentRobot extends Robot {
   }
 
   override def loop: Unit = {
-    val movementCommand: MovementCommand = movementCommandMessenger.getMessage
+    val movementCommand: MovementCommand = movementCommandMessenger.movementCommand
+    //val direction=in.readObject().asInstanceOf[java.lang.Double]
+
     if (movementCommand.mode.equals(MovementCommand.MODE_POLAR)) {
-      L298NAO.move(movementCommand.point2D.d1, movementCommand.point2D.d2)
+      L298NAO.move(movementCommand.point2D)
+    } else {
+      //TODO calculate polar command from current location
     }
   }
 }

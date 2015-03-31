@@ -1,9 +1,9 @@
 package edu.hkcc.pacmanrobot.server.map;
 
 
-import edu.hkcc.pacmanrobot.utils.map.*;
-import scala.Function2;
-import scala.collection.immutable.List;
+import edu.hkcc.pacmanrobot.utils.map.MapContent;
+import edu.hkcc.pacmanrobot.utils.map.MapKey;
+import edu.hkcc.pacmanrobot.utils.map.ObstacleMapManager;
 
 /**
  * Created by 13058456a on 3/17/2015.
@@ -22,6 +22,7 @@ public class ServerObstacleMapManager extends ObstacleMapManager {
     public void myReceiveMap() {
 
     }
+
     public String getMap(long localTime, long robotID) {
 
         //use for-loop to loop the list
@@ -33,6 +34,7 @@ public class ServerObstacleMapManager extends ObstacleMapManager {
 //        }
         return null;//change null when yoe finish.
     }
+
     public void listData() {
         long localTime = 0, robotID = 0;//TODO !!! change 0 when you finish !!!
 
