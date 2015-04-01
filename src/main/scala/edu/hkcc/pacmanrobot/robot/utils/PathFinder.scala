@@ -62,6 +62,8 @@ class PathFinder(private var map: Array[Array[Boolean]], var LOOP_INTERVAL: Int 
   }
 
   def setup = {
-    ai = new GA(POP_SIZE = 32, BIT_SIZE = getTabularSize(map) * PathFinder.Direction.bitSize,)
+    ai = new GA(POP_SIZE = 32, BIT_SIZE = getTabularSize(map) * PathFinder.Direction.bitSize,
+      P_SELECTION=0.25,P_MUTATION = 0.1,A_MUTATION = 0.03,EVAL_FITNESS_FUNCTION = eval,PROBLEM_TYPE = GA.ProblemType.Minimize,LOOP_INTERVAL=100)
   }
+  def eval(rawCode:Array[Double])
 }
