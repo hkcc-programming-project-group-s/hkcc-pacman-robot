@@ -20,4 +20,7 @@ object Utils {
       max - min + 1
     }
   }
+  def getTabularSize[T](array:Array[Array[T]]):Int={
+    array.length*(array(0).length)
+  }
 }
