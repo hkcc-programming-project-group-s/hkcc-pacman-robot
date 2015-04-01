@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.robot.utils;
 
 import com.pi4j.io.gpio.*;
+import com.pi4j.wiringpi.SoftPwm;
 import edu.hkcc.pacmanrobot.utils.maths.Point2D;
 
 import static edu.hkcc.pacmanrobot.utils.Maths.*;
@@ -151,5 +152,15 @@ public class L298NAO {
     public static void both_stop() {
         left_off();
         right_off();
+    }
+
+    public static boolean ready=false;
+    public static void setup(){
+        SoftPwm.softPwmCreate()
+        public static final GpioPinPwmOutput R_F = gpio.provisionPwmOutputPin(RaspiPin.GPIO_21);
+        public static final GpioPinPwmOutput R_B = gpio.provisionPwmOutputPin(RaspiPin.GPIO_22);
+        public static final GpioPinPwmOutput L_B = gpio.provisionPwmOutputPin(RaspiPin.GPIO_23);
+        public static final GpioPinPwmOutput L_F = gpio.provisionPwmOutputPin(RaspiPin.GPIO_24);
+        ready=true;
     }
 }
