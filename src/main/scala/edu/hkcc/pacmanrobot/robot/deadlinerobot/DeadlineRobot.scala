@@ -47,7 +47,7 @@ class DeadlineRobot extends Robot {
       dir._1=Maths.R
     else if(dir._1<0)
       dir._1=Maths.L
-    L298NAO.move(dir)
+    L298NAO.move_pwm(dir)
   }
 
   def range(d: Double) = {
@@ -56,6 +56,8 @@ class DeadlineRobot extends Robot {
   }
 
   def getTargetPosition: Point2D = {
-    new Point2D(range(Mpu6050AO.getZRotaion))
+    val d=range(Mpu6050AO.getZRotaion)
+    val f=Math.abs(d)/20000.0/2
+    new Point2D(d,f)
   }
 }
