@@ -34,38 +34,38 @@ import java.io.IOException;
 /**
  * Default-factory which is used by the potentiometer's constructor which
  * hides the 'controllerFactory'-parameter.
- * 
- * @see com.pi4j.component.potentiometer.microchip.impl.MicrochipPotentiometerDeviceControllerFactory
+ *
  * @author <a href="http://raspelikan.blogspot.co.at">Raspelikan</a>
+ * @see com.pi4j.component.potentiometer.microchip.impl.MicrochipPotentiometerDeviceControllerFactory
  */
 public class MicrochipPotentiometerDefaultDeviceControllerFactory
-		implements MicrochipPotentiometerDeviceControllerFactory {
+        implements MicrochipPotentiometerDeviceControllerFactory {
 
-	/**
-	 * A static instance
-	 */
-	private static final MicrochipPotentiometerDeviceControllerFactory defaultFactory
-			= new MicrochipPotentiometerDefaultDeviceControllerFactory();
-	
-	/**
-	 * @return The static instance
-	 */
-	public static MicrochipPotentiometerDeviceControllerFactory getInstance() {
-		
-		return defaultFactory;
-		
-	}
-	
-	/**
-	 * @param i2cDevice The underlying device
-	 * @return The controller for the given device
-	 */
-	@Override
-	public MicrochipPotentiometerDeviceController getController(final I2CDevice i2cDevice)
-			throws IOException {
-		
-		return new MicrochipPotentiometerDeviceController(i2cDevice);
-		
-	}
-	
+    /**
+     * A static instance
+     */
+    private static final MicrochipPotentiometerDeviceControllerFactory defaultFactory
+            = new MicrochipPotentiometerDefaultDeviceControllerFactory();
+
+    /**
+     * @return The static instance
+     */
+    public static MicrochipPotentiometerDeviceControllerFactory getInstance() {
+
+        return defaultFactory;
+
+    }
+
+    /**
+     * @param i2cDevice The underlying device
+     * @return The controller for the given device
+     */
+    @Override
+    public MicrochipPotentiometerDeviceController getController(final I2CDevice i2cDevice)
+            throws IOException {
+
+        return new MicrochipPotentiometerDeviceController(i2cDevice);
+
+    }
+
 }

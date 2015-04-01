@@ -31,19 +31,28 @@ import com.pi4j.component.ObserveableComponent;
 
 
 public interface DimmableLight extends ObserveableComponent {
-    
-    void setLevel(int level);
+
     int getLevel();
+
+    void setLevel(int level);
+
     float getLevelPercentage();
+
     float getLevelPercentage(int level);
+
     int getMinLevel();
-    int getMaxLevel();   
-    
+
+    int getMaxLevel();
+
     void on();
+
     void off();
+
     boolean isOn();
+
     boolean isOff();
-    
+
     void addListener(DimmableLightListener... listener);
-    void removeListener(DimmableLightListener... listener);     
+
+    void removeListener(DimmableLightListener... listener);
 }

@@ -9,7 +9,6 @@ import edu.hkcc.pacmanrobot.robot.utils.L298NAO
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.Config.MOTOR_CYCLE_INTERVAL
 import edu.hkcc.pacmanrobot.utils.maths.Point2D
-import edu.hkcc.pacmanrobot.utils.message.MovementCommand
 
 
 /**
@@ -46,7 +45,7 @@ class StudentRobot extends Robot {
   override def loop: Unit = {
     //val movementCommand: MovementCommand = movementCommandMessenger.getMessage
     val direction=in.readObject().asInstanceOf[java.lang.Double]
-    L298NAO.move(new Point2D(direction))
+    L298NAO.move_pwm(new Point2D(direction,1))
 //    if (movementCommand.mode.equals(MovementCommand.MODE_POLAR)) {
 //      L298NAO.move(movementCommand.point2D)
 //    }else{

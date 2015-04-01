@@ -37,14 +37,14 @@ public enum PiFaceLed {
     LED5(5),
     LED6(6),
     LED7(7);
-    
+
     private int index = -1;
-    
-    private PiFaceLed(int index){
+
+    private PiFaceLed(int index) {
         this.index = index;
     }
-    
-    public int getIndex(){
+
+    public int getIndex() {
         return index;
-    }                
+    }
 }

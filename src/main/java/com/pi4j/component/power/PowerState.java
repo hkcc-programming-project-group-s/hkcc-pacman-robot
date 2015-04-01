@@ -29,9 +29,9 @@ package com.pi4j.component.power;
 
 
 public enum PowerState {
-    
+
     UNKNOWN,
     ON,
     OFF
-    
+
 }

@@ -36,21 +36,14 @@ import com.pi4j.component.sensor.SensorStateChangeEvent;
 import com.pi4j.component.switches.Switch;
 import com.pi4j.component.switches.SwitchListener;
 import com.pi4j.component.switches.SwitchStateChangeEvent;
-import com.pi4j.device.access.Opener;
-import com.pi4j.device.access.OpenerBase;
-import com.pi4j.device.access.OpenerLockChangeEvent;
-import com.pi4j.device.access.OpenerLockedException;
-import com.pi4j.device.access.OpenerState;
-import com.pi4j.device.access.OpenerStateChangeEvent;
+import com.pi4j.device.access.*;
 
-public class OpenerDevice extends OpenerBase implements Opener
-{
+public class OpenerDevice extends OpenerBase implements Opener {
+    private final OpenerDevice opener = this;
     private Relay relay;
     private Sensor sensor;
     private SensorState openSensorState;
     private Switch lock = null;
-    private final OpenerDevice opener = this;
-
     // create sensor listener
     private SensorListener sensorListener = new SensorListener() {
         @Override
@@ -60,7 +53,7 @@ public class OpenerDevice extends OpenerBase implements Opener
             opener.notifyListeners(new OpenerStateChangeEvent(opener, oldState, newState));
         }
     };
-    
+
     // create lock switch listener
     private SwitchListener lockSwitchListener = new SwitchListener() {
         @Override
@@ -72,27 +65,27 @@ public class OpenerDevice extends OpenerBase implements Opener
     public OpenerDevice(Relay relay, Sensor sensor, SensorState openSensorState) {
         this.relay = relay;
         this.sensor = sensor;
-        this.openSensorState= openSensorState;
+        this.openSensorState = openSensorState;
         this.sensor.addListener(sensorListener);
     }
 
     public OpenerDevice(Relay relay, Sensor sensor, SensorState openSensorState, Switch lock) {
-        this(relay,sensor, openSensorState);
+        this(relay, sensor, openSensorState);
         this.lock = lock;
         this.lock.addListener(lockSwitchListener);
-    }    
+    }
 
     @Override
     public void open() throws OpenerLockedException {
-        
+
         // abort if the opener is locked
-        if(isLocked())
+        if (isLocked())
             throw new OpenerLockedException(this);
-        
+
         // if the open sensor determines that the door/gate is 
         // not in the open state, then pulse the relay to 
         // perform the open operation
-        if(!sensor.isState(openSensorState)) {
+        if (!sensor.isState(openSensorState)) {
             // pulse the control relay to open the garage door/gate
             relay.pulse();
         }
@@ -100,15 +93,15 @@ public class OpenerDevice extends OpenerBase implements Opener
 
     @Override
     public void close() throws OpenerLockedException {
-        
+
         // abort if the opener is locked
-        if(isLocked())
+        if (isLocked())
             throw new OpenerLockedException(this);
-        
+
         // if the open sensor determines that the door/gate is 
         // in the open state, then pulse the relay to 
         // perform the close operation
-        if(sensor.isState(openSensorState)) {
+        if (sensor.isState(openSensorState)) {
             // pulse the control relay to close the garage door/gate
             relay.pulse();
         }
@@ -116,7 +109,7 @@ public class OpenerDevice extends OpenerBase implements Opener
 
     @Override
     public OpenerState getState() {
-        if(sensor.getState().equals(openSensorState))
+        if (sensor.getState().equals(openSensorState))
             return OpenerState.OPEN;
         else
             return OpenerState.CLOSED;
@@ -124,15 +117,15 @@ public class OpenerDevice extends OpenerBase implements Opener
 
     @Override
     public boolean isLocked() {
-        if(lock == null)
+        if (lock == null)
             return false;
         return lock.isOn();
     }
-    
+
     protected OpenerState getState(SensorState sensorState) {
-        if(sensorState.equals(openSensorState))
+        if (sensorState.equals(openSensorState))
             return OpenerState.OPEN;
         else
             return OpenerState.CLOSED;
-    }    
+    }
 }

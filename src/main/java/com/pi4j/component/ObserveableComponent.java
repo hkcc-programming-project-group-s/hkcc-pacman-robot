@@ -31,5 +31,5 @@ package com.pi4j.component;
 public interface ObserveableComponent extends Component {
 
     void removeAllListeners();
-    
+
 }

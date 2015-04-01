@@ -28,19 +28,19 @@ package com.pi4j.io.gpio.tasks.impl;
  */
 
 
-import java.util.concurrent.ScheduledFuture;
-
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 
+import java.util.concurrent.ScheduledFuture;
+
 public class GpioBlinkStopTaskImpl implements Runnable {
-    
+
     private final GpioPinDigitalOutput pin;
     private final PinState stopState;
     private final ScheduledFuture<?> blinkTask;
-    
+
     public GpioBlinkStopTaskImpl(GpioPinDigitalOutput pin, PinState stopState, ScheduledFuture<?> blinkTask) {
-        this.pin = pin;    
+        this.pin = pin;
         this.stopState = stopState;
         this.blinkTask = blinkTask;
     }
@@ -48,7 +48,7 @@ public class GpioBlinkStopTaskImpl implements Runnable {
     public void run() {
         // cancel the blinking task
         blinkTask.cancel(true);
-        
+
         // set the pin to the stop blinking state
         pin.setState(stopState);
     }

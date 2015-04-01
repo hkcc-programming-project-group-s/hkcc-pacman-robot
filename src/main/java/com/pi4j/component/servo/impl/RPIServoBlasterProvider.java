@@ -27,27 +27,20 @@ package com.pi4j.component.servo.impl;
  * #L%
  */
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.pi4j.component.servo.ServoDriver;
 import com.pi4j.component.servo.ServoProvider;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Implementation of https://github.com/richardghirst/PiBits/tree/master/ServoBlaster
- * 
  *
  * @author Daniel Sendula
  */
@@ -64,9 +57,9 @@ public class RPIServoBlasterProvider implements ServoProvider {
     //    6 on P1-18          GPIO-24
     //    7 on P1-22          GPIO-25
 
-    public static final String PIN_P1_3  = "P1-3";
-    public static final String PIN_P1_5  = "P1-5";
-    public static final String PIN_P1_7  = "P1-7";
+    public static final String PIN_P1_3 = "P1-3";
+    public static final String PIN_P1_5 = "P1-5";
+    public static final String PIN_P1_7 = "P1-7";
     public static final String PIN_P1_11 = "P1-11";
     public static final String PIN_P1_12 = "P1-12";
     public static final String PIN_P1_13 = "P1-13";
@@ -85,10 +78,11 @@ public class RPIServoBlasterProvider implements ServoProvider {
     public static final String PIN_P5_4 = "P5-4";
     public static final String PIN_P5_5 = "P5-5";
     public static final String PIN_P5_6 = "P5-6";
-
+    public static final String SERVO_BLASTER_DEV = "/dev/servoblaster";
+    public static final String SERVO_BLASTER_DEV_CFG = "/dev/servoblaster-cfg";
     public static Map<Pin, String> PIN_MAP;
     public static Map<String, Pin> REVERSE_PIN_MAP;
-    
+
     static {
         PIN_MAP = new HashMap<Pin, String>();
         REVERSE_PIN_MAP = new HashMap<String, Pin>();
@@ -114,24 +108,14 @@ public class RPIServoBlasterProvider implements ServoProvider {
         definePin(RaspiPin.GPIO_20, PIN_P5_6);
     }
 
-    static void definePin(Pin pin, String s) {
-        PIN_MAP.put(pin, s);
-        REVERSE_PIN_MAP.put(s, pin);
-    }
-    
-    public static final String SERVO_BLASTER_DEV = "/dev/servoblaster";
-    public static final String SERVO_BLASTER_DEV_CFG = "/dev/servoblaster-cfg";
-    
     protected File servoBlasterDev;
     protected File servoBlasterDevCfg;
-    
     protected Writer writer;
-    
     protected Map<Pin, RPIServoBlasterServoDriver> allocatedDrivers = new HashMap<Pin, RPIServoBlasterServoDriver>();
-    
+
     /**
      * Constructor. It checks if /dev/servoblaster file exists.
-     * 
+     *
      * @throws IOException thrown in case file /dev/servoblaster does not exist.
      */
     public RPIServoBlasterProvider() throws IOException {
@@ -145,9 +129,14 @@ public class RPIServoBlasterProvider implements ServoProvider {
             throw new FileNotFoundException("File " + SERVO_BLASTER_DEV_CFG + " is not present." +
                     " Please check https://github.com/richardghirst/PiBits/tree/master/ServoBlaster for details.");
         }
-        
+
     }
-    
+
+    static void definePin(Pin pin, String s) {
+        PIN_MAP.put(pin, s);
+        REVERSE_PIN_MAP.put(s, pin);
+    }
+
     public List<Pin> getDefinedServoPins() throws IOException {
         List<Pin> servoPins = new ArrayList<Pin>();
         FileReader in = new FileReader(servoBlasterDevCfg);
@@ -157,7 +146,7 @@ public class RPIServoBlasterProvider implements ServoProvider {
             @SuppressWarnings("unused")
             String p5pins = null;
             boolean mappingStarted = false;
-            
+
             @SuppressWarnings("resource")
             BufferedReader reader = new BufferedReader(in);
 
@@ -172,7 +161,7 @@ public class RPIServoBlasterProvider implements ServoProvider {
                             String pin = line.substring(i + 4).trim();
                             i = pin.indexOf(' ');
                             pin = pin.substring(0, i);
-                            
+
                             Pin gpio = REVERSE_PIN_MAP.get(pin);
                             if (gpio != null) {
                                 if (index == servoPins.size()) {
@@ -188,8 +177,9 @@ public class RPIServoBlasterProvider implements ServoProvider {
                             } else {
                                 System.err.println("Unrecognised pin " + pin);
                             }
-                            
-                        } catch (NumberFormatException ignore) { }
+
+                        } catch (NumberFormatException ignore) {
+                        }
                     }
                 } else {
                     if (line.startsWith("p1pins=")) {
@@ -212,10 +202,10 @@ public class RPIServoBlasterProvider implements ServoProvider {
         }
         return servoPins;
     }
-    
+
     /**
      * Returns new instance of {@link RPIServoBlasterServoDriver}.
-     * 
+     *
      * @param servoPin servo pin.
      * @return instance of {@link RPIServoBlasterServoDriver}.
      */
@@ -231,7 +221,7 @@ public class RPIServoBlasterProvider implements ServoProvider {
             driver = new RPIServoBlasterServoDriver(servoPin, index, PIN_MAP.get(servoPin), this);
             ensureWriterIsCreated();
         }
-        
+
         return driver;
     }
 
@@ -241,7 +231,7 @@ public class RPIServoBlasterProvider implements ServoProvider {
             writer = new FileWriter(servoBlasterDev);
         }
     }
-    
+
     protected synchronized void updateServo(String pinName, int value) {
         StringBuilder b = new StringBuilder();
         b.append(pinName).append('=').append(Integer.toString(value)).append('\n');
@@ -251,7 +241,8 @@ public class RPIServoBlasterProvider implements ServoProvider {
         } catch (IOException e) {
             try {
                 writer.close();
-            } catch (IOException ignore) { }
+            } catch (IOException ignore) {
+            }
         }
         try {
             ensureWriterIsCreated();

@@ -30,5 +30,7 @@ package com.pi4j.device.pibrella.impl;
 public class PibrellaDevice extends PibrellaBase {
 
     // default constructor
-    public PibrellaDevice()  { super(); }
+    public PibrellaDevice() {
+        super();
+    }
 }

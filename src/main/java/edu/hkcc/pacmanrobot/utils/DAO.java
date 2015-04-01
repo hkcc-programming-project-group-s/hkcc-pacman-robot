@@ -1,7 +1,6 @@
 package edu.hkcc.pacmanrobot.utils;
 
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.Position;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -48,7 +47,7 @@ public class DAO {
             double x, y, z;
             x = y = z = 0;
 
-            Position result = new Position(x, y, z,new Timestamp(System.currentTimeMillis()));
+            Position result = new Position(x, y, z, new Timestamp(System.currentTimeMillis()));
 
             return result;
         }

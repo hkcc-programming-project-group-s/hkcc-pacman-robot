@@ -36,9 +36,9 @@ package com.pi4j.io.gpio;
 @SuppressWarnings("unused")
 public enum PinEdge {
 
-    NONE(0, "none"), 
+    NONE(0, "none"),
     BOTH(1, "both"),
-    RISING(2, "rising"), 
+    RISING(2, "rising"),
     FALLING(3, "falling");
 
     private final int value;
@@ -49,19 +49,6 @@ public enum PinEdge {
         this.name = name;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public String getName() {
-        return name;
-    }
-    
-    @Override
-    public String toString() {
-        return name;        
-    }    
-    
     public static PinEdge getEdge(int edge) {
         for (PinEdge item : PinEdge.values()) {
             if (item.getValue() == edge) {
@@ -69,6 +56,19 @@ public enum PinEdge {
             }
         }
         return null;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
 

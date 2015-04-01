@@ -1,9 +1,10 @@
 package com.pi4j.gpio.extension.olimex;
 
-import java.util.EnumSet;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.impl.PinImpl;
+
+import java.util.EnumSet;
 
 /*
  * #%L
@@ -37,15 +38,14 @@ import com.pi4j.io.gpio.impl.PinImpl;
  * More information about the board can be found here: *
  * https://www.olimex.com/Products/AVR/Development/AVR-IO-M16/
  * </p>
- * 
+ * <p>
  * <p>
  * The Olimex AVR-IO board is connected via RS232 serial connection to the Raspberry Pi and provides
  * 4 electromechanical RELAYs and 4 opto-isolated INPUT pins.
  * </p>
- * 
- * @see https://www.olimex.com/Products/AVR/Development/AVR-IO-M16/
+ *
  * @author Robert Savage
- * 
+ * @see https://www.olimex.com/Products/AVR/Development/AVR-IO-M16/
  */
 public class OlimexAVRIOPin {
 
@@ -64,7 +64,7 @@ public class OlimexAVRIOPin {
     public static final Pin IN_03 = new PinImpl(OlimexAVRIOGpioProvider.NAME, 7, "INPUT 3", EnumSet.of(PinMode.DIGITAL_INPUT));
 
     public static final Pin IN_04 = new PinImpl(OlimexAVRIOGpioProvider.NAME, 8, "INPUT 4", EnumSet.of(PinMode.DIGITAL_INPUT));
-    
-    public static Pin[] INPUTS = { OlimexAVRIOPin.IN_01, OlimexAVRIOPin.IN_02, OlimexAVRIOPin.IN_03, OlimexAVRIOPin.IN_04 };
-    public static Pin[] RELAYS = { OlimexAVRIOPin.RELAY_01, OlimexAVRIOPin.RELAY_02, OlimexAVRIOPin.RELAY_03, OlimexAVRIOPin.RELAY_04 };    
+
+    public static Pin[] INPUTS = {OlimexAVRIOPin.IN_01, OlimexAVRIOPin.IN_02, OlimexAVRIOPin.IN_03, OlimexAVRIOPin.IN_04};
+    public static Pin[] RELAYS = {OlimexAVRIOPin.RELAY_01, OlimexAVRIOPin.RELAY_02, OlimexAVRIOPin.RELAY_03, OlimexAVRIOPin.RELAY_04};
 }

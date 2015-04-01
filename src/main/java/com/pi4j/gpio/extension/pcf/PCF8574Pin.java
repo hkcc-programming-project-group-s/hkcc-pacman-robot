@@ -28,10 +28,11 @@ package com.pi4j.gpio.extension.pcf;
  */
 
 
-import java.util.EnumSet;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.impl.PinImpl;
+
+import java.util.EnumSet;
 
 
 /**
@@ -40,14 +41,13 @@ import com.pi4j.io.gpio.impl.PinImpl;
  * More information about the board can be found here: *
  * http://www.ti.com/lit/ds/symlink/pcf8574.pdf
  * </p>
- * 
+ * <p>
  * <p>
  * The PCF8574 is connected via I2C connection to the Raspberry Pi and provides
  * 8 GPIO pins that can be used for either digital input or digital output pins.
  * </p>
- * 
+ *
  * @author Robert Savage
- * 
  */
 public class PCF8574Pin {
 
@@ -60,11 +60,11 @@ public class PCF8574Pin {
     public static final Pin GPIO_06 = createDigitalPin(6, "GPIO 6");
     public static final Pin GPIO_07 = createDigitalPin(7, "GPIO 7");
 
-    public static Pin[] ALL = { PCF8574Pin.GPIO_00, PCF8574Pin.GPIO_01, PCF8574Pin.GPIO_02, PCF8574Pin.GPIO_03,
-                                PCF8574Pin.GPIO_04, PCF8574Pin.GPIO_05, PCF8574Pin.GPIO_06, PCF8574Pin.GPIO_07 };
-    
+    public static Pin[] ALL = {PCF8574Pin.GPIO_00, PCF8574Pin.GPIO_01, PCF8574Pin.GPIO_02, PCF8574Pin.GPIO_03,
+            PCF8574Pin.GPIO_04, PCF8574Pin.GPIO_05, PCF8574Pin.GPIO_06, PCF8574Pin.GPIO_07};
+
     private static Pin createDigitalPin(int address, String name) {
-        return new PinImpl(PCF8574GpioProvider.NAME, address, name, 
-                    EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.DIGITAL_OUTPUT));
-    }       
+        return new PinImpl(PCF8574GpioProvider.NAME, address, name,
+                EnumSet.of(PinMode.DIGITAL_INPUT, PinMode.DIGITAL_OUTPUT));
+    }
 }

@@ -6,19 +6,34 @@ import com.pi4j.io.i2c.{I2CBus, I2CDevice, I2CFactory}
 import edu.hkcc.pacmanrobot.utils.Maths._
 import edu.hkcc.pacmanrobot.utils.maths.Point3D
 
+import scala.math.{cos, sin}
+
 /**
  * Created by beenotung on 3/30/15.
  */
 object Mpu6050AO extends Thread {
-  val power_mgmt_1: Int = 0x6b
-  val power_mgmt_2: Int = 0x6c
+  private val power_mgmt_1: Int = 0x6b
+  private val power_mgmt_2: Int = 0x6c
   private val ONE_SECOND: Long = 1000000000L
-  var bg_z: Double = 0
-  var acceleration: Point3D = new Point3D()
-  var angularAcceleration: Point3D = new Point3D()
-  var rotation: Point3D = new Point3D()
-  var displacement: Point3D = new Point3D()
+  //default +- 2g per second
+  // in unit of cm
+  private val ACCEL_RATIO: Double = 1.0 / 32768 * 2 * 9.80665 * 100
+  //default +- 250 deg per second
+  // in unit of rad
+  private val GYRO_RATION: Double = 1.0 / 32768 * 250 / 180 * Math.PI
+  var linearAcceleration: Point3D = _
+  var angularAcceleration: Point3D = _
+  var linearVelocity: Point3D = new Point3D()
+  var angularVelocity: Point3D = new Point3D()
+  var linearDisplacement: Point3D = new Point3D()
+  var angularDisplacement: Point3D = new Point3D()
   var ready: Boolean = false
+  var bufferRadian: Double = _
+  var bufferAngular: Point3D = _
+  private var bufferLinear: Point3D = _
+  private var bufferLinearAcceleration: Point3D = _
+  private var backgroundLinearAcceleration: Point3D = new Point3D()
+  private var backgroundAngularAcceleration: Point3D = new Point3D()
   private var TIME0: Long = 0L
   private var bus: I2CBus = null
   private var mpu6050: I2CDevice = null
@@ -35,8 +50,8 @@ object Mpu6050AO extends Thread {
   }
 
   def getAcceleration: Point3D = {
-    //acceleration.$div(16384.0)
-    acceleration / 16384.0
+    //linearAcceleration.$div(16384.0)
+    linearAcceleration / 16384.0
   }
 
   def getZRotaion: Double = {
@@ -44,24 +59,32 @@ object Mpu6050AO extends Thread {
   }
 
   def getRotation: Point3D = {
-    rotation - bg_z
+    angularDisplacement
   }
 
   @throws(classOf[IOException])
   def readAccel {
-    acceleration = new Point3D(readWord2C(0x3b), readWord2C(0x3d), readWord2C(0x3f))
-    accelTimer.getDelta
+    bufferLinearAcceleration = new Point3D(readWord2C(0x3b), readWord2C(0x3d), readWord2C(0x3f)) * ACCEL_RATIO - backgroundLinearAcceleration
+    val t = accelTimer.getDeltaSecond
     if (accelTimer.last != 0) {
-      displacement += acceleration
+      bufferRadian = getZRotaion
+      linearAcceleration.z = bufferLinearAcceleration.z
+      linearAcceleration.y = bufferLinearAcceleration.y * cos(bufferRadian) - bufferLinearAcceleration.x * sin(bufferRadian)
+      linearAcceleration.x = bufferLinearAcceleration.y * sin(bufferRadian) + bufferLinearAcceleration.x * cos(bufferRadian)
+      bufferLinear = linearAcceleration * t
+      linearDisplacement += linearVelocity * t + bufferLinear * t * 0.5d
+      linearVelocity += bufferLinear
     }
   }
 
   @throws(classOf[IOException])
-  def readGyro {
-    angularAcceleration = new Point3D(readWord2C(0x43), readWord2C(0x45), readWord2C(0x47))
-    gyroTimer.getDelta
+  def readGyro = {
+    angularAcceleration = new Point3D(readWord2C(0x43), readWord2C(0x45), readWord2C(0x47)) * GYRO_RATION - backgroundLinearAcceleration
+    val t = gyroTimer.getDeltaSecond
     if (gyroTimer.last != 0) {
-      rotation += angularAcceleration
+      bufferAngular = angularAcceleration * t
+      angularDisplacement += angularVelocity * t + bufferAngular * t * 0.5d
+      angularVelocity += bufferAngular
     }
   }
 
@@ -120,31 +143,31 @@ object Mpu6050AO extends Thread {
     Mpu6050AO.bus = I2CFactory.getInstance(I2CBus.BUS_1)
     Mpu6050AO.mpu6050 = Mpu6050AO.bus.getDevice(0x68)
     Mpu6050AO.mpu6050.write(Mpu6050AO.power_mgmt_1, 0x00.toByte)
-    val last_time: Long = 0
-    val now: Long = 0L
     Mpu6050AO.TIME0 = System.nanoTime
     var TIME1: Long = 0L
-    while (({
-      TIME1 = System.nanoTime;
-      TIME1
-    } - Mpu6050AO.TIME0) < 2147483647) {
+    do {
       writeMpu6050(0x01.toByte)
-      Mpu6050AO.bg_z += 1.0 * readWord2C(0x47)
+      backgroundLinearAcceleration += new Point3D(readWord2C(0x3b), readWord2C(0x3d), readWord2C(0x3f))
+      backgroundAngularAcceleration += new Point3D(readWord2C(0x43), readWord2C(0x45), readWord2C(0x47))
       writeMpu6050(0xff.toByte)
-    }
-    Mpu6050AO.bg_z /= 1.0 * TIME1 - Mpu6050AO.TIME0
-    System.out.println("bg_z=" + Mpu6050AO.bg_z)
+      TIME1 = System.nanoTime()
+    } while ((TIME1 - TIME0) < 2147483647)
+    backgroundLinearAcceleration /= (TIME1 - TIME0) * GYRO_RATION
+    backgroundAngularAcceleration /= (TIME1 - TIME0) * ACCEL_RATIO
+    System.out.println("bg_z=" + backgroundAngularAcceleration.z)
     ready = true
   }
 
-  private def real(shiftedValue: Double, time1: Long): Double = {
-    shiftedValue - Mpu6050AO.bg_z * (time1 - Mpu6050AO.TIME0)
-  }
-
-  private class Timer {
-    var last: Long = 0
-    var now: Long = 0
+  class Timer {
+    var last: Long = 0L
+    var now: Long = 0L
     var delta: Long = 0L
+    var deltaSecond: Double = 0d
+
+    def getDeltaSecond: Double = {
+      deltaSecond = getDelta / 1e9d
+      deltaSecond
+    }
 
     def getDelta: Long = {
       last = now
@@ -153,5 +176,6 @@ object Mpu6050AO extends Thread {
       delta
     }
   }
+
 
 }

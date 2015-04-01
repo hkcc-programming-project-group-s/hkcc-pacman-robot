@@ -38,11 +38,11 @@ public class FireplaceTimeoutEvent extends EventObject {
         super(fireplaceComponent);
     }
 
-    public void setHandled(boolean handled){
-        this.handled = handled;
+    public boolean isHandled() {
+        return this.handled;
     }
 
-    public boolean isHandled(){
-        return this.handled;
+    public void setHandled(boolean handled) {
+        this.handled = handled;
     }
 }

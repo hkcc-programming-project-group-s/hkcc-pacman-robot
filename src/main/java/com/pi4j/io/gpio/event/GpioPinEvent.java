@@ -48,12 +48,12 @@ public class GpioPinEvent extends EventObject {
     public GpioPinEvent(Object obj, GpioPin pin, PinEventType type) {
         super(obj);
         this.pin = pin;
-        this.type = type;        
+        this.type = type;
     }
 
     /**
      * Get the pin number that changed and raised this event.
-     * 
+     *
      * @return GPIO pin number (not header pin number; not wiringPi pin number)
      */
     public GpioPin getPin() {

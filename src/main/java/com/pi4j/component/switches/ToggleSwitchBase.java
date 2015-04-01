@@ -29,5 +29,5 @@ package com.pi4j.component.switches;
 
 
 public abstract class ToggleSwitchBase extends SwitchBase implements ToggleSwitch {
-    
+
 }

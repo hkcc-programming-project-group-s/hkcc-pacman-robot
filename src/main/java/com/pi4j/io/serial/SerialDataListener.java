@@ -30,7 +30,7 @@ package com.pi4j.io.serial;
 
 /**
  * <p> This interface implements the callback event handler for Serial Data events. </p>
- * 
+ * <p>
  * <p>
  * Before using the Pi4J library, you need to ensure that the Java VM in configured with access to
  * the following system libraries:
@@ -42,22 +42,21 @@ package com.pi4j.io.serial;
  * Gordon Henderson @ <a href="http://wiringpi.com/">http://wiringpi.com/</a>)
  * </blockquote>
  * </p>
- * 
+ *
+ * @author Robert Savage (<a
+ *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  * @see com.pi4j.io.serial.SerialFactory
  * @see com.pi4j.io.serial.Serial
  * @see com.pi4j.io.serial.SerialDataEvent
- * 
  * @see <a href="http://www.pi4j.com/">http://www.pi4j.com/</a>
- * @author Robert Savage (<a
- *         href="http://www.savagehomeautomation.com">http://www.savagehomeautomation.com</a>)
  */
 public interface SerialDataListener extends java.util.EventListener {
 
     /**
      * This is the event callback method that will be invoked when new serial data is received.
      *
-     * @see com.pi4j.io.serial.SerialDataEvent
      * @param event serial data event
+     * @see com.pi4j.io.serial.SerialDataEvent
      */
     void dataReceived(SerialDataEvent event);
 }

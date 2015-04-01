@@ -27,24 +27,23 @@ package com.pi4j.component.servo.impl;
  * #L%
  */
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.pi4j.component.servo.ServoDriver;
 import com.pi4j.component.servo.ServoProvider;
 import com.pi4j.gpio.extension.pca.PCA9685GpioProvider;
 import com.pi4j.gpio.extension.pca.PCA9685Pin;
 import com.pi4j.io.gpio.Pin;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class PCA9685GpioServoProvider implements ServoProvider {
 
+    protected Map<Pin, PCA9685GpioServoDriver> allocatedDrivers = new HashMap<Pin, PCA9685GpioServoDriver>();
     private PCA9685GpioProvider provider;
 
-    protected Map<Pin, PCA9685GpioServoDriver> allocatedDrivers = new HashMap<Pin, PCA9685GpioServoDriver>();
-    
     public PCA9685GpioServoProvider(PCA9685GpioProvider provider) {
         this.provider = provider;
     }
@@ -66,7 +65,7 @@ public class PCA9685GpioServoProvider implements ServoProvider {
         if (driver == null) {
             driver = new PCA9685GpioServoDriver(provider, servoPin);
         }
-        
+
         return driver;
     }
 

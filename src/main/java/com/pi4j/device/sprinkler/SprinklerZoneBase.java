@@ -31,7 +31,7 @@ package com.pi4j.device.sprinkler;
 public abstract class SprinklerZoneBase implements SprinklerZone {
 
     protected String name = null;
-    
+
     @Override
     public String getName() {
         return name;
@@ -59,7 +59,7 @@ public abstract class SprinklerZoneBase implements SprinklerZone {
 
     @Override
     public abstract boolean isOn();
-    
+
     @Override
     public abstract void setState(boolean on);
 }

@@ -29,8 +29,8 @@ package com.pi4j.component.sensor;
 
 
 public enum SensorState {
-    
+
     OPEN,
     CLOSED
-    
+
 }

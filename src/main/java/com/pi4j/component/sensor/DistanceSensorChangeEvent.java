@@ -28,7 +28,6 @@ package com.pi4j.component.sensor;
  */
 
 
-
 import java.util.Date;
 import java.util.EventObject;
 
@@ -43,24 +42,24 @@ public class DistanceSensorChangeEvent extends EventObject {
         super(sensor);
         this.value = value;
         this.distance = distance;
-        this.timestamp = timestamp;        
+        this.timestamp = timestamp;
     }
 
     public DistanceSensorChangeEvent(DistanceSensor sensor, double value, double distance) {
         super(sensor);
         this.value = value;
         this.distance = distance;
-        this.timestamp = new Date();        
+        this.timestamp = new Date();
     }
-    
+
     public DistanceSensor getSensor() {
-        return (DistanceSensor)getSource();
+        return (DistanceSensor) getSource();
     }
-    
+
     public Date getTimestamp() {
         return timestamp;
     }
-    
+
     public double getDistance() {
         return distance;
     }
@@ -68,5 +67,5 @@ public class DistanceSensorChangeEvent extends EventObject {
     public double getRawValue() {
         return value;
     }
-    
+
 }

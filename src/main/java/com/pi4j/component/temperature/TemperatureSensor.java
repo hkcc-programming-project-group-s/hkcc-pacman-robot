@@ -34,9 +34,12 @@ import com.pi4j.temperature.TemperatureScale;
 public interface TemperatureSensor extends ObserveableComponent {
 
     double getTemperature();
+
     double getTemperature(TemperatureScale scale);
+
     TemperatureScale getScale();
-    
+
     void addListener(TemperatureListener... listener);
+
     void removeListener(TemperatureListener... listener);
 }

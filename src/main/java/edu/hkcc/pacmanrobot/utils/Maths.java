@@ -1,7 +1,5 @@
 package edu.hkcc.pacmanrobot.utils;
 
-import java.io.Serializable;
-
 /**
  * Created by beenotung on 3/26/15.
  */

@@ -36,10 +36,10 @@ public abstract class TemperatureControllerBase extends TemperatureSensorBase im
     public abstract double getTemperature();
 
     @Override
-    public abstract TemperatureScale getScale();
+    public abstract void setTemperature(double temperature);
 
     @Override
-    public abstract void setTemperature(double temperature);
+    public abstract TemperatureScale getScale();
 
     @Override
     public void setTemperature(double temperature, TemperatureScale scale) {

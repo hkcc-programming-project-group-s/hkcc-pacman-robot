@@ -36,13 +36,13 @@ public class LightLevelChangeEvent extends EventObject {
 
     public LightLevelChangeEvent(DimmableLight light, int level) {
         super(light);
-        this.level = level;        
+        this.level = level;
     }
 
     public DimmableLight getLight() {
-        return (DimmableLight)getSource();
+        return (DimmableLight) getSource();
     }
-    
+
     public int getLevel() {
         return level;
     }

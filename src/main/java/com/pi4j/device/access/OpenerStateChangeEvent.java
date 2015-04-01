@@ -38,14 +38,14 @@ public class OpenerStateChangeEvent extends EventObject {
 
     public OpenerStateChangeEvent(Opener opener, OpenerState oldState, OpenerState newState) {
         super(opener);
-        this.oldState = oldState;        
+        this.oldState = oldState;
         this.newState = newState;
     }
 
     public Opener getOpener() {
-        return (Opener)getSource();
+        return (Opener) getSource();
     }
-    
+
     public OpenerState getOldState() {
         return oldState;
     }

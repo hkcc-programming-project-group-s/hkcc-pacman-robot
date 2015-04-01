@@ -57,7 +57,7 @@ class DeadlineRobot extends Robot {
 
   def getTargetPosition: Point2D = {
     val d=range(Mpu6050AO.getZRotaion)
-    val f=Math.abs(d)/20000.0/2
+    val f=Math.abs(d)/Maths.B
     new Point2D(d,f)
   }
 }

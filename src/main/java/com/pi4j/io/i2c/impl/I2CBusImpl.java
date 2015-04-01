@@ -37,26 +37,51 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This is implementation of i2c bus. This class keeps underlying linux file descriptor of
- * particular bus. As all reads and writes from/to i2c bus are blocked I/Os current implementation uses only 
+ * particular bus. As all reads and writes from/to i2c bus are blocked I/Os current implementation uses only
  * one file per bus for all devices. Device implementations use this class file handle.
- * 
- * @author Daniel Sendula
  *
+ * @author Daniel Sendula
  */
 public class I2CBusImpl implements I2CBus {
 
-    /** Singleton instance of bus 0 */
+    /**
+     * to lock the creation/destruction of the bus singletons
+     */
+    private final static Lock lock = new ReentrantLock(true);
+    /**
+     * Singleton instance of bus 0
+     */
     private static I2CBus bus0 = null;
-
-    /** Singleton instance of bus 1 */
+    /**
+     * Singleton instance of bus 1
+     */
     private static I2CBus bus1 = null;
-    
-    /** to lock the creation/destruction of the bus singletons */
-    private final static Lock lock = new ReentrantLock( true );
+    /**
+     * File handle for this i2c bus
+     */
+    protected int fd;
+    /**
+     * File name of this i2c bus
+     */
+    protected String filename;
 
-    /** 
+    /**
+     * Constructor of i2c bus implementation.
+     *
+     * @param filename file name of device to be opened.
+     * @throws IOException thrown in case that file cannot be opened
+     */
+    public I2CBusImpl(String filename) throws IOException {
+        this.filename = filename;
+        fd = I2C.i2cOpen(filename);
+        if (fd < 0) {
+            throw new IOException("Cannot open file handle for " + filename + " got " + fd + " back.");
+        }
+    }
+
+    /**
      * Factory method that returns bus implementation.
-     * 
+     *
      * @param busNumber bus number
      * @return appropriate bus implementation
      * @throws IOException thrown in case there is a problem opening bus file or bus number is not 0 or 1.
@@ -83,34 +108,11 @@ public class I2CBusImpl implements I2CBus {
         return bus;
     }
 
-    /** File handle for this i2c bus */
-    protected int fd;
-    
-    /** File name of this i2c bus */
-    protected String filename;
-    
-    /**
-     * Constructor of i2c bus implementation.
-     * 
-     * @param filename file name of device to be opened.
-     * 
-     * @throws IOException thrown in case that file cannot be opened
-     */
-    public I2CBusImpl(String filename) throws IOException {
-        this.filename = filename;
-        fd = I2C.i2cOpen(filename);
-        if (fd < 0) {
-            throw new IOException("Cannot open file handle for " + filename + " got " + fd + " back.");
-        }
-    }
-
     /**
      * Returns i2c device implementation ({@link I2CDeviceImpl}).
-     * 
+     *
      * @param address address of i2c device
-     * 
      * @return implementation of i2c device with given address
-     * 
      * @throws IOException never in this implementation
      */
     @Override
@@ -120,7 +122,7 @@ public class I2CBusImpl implements I2CBus {
 
     /**
      * Closes this i2c bus
-     * 
+     *
      * @throws IOException never in this implementation
      */
     @Override
@@ -138,15 +140,13 @@ public class I2CBusImpl implements I2CBus {
         lock.unlock();
     }
 
-	@Override
-	public String getFileName()
-	{
-		return filename;
-	}
+    @Override
+    public String getFileName() {
+        return filename;
+    }
 
-	@Override
-	public int getFileDescriptor()
-	{
-		return fd;
-	}
+    @Override
+    public int getFileDescriptor() {
+        return fd;
+    }
 }

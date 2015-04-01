@@ -38,14 +38,14 @@ public class TemperatureChangeEvent extends EventObject {
 
     public TemperatureChangeEvent(TemperatureSensor sensor, double oldTemperature, double newTemperature) {
         super(sensor);
-        this.oldTemperature = oldTemperature;        
+        this.oldTemperature = oldTemperature;
         this.newTemperature = newTemperature;
     }
 
     public TemperatureSensor getTemperatureSensor() {
-        return (TemperatureSensor)getSource();
+        return (TemperatureSensor) getSource();
     }
-    
+
     public double getOldTemperature() {
         return oldTemperature;
     }
@@ -57,5 +57,5 @@ public class TemperatureChangeEvent extends EventObject {
     public double getTemperatureChange() {
         return (newTemperature - oldTemperature);
     }
-    
+
 }

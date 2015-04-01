@@ -42,12 +42,12 @@ public class GpioProviderPinCache {
     private PinPullResistance resistance;
     private double analogValue = -1;
     private int pwmValue = -1;
-    private boolean exported = false; 
-    
+    private boolean exported = false;
+
     public GpioProviderPinCache(Pin pin) {
         this.pin = pin;
     }
-    
+
     @Override
     public String toString() {
         return "PIN [" + pin.getName() + "] CACHE :: mode=" + mode.getName() + "; state=" + state.getName();
@@ -56,47 +56,47 @@ public class GpioProviderPinCache {
     public PinMode getMode() {
         return mode;
     }
-    
+
     public void setMode(PinMode mode) {
         this.mode = mode;
     }
-    
+
     public PinState getState() {
         return state;
     }
-    
+
     public void setState(PinState state) {
         this.state = state;
     }
-    
+
     public PinPullResistance getResistance() {
         return resistance;
     }
-    
+
     public void setResistance(PinPullResistance resistance) {
         this.resistance = resistance;
     }
-    
+
     public double getAnalogValue() {
         return analogValue;
     }
-    
+
     public void setAnalogValue(double value) {
         this.analogValue = value;
     }
-    
+
     public int getPwmValue() {
         return pwmValue;
     }
-    
+
     public void setPwmValue(int value) {
         this.pwmValue = value;
     }
-    
+
     public boolean isExported() {
         return exported;
     }
-    
+
     public void setExported(boolean exported) {
         this.exported = exported;
     }

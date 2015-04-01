@@ -31,19 +31,27 @@ import java.util.Map;
 
 
 public interface Device {
-    
-    void setName(String name);
+
     String getName();
-    
-    void setTag(Object tag);
+
+    void setName(String name);
+
     Object getTag();
-    
+
+    void setTag(Object tag);
+
     void setProperty(String key, String value);
+
     boolean hasProperty(String key);
+
     String getProperty(String key, String defaultValue);
+
     String getProperty(String key);
-    Map<String,String> getProperties();
+
+    Map<String, String> getProperties();
+
     void removeProperty(String key);
-    void clearProperties();    
-    
+
+    void clearProperties();
+
 }

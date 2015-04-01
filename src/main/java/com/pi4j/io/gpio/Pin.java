@@ -37,11 +37,15 @@ import java.util.EnumSet;
  */
 @SuppressWarnings("unused")
 public interface Pin {
-    
+
     String getProvider();
-    int getAddress();    
+
+    int getAddress();
+
     String getName();
+
     EnumSet<PinMode> getSupportedPinModes();
+
     EnumSet<PinPullResistance> getSupportedPinPullResistance();
 
 }

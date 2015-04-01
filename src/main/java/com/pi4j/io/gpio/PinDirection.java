@@ -37,8 +37,8 @@ import java.util.EnumSet;
  */
 @SuppressWarnings("unused")
 public enum PinDirection {
-    
-    IN(0, "in"), 
+
+    IN(0, "in"),
     OUT(1, "out");
 
     private final int value;
@@ -49,19 +49,6 @@ public enum PinDirection {
         this.name = name;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public String getName() {
-        return name;
-    }
-    
-    @Override
-    public String toString() {
-        return name.toUpperCase();        
-    }    
-    
     public static PinDirection getDirection(int direction) {
         for (PinDirection item : PinDirection.values()) {
             if (item.getValue() == direction) {
@@ -69,9 +56,22 @@ public enum PinDirection {
             }
         }
         return null;
-    }    
-    
+    }
+
     public static EnumSet<PinDirection> all() {
         return EnumSet.of(PinDirection.IN, PinDirection.OUT);
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return name.toUpperCase();
     }
 }

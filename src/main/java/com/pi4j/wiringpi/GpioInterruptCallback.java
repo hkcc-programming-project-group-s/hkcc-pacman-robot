@@ -28,6 +28,6 @@ package com.pi4j.wiringpi;
  */
 
 
-public interface GpioInterruptCallback  {
+public interface GpioInterruptCallback {
     void callback(int pin);
 }

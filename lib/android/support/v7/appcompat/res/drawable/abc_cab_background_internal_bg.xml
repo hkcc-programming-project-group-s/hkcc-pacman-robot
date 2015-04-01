@@ -15,7 +15,7 @@
 -->
 
 <!--
-    A solid rectangle so that we can use a PorterDuff multiply color filter to tint this
+    A solid rectangle so that we can use a PorterDuff multiple color filter to tint this
 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
        android:shape="rectangle">

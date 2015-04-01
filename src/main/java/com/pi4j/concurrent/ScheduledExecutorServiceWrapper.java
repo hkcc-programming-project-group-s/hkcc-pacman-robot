@@ -36,15 +36,16 @@ import java.util.concurrent.*;
 public class ScheduledExecutorServiceWrapper implements ScheduledExecutorService {
 
     private ScheduledExecutorService service;
-    
+
     /**
      * Default constructor
+     *
      * @param service executor service
      */
     public ScheduledExecutorServiceWrapper(ScheduledExecutorService service) {
         this.service = service;
     }
-    
+
     @Override
     public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
         return service.awaitTermination(timeout, unit);
@@ -56,7 +57,7 @@ public class ScheduledExecutorServiceWrapper implements ScheduledExecutorService
     }
 
     @Override
-    public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit) 
+    public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
             throws InterruptedException {
         return service.invokeAll(tasks, timeout, unit);
     }
@@ -109,7 +110,7 @@ public class ScheduledExecutorServiceWrapper implements ScheduledExecutorService
 
     @Override
     public void execute(Runnable command) {
-        service.execute(command);        
+        service.execute(command);
     }
 
     @Override
@@ -124,13 +125,13 @@ public class ScheduledExecutorServiceWrapper implements ScheduledExecutorService
 
     @Override
     public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period,
-            TimeUnit unit) {
+                                                  TimeUnit unit) {
         return service.scheduleAtFixedRate(command, initialDelay, period, unit);
     }
 
     @Override
     public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay,
-            long delay, TimeUnit unit) {
+                                                     long delay, TimeUnit unit) {
         return service.scheduleWithFixedDelay(command, initialDelay, delay, unit);
     }
 }

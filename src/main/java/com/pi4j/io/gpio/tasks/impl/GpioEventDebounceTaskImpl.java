@@ -37,9 +37,9 @@ import java.util.concurrent.ExecutorService;
 
 public class GpioEventDebounceTaskImpl implements Runnable {
 
+    private static ExecutorService executor;
     private final GpioPinDigitalInput pin;
     private final PinState originalPinState;
-    private static ExecutorService executor;
 
     public GpioEventDebounceTaskImpl(GpioPinDigitalInput pin, PinState state) {
         executor = GpioFactory.getExecutorServiceFactory().newSingleThreadExecutorService();
@@ -52,7 +52,7 @@ public class GpioEventDebounceTaskImpl implements Runnable {
         // if the current pin state is not the same as the original pin state,
         // then we need to raise a new pin event to notify the user that the pin
         // state has changed during the debounce delay period
-        if(!pin.isState(originalPinState)){
+        if (!pin.isState(originalPinState)) {
             // add a new pin event notification to the thread pool for *immediate* execution
             executor.execute(new GpioEventDispatchTaskImpl(pin,
                     new PinDigitalStateChangeEvent(this, pin.getPin(), pin.getState())));

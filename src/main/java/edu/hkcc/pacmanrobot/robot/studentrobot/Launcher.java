@@ -1,7 +1,5 @@
 package edu.hkcc.pacmanrobot.robot.studentrobot;
 
-import edu.hkcc.pacmanrobot.robot.utils.L298NAO;
-
 /**
  * Created by beenotung on 3/27/15.
  */

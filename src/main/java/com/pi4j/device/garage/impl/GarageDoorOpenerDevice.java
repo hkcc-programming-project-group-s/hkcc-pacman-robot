@@ -34,13 +34,12 @@ import com.pi4j.component.sensor.SensorState;
 import com.pi4j.component.switches.Switch;
 import com.pi4j.device.access.impl.OpenerDevice;
 
-public class GarageDoorOpenerDevice extends OpenerDevice
-{
+public class GarageDoorOpenerDevice extends OpenerDevice {
     public GarageDoorOpenerDevice(Relay relay, Sensor doorSensor, SensorState doorOpenSensorState) {
         super(relay, doorSensor, doorOpenSensorState);
     }
 
     public GarageDoorOpenerDevice(Relay relay, Sensor doorSensor, SensorState doorOpenSensorState, Switch lock) {
         super(relay, doorSensor, doorOpenSensorState, lock);
-    }       
+    }
 }

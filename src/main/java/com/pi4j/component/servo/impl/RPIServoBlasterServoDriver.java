@@ -27,10 +27,10 @@ package com.pi4j.component.servo.impl;
  * #L%
  */
 
-import java.io.IOException;
-
 import com.pi4j.component.servo.ServoDriver;
 import com.pi4j.io.gpio.Pin;
+
+import java.io.IOException;
 
 public class RPIServoBlasterServoDriver implements ServoDriver {
 
@@ -39,24 +39,24 @@ public class RPIServoBlasterServoDriver implements ServoDriver {
     protected String pinString;
     protected int servoPosition;
     protected RPIServoBlasterProvider provider;
-    
+
     protected RPIServoBlasterServoDriver(Pin servoPin, int index, String pinString, RPIServoBlasterProvider provider) throws IOException {
         this.index = index;
         this.servoPin = servoPin;
         this.pinString = pinString;
         this.provider = provider;
     }
-    
-    
+
+
     public int getServoPulseWidth() {
         return servoPosition;
     }
-    
+
     public void setServoPulseWidth(int width) {
         this.servoPosition = width;
         provider.updateServo(pinString, width);
     }
-    
+
     public int getServoPulseResolution() {
         return 100;
     }

@@ -1,11 +1,7 @@
 package com.pi4j.gpio.extension.olimex;
 
 import com.pi4j.gpio.extension.serial.SerialCommandQueueProcessingThread;
-import com.pi4j.io.gpio.GpioProvider;
-import com.pi4j.io.gpio.GpioProviderBase;
-import com.pi4j.io.gpio.Pin;
-import com.pi4j.io.gpio.PinMode;
-import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.event.PinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.PinListener;
 import com.pi4j.io.serial.Serial;
@@ -46,15 +42,14 @@ import com.pi4j.io.serial.SerialFactory;
  * More information about the board can be found here: *
  * https://www.olimex.com/Products/AVR/Development/AVR-IO-M16/
  * </p>
- * 
+ * <p>
  * <p>
  * The Olimex AVR-IO board is connected via RS232 serial connection to the Raspberry Pi and provides
  * 4 electromechanical RELAYs and 4 opto-isolated INPUT pins.
  * </p>
- * 
- * @see https://www.olimex.com/Products/AVR/Development/AVR-IO-M16/
+ *
  * @author Robert Savage
- * 
+ * @see https://www.olimex.com/Products/AVR/Development/AVR-IO-M16/
  */
 public class OlimexAVRIOGpioProvider extends GpioProviderBase implements GpioProvider {
 
@@ -67,23 +62,23 @@ public class OlimexAVRIOGpioProvider extends GpioProviderBase implements GpioPro
     public OlimexAVRIOGpioProvider(String serialDevice) {
         // create serial communications instance
         com = SerialFactory.createInstance();
-        
+
         // create serial data listener
         SerialExampleListener listener = new SerialExampleListener();
 
         // add/register the serial data listener
         com.addListener(listener);
-        
+
         // open serial port for communication
         com.open(serialDevice, 19200);
-        
+
         // create and start the serial command processing queue thread
         // set the delay time to 100 ms; this works well for the AVR-IO
         queue = new SerialCommandQueueProcessingThread(com, 50);
         queue.start();
         queue.put("?"); // query for current status
     }
-    
+
     @Override
     public String getName() {
         return NAME;
@@ -102,11 +97,11 @@ public class OlimexAVRIOGpioProvider extends GpioProviderBase implements GpioPro
     @Override
     public PinMode getMode(Pin pin) {
         super.getMode(pin);
-        
+
         // return first mode found; this device has singular fixed pin modes
-        for(PinMode mode : pin.getSupportedPinModes())
+        for (PinMode mode : pin.getSupportedPinModes())
             return mode;
-        
+
         return null;
     }
 
@@ -127,22 +122,22 @@ public class OlimexAVRIOGpioProvider extends GpioProviderBase implements GpioPro
         super.getState(pin);
 
         // calculate current state from the bitmask value
-        int bit = (int)Math.pow(2, (pin.getAddress()-1));
+        int bit = (int) Math.pow(2, (pin.getAddress() - 1));
         int state = (currentStates & bit);
         return (state == bit) ? PinState.HIGH : PinState.LOW;
-    }    
-    
-    
+    }
+
+
     @Override
     public void shutdown() {
-        
+
         // prevent reentrant invocation
-        if(isShutdown())
+        if (isShutdown())
             return;
-        
+
         // perform shutdown login in base
         super.shutdown();
-        
+
         // if a serial processing queue is running, then shut it down now
         if (queue != null) {
             // shutdown serial data processing thread
@@ -153,86 +148,86 @@ public class OlimexAVRIOGpioProvider extends GpioProviderBase implements GpioPro
 
         // close the serial port communication
         com.close();
-        
+
         // shutdown any serial data monitoring threads
         com.shutdown();
-    }      
-    
+    }
+
     /**
      * This class implements the serial data listener interface with the callback method for event
      * notifications when data is received on the serial port.
-     * 
-     * @see SerialDataListener
+     *
      * @author Robert Savage
+     * @see SerialDataListener
      */
     class SerialExampleListener implements SerialDataListener {
         private StringBuilder buffer = new StringBuilder();
-        
+
         public void dataReceived(SerialDataEvent event) {
-           String data = event.getData();
-           
-           // append received data into buffer
-           if (data != null && !data.isEmpty()) {
-               buffer.append(data);
-           }
-           
-           int start = buffer.indexOf("$");
-           int stop = buffer.indexOf("\n");
-           
-           while (stop >= 0) {
-               // process data buffer
-               if(start >= 0 && stop > start) {
-                   // get command
-                   String command = buffer.substring(start, stop+1);
-                   buffer.delete(start, stop+1).toString();
-    
-                   // remove terminating characters
-                   command = command.replace("$", "");
-                   command = command.replace("\n", "");
-                   command = command.replace("\r", "");
-                   
-                   // print out the data received to the console
-                   //System.out.println("<<< COM RX >>> " + command);
-                   
-                   int value = Integer.parseInt(command, 16);
-                   
-                   // process each INPUT pin for changes; 
-                   // dispatch change events if needed
-                   for (Pin pin : OlimexAVRIOPin.INPUTS) {
-                       evaluatePinForChange(pin, value);
-                   }
-                   
-                   // update the current value tracking variable
-                   currentStates = value;
-               } else if (stop >= 0) {
-                   // invalid data command; purge
-                   buffer.delete(0, stop+1);
-                   
-                   //System.out.println("PURGE >>> " + removed);
-               }
-               
-               // seek to next command in buffer
-               start = buffer.indexOf("$");
-               stop = buffer.indexOf("\n");               
-           }
+            String data = event.getData();
+
+            // append received data into buffer
+            if (data != null && !data.isEmpty()) {
+                buffer.append(data);
+            }
+
+            int start = buffer.indexOf("$");
+            int stop = buffer.indexOf("\n");
+
+            while (stop >= 0) {
+                // process data buffer
+                if (start >= 0 && stop > start) {
+                    // get command
+                    String command = buffer.substring(start, stop + 1);
+                    buffer.delete(start, stop + 1).toString();
+
+                    // remove terminating characters
+                    command = command.replace("$", "");
+                    command = command.replace("\n", "");
+                    command = command.replace("\r", "");
+
+                    // print out the data received to the console
+                    //System.out.println("<<< COM RX >>> " + command);
+
+                    int value = Integer.parseInt(command, 16);
+
+                    // process each INPUT pin for changes;
+                    // dispatch change events if needed
+                    for (Pin pin : OlimexAVRIOPin.INPUTS) {
+                        evaluatePinForChange(pin, value);
+                    }
+
+                    // update the current value tracking variable
+                    currentStates = value;
+                } else if (stop >= 0) {
+                    // invalid data command; purge
+                    buffer.delete(0, stop + 1);
+
+                    //System.out.println("PURGE >>> " + removed);
+                }
+
+                // seek to next command in buffer
+                start = buffer.indexOf("$");
+                stop = buffer.indexOf("\n");
+            }
         }
-        
-        
+
+
         private void evaluatePinForChange(Pin pin, int value) {
-            int bit = (int)Math.pow(2, (pin.getAddress()-1));
+            int bit = (int) Math.pow(2, (pin.getAddress() - 1));
             if ((value & bit) != (currentStates & bit)) {
                 // change detected for INPUT PIN
                 //System.out.println("<<< CHANGE >>> " + pin.getName());
                 dispatchPinChangeEvent(pin.getAddress(), ((value & bit) == bit) ? PinState.HIGH : PinState.LOW);
             }
         }
-        
-        
+
+
         private void dispatchPinChangeEvent(int pinAddress, PinState state) {
             // iterate over the pin listeners map
             for (Pin pin : listeners.keySet()) {
                 //System.out.println("<<< DISPATCH >>> " + pin.getName() + " : " + state.getName());
-                
+
                 // dispatch this event to the listener 
                 // if a matching pin address is found
                 if (pin.getAddress() == pinAddress) {
@@ -240,8 +235,8 @@ public class OlimexAVRIOGpioProvider extends GpioProviderBase implements GpioPro
                     for (PinListener listener : listeners.get(pin)) {
                         listener.handlePinEvent(new PinDigitalStateChangeEvent(this, pin, state));
                     }
-                }            
-            }            
+                }
+            }
         }
-    }      
+    }
 }

@@ -32,7 +32,7 @@ import com.pi4j.component.ObserveableComponentBase;
 
 
 public abstract class RelayBase extends ObserveableComponentBase implements Relay {
-    
+
     public static final int DEFAULT_PULSE_MILLISECONDS = 500;
 
     @Override
@@ -71,26 +71,25 @@ public abstract class RelayBase extends ObserveableComponentBase implements Rela
         close();
         try {
             Thread.sleep(milliseconds);
-        } 
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         open();
     }
-    
+
     @Override
     public void toggle() {
-        if(isOpen()) 
+        if (isOpen())
             close();
-        else 
+        else
             open();
     }
-    
+
     @Override
     public boolean isState(RelayState state) {
         return getState().equals(state);
     }
-    
+
     @Override
     public void addListener(RelayListener... listener) {
         super.addListener(listener);
@@ -102,8 +101,8 @@ public abstract class RelayBase extends ObserveableComponentBase implements Rela
     }
 
     protected synchronized void notifyListeners(RelayStateChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((RelayListener)listener).onStateChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((RelayListener) listener).onStateChange(event);
         }
-    } 
+    }
 }

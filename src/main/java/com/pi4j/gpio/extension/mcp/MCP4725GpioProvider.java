@@ -37,36 +37,33 @@ import java.io.IOException;
 /**
  * <p>
  * This GPIO provider implements the MCP4725 12-Bit Digital-to-Analog Converter as native Pi4J GPIO pins.
- * More information about the board can be found here: 
+ * More information about the board can be found here:
  * http://http://www.adafruit.com/product/935
  * </p>
- * 
+ * <p>
  * <p>
  * The MCP4725 is connected via SPI connection to the Raspberry Pi and provides 1 GPIO analog output pin.
  * </p>
- * 
+ *
  * @author Christian Wehrli
- * 
  */
 public class MCP4725GpioProvider extends GpioProviderBase {
 
     public static final String NAME = "com.pi4j.gpio.extension.mcp.MCP4725GpioProvider";
     public static final String DESCRIPTION = "MCP4725 GPIO Provider";
-    private boolean i2cBusOwner = false;
-    private final I2CBus bus;
-    private final I2CDevice device;
-
     // =======================================================================
     // MCP4725 I2C ADDRESS
     // =======================================================================
     public static final int MCP4725_ADDRESS_1 = 0x62; // ADDRESS 1 : 0x62 (01100010) ADR -> GND (default)
     public static final int MCP4725_ADDRESS_2 = 0x63; // ADDRESS 2 : 0x63 (01100011) ADR -> VDD
-
     // =======================================================================
     // WRITE REGISTER
     // =======================================================================
     private static final int MCP4725_REG_WRITEDAC = 0x40; // Writes data to the DAC
     private static final int MCP4725_REG_WRITEDAC_EEPROM = 0x60; // not used yet... writes data to the DAC and the EEPROM (persisting the assigned value after reset)
+    private final I2CBus bus;
+    private final I2CDevice device;
+    private boolean i2cBusOwner = false;
 
     public MCP4725GpioProvider(int busNumber, int address) throws IOException {
         // create I2C communications bus instance
@@ -128,7 +125,7 @@ public class MCP4725GpioProvider extends GpioProviderBase {
             resetOutput();
 
             // if we are the owner of the I2C bus, then close it
-            if(i2cBusOwner) {
+            if (i2cBusOwner) {
                 // close the I2C bus communication
                 bus.close();
             }

@@ -32,13 +32,21 @@ import com.pi4j.component.Component;
 public interface Motor extends Component {
 
     void forward();
+
     void forward(long milleseconds);
+
     void reverse();
+
     void reverse(long milleseconds);
+
     void stop();
+
     MotorState getState();
+
     void setState(MotorState state);
+
     boolean isState(MotorState state);
+
     boolean isStopped();
 
 }

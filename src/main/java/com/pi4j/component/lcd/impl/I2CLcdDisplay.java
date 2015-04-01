@@ -27,7 +27,6 @@
  */
 
 
-
 package com.pi4j.component.lcd.impl;
 
 //~--- non-JDK imports --------------------------------------------------------
@@ -38,60 +37,57 @@ import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
 
-//~--- JDK imports ------------------------------------------------------------
-
 import java.util.BitSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+//~--- JDK imports ------------------------------------------------------------
 
 //~--- classes ----------------------------------------------------------------
 
 /**
  * Class description
  *
- *
- * @version        1.0, 08/29/13
- * @author         Andrew Chandler
+ * @author Andrew Chandler
+ * @version 1.0, 08/29/13
  */
 public class I2CLcdDisplay extends LCDBase implements LCD {
-    boolean             backLightDesiredState = true;
-    private boolean     backlight             = true;
-    boolean             rsFlag                = false;
-    boolean             eFlag                 = false;
-    private I2CDevice   dev                   = null;
-    private final int[] LCD_LINE_ADDRESS      = { 0x80, 0xC0, 0x94, 0xD4 };
-
-    /** posilame text */
+    private final int[] LCD_LINE_ADDRESS = {0x80, 0xC0, 0x94, 0xD4};
+    /**
+     * posilame text
+     */
     private final boolean LCD_CHR = true;
-
-    /** posilame command */
+    /**
+     * posilame command
+     */
     private final boolean LCD_CMD = false;
-
-    // private int           lcdHandle;
-    @SuppressWarnings("unused")
-    private int pulseData = 0;
-    int         backlightBit;
-    int         rsBit;
-    int         rwBit;
-    int         eBit;
-    int         d7Bit;
-    int         d6Bit;
-    int         d5Bit;
-    int         d4Bit;
-
     /**
      *
      */
     protected int rows;
-
     /**
      *
      */
     protected int columns;
+    boolean backLightDesiredState = true;
+    boolean rsFlag = false;
+    boolean eFlag = false;
+    int backlightBit;
+    int rsBit;
+    int rwBit;
+    int eBit;
+    int d7Bit;
+    int d6Bit;
+    int d5Bit;
+    int d4Bit;
+    private boolean backlight = true;
+    private I2CDevice dev = null;
+    // private int           lcdHandle;
+    @SuppressWarnings("unused")
+    private int pulseData = 0;
 
     /**
      * Constructs ...
-     *
      *
      * @param rows
      * @param columns
@@ -105,30 +101,40 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
      * @param d6
      * @param d5
      * @param d4
-     *
      * @throws Exception
      */
     public I2CLcdDisplay(int rows, int columns, int i2cBus, int i2cAddress, int backlightBit, int rsBit, int rwBit,
                          int eBit, int d7, int d6, int d5, int d4)
             throws Exception {
-        this.rows    = rows;
+        this.rows = rows;
         this.columns = columns;
 
         // int bits[] = { d7, d6, d5, d4 };
-        this.d7Bit        = d7;
-        this.d6Bit        = d6;
-        this.d5Bit        = d5;
-        this.d4Bit        = d4;
+        this.d7Bit = d7;
+        this.d6Bit = d6;
+        this.d5Bit = d5;
+        this.d4Bit = d4;
         this.backlightBit = backlightBit;
-        this.rsBit        = rsBit;
-        this.eBit         = eBit;
-        this.rows         = rows;
-        this.columns      = columns;
+        this.rsBit = rsBit;
+        this.eBit = eBit;
+        this.rows = rows;
+        this.columns = columns;
 
         I2CBus bus = I2CFactory.getInstance(i2cBus);
 
         dev = bus.getDevice(i2cAddress);
         this.init();
+    }
+
+    public static BitSet fromByte(byte b) {
+        BitSet bits = new BitSet(8);
+
+        for (int i = 0; i < 8; i++) {
+            bits.set(i, (b & 1) == 1);
+            b >>= 1;
+        }
+
+        return bits;
     }
 
     /**
@@ -144,7 +150,6 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
     }
 
     /**
-     *
      * @param data
      */
     @Override
@@ -157,7 +162,6 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
     }
 
     /**
-     *
      * @param data
      */
     @Override
@@ -172,9 +176,8 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
     }
 
     /**
-     *
      * @param val
-     * @param type   true = display data, false = LCD cmd
+     * @param type true = display data, false = LCD cmd
      * @throws Exception
      */
     public void lcd_byte(int val, boolean type) throws Exception {
@@ -197,17 +200,6 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
         } catch (Exception ex) {
             Logger.getLogger(I2CLcdDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public static BitSet fromByte(byte b) {
-        BitSet bits = new BitSet(8);
-
-        for (int i = 0; i < 8; i++) {
-            bits.set(i, (b & 1) == 1);
-            b >>= 1;
-        }
-
-        return bits;
     }
 
     private void init() throws Exception {
@@ -233,23 +225,23 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
     }    // private voi
 
     private void write(int incomingData) throws Exception {
-        int    tmpData = incomingData;
-        BitSet bits    = fromByte((byte) tmpData);
-        byte   out     = (byte) ((bits.get(3)
-                                  ? 1 << d7Bit
-                                  : 0 << d7Bit) | (bits.get(2)
+        int tmpData = incomingData;
+        BitSet bits = fromByte((byte) tmpData);
+        byte out = (byte) ((bits.get(3)
+                ? 1 << d7Bit
+                : 0 << d7Bit) | (bits.get(2)
                 ? 1 << d6Bit
                 : 0 << d6Bit) | (bits.get(1)
-                                 ? 1 << d5Bit
-                                 : 0 << d5Bit) | (bits.get(0)
+                ? 1 << d5Bit
+                : 0 << d5Bit) | (bits.get(0)
                 ? 1 << d4Bit
                 : 0 << d4Bit) | (isBacklight()
-                                 ? 1 << backlightBit
-                                 : 0 << backlightBit) | (rsFlag
+                ? 1 << backlightBit
+                : 0 << backlightBit) | (rsFlag
                 ? 1 << rsBit
                 : 0 << rsBit) | (eFlag
-                                 ? 1 << eBit
-                                 : 0 << eBit));
+                ? 1 << eBit
+                : 0 << eBit));
 
         // ReMap - Default case where everything just works is
 
@@ -279,7 +271,6 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -288,7 +279,6 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -309,7 +299,6 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
     }
 
     /**
-     *
      * @param row
      * @param column
      */
@@ -326,13 +315,6 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
         }
     }
 
-    /**
-     * @param backlight the backlight to set
-     */
-    public void setBacklight(boolean backlight) {
-        this.backlight = backlight;
-    }
-
     private void setRS(boolean val) {
         rsFlag = val;
     }
@@ -346,5 +328,12 @@ public class I2CLcdDisplay extends LCDBase implements LCD {
      */
     public boolean isBacklight() {
         return backlight;
+    }
+
+    /**
+     * @param backlight the backlight to set
+     */
+    public void setBacklight(boolean backlight) {
+        this.backlight = backlight;
     }
 }

@@ -38,14 +38,14 @@ public class SensorStateChangeEvent extends EventObject {
 
     public SensorStateChangeEvent(Sensor sensor, SensorState oldState, SensorState newState) {
         super(sensor);
-        this.oldState = oldState;        
+        this.oldState = oldState;
         this.newState = newState;
     }
 
     public Sensor getSensor() {
-        return (Sensor)getSource();
+        return (Sensor) getSource();
     }
-    
+
     public SensorState getOldState() {
         return oldState;
     }

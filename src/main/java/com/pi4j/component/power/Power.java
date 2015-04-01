@@ -31,14 +31,20 @@ import com.pi4j.component.ObserveableComponent;
 
 
 public interface Power extends ObserveableComponent {
-    
+
     void on();
+
     void off();
+
     boolean isOn();
+
     boolean isOff();
+
     PowerState getState();
+
     void setState(PowerState state);
-    
+
     void addListener(PowerListener... listener);
+
     void removeListener(PowerListener... listener);
 }

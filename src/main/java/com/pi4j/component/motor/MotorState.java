@@ -29,9 +29,9 @@ package com.pi4j.component.motor;
 
 
 public enum MotorState {
-    
+
     STOP,
     FORWARD,
     REVERSE;
-    
+
 }

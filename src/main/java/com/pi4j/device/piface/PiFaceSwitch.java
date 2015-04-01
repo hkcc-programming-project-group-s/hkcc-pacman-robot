@@ -33,14 +33,14 @@ public enum PiFaceSwitch {
     S2(1),
     S3(2),
     S4(3);
-    
+
     private int index = -1;
-    
-    private PiFaceSwitch(int index){
+
+    private PiFaceSwitch(int index) {
         this.index = index;
     }
-    
-    public int getIndex(){
+
+    public int getIndex() {
         return index;
     }
 }

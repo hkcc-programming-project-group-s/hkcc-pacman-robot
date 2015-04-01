@@ -28,7 +28,7 @@ package com.pi4j.component.lcd;
  */
 
 
-public enum LCDTextAlignment  {
+public enum LCDTextAlignment {
     ALIGN_CENTER,
     ALIGN_LEFT,
     ALIGN_RIGHT

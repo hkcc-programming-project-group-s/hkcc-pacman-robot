@@ -34,78 +34,78 @@ import java.io.IOException;
 
 /**
  * Pi4J-device for MCP4452.
- * 
+ *
  * @author <a href="http://raspelikan.blogspot.co.at">Raspelikan</a>
  */
 public class MCP4452 extends MicrochipPotentiometerBase implements MicrochipPotentiometer {
 
-	private static final MicrochipPotentiometerChannel[] supportedChannels = new MicrochipPotentiometerChannel[] {
-		MicrochipPotentiometerChannel.A, MicrochipPotentiometerChannel.B, MicrochipPotentiometerChannel.C, MicrochipPotentiometerChannel.D
-	};
-	
-	/**
-	 * Builds an instance which is ready to use.
-	 * 
-	 * @param i2cBus The Pi4J-I2CBus to which the device is connected to
-	 * @param pinA0 Whether the device's address pin A0 is high (true) or low (false)
-	 * @param initialValue Initial value of wiper
-	 * @throws IOException Thrown if communication fails or device returned a malformed result
-	 */
-	public MCP4452(final I2CBus i2cBus, final boolean pinA0,
-                   final int initialValue) throws IOException {
-		
-		super(i2cBus, pinA0, PIN_NOT_AVAILABLE, PIN_NOT_AVAILABLE,
-				MicrochipPotentiometerChannel.A, MicrochipPotentiometerNonVolatileMode.VOLATILE_ONLY, initialValue);
-		
-	}
-	
-	/**
-	 * @return Whether device is capable of non volatile wipers (false for MCP4452)
-	 */
-	@Override
-	public boolean isCapableOfNonVolatileWiper() {
-		
-		return false;
-		
-	}
-	
-	/**
-	 * @return The maximal value at which a wiper can be (256 for MCP4452)
-	 */
-	@Override
-	public int getMaxValue() {
-		
-		return maxValue();
-		
-	}
-	
-	/**
-	 * @return The maximal value at which a wiper can be (256 for MCP4452)
-	 */
-	public static int maxValue() {
-		
-		return 256;
-		
-	}
+    private static final MicrochipPotentiometerChannel[] supportedChannels = new MicrochipPotentiometerChannel[]{
+            MicrochipPotentiometerChannel.A, MicrochipPotentiometerChannel.B, MicrochipPotentiometerChannel.C, MicrochipPotentiometerChannel.D
+    };
 
-	/**
-	 * @return Whether this device is a potentiometer or a rheostat (true for MCP4452)
-	 */
-	@Override
-	public boolean isRheostat() {
-		
-		return true;
-		
-	}
-	
-	/**
-	 * @return All channels supported by the underlying device (A, B, C and D for MCP4452)
-	 */
-	@Override
-	public MicrochipPotentiometerChannel[] getSupportedChannelsByDevice() {
-		
-		return supportedChannels;
-		
-	}
-	
+    /**
+     * Builds an instance which is ready to use.
+     *
+     * @param i2cBus       The Pi4J-I2CBus to which the device is connected to
+     * @param pinA0        Whether the device's address pin A0 is high (true) or low (false)
+     * @param initialValue Initial value of wiper
+     * @throws IOException Thrown if communication fails or device returned a malformed result
+     */
+    public MCP4452(final I2CBus i2cBus, final boolean pinA0,
+                   final int initialValue) throws IOException {
+
+        super(i2cBus, pinA0, PIN_NOT_AVAILABLE, PIN_NOT_AVAILABLE,
+                MicrochipPotentiometerChannel.A, MicrochipPotentiometerNonVolatileMode.VOLATILE_ONLY, initialValue);
+
+    }
+
+    /**
+     * @return The maximal value at which a wiper can be (256 for MCP4452)
+     */
+    public static int maxValue() {
+
+        return 256;
+
+    }
+
+    /**
+     * @return Whether device is capable of non volatile wipers (false for MCP4452)
+     */
+    @Override
+    public boolean isCapableOfNonVolatileWiper() {
+
+        return false;
+
+    }
+
+    /**
+     * @return The maximal value at which a wiper can be (256 for MCP4452)
+     */
+    @Override
+    public int getMaxValue() {
+
+        return maxValue();
+
+    }
+
+    /**
+     * @return Whether this device is a potentiometer or a rheostat (true for MCP4452)
+     */
+    @Override
+    public boolean isRheostat() {
+
+        return true;
+
+    }
+
+    /**
+     * @return All channels supported by the underlying device (A, B, C and D for MCP4452)
+     */
+    @Override
+    public MicrochipPotentiometerChannel[] getSupportedChannelsByDevice() {
+
+        return supportedChannels;
+
+    }
+
 }

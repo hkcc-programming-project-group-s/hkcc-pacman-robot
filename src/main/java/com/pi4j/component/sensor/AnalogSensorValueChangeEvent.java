@@ -38,14 +38,14 @@ public class AnalogSensorValueChangeEvent extends EventObject {
 
     public AnalogSensorValueChangeEvent(AnalogSensor sensor, double oldValue, double newValue) {
         super(sensor);
-        this.oldValue = oldValue;        
+        this.oldValue = oldValue;
         this.newValue = newValue;
     }
 
     public AnalogSensor getSensor() {
-        return (AnalogSensor)getSource();
+        return (AnalogSensor) getSource();
     }
-    
+
     public double getOldValue() {
         return oldValue;
     }

@@ -35,11 +35,10 @@ import com.pi4j.io.gpio.event.GpioPinAnalogValueChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerAnalog;
 
 public class DistanceSensorComponent extends DistanceSensorBase {
-    
+
+    private final DistanceSensor sensor = this;
     // internal class members
     private GpioPinAnalogInput pin = null;
-    private final DistanceSensor sensor = this;
-    
     // create internal pin listener
     private GpioPinListenerAnalog pinListener = new GpioPinListenerAnalog() {
 
@@ -52,19 +51,18 @@ public class DistanceSensorComponent extends DistanceSensorBase {
 
     /**
      * default constructor
-     *  
+     *
      * @param pin analog input pin
      */
     public DistanceSensorComponent(GpioPinAnalogInput pin) {
         this.pin = pin;
-        
+
         // add pin listener
-        this.pin.addListener(pinListener); 
+        this.pin.addListener(pinListener);
     }
 
     @Override
-    public double getValue()
-    {
+    public double getValue() {
         return pin.getValue();
     }
 }

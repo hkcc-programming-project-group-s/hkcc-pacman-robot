@@ -26,15 +26,16 @@ package com.pi4j.gpio.extension.pca;
  * limitations under the License.
  * #L%
  */
-import java.util.EnumSet;
 
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.impl.PinImpl;
 
+import java.util.EnumSet;
+
 /**
- * Represents all of the 16 PWM channels provided by the PCA9685 I2C 12-bit PWM LED/Servo controller. 
- * 
+ * Represents all of the 16 PWM channels provided by the PCA9685 I2C 12-bit PWM LED/Servo controller.
+ *
  * @author Christian Wehrli
  * @see PCA9685GpioProvider
  */

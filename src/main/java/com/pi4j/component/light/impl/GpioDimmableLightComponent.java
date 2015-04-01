@@ -34,15 +34,15 @@ import com.pi4j.component.light.LightStateChangeEvent;
 import com.pi4j.io.gpio.GpioPinPwmOutput;
 
 public class GpioDimmableLightComponent extends DimmableLightBase {
-    
+
     // internal class members
     GpioPinPwmOutput pin = null;
     int min = 0;
     int max = 0;
-    
+
     /**
-     * default constructor  
-     *  
+     * default constructor
+     *
      * @param pin GPIO digital output pin
      * @param min PWM pin value to set when LIGHT is fully ON
      * @param max PWM pin value to set when LIGHT is fully OFF
@@ -54,36 +54,32 @@ public class GpioDimmableLightComponent extends DimmableLightBase {
     }
 
     @Override
-    public int getMinLevel()
-    {
-        return min; 
+    public int getMinLevel() {
+        return min;
     }
 
     @Override
-    public int getMaxLevel()
-    {
+    public int getMaxLevel() {
         return max;
     }
 
     @Override
-    public int getLevel()
-    {
+    public int getLevel() {
         return pin.getPwm();
     }
 
     @Override
-    public void setLevel(int level)
-    {
+    public void setLevel(int level) {
         boolean isOnBeforeChange = isOn();
 
         // turn the light fully OFF by setting the PWM GPIO to min value
         pin.setPwm(level);
-        
+
         boolean isOnAfterChange = isOn();
 
         // notify any power state change listeners
         notifyListeners(new LightLevelChangeEvent(this, level));
-        if(isOnBeforeChange != isOnAfterChange)
+        if (isOnBeforeChange != isOnAfterChange)
             notifyListeners(new LightStateChangeEvent(this, isOnAfterChange));
     }
 }

@@ -32,7 +32,7 @@ import com.pi4j.component.ObserveableComponentBase;
 
 
 public abstract class SensorBase extends ObserveableComponentBase implements Sensor {
-    
+
     @Override
     public boolean isOpen() {
         return (getState() == SensorState.OPEN);
@@ -45,12 +45,12 @@ public abstract class SensorBase extends ObserveableComponentBase implements Sen
 
     @Override
     public abstract SensorState getState();
-    
+
     @Override
     public boolean isState(SensorState state) {
         return getState().equals(state);
     }
-    
+
     @Override
     public void addListener(SensorListener... listener) {
         super.addListener(listener);
@@ -62,8 +62,8 @@ public abstract class SensorBase extends ObserveableComponentBase implements Sen
     }
 
     protected synchronized void notifyListeners(SensorStateChangeEvent event) {
-        for(ComponentListener listener : super.listeners) {
-            ((SensorListener)listener).onStateChange(event);
+        for (ComponentListener listener : super.listeners) {
+            ((SensorListener) listener).onStateChange(event);
         }
-    }    
+    }
 }

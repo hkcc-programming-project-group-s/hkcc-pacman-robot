@@ -31,12 +31,16 @@ package com.pi4j.component.light;
 import com.pi4j.component.ObserveableComponent;
 
 public interface Light extends ObserveableComponent {
-    
+
     void on();
+
     void off();
+
     boolean isOn();
+
     boolean isOff();
-    
+
     void addListener(LightListener... listener);
-    void removeListener(LightListener... listener);      
+
+    void removeListener(LightListener... listener);
 }

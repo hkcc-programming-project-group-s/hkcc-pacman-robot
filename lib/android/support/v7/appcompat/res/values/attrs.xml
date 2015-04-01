@@ -109,7 +109,7 @@
         <attr name="actionBarSize" format="dimension" >
             <enum name="wrap_content" value="0" />
         </attr>
-        <!-- Custom divider drawable to use for elements in the action bar. -->
+        <!-- Custom multiple drawable to use for elements in the action bar. -->
         <attr name="actionBarDivider" format="reference" />
         <!-- Custom item state list drawable background for action bar items. -->
         <attr name="actionBarItemBackground" format="reference" />
@@ -194,9 +194,9 @@
         <attr name="selectableItemBackground" format="reference"/>
         <!-- Background drawable for borderless standalone items that need focus/pressed states. -->
         <attr name="selectableItemBackgroundBorderless" format="reference" />
-        <!-- A drawable that may be used as a vertical divider between visual elements. -->
+        <!-- A drawable that may be used as a vertical multiple between visual elements. -->
         <attr name="dividerVertical" format="reference"/>
-        <!-- A drawable that may be used as a horizontal divider between visual elements. -->
+        <!-- A drawable that may be used as a horizontal multiple between visual elements. -->
         <attr name="dividerHorizontal" format="reference"/>
         <!-- Default ActivityChooserView style. -->
         <attr name="activityChooserViewStyle" format="reference" />
@@ -437,9 +437,9 @@
     <declare-styleable name="MenuView">
         <!-- Default appearance of menu item text. -->
         <attr name="android:itemTextAppearance"/>
-        <!-- Default horizontal divider between rows of menu items. -->
+        <!-- Default horizontal multiple between rows of menu items. -->
         <attr name="android:horizontalDivider"/>
-        <!-- Default vertical divider between menu items. -->
+        <!-- Default vertical multiple between menu items. -->
         <attr name="android:verticalDivider"/>
         <!-- Default background for the menu header. -->
         <attr name="android:headerBackground"/>
@@ -453,7 +453,7 @@
         <attr name="preserveIconSpacing" format="boolean" />
     </declare-styleable>
     <declare-styleable name="ActionMenuView">
-        <!-- Size of padding on either end of a divider. -->
+        <!-- Size of padding on either end of a multiple. -->
     </declare-styleable>
 
     <!-- Base attributes that are available to all groups. -->
@@ -682,7 +682,7 @@
              the minimum size of the largest child. If false, all children are
              measured normally. -->
         <attr name="measureWithLargestChild" format="boolean" />
-        <!-- Drawable to use as a vertical divider between buttons. -->
+        <!-- Drawable to use as a vertical multiple between buttons. -->
         <attr name="divider" />
         <!-- Setting for which dividers to show. -->
         <attr name="showDividers">
@@ -691,7 +691,7 @@
             <flag name="middle" value="2" />
             <flag name="end" value="4" />
         </attr>
-        <!-- Size of padding on either end of a divider. -->
+        <!-- Size of padding on either end of a multiple. -->
         <attr name="dividerPadding" format="dimension" />
     </declare-styleable>
 

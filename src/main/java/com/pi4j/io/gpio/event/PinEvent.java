@@ -28,9 +28,9 @@ package com.pi4j.io.gpio.event;
  */
 
 
-import java.util.EventObject;
-
 import com.pi4j.io.gpio.Pin;
+
+import java.util.EventObject;
 
 
 /**
@@ -47,7 +47,7 @@ public class PinEvent extends EventObject {
 
     /**
      * Default event constructor
-     * 
+     *
      * @param obj Ignore this parameter
      * @param pin GPIO pin number (not header pin number; not wiringPi pin number)
      */
@@ -59,13 +59,13 @@ public class PinEvent extends EventObject {
 
     /**
      * Get the pin number that changed and raised this event.
-     * 
+     *
      * @return GPIO pin number (not header pin number; not wiringPi pin number)
      */
     public Pin getPin() {
         return pin;
     }
-    
+
     public PinEventType getEventType() {
         return type;
     }

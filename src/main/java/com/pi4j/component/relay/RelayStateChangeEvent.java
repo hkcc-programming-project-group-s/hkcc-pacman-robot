@@ -38,14 +38,14 @@ public class RelayStateChangeEvent extends EventObject {
 
     public RelayStateChangeEvent(Relay relay, RelayState oldState, RelayState newState) {
         super(relay);
-        this.oldState = oldState;        
+        this.oldState = oldState;
         this.newState = newState;
     }
 
     public Relay getRelay() {
-        return (Relay)getSource();
+        return (Relay) getSource();
     }
-    
+
     public RelayState getOldState() {
         return oldState;
     }

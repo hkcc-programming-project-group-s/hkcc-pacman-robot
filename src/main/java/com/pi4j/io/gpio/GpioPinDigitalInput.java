@@ -63,7 +63,7 @@ public interface GpioPinDigitalInput extends GpioPinDigital, GpioPinInput {
      * Sets the debounce delay interval (in milliseconds) for the specified pin state.
      *
      * @param debounce The debounce delay interval in milliseconds.
-     * @param state The pin states to apply the debounce delay interval to.
+     * @param state    The pin states to apply the debounce delay interval to.
      */
-    void setDebounce(int debounce, PinState ... state);
+    void setDebounce(int debounce, PinState... state);
 }

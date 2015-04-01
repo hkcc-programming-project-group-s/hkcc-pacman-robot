@@ -43,33 +43,33 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class GpioEventMonitorExecutorImpl implements PinListener {
-    
-    private final GpioPinInput pin;
+
     private static ExecutorService executor;
     private static ScheduledExecutorService scheduledExecutor;
+    private final GpioPinInput pin;
     private ScheduledFuture debounceFuture = null;
-    
+
     public GpioEventMonitorExecutorImpl(GpioPinInput pin) {
-        this.pin = pin;        
+        this.pin = pin;
         executor = GpioFactory.getExecutorServiceFactory().newSingleThreadExecutorService();
         scheduledExecutor = GpioFactory.getExecutorServiceFactory().getScheduledExecutorService();
     }
-    
+
     @Override
     public void handlePinEvent(PinEvent event) {
 
         // for digital input pins, we need to enforce pin debounce event suppression
-        if(pin instanceof GpioPinDigitalInput && event.getEventType() == PinEventType.DIGITAL_STATE_CHANGE){
+        if (pin instanceof GpioPinDigitalInput && event.getEventType() == PinEventType.DIGITAL_STATE_CHANGE) {
 
             // cast to the digital input pin interface, get the current state from
             // the event, and determine the debounce interval for this pin state
-            GpioPinDigitalInput dip = (GpioPinDigitalInput)pin;
+            GpioPinDigitalInput dip = (GpioPinDigitalInput) pin;
             PinState state = ((PinDigitalStateChangeEvent) event).getState();
             int pinDebounceForState = dip.getDebounce(state);
 
             // if the pin has a debounce delay configured for this pin state,
             // then we will need to use the pin debounce logic to defer pin events
-            if(pinDebounceForState > 0) {
+            if (pinDebounceForState > 0) {
                 // if no existing debounce future task exists or no future task is still busy, then
                 // create a new debounce future task and schedule it based on the debounce
                 // interval defined for the current pin state

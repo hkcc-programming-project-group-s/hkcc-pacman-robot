@@ -31,29 +31,29 @@ package com.pi4j.component.potentiometer.microchip;
 /**
  * The device-status concerning the channel this
  * instance of MCP45XX_MCP46XX_Potentiometer is configured for.
- * 
- * @see com.pi4j.component.potentiometer.microchip.impl.MicrochipPotentiometerBase
+ *
  * @author <a href="http://raspelikan.blogspot.co.at">Raspelikan</a>
+ * @see com.pi4j.component.potentiometer.microchip.impl.MicrochipPotentiometerBase
  */
 public interface MicrochipPotentiometerDeviceStatus {
-	
-	/**
-	 * @return Whether the device is writing to EEPROM at the moment
-	 */
-	public boolean isEepromWriteActive();
 
-	/**
-	 * @return Whether EEPROM is write-protected
-	 */
-	public boolean isEepromWriteProtected();
-	
-	/**
-	 * @return The channel the wiper-lock-active status is for
-	 */
-	public MicrochipPotentiometerChannel getWiperLockChannel();
+    /**
+     * @return Whether the device is writing to EEPROM at the moment
+     */
+    public boolean isEepromWriteActive();
 
-	/**
-	 * @return Whether the wiper's lock is active
-	 */
-	public boolean isWiperLockActive();
+    /**
+     * @return Whether EEPROM is write-protected
+     */
+    public boolean isEepromWriteProtected();
+
+    /**
+     * @return The channel the wiper-lock-active status is for
+     */
+    public MicrochipPotentiometerChannel getWiperLockChannel();
+
+    /**
+     * @return Whether the wiper's lock is active
+     */
+    public boolean isWiperLockActive();
 }

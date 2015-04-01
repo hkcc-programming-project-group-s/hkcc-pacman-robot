@@ -27,27 +27,22 @@ package com.pi4j.component.servo.impl;
  * #L%
  */
 
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.pi4j.component.ComponentBase;
 import com.pi4j.component.servo.Servo;
 import com.pi4j.component.servo.ServoDriver;
 import com.pi4j.io.gpio.exception.ValidationException;
+
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Christian Wehrli
  */
 public class GenericServo extends ComponentBase implements Servo {
 
-    public enum Orientation {
-        LEFT, RIGHT
-    }
-        
     public static final float PWM_MIN = 900; // in micro seconds
     public static final float PWM_NEUTRAL = 1500; // in micro seconds
     public static final float PWM_MAX = 2100; // in micro seconds
-
     private ServoDriver servoDriver;
     private float position;
     private int pwmDuration;
@@ -55,11 +50,10 @@ public class GenericServo extends ComponentBase implements Servo {
     private float pwmDurationNeutral = -1;
     private float pwmDurationEndPointRight = -1;
     private boolean isReverse = false;
-
     public GenericServo(ServoDriver servoDriver, String name) {
         this(servoDriver, name, null);
     }
-    
+
     public GenericServo(ServoDriver servoDriver, String name, Map<String, String> properties) {
         setServoDriver(servoDriver);
         setName(name);
@@ -72,25 +66,24 @@ public class GenericServo extends ComponentBase implements Servo {
         }
     }
 
-    protected void setServoDriver(ServoDriver servoDriver) {
-        this.servoDriver = servoDriver;
-    }
-
     public ServoDriver getServoDriver() {
         return servoDriver;
     }
 
+    protected void setServoDriver(ServoDriver servoDriver) {
+        this.servoDriver = servoDriver;
+    }
+
+    @Override
+    public float getPosition() {
+        return position;
+    }
 
     @Override
     public void setPosition(float position) {
         this.position = validatePosition(position);
         pwmDuration = calculatePwmDuration(position);
         servoDriver.setServoPulseWidth(pwmDuration);
-    }
-
-    @Override
-    public float getPosition() {
-        return position;
     }
 
     protected int getPwmDuration() {
@@ -122,15 +115,15 @@ public class GenericServo extends ComponentBase implements Servo {
         }
         float endPointValue = Float.parseFloat(getProperty(propertyName, PROP_END_POINT_DEFAULT));
         validateEndPoint(endPointValue, propertyName);
-        
+
         float calculatedPwmDuration;
         if (orientation == Orientation.LEFT) {
             calculatedPwmDuration = calculateNeutralPwmDuration() - ((PWM_MAX - PWM_NEUTRAL) / 150 * endPointValue);
         } else {
             calculatedPwmDuration = calculateNeutralPwmDuration() + ((PWM_MAX - PWM_NEUTRAL) / 150 * endPointValue);
         }
-        
-        
+
+
         if (calculatedPwmDuration < PWM_MIN) {
             result = PWM_MIN;
         } else if (calculatedPwmDuration > PWM_MAX) {
@@ -160,13 +153,13 @@ public class GenericServo extends ComponentBase implements Servo {
             position = -position;
         }
         if (position < 0) {
-            result = (int)(pwmDurationNeutral + (pwmDurationNeutral - pwmDurationEndPointLeft) * position / 100.00);
+            result = (int) (pwmDurationNeutral + (pwmDurationNeutral - pwmDurationEndPointLeft) * position / 100.00);
         } else if (position > 0) {
-            result = (int)(pwmDurationNeutral + (pwmDurationEndPointRight - pwmDurationNeutral) * position / 100.00);
+            result = (int) (pwmDurationNeutral + (pwmDurationEndPointRight - pwmDurationNeutral) * position / 100.00);
         } else {
-            result = (int)pwmDurationNeutral;
+            result = (int) pwmDurationNeutral;
         }
-        return (int)((result * servoDriver.getServoPulseResolution()) / 1000);
+        return (int) ((result * servoDriver.getServoPulseResolution()) / 1000);
     }
 
     @Override
@@ -201,5 +194,9 @@ public class GenericServo extends ComponentBase implements Servo {
             throw new ValidationException("Position [" + position + "] must be between " + Servo.POS_MAX_LEFT + "(%) and +" + Servo.POS_MAX_RIGHT + "(%) but is [" + position + "]");
         }
         return position;
+    }
+
+    public enum Orientation {
+        LEFT, RIGHT
     }
 }

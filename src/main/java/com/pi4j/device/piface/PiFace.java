@@ -35,7 +35,7 @@ import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 
 public interface PiFace extends Device {
-    
+
     public static final byte ADDRESS_0 = 0b01000000; // 0x40 [0100 0000]
     public static final byte ADDRESS_1 = 0b01000010; // 0x42 [0100 0010]
     public static final byte ADDRESS_2 = 0b01000100; // 0x44 [0100 0100]
@@ -43,7 +43,7 @@ public interface PiFace extends Device {
 
     public static final byte DEFAULT_ADDRESS = ADDRESS_0;
 
-    
+
     /**
      * @return the inputPins
      */
@@ -53,7 +53,7 @@ public interface PiFace extends Device {
      * @return an inputPin
      */
     GpioPinDigitalInput getInputPin(int index);
-    
+
     /**
      * @return the outputPins
      */
@@ -63,7 +63,7 @@ public interface PiFace extends Device {
      * @return an outputPin
      */
     GpioPinDigitalOutput getOutputPin(int index);
-    
+
     /**
      * @return the relays
      */
@@ -78,7 +78,7 @@ public interface PiFace extends Device {
      * @return a relay
      */
     Relay getRelay(PiFaceRelay relay);
-    
+
     /**
      * @return the switches
      */
@@ -93,17 +93,17 @@ public interface PiFace extends Device {
      * @return a switch
      */
     Switch getSwitch(PiFaceSwitch switchValue);
-    
+
     /**
      * @return the leds
      */
     LED[] getLeds();
-    
+
     /**
      * @return a led
      */
     LED getLed(int index);
-    
+
     /**
      * @return a led
      */

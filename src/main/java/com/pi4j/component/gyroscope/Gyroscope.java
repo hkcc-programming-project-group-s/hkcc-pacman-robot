@@ -30,7 +30,7 @@ import java.io.IOException;
  */
 
 public interface Gyroscope {
-    
+
     int READ_NOT_TRIGGERED = 0;
     int GET_ANGLE_TRIGGER_READ = 1;
     int GET_ANGULAR_VELOCITY_TRIGGER_READ = 2;
@@ -39,16 +39,19 @@ public interface Gyroscope {
     float getAngularVelocity() throws IOException;
 
     void recalibrateOffset() throws IOException;
-    
+
     void setReadTrigger(int readTrigger);
-    
-    void setRawValue(int value);
+
     int getRawValue() throws IOException;
-    
-    void setOffset(int offset);
+
+    void setRawValue(int value);
+
     int getOffset();
 
-    void setAngle(float angle);
+    void setOffset(int offset);
+
     float getAngle() throws IOException;
+
+    void setAngle(float angle);
 
 }

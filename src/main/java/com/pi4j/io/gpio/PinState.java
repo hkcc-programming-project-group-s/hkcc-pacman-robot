@@ -38,8 +38,8 @@ import java.util.EnumSet;
 @SuppressWarnings("unused")
 public enum PinState {
 
-    LOW(0, "LOW"), 
-    HIGH(1, "HIGH"); 
+    LOW(0, "LOW"),
+    HIGH(1, "HIGH");
 
     private final int value;
     private final String name;
@@ -49,27 +49,6 @@ public enum PinState {
         this.name = name;
     }
 
-    public boolean isHigh() {
-        return (this == HIGH);
-    }
-
-    public boolean isLow() {
-        return (this == LOW);
-    }
-    
-    public int getValue() {
-        return value;
-    }
-
-    public String getName() {
-        return name;
-    }
-    
-    @Override
-    public String toString() {
-        return name;        
-    }    
-    
     public static PinState getState(int state) {
         for (PinState item : PinState.values()) {
             if (item.getValue() == state) {
@@ -82,16 +61,37 @@ public enum PinState {
     public static PinState getInverseState(PinState state) {
         return (state == HIGH ? LOW : HIGH);
     }
-    
+
     public static PinState getState(boolean state) {
         return (state ? PinState.HIGH : PinState.LOW);
     }
 
     public static PinState[] allStates() {
         return PinState.values();
-    }    
-    
+    }
+
     public static EnumSet<PinState> all() {
         return EnumSet.of(PinState.HIGH, PinState.LOW);
-    }        
+    }
+
+    public boolean isHigh() {
+        return (this == HIGH);
+    }
+
+    public boolean isLow() {
+        return (this == LOW);
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

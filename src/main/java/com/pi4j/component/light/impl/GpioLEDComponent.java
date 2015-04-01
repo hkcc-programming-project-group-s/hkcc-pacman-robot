@@ -38,7 +38,7 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import java.util.concurrent.Future;
 
 public class GpioLEDComponent extends LEDBase {
-    
+
     // internal class members
     GpioPinDigitalOutput pin = null;
     PinState onState = PinState.HIGH;
@@ -48,22 +48,22 @@ public class GpioLEDComponent extends LEDBase {
     private GpioPinListenerDigital listener = new GpioPinListenerDigital() {
         @Override
         public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-        // notify any state change listeners
-        if(event.getState() == onState){
-            notifyListeners(new LightStateChangeEvent(GpioLEDComponent.this, true));
-        }
-        if(event.getState() == offState){
-            notifyListeners(new LightStateChangeEvent(GpioLEDComponent.this, false));
-        }
+            // notify any state change listeners
+            if (event.getState() == onState) {
+                notifyListeners(new LightStateChangeEvent(GpioLEDComponent.this, true));
+            }
+            if (event.getState() == offState) {
+                notifyListeners(new LightStateChangeEvent(GpioLEDComponent.this, false));
+            }
         }
     };
 
     /**
-     * using this constructor requires that the consumer 
-     *  define the LIGHT ON and LIGHT OFF pin states 
-     *  
-     * @param pin GPIO digital output pin
-     * @param onState pin state to set when power is ON
+     * using this constructor requires that the consumer
+     * define the LIGHT ON and LIGHT OFF pin states
+     *
+     * @param pin      GPIO digital output pin
+     * @param onState  pin state to set when power is ON
      * @param offState pin state to set when power is OFF
      */
     public GpioLEDComponent(GpioPinDigitalOutput pin, PinState onState, PinState offState) {
@@ -74,19 +74,19 @@ public class GpioLEDComponent extends LEDBase {
 
     /**
      * default constructor; using this constructor assumes that:
-     *  (1) a pin state of HIGH is LIGHT ON
-     *  (2) a pin state of LOW  is LIGHT OFF
-     *  
+     * (1) a pin state of HIGH is LIGHT ON
+     * (2) a pin state of LOW  is LIGHT OFF
+     *
      * @param pin GPIO digital output pin
      */
     public GpioLEDComponent(GpioPinDigitalOutput pin) {
         this.pin = pin;
         this.pin.addListener(listener);
     }
-    
+
     /**
      * Set the current GPIO digital output pin state
-     * based for LIGHT ON 
+     * based for LIGHT ON
      */
     @Override
     public void on() {
@@ -96,7 +96,7 @@ public class GpioLEDComponent extends LEDBase {
 
     /**
      * Set the current GPIO digital output pin state
-     * based for LIGHT OFF 
+     * based for LIGHT OFF
      */
     @Override
     public void off() {
@@ -106,33 +106,33 @@ public class GpioLEDComponent extends LEDBase {
 
 
     /**
-     * Return the current power state based on the  
+     * Return the current power state based on the
      * GPIO digital output pin state.
-     *  
-     * @return boolean is light on 
+     *
+     * @return boolean is light on
      */
     @Override
     public boolean isOn() {
         return pin.isState(onState);
     }
-    
+
     @Override
-    public Future<?> blink(long delay){
+    public Future<?> blink(long delay) {
         return pin.blink(delay, onState);
     }
-    
+
     @Override
-    public Future<?> blink(long delay, long duration){
+    public Future<?> blink(long delay, long duration) {
         return pin.blink(delay, duration, onState);
     }
-    
+
     @Override
-    public Future<?> pulse(long duration){
+    public Future<?> pulse(long duration) {
         return pin.pulse(duration, onState);
     }
-    
+
     @Override
-    public Future<?> pulse(long duration, boolean blocking){
+    public Future<?> pulse(long duration, boolean blocking) {
         return pin.pulse(duration, onState, blocking);
     }
 }

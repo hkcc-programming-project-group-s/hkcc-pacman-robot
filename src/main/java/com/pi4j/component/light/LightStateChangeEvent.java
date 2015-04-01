@@ -37,13 +37,13 @@ public class LightStateChangeEvent extends EventObject {
 
     public LightStateChangeEvent(Light light, boolean isOn) {
         super(light);
-        this.isOn = isOn;        
+        this.isOn = isOn;
     }
 
     public Light getLight() {
-        return (Light)getSource();
+        return (Light) getSource();
     }
-    
+
     public boolean isOn() {
         return isOn;
     }

@@ -31,12 +31,16 @@ package com.pi4j.component.sensor;
 import com.pi4j.component.ObserveableComponent;
 
 public interface Sensor extends ObserveableComponent {
-    
+
     boolean isOpen();
+
     boolean isClosed();
+
     SensorState getState();
+
     boolean isState(SensorState state);
 
     void addListener(SensorListener... listener);
+
     void removeListener(SensorListener... listener);
 }

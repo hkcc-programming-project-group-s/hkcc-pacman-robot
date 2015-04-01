@@ -30,11 +30,18 @@ package com.pi4j.component.motor;
 public interface StepperMotor extends Motor {
 
     float getStepsPerRevolution();
-    void setStepsPerRevolution(int steps);    
+
+    void setStepsPerRevolution(int steps);
+
     void setStepInterval(long milliseconds);
+
     void setStepInterval(long milliseconds, int nanoseconds);
-    void setStepSequence(byte[] sequence);
+
     byte[] getStepSequence();
+
+    void setStepSequence(byte[] sequence);
+
     void rotate(double revolutions);
+
     void step(long steps);
 }

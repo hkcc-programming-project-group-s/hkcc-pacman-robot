@@ -37,13 +37,13 @@ public class OpenerLockChangeEvent extends EventObject {
 
     public OpenerLockChangeEvent(Opener opener, boolean isLocked) {
         super(opener);
-        this.isLocked = isLocked;        
+        this.isLocked = isLocked;
     }
 
     public Opener getOpener() {
-        return (Opener)getSource();
+        return (Opener) getSource();
     }
-    
+
     public boolean isLocked() {
         return isLocked;
     }

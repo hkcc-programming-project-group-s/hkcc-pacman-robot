@@ -29,10 +29,10 @@ package com.pi4j.device.access;
 
 
 public enum OpenerState {
-    
+
     OPEN,
     CLOSED,
     OPENING,
     CLOSING
-    
+
 }

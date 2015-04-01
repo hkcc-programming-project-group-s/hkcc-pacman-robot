@@ -37,18 +37,18 @@ public class ButtonEvent extends EventObject {
     }
 
     public Button getButton() {
-        return (Button)getSource();
+        return (Button) getSource();
     }
 
-    public boolean isPressed(){
+    public boolean isPressed() {
         return getButton().isPressed();
     }
 
-    public boolean isReleased(){
+    public boolean isReleased() {
         return getButton().isReleased();
     }
 
-    public boolean isState(ButtonState state){
+    public boolean isState(ButtonState state) {
         return getButton().isState(state);
     }
 

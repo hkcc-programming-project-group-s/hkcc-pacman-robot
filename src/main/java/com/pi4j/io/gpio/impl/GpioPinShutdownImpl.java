@@ -27,9 +27,9 @@ package com.pi4j.io.gpio.impl;
  * #L%
  */
 
+import com.pi4j.io.gpio.GpioPinShutdown;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.PinPullResistance;
-import com.pi4j.io.gpio.GpioPinShutdown;
 import com.pi4j.io.gpio.PinState;
 
 public class GpioPinShutdownImpl implements GpioPinShutdown {
@@ -40,18 +40,13 @@ public class GpioPinShutdownImpl implements GpioPinShutdown {
     PinState state = null;
 
     @Override
-    public void setUnexport(Boolean unexport) {
-        this.unexport = unexport;
-    }
-
-    @Override
     public Boolean getUnexport() {
         return unexport;
     }
 
     @Override
-    public void setMode(PinMode mode) {
-        this.mode = mode;
+    public void setUnexport(Boolean unexport) {
+        this.unexport = unexport;
     }
 
     @Override
@@ -60,8 +55,8 @@ public class GpioPinShutdownImpl implements GpioPinShutdown {
     }
 
     @Override
-    public void setPullResistor(PinPullResistance resistance) {
-        this.resistance = resistance;
+    public void setMode(PinMode mode) {
+        this.mode = mode;
     }
 
     @Override
@@ -70,12 +65,17 @@ public class GpioPinShutdownImpl implements GpioPinShutdown {
     }
 
     @Override
-    public void setState(PinState state) {
-        this.state = state;
+    public void setPullResistor(PinPullResistance resistance) {
+        this.resistance = resistance;
     }
 
     @Override
     public PinState getState() {
         return state;
+    }
+
+    @Override
+    public void setState(PinState state) {
+        this.state = state;
     }
 }
