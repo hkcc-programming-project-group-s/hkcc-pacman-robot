@@ -4,9 +4,12 @@ package edu.hkcc.pacmanrobot.server;
 import edu.hkcc.pacmanrobot.utils.Device;
 import edu.hkcc.pacmanrobot.utils.Point2D;
 
+import java.net.ServerSocket;
 import java.sql.Timestamp;
 
 public class Sever extends Device {
+
+    public ServerSocket serverSocket;
     private boolean gameRun = true;
 
     public void listenToRemotecontroller() {

@@ -3,7 +3,7 @@ package edu.hkcc.pacmanrobot.robot.utils
 import java.io.IOException
 
 import com.pi4j.io.i2c.{I2CBus, I2CDevice, I2CFactory}
-import edu.hkcc.pacmanrobot.utils.{Point3D, Maths}
+import edu.hkcc.pacmanrobot.utils.{Maths, Point3D}
 
 /**
  * Created by beenotung on 3/30/15.

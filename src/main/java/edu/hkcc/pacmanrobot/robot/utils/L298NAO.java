@@ -152,7 +152,7 @@ public class L298NAO {
         } else if (isInRange(direction, L)) {
             left_backward();
             right_forward();
-            
+
         } else if (isInRange(direction, F_L)) {
             left_stop();
             right_forward();

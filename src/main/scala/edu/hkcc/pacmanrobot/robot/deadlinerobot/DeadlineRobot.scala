@@ -50,7 +50,7 @@ class DeadlineRobot extends Robot {
   }
 
   def getTargetPosition: Point2D = {
-    new Point2D(range(Mpu6050AO.getZRotaion),5)
+    new Point2D(range(Mpu6050AO.getZRotaion), 5)
   }
 
   def range(d: Double) = {

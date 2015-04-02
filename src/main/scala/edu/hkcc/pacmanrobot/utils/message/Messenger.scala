@@ -158,6 +158,9 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends
     val message: MessageType = inputStream.readObject.asInstanceOf[MessageType]
     inputQueue.add(message)
     //println("received " + message.toString)
-    autoGet(getMessage)
+    try{autoGet(getMessage)}
+    catch {
+      case e:NotImplementedError=>{}
+    }
   }
 }
