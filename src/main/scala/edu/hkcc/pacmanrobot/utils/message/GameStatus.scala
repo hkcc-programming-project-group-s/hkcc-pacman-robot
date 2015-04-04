@@ -20,6 +20,7 @@ object GameStatus extends Message {
   val STATE_PAUSE: Byte = 0x05
   val STATE_WIN: Byte = 0x06
   val STATE_LOSE: Byte = 0x07
+  var status: Byte=0
 }
 
 /*
@@ -28,4 +29,5 @@ object GameStatus extends Message {
 //class GameStatus(val status: GameStatus.GameStatusType,val message: String = "") extends Serializable
 class GameStatus(var status: Byte, var message: String = "") extends Message {
   override def port(): Int = Config.PORT_GAME_STATUS
+  this.status=status
 }
