@@ -10,24 +10,32 @@ import edu.hkcc.pacmanrobot.utils.studentrobot.code.Messenger
 /**
  * Created by beenotung on 3/26/15.
  */
-class MovementCommandMessenger extends Messenger[MovementCommand](Config.PORT_MOVEMENT_COMMAND) {
-  def this(socket: Socket, port: Int) = this(socket, port)
+class MovementCommandMessenger(socket: Socket) {
+  def this() = {
+    this(Messenger.connect(Config.PORT_MOVEMENT_COMMAND))
+  }
 
   var movementCommand: MovementCommand = MovementCommand.stop
+  val messenger = new Messenger[MovementCommand](Config.PORT_MOVEMENT_COMMAND) {
+    override def autoGet(message: MovementCommand): Unit = {
+      movementCommand = message
+    }
 
-  override def autoGet(message: MovementCommand): Unit = {
-    movementCommand = message
+    override def getMessage: MovementCommand = {
+      while (!inputQueue.isEmpty)
+        movementCommand = inputQueue.poll
+      movementCommand
+    }
+
+    override def sendMessage(message: MovementCommand): Unit = {
+      while (!outputQueue.isEmpty)
+        outputQueue.poll()
+      outputQueue.add(message)
+    }
   }
 
-  override def getMessage: MovementCommand = {
-    while (!inputQueue.isEmpty)
-      movementCommand = inputQueue.poll
-    movementCommand
+  def sendMessage(message: MovementCommand): Unit = {
+    messenger.sendMessage(message)
   }
-
-  override def sendMessage(message: MovementCommand): Unit = {
-    while (!outputQueue.isEmpty)
-      outputQueue.poll()
-    outputQueue.add(message)
-  }
+  def start=messenger.start
 }

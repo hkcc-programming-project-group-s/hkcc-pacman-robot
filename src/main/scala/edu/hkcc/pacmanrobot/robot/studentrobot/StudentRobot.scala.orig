@@ -1,14 +1,14 @@
 package edu.hkcc.pacmanrobot.robot.studentrobot
 
-import java.io.ObjectInputStream
-import java.net.Socket
-
 import edu.hkcc.pacmanrobot.robot.core.Robot
 import edu.hkcc.pacmanrobot.robot.edu.hkcc.pacmanrobot.utils.studentrobot.MovementCommandMessenger
 import edu.hkcc.pacmanrobot.robot.utils.L298NAO
-import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.Config.MOTOR_CYCLE_INTERVAL
+<<<<<<< HEAD
 import edu.hkcc.pacmanrobot.utils.message.MovementCommand
+=======
+import edu.hkcc.pacmanrobot.utils.maths.Point2D
+>>>>>>> messenger
 
 
 /**
@@ -33,19 +33,31 @@ class StudentRobot extends Robot {
   override def run = {
     movementCommandMessenger.start
     while (true) {
+      movementCommandMessenger.checkConnection
       loop
       Thread.sleep(MOTOR_CYCLE_INTERVAL)
     }
   }
 
   override def loop: Unit = {
+<<<<<<< HEAD
     val movementCommand: MovementCommand = movementCommandMessenger.movementCommand
     //val direction=in.readObject().asInstanceOf[java.lang.Double]
 
     if (movementCommand.mode.equals(MovementCommand.MODE_POLAR)) {
-      L298NAO.move_pwm(movementCommand.point2D)
+      L298NAO.move(movementCommand.point2D)
     } else {
       //TODO calculate polar command from current location
     }
+=======
+    //val movementCommand: MovementCommand = movementCommandMessenger.getMessage
+    val direction=in.readObject().asInstanceOf[java.lang.Double]
+    L298NAO.move_pwm(new Point2D(direction,1))
+//    if (movementCommand.mode.equals(MovementCommand.MODE_POLAR)) {
+//      L298NAO.move(movementCommand.point2D)
+//    }else{
+//      //TODO calculate polar command from current location
+//    }
+>>>>>>> messenger
   }
 }

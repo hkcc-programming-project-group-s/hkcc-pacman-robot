@@ -41,20 +41,36 @@ class DeadlineRobot extends Robot {
   }
 
   def loop: Unit = {
+<<<<<<< HEAD
     val dir: Point2D = getTargetPosition
     if (dir._1 > 0)
       dir._1 = R
     else if (dir._1 < 0)
       dir._1 = L
+    L298NAO.move(dir)
+=======
+    val dir:Point2D=getTargetPosition
+    if(dir._1>0)
+      dir._1=Maths.R
+    else if(dir._1<0)
+      dir._1=Maths.L
     L298NAO.move_pwm(dir)
+>>>>>>> messenger
   }
 
   def getTargetPosition: Point2D = {
     new Point2D(range(Mpu6050AO.getZRotaion),5)
   }
 
+<<<<<<< HEAD
   def range(d: Double) = {
     println("\t turn to: " + d)
     d
+=======
+  def getTargetPosition: Point2D = {
+    val d=range(Mpu6050AO.getZRotaion)
+    val f=Math.abs(d)/Maths.B
+    new Point2D(d,f)
+>>>>>>> messenger
   }
 }

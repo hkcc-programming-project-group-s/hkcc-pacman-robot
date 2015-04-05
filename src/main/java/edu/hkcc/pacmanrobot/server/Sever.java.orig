@@ -2,8 +2,11 @@ package edu.hkcc.pacmanrobot.server;
 
 
 import edu.hkcc.pacmanrobot.utils.Device;
+<<<<<<< HEAD
 import edu.hkcc.pacmanrobot.utils.Point2D;
-
+=======
+import edu.hkcc.pacmanrobot.utils.maths.Point2D;
+>>>>>>> messenger
 
 import java.sql.Timestamp;
 

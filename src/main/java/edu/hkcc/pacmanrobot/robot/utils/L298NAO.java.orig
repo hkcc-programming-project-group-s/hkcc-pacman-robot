@@ -20,9 +20,13 @@ public class L298NAO {
     public static final int L_F = 19;
     public static final int PWM_MAX_RANGE = 100;
     public static GpioController gpio = GpioFactory.getInstance();
+<<<<<<< HEAD
+    public static final GpioPinDigitalOutput R_F = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21);
+    public static final GpioPinDigitalOutput R_B = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22);
+    public static final GpioPinDigitalOutput L_B = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23);
+    public static final GpioPinDigitalOutput L_F = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24);
     public static final GpioPinDigitalOutput E_R = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
     public static final GpioPinDigitalOutput E_L = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
-    public static boolean ready = false;
 
     public static void enableMotor(GpioPinDigitalOutput pin, boolean on) {
         if ((on) && pin.isLow()) pin.high();
@@ -45,6 +49,61 @@ public class L298NAO {
         enableMotor(E_R, false);
     }
 
+    public static void left_forward() {
+        left_on();
+        setGpioPair_FT(L_B, L_F);
+    }
+
+    public static void left_backward() {
+        left_on();
+        setGpioPair_FT(L_F, L_B);
+    }
+
+    public static void left_stop() {
+        left_off();
+        setTwoGpio(L_F, L_B, false);
+        //setTwoGpio(L_F, L_B, true);
+    }
+
+    public static void right_forward() {
+        right_on();
+        setGpioPair_FT(R_B, R_F);
+    }
+
+    public static void right_backward() {
+        right_on();
+        setGpioPair_FT(R_F, R_B);
+    }
+
+    public static void right_stop() {
+        right_off();
+        setTwoGpio(R_F, R_B, false);
+        //setTwoGpio(R_F, R_B, true);
+    }
+
+    @Deprecated
+=======
+    public static final GpioPinDigitalOutput E_R = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
+    public static final GpioPinDigitalOutput E_L = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
+    public static boolean ready = false;
+
+    public static void left_on() {
+        setGpio(E_L, true);
+    }
+
+    public static void left_off() {
+        setGpio(E_L, false);
+    }
+
+    public static void right_on() {
+        setGpio(E_R, true);
+    }
+
+    public static void right_off() {
+        setGpio(E_R, false);
+    }
+
+>>>>>>> messenger
     public static void setGpio(GpioPinDigitalOutput gpio, boolean isHigh) {
         if (isHigh && gpio.isLow())
             gpio.high();
@@ -63,7 +122,7 @@ public class L298NAO {
     }
 
     public static void move_pwm(Point2D point2D) {
-        move_pwm(point2D._1, point2D._2);
+        move_pwm(point2D._1(), (int) Math.round(point2D._2() * PWM_MAX_RANGE));
     }
 
     public static void setMotorPwm(GpioPinDigitalOutput enablePin, int forwardPin, int backwardPin, int pwm) {
@@ -83,8 +142,26 @@ public class L298NAO {
         }
     }
 
+<<<<<<< HEAD
+    public static void move(Point2D point2D) {
+        move(point2D._1, point2D._2);
+    }
+
+    public static void move_pwm(Point2D point2D) {
+        move_pwm(point2D._1, point2D._2);
+    }
+
+    public static void move_pwm(double direction, double power) {
+        if (power <= 0) {
+            both_stop();
+            return;
+        }
+        double l, r;
+
+=======
     public static void move_pwm(double direction) {
         move_pwm(direction, 1d);
+>>>>>>> messenger
     }
 
     /**
@@ -102,8 +179,13 @@ public class L298NAO {
             l = 1;
             r = 0;
         } else if (isInRange(direction, R)) {
+<<<<<<< HEAD
+            left_forward();
+            right_backward();
+=======
             l = 1;
             r = -1;
+>>>>>>> messenger
         } else if (isInRange(direction, B_R)) {
             l = -1;
             r = 0;
@@ -113,12 +195,21 @@ public class L298NAO {
             l = 0;
             r = -1;
         } else if (isInRange(direction, L)) {
+<<<<<<< HEAD
+            left_backward();
+            right_forward();
+            
+        } else if (isInRange(direction, F_L)) {
+            left_stop();
+            right_forward();
+=======
             l = -1;
             r = 1;
 
         } else if (isInRange(direction, F_L)) {
             l = 0;
             r = 1;
+>>>>>>> messenger
         } else //if (Maths.isInRange(direction,F))
         {
             l = r = 1;
@@ -161,5 +252,4 @@ public class L298NAO {
         softPwmCreate(19, 0, PWM_MAX_RANGE);
         ready = true;
     }
-
 }

@@ -44,7 +44,7 @@ object Messenger {
   }
 }
 
-abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends Thread {
+abstract class Messenger[MessageType](var socket: Socket, var port: Int) extends Thread {
   val SEND_INTERVAL: Long = 50
   val GET_INTERVAL: Long = 50
   var inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
