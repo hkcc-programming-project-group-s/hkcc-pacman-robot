@@ -3,7 +3,11 @@ package edu.hkcc.pacmanrobot.utils.message;
 
 import edu.hkcc.pacmanrobot.utils.Config;
 import edu.hkcc.pacmanrobot.utils.map.Message;
+<<<<<<< HEAD
 import edu.hkcc.pacmanrobot.utils.Point2D;
+=======
+import edu.hkcc.pacmanrobot.utils.maths.Point2D;
+>>>>>>> messenger
 
 /**
  * Created by beenotung on 2/10/15.

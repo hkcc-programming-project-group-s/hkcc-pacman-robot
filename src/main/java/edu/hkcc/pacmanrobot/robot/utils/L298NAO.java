@@ -6,17 +6,20 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.RaspiPin;
 import edu.hkcc.pacmanrobot.utils.Point2D;
 
+import static com.pi4j.wiringpi.SoftPwm.softPwmCreate;
+import static com.pi4j.wiringpi.SoftPwm.softPwmWrite;
 import static edu.hkcc.pacmanrobot.utils.Maths.*;
 
 /**
  * Created by beenotung on 3/3/15.
  */
 public class L298NAO {
+    public static final int R_F = 5;
+    public static final int R_B = 6;
+    public static final int L_B = 13;
+    public static final int L_F = 19;
+    public static final int PWM_MAX_RANGE = 100;
     public static GpioController gpio = GpioFactory.getInstance();
-    public static final GpioPinDigitalOutput R_F = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21);
-    public static final GpioPinDigitalOutput R_B = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22);
-    public static final GpioPinDigitalOutput L_B = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23);
-    public static final GpioPinDigitalOutput L_F = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24);
     public static final GpioPinDigitalOutput E_R = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
     public static final GpioPinDigitalOutput E_L = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
 
@@ -41,125 +44,120 @@ public class L298NAO {
         enableMotor(E_R, false);
     }
 
-    public static void left_forward() {
-        left_on();
-        setGpioPair_FT(L_B, L_F);
-    }
-
-    public static void left_backward() {
-        left_on();
-        setGpioPair_FT(L_F, L_B);
-    }
-
-    public static void left_stop() {
-        left_off();
-        setTwoGpio(L_F, L_B, false);
-        //setTwoGpio(L_F, L_B, true);
-    }
-
-    public static void right_forward() {
-        right_on();
-        setGpioPair_FT(R_B, R_F);
-    }
-
-    public static void right_backward() {
-        right_on();
-        setGpioPair_FT(R_F, R_B);
-    }
-
-    public static void right_stop() {
-        right_off();
-        setTwoGpio(R_F, R_B, false);
-        //setTwoGpio(R_F, R_B, true);
-    }
-
-    @Deprecated
     public static void setGpio(GpioPinDigitalOutput gpio, boolean isHigh) {
-        if (isHigh)
+        if (isHigh && gpio.isLow())
             gpio.high();
-        else
+        else if (!isHigh && gpio.isHigh())
             gpio.low();
     }
 
     public static void setTwoGpio(GpioPinDigitalOutput gpio1, GpioPinDigitalOutput gpio2, boolean isHigh) {
-        if (isHigh) {
-            gpio1.high();
-            gpio2.high();
-        } else {
-            gpio1.low();
-            gpio2.low();
-        }
+        setGpio(gpio1, isHigh);
+        setGpio(gpio2, isHigh);
     }
-
 
     public static void setGpioPair_FT(GpioPinDigitalOutput falseGpio, GpioPinDigitalOutput trueGpio) {
         if (falseGpio.isHigh()) falseGpio.low();
         if (trueGpio.isLow()) trueGpio.high();
     }
 
-    public static void both_stop() {
-        left_stop();
-        right_stop();
-    }
-
-    public static void both_forward() {
-        left_forward();
-        right_forward();
-    }
-
-    public static void both_backward() {
-        left_backward();
-        right_backward();
-    }
-
-    public static void move(Point2D point2D) {
-        move(point2D._1, point2D._2);
-    }
-
     public static void move_pwm(Point2D point2D) {
-        move_pwm(point2D._1, point2D._2);
+        move_pwm(point2D._1(), (int) Math.round(point2D._2() * PWM_MAX_RANGE));
     }
 
-    public static void move_pwm(double direction, double power) {
-        if (power <= 0) {
+    public static void setMotorPwm(GpioPinDigitalOutput enablePin, int forwardPin, int backwardPin, int pwm) {
+        if (pwm == 0) {
+            setGpio(enablePin, false);
+            softPwmWrite(forwardPin, pwm);
+            softPwmWrite(backwardPin, pwm);
+        } else {
+            setGpio(enablePin, true);
+            if (pwm > 0) {
+                softPwmWrite(backwardPin, 0);
+                softPwmWrite(forwardPin, pwm);
+            } else {
+                softPwmWrite(forwardPin, 0);
+                softPwmWrite(backwardPin, -pwm);
+            }
+        }
+    }
+
+    public static void move_pwm(double direction) {
+        move_pwm(direction, 1d);
+    }
+
+    /**
+     * @param direction (radian)
+     *                  0 to PI*2
+     * @param pwm       0 to 1
+     */
+    public static void move_pwm(double direction, double pwm) {
+        if (pwm == 0) {
             both_stop();
             return;
         }
-        double l, r;
-
-    }
-
-    public static void move(double direction, double distance) {
-        //System.out.printf("motor move: \t%.2f,\t%.2f\n", direction, distance);
-        if (distance <= 0) {
-            both_stop();
-            return;
-        }
+        int l, r;
         if (isInRange(direction, F_R)) {
-            left_forward();
-            right_stop();
+            l = 1;
+            r = 0;
         } else if (isInRange(direction, R)) {
-            left_forward();
-            right_backward();
+            l = 1;
+            r = -1;
         } else if (isInRange(direction, B_R)) {
-            left_backward();
-            right_stop();
+            l = -1;
+            r = 0;
         } else if (isInRange(direction, B)) {
-            both_backward();
+            l = r = -1;
         } else if (isInRange(direction, B_L)) {
-            left_stop();
-            right_backward();
+            l = 0;
+            r = -1;
         } else if (isInRange(direction, L)) {
-            left_backward();
-            right_forward();
-            
+            l = -1;
+            r = 1;
+
         } else if (isInRange(direction, F_L)) {
-            left_stop();
-            right_forward();
+            l = 0;
+            r = 1;
         } else //if (Maths.isInRange(direction,F))
         {
-            both_forward();
+            l = r = 1;
         }
+        l *= (pwm * PWM_MAX_RANGE);
+        r *= (pwm * PWM_MAX_RANGE);
+        left_pwm(l);
+        right_pwm(r);
     }
 
+    /**
+     * @param pwm direction -100 to 100
+     *            -100 = full speed backward
+     *            100 = full sped forward
+     *            0 = stop
+     */
+    public static void right_pwm(int pwm) {
+        setMotorPwm(E_R, R_F, R_B, pwm);
+    }
+
+    /**
+     * @param pwm direction -100 to 100
+     *            -100 = full speed backward
+     *            100 = full sped forward
+     *            0 = stop
+     */
+    public static void left_pwm(int pwm) {
+        setMotorPwm(E_L, L_F, L_B, pwm);
+    }
+
+    public static void both_stop() {
+        left_off();
+        right_off();
+    }
+
+    public static void setup() {
+        softPwmCreate(5, 0, PWM_MAX_RANGE);
+        softPwmCreate(6, 0, PWM_MAX_RANGE);
+        softPwmCreate(13, 0, PWM_MAX_RANGE);
+        softPwmCreate(19, 0, PWM_MAX_RANGE);
+        ready = true;
+    }
 }

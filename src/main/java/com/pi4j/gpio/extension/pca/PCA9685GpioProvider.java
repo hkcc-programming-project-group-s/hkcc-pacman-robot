@@ -308,7 +308,7 @@ public class PCA9685GpioProvider extends GpioProviderBase implements GpioProvide
         }
         PinMode mode = getMode(pin);
         if (mode != PinMode.PWM_OUTPUT) {
-            throw new InvalidPinModeException(pin, "Invalid pin mode [" + mode.getName() + "]; unable to setPwm(" + onPosition + ", " + offPosition + ")");
+            throw new InvalidPinModeException(pin, "Invalid pin mode [" + mode.getName() + "]; unable to setMotorPwm(" + onPosition + ", " + offPosition + ")");
         }
     }
 

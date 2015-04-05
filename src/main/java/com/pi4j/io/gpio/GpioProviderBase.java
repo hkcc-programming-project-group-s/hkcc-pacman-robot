@@ -247,7 +247,7 @@ public abstract class GpioProviderBase implements GpioProvider {
         PinMode mode = getMode(pin);
 
         if (mode != PinMode.PWM_OUTPUT) {
-            throw new InvalidPinModeException(pin, "Invalid pin mode [" + mode.getName() + "]; unable to setPwm(" + value + ")");
+            throw new InvalidPinModeException(pin, "Invalid pin mode [" + mode.getName() + "]; unable to setMotorPwm(" + value + ")");
         }
 
         // cache pin PWM value

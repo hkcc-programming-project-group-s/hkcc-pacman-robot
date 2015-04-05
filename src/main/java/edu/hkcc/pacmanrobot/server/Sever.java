@@ -2,7 +2,7 @@ package edu.hkcc.pacmanrobot.server;
 
 
 import edu.hkcc.pacmanrobot.utils.Device;
-import edu.hkcc.pacmanrobot.utils.Point2D;
+import edu.hkcc.pacmanrobot.utils.maths.Point2D;
 
 import java.sql.Timestamp;
 

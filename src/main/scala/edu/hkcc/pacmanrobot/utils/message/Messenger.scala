@@ -132,8 +132,8 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends
     outputThread.interrupt
   }
 
-  def sendMessage(content: MessageType): Unit = {
-    outputQueue.add(content)
+  def sendMessage(message: MessageType): Unit = {
+    outputQueue.add(message)
   }
 
   def getMessage: MessageType = {
