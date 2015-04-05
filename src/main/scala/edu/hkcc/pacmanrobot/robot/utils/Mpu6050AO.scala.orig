@@ -10,7 +10,7 @@ import edu.hkcc.pacmanrobot.utils.Point3D
 import scala.math.{cos, sin}
 =======
 import edu.hkcc.pacmanrobot.utils.{Maths, Point3D}
->>>>>>> server
+>>>>>>> AI
 
 /**
  * Created by beenotung on 3/30/15.
