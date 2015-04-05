@@ -1,5 +1,6 @@
 package edu.hkcc.pacmanrobot.utils;
 
+import java.awt.*;
 import java.io.Serializable;
 
 /**
