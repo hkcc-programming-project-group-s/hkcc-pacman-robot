@@ -1,9 +1,13 @@
 package edu.hkcc.pacmanrobot.robot.utils;
 
-import com.pi4j.io.gpio.*;
-import com.pi4j.wiringpi.SoftPwm;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.RaspiPin;
 import edu.hkcc.pacmanrobot.utils.maths.Point2D;
 
+import static com.pi4j.wiringpi.SoftPwm.softPwmCreate;
+import static com.pi4j.wiringpi.SoftPwm.softPwmWrite;
 import static edu.hkcc.pacmanrobot.utils.Maths.*;
 
 /**
@@ -11,51 +15,43 @@ import static edu.hkcc.pacmanrobot.utils.Maths.*;
  */
 public class L298NAO {
     public static GpioController gpio = GpioFactory.getInstance();
-    public static final GpioPinPwmOutput R_F = gpio.provisionPwmOutputPin(RaspiPin.GPIO_21);
-    public static final GpioPinPwmOutput R_B = gpio.provisionPwmOutputPin(RaspiPin.GPIO_22);
-    public static final GpioPinPwmOutput L_B = gpio.provisionPwmOutputPin(RaspiPin.GPIO_23);
-    public static final GpioPinPwmOutput L_F = gpio.provisionPwmOutputPin(RaspiPin.GPIO_24);
+    public static final int R_F = 5;
+    public static final int R_B = 6;
+    public static final int L_B = 13;
+    public static final int L_F = 19;
     public static final GpioPinDigitalOutput E_R = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
     public static final GpioPinDigitalOutput E_L = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
-    public static int PWM_MAX_RANGE = 100;
+    public static final int PWM_MAX_RANGE = 100;
 
-    public static void enableMotor(GpioPinDigitalOutput pin, boolean on) {
-        if ((on) && pin.isLow()) pin.high();
-        else if ((!on) && pin.isHigh()) pin.low();
-    }
+
 
     public static void left_on() {
-        enableMotor(E_L, true);
+        setGpio(E_L, true);
     }
 
     public static void left_off() {
-        enableMotor(E_L, false);
+        setGpio(E_L, false);
     }
 
     public static void right_on() {
-        enableMotor(E_R, true);
+        setGpio(E_R, true);
     }
 
     public static void right_off() {
-        enableMotor(E_R, false);
+        setGpio(E_R, false);
     }
 
-    @Deprecated
+
     public static void setGpio(GpioPinDigitalOutput gpio, boolean isHigh) {
-        if (isHigh)
+        if (isHigh&&gpio.isLow())
             gpio.high();
-        else
+        else if(!isHigh&&gpio.isHigh())
             gpio.low();
     }
 
     public static void setTwoGpio(GpioPinDigitalOutput gpio1, GpioPinDigitalOutput gpio2, boolean isHigh) {
-        if (isHigh) {
-            gpio1.high();
-            gpio2.high();
-        } else {
-            gpio1.low();
-            gpio2.low();
-        }
+        setGpio(gpio1,isHigh);
+        setGpio(gpio2,isHigh);
     }
 
     public static void setGpioPair_FT(GpioPinDigitalOutput falseGpio, GpioPinDigitalOutput trueGpio) {
@@ -64,33 +60,44 @@ public class L298NAO {
     }
 
     public static void move_pwm(Point2D point2D) {
-        move_pwm(point2D._1(), (int) Math.round(point2D._2() * 100));
+        move_pwm(point2D._1(), (int) Math.round(point2D._2() * PWM_MAX_RANGE));
     }
 
-    public static void setPwm(GpioPinDigitalOutput enablePin, GpioPinPwmOutput forwardPin, GpioPinPwmOutput backwardPin, int pwm) {
+    public static void setMotorPwm(GpioPinDigitalOutput enablePin, int forwardPin, int backwardPin, int pwm) {
         if (pwm == 0) {
-            if (enablePin.isHigh())
-                enablePin.low();
-            backwardPin.setPwm(pwm);
-            forwardPin.setPwm(pwm);
+            setGpio(enablePin,false);
+            softPwmWrite(forwardPin, pwm);
+            softPwmWrite(backwardPin, pwm);
         } else {
-            if (enablePin.isLow())
-                enablePin.high();
+            setGpio(enablePin,true);
             if (pwm > 0) {
-                backwardPin.setPwm(0);
-                forwardPin.setPwm(pwm);
+                softPwmWrite(backwardPin, 0);
+                softPwmWrite(forwardPin, pwm);
             } else {
-                forwardPin.setPwm(0);
-                backwardPin.setPwm(-pwm);
+                softPwmWrite(forwardPin, 0);
+                softPwmWrite(backwardPin, -pwm);
             }
         }
+    }
+
+    public static void move_pwm(double direction) {
+        if (pwm == 0) {
+            both_stop();
+            return;
+        }
+        double l, r;
+        if(isBetween(F,direction,F_R)){
+            l=1
+        }
+
+        left_pwm((int) Math.round(l*PWM_MAX_RANGE));
+        right_pwm((int) Math.round(r*PWM_MAX_RANGE));
     }
 
     /**
      * @param direction (radian)
      *                  0 to PI*2
-     * @param pwm
-     *                  0 to 1
+     * @param pwm       0 to 1
      */
     public static void move_pwm(double direction, double pwm) {
         if (pwm == 0) {
@@ -126,7 +133,7 @@ public class L298NAO {
         l *= (pwm * PWM_MAX_RANGE);
         r *= (pwm * PWM_MAX_RANGE);
         left_pwm(l);
-        right_pwm(l);
+        right_pwm(r);
     }
 
     /**
@@ -136,7 +143,7 @@ public class L298NAO {
      *            0 = stop
      */
     public static void right_pwm(int pwm) {
-        setPwm(E_R, R_F, R_B, pwm);
+        setMotorPwm(E_R, R_F, R_B, pwm);
     }
 
     /**
@@ -146,7 +153,7 @@ public class L298NAO {
      *            0 = stop
      */
     public static void left_pwm(int pwm) {
-        setPwm(E_L, L_F, L_B, pwm);
+        setMotorPwm(E_L, L_F, L_B, pwm);
     }
 
     public static void both_stop() {
@@ -154,13 +161,13 @@ public class L298NAO {
         right_off();
     }
 
-    public static boolean ready=false;
-    public static void setup(){
-        SoftPwm.softPwmCreate()
-        public static final GpioPinPwmOutput R_F = gpio.provisionPwmOutputPin(RaspiPin.GPIO_21);
-        public static final GpioPinPwmOutput R_B = gpio.provisionPwmOutputPin(RaspiPin.GPIO_22);
-        public static final GpioPinPwmOutput L_B = gpio.provisionPwmOutputPin(RaspiPin.GPIO_23);
-        public static final GpioPinPwmOutput L_F = gpio.provisionPwmOutputPin(RaspiPin.GPIO_24);
-        ready=true;
+    public static boolean ready = false;
+
+    public static void setup() {
+        softPwmCreate(5, 0, PWM_MAX_RANGE);
+        softPwmCreate(6, 0, PWM_MAX_RANGE);
+        softPwmCreate(13, 0, PWM_MAX_RANGE);
+        softPwmCreate(19, 0, PWM_MAX_RANGE);
+        ready = true;
     }
 }

@@ -6,7 +6,7 @@
 [debug] == resolving dependencies for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 [compile]
 [debug] == resolving dependencies sbt_robot#sbt_robot$sources_javadoc_2.11;1.0->org.scala-lang#scala-library;2.11.6 [compile->default(compile)]
 [info] Resolving org.scala-lang#scala-library;2.11.6 ...
-[debug] sbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@788db0ed
+[debug] sbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@58e5bda9
 [debug] sbt-chain: module revision found in cache: org.scala-lang#scala-library;2.11.6
 [debug] 	found org.scala-lang#scala-library;2.11.6 in sbt-chain
 [debug] 	[2.11.6] org.scala-lang#scala-library;2.11.6
@@ -167,18 +167,18 @@
 [debug] 	[NOT REQUIRED] org.scala-lang.modules#scala-parser-combinators_2.11;1.0.3!scala-parser-combinators_2.11.jar(src)
 [debug] 	[NOT REQUIRED] jline#jline;2.12.1!jline.jar(src)
 [debug] 	[NOT REQUIRED] jline#jline;2.12.1!jline.jar(doc)
-[debug] :: resolution report :: resolve 58ms :: artifacts dl 9ms
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 compile produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-compile.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 runtime produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-runtime.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 test produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-test.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 provided produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-provided.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 optional produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-optional.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 compile-internal produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-compile-internal.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 runtime-internal produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-runtime-internal.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 test-internal produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-test-internal.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 plugin produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-plugin.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 sources produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-sources.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 docs produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-docs.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 pom produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-pom.xml
-[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 scala-tool produced in /home/beenotung/git/repo/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-scala-tool.xml
-[debug] 	resolve done (58ms resolve - 9ms download)
+[debug] :: resolution report :: resolve 94ms :: artifacts dl 9ms
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 compile produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-compile.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 runtime produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-runtime.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 test produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-test.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 provided produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-provided.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 optional produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-optional.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 compile-internal produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-compile-internal.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 runtime-internal produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-runtime-internal.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 test-internal produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-test-internal.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 plugin produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-plugin.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 sources produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-sources.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 docs produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-docs.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 pom produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-pom.xml
+[debug] 	report for sbt_robot#sbt_robot$sources_javadoc_2.11;1.0 scala-tool produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_javadoc_2.11-scala-tool.xml
+[debug] 	resolve done (94ms resolve - 9ms download)
