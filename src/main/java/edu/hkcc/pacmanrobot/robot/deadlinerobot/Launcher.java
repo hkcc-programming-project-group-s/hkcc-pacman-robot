@@ -5,7 +5,7 @@ package edu.hkcc.pacmanrobot.robot.deadlinerobot;
  */
 public class Launcher {
     public static void main(String[] args) {
-        DeadlineRobot deadlineRobot = new DeadlineRobot();
+        DeadlineRobot deadlineRobot = new DeadlineRobot("test deadline");
         deadlineRobot.start();
     }
 }

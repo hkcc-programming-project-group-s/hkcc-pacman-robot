@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.controller.javacontroller;
+package edu.hkcc.pacmanrobot.controller.desktopcontroller;
 
 /**
  * Created by beenotung on 3/23/15.

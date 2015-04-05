@@ -1,10 +1,8 @@
-package edu.hkcc.pacmanrobot.controller.javacontroller;
-
-import edu.hkcc.pacmanrobot.controller.Controller;
+package edu.hkcc.pacmanrobot.controller.desktopcontroller;
 
 import javax.swing.*;
 
-public class ControllerJavaApplication extends Controller {
+public class ControllerJavaApplication {//extends Controller {
     public JFrame mainFrame;
     public KeyboardSettings keyboardSettings = new KeyboardSettings();
     public KeyboardHandler keyboardHandler = new KeyboardHandler(keyboardSettings);
@@ -27,16 +25,5 @@ public class ControllerJavaApplication extends Controller {
 
     public void start() {
         mainFrame.setVisible(true);
-    }
-
-    @Override
-    public void loop() {
-
-    }
-
-
-    @Override
-    public void setup() {
-
     }
 }

@@ -15,7 +15,7 @@ class MessengerManager[Type](val servicePort: Int, autoGet_func: Type => Unit) {
       while (true) {
         messengers :+= new Messenger[Type](serverSocket.accept(), servicePort) {
           override def autoGet(message: Type): Unit = {
-            autoGet_func
+            autoGet_func(message)
           }
         }
       }
