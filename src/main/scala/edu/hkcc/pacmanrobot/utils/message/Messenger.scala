@@ -2,7 +2,7 @@ package edu.hkcc.pacmanrobot.utils.studentrobot.code
 
 
 import java.io.{IOException, ObjectInputStream, ObjectOutputStream}
-import java.net.{Socket, SocketException}
+import java.net.{NetworkInterface, Socket, SocketException}
 import java.util.Calendar
 import java.util.concurrent.{ConcurrentLinkedQueue, Semaphore}
 
@@ -44,9 +44,9 @@ object Messenger {
   }
 }
 
-abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends Thread {
-  val SEND_INTERVAL: Long = 50
-  val GET_INTERVAL: Long = 50
+abstract class Messenger[MessageType](var socket: Socket, val port: Int,
+                                      val SEND_INTERVAL: Long = 50, val GET_INTERVAL: Long = 50)
+  extends Thread {
   var inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
   var outputStream: ObjectOutputStream = new ObjectOutputStream(socket.getOutputStream)
   val inputThread: Thread = new Thread(new Runnable {
@@ -158,9 +158,15 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int) extends
     val message: MessageType = inputStream.readObject.asInstanceOf[MessageType]
     inputQueue.add(message)
     //println("received " + message.toString)
-    try{autoGet(getMessage)}
-    catch {
-      case e:NotImplementedError=>{}
+    try {
+      autoGet(getMessage)
     }
+    catch {
+      case e: NotImplementedError => {}
+    }
+  }
+
+  def getRemoteMacAddress: Array[Byte] = {
+    NetworkInterface.getByInetAddress(socket.getInetAddress).getHardwareAddress
   }
 }

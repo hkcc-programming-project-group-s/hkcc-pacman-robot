@@ -1,5 +1,7 @@
 package edu.hkcc.pacmanrobot.utils.studentrobot.code
 
+import java.net.{InetAddress, NetworkInterface}
+
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.map.Message
 
@@ -18,13 +20,19 @@ object DeviceInfo extends Message {
   val DEVICE_TYPE_GMAE_REPORT: Byte = 7
 
   val ROBOT_SET = Set(DEVICE_TYPE_ASSIGNMENT_ROBOT, DEVICE_TYPE_DEADLINE_ROBOT, DEVICE_TYPE_STUDENT_ROBOT, DEVICE_TYPE_UNCLASSED_ROBOT)
+
+  def getLocalMacAddress: Array[Byte] = {
+    NetworkInterface.getByInetAddress(InetAddress.getLocalHost).getHardwareAddress
+  }
 }
 
-class DeviceInfo(var name: String, var IP: String, var id: Long,var deviceType:Byte, var lastConnectionTime: Long = 0) extends Serializable {
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.DeviceInfo.getLocalMacAddress
+
+class DeviceInfo(val MAC_ADDRESS: Array[Byte] = getLocalMacAddress, var name: String, var ip: String, var deviceType: Byte, var lastConnectionTime: Long = 0) extends Serializable {
   def set(newInfo: DeviceInfo): Unit = {
     name = newInfo.name
-    IP = newInfo.IP
-    id = newInfo.id
+    ip = newInfo.ip
+    deviceType = newInfo.deviceType
     lastConnectionTime = newInfo.lastConnectionTime
   }
 }
