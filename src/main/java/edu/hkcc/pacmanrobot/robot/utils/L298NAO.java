@@ -14,16 +14,15 @@ import static edu.hkcc.pacmanrobot.utils.Maths.*;
  * Created by beenotung on 3/3/15.
  */
 public class L298NAO {
-    public static GpioController gpio = GpioFactory.getInstance();
     public static final int R_F = 5;
     public static final int R_B = 6;
     public static final int L_B = 13;
     public static final int L_F = 19;
+    public static final int PWM_MAX_RANGE = 100;
+    public static GpioController gpio = GpioFactory.getInstance();
     public static final GpioPinDigitalOutput E_R = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
     public static final GpioPinDigitalOutput E_L = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
-    public static final int PWM_MAX_RANGE = 100;
-
-
+    public static boolean ready = false;
 
     public static void left_on() {
         setGpio(E_L, true);
@@ -41,17 +40,16 @@ public class L298NAO {
         setGpio(E_R, false);
     }
 
-
     public static void setGpio(GpioPinDigitalOutput gpio, boolean isHigh) {
-        if (isHigh&&gpio.isLow())
+        if (isHigh && gpio.isLow())
             gpio.high();
-        else if(!isHigh&&gpio.isHigh())
+        else if (!isHigh && gpio.isHigh())
             gpio.low();
     }
 
     public static void setTwoGpio(GpioPinDigitalOutput gpio1, GpioPinDigitalOutput gpio2, boolean isHigh) {
-        setGpio(gpio1,isHigh);
-        setGpio(gpio2,isHigh);
+        setGpio(gpio1, isHigh);
+        setGpio(gpio2, isHigh);
     }
 
     public static void setGpioPair_FT(GpioPinDigitalOutput falseGpio, GpioPinDigitalOutput trueGpio) {
@@ -65,11 +63,11 @@ public class L298NAO {
 
     public static void setMotorPwm(GpioPinDigitalOutput enablePin, int forwardPin, int backwardPin, int pwm) {
         if (pwm == 0) {
-            setGpio(enablePin,false);
+            setGpio(enablePin, false);
             softPwmWrite(forwardPin, pwm);
             softPwmWrite(backwardPin, pwm);
         } else {
-            setGpio(enablePin,true);
+            setGpio(enablePin, true);
             if (pwm > 0) {
                 softPwmWrite(backwardPin, 0);
                 softPwmWrite(forwardPin, pwm);
@@ -81,17 +79,7 @@ public class L298NAO {
     }
 
     public static void move_pwm(double direction) {
-        if (pwm == 0) {
-            both_stop();
-            return;
-        }
-        double l, r;
-        if(isBetween(F,direction,F_R)){
-            l=1
-        }
-
-        left_pwm((int) Math.round(l*PWM_MAX_RANGE));
-        right_pwm((int) Math.round(r*PWM_MAX_RANGE));
+        move_pwm(direction, 1d);
     }
 
     /**
@@ -160,8 +148,6 @@ public class L298NAO {
         left_off();
         right_off();
     }
-
-    public static boolean ready = false;
 
     public static void setup() {
         softPwmCreate(5, 0, PWM_MAX_RANGE);
