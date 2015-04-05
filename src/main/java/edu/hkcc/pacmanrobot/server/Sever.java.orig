@@ -2,15 +2,18 @@ package edu.hkcc.pacmanrobot.server;
 
 
 import edu.hkcc.pacmanrobot.utils.Device;
-<<<<<<< HEAD
 import edu.hkcc.pacmanrobot.utils.Point2D;
-=======
-import edu.hkcc.pacmanrobot.utils.maths.Point2D;
->>>>>>> messenger
 
+<<<<<<< HEAD
+
+=======
+import java.net.ServerSocket;
+>>>>>>> server
 import java.sql.Timestamp;
 
 public class Sever extends Device {
+
+    public ServerSocket serverSocket;
     private boolean gameRun = true;
 
     public void listenToRemotecontroller() {

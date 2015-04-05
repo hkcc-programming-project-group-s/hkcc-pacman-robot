@@ -62,7 +62,8 @@
     <target name="compile.module.controller.production" depends="register.custom.compilers,compile.module.utils"
             description="Compile module Controller; production classes">
         <mkdir dir="${controller.output.dir}"/>
-        <javac2 debug="${compiler.debug}" destdir="${controller.output.dir}" executable="${module.jdk.bin.controller}/javac"
+        <javac2 debug="${compiler.debug}" destdir="${controller.output.dir}"
+                executable="${module.jdk.bin.controller}/javac"
                 fork="true" memorymaximumsize="${compiler.max.memory}" nowarn="${compiler.generate.no.warnings}">
             <compilerarg line="${compiler.args.controller}"/>
             <bootclasspath refid="controller.module.bootclasspath"/>

@@ -3,9 +3,14 @@ package edu.hkcc.pacmanrobot.robot.utils
 import java.io.IOException
 
 import com.pi4j.io.i2c.{I2CBus, I2CDevice, I2CFactory}
-import edu.hkcc.pacmanrobot.utils.{Point3D, Maths}
+<<<<<<< HEAD
+import edu.hkcc.pacmanrobot.utils.Maths._
+import edu.hkcc.pacmanrobot.utils.Point3D
 
 import scala.math.{cos, sin}
+=======
+import edu.hkcc.pacmanrobot.utils.{Maths, Point3D}
+>>>>>>> server
 
 /**
  * Created by beenotung on 3/30/15.
@@ -15,24 +20,11 @@ object Mpu6050AO extends Thread {
   private val power_mgmt_2: Int = 0x6c
   private val ONE_SECOND: Long = 1000000000L
   //default +- 2g per second
-<<<<<<< HEAD
-  private val ACCEL_RATIO = 1.0 / (32768 / 2 / 9.80665 * 100)
-  // in unit of cm
-  //default +- 250 deg per second
-  private val GYRO_RATION = 1.0 / (32768 / 250 / 180 * Math.PI)
-  // in unit of rad
-  var ready: Boolean = false
-  private var bg_z: Double = 0
-  private var acceleration: Point3D = new Point3D()
-  private var angularAcceleration: Point3D = new Point3D()
-  private var rotation: Point3D = new Point3D()
-  private var displacement: Point3D = new Point3D()
-=======
-  // in unit of cm
-  private val ACCEL_RATIO: Double = 1.0 / 32768 * 2 * 9.80665 * 100
+  // in unit of ms-2
+  private val ACCEL_RATIO: Double = 1.0 / 32768d * 2 * 9.80665 //* 100
   //default +- 250 deg per second
   // in unit of rad
-  private val GYRO_RATION: Double = 1.0 / 32768 * 250 / 180 * Math.PI
+  private val GYRO_RATION: Double = 1.0 / 32768d * 250d / 180d * Math.PI
   var linearAcceleration: Point3D = _
   var angularAcceleration: Point3D = _
   var linearVelocity: Point3D = new Point3D()
@@ -46,7 +38,6 @@ object Mpu6050AO extends Thread {
   private var bufferLinearAcceleration: Point3D = _
   private var backgroundLinearAcceleration: Point3D = new Point3D()
   private var backgroundAngularAcceleration: Point3D = new Point3D()
->>>>>>> messenger
   private var TIME0: Long = 0L
   private var bus: I2CBus = null
   private var mpu6050: I2CDevice = null
@@ -63,24 +54,19 @@ object Mpu6050AO extends Thread {
   }
 
   def getAcceleration: Point3D = {
-<<<<<<< HEAD
-    acceleration * ACCEL_RATIO
-=======
     //linearAcceleration.$div(16384.0)
     linearAcceleration / 16384.0
->>>>>>> messenger
   }
 
   def getZRotaion: Double = {
-    getRotation.z - (bg_z * GYRO_RATION)
+    getRotation.z
   }
 
   def getRotation: Point3D = {
-<<<<<<< HEAD
-    rotation * GYRO_RATION
-=======
     angularDisplacement
->>>>>>> messenger
+  }
+  def getDisplacement:Point3D={
+    linearDisplacement/100d
   }
 
   @throws(classOf[IOException])
@@ -88,11 +74,6 @@ object Mpu6050AO extends Thread {
     bufferLinearAcceleration = new Point3D(readWord2C(0x3b), readWord2C(0x3d), readWord2C(0x3f)) * ACCEL_RATIO - backgroundLinearAcceleration
     val t = accelTimer.getDeltaSecond
     if (accelTimer.last != 0) {
-<<<<<<< HEAD
-      acceleration.y = y * cos(radian) - x * sin(radian);
-      acceleration.x = y * sin(radian) + x * cos(radian);
-      displacement += acceleration
-=======
       bufferRadian = getZRotaion
       linearAcceleration.z = bufferLinearAcceleration.z
       linearAcceleration.y = bufferLinearAcceleration.y * cos(bufferRadian) - bufferLinearAcceleration.x * sin(bufferRadian)
@@ -100,7 +81,6 @@ object Mpu6050AO extends Thread {
       bufferLinear = linearAcceleration * t
       linearDisplacement += linearVelocity * t + bufferLinear * t * 0.5d
       linearVelocity += bufferLinear
->>>>>>> messenger
     }
   }
 
@@ -151,12 +131,12 @@ object Mpu6050AO extends Thread {
   }
 
   private def getXRotation(x: Double, y: Double, z: Double): Double = {
-    val rad: Double = Math.atan2(x, Maths.length(y, z))
+    val rad: Double = Math.atan2(x, length(y, z))
     -Math.toDegrees(rad)
   }
 
   private def getYRotation(x: Double, y: Double, z: Double): Double = {
-    val rad: Double = Math.atan2(y, Maths.length(x, z))
+    val rad: Double = Math.atan2(y, length(x, z))
     -Math.toDegrees(rad)
   }
 
@@ -170,6 +150,8 @@ object Mpu6050AO extends Thread {
     Mpu6050AO.bus = I2CFactory.getInstance(I2CBus.BUS_1)
     Mpu6050AO.mpu6050 = Mpu6050AO.bus.getDevice(0x68)
     Mpu6050AO.mpu6050.write(Mpu6050AO.power_mgmt_1, 0x00.toByte)
+    val last_time: Long = 0
+    val now: Long = 0L
     Mpu6050AO.TIME0 = System.nanoTime
     var TIME1: Long = 0L
     do {
@@ -204,9 +186,5 @@ object Mpu6050AO extends Thread {
     }
   }
 
-<<<<<<< HEAD
-}
-=======
 
 }
->>>>>>> messenger

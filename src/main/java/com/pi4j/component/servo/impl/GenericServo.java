@@ -50,6 +50,7 @@ public class GenericServo extends ComponentBase implements Servo {
     private float pwmDurationNeutral = -1;
     private float pwmDurationEndPointRight = -1;
     private boolean isReverse = false;
+
     public GenericServo(ServoDriver servoDriver, String name) {
         this(servoDriver, name, null);
     }

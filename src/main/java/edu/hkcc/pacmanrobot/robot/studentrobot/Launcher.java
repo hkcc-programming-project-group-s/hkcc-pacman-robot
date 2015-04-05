@@ -5,7 +5,7 @@ package edu.hkcc.pacmanrobot.robot.studentrobot;
  */
 public class Launcher {
     public static void main(String[] args) {
-        StudentRobot studentRobot = new StudentRobot();
+        StudentRobot studentRobot = new StudentRobot("test student");
         studentRobot.start();
     }
 }

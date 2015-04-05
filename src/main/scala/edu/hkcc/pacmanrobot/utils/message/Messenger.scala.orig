@@ -44,9 +44,15 @@ object Messenger {
   }
 }
 
+<<<<<<< HEAD
+abstract class Messenger[MessageType](var socket: Socket, var port: Int) extends Thread {
+  val SEND_INTERVAL: Long = 50
+  val GET_INTERVAL: Long = 50
+=======
 abstract class Messenger[MessageType](var socket: Socket, val port: Int,
                                       val SEND_INTERVAL: Long = 50, val GET_INTERVAL: Long = 50)
   extends Thread {
+>>>>>>> server
   var inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
   var outputStream: ObjectOutputStream = new ObjectOutputStream(socket.getOutputStream)
   val inputThread: Thread = new Thread(new Runnable {
@@ -132,8 +138,8 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int,
     outputThread.interrupt
   }
 
-  def sendMessage(content: MessageType): Unit = {
-    outputQueue.add(content)
+  def sendMessage(message: MessageType): Unit = {
+    outputQueue.add(message)
   }
 
   def getMessage: MessageType = {
@@ -158,9 +164,15 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int,
     val message: MessageType = inputStream.readObject.asInstanceOf[MessageType]
     inputQueue.add(message)
     //println("received " + message.toString)
-    autoGet(getMessage)
+    try {
+      autoGet(getMessage)
+    }
+    catch {
+      case e: NotImplementedError => {}
+    }
   }
-  def getRemoteMacAddress:Array[Byte]={
+
+  def getRemoteMacAddress: Array[Byte] = {
     NetworkInterface.getByInetAddress(socket.getInetAddress).getHardwareAddress
   }
 }

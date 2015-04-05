@@ -6,7 +6,6 @@ import edu.hkcc.pacmanrobot.utils.Point2D;
 import edu.hkcc.pacmanrobot.utils.map.Message;
 
 
-
 /**
  * Created by beenotung on 2/10/15.
  */

@@ -8,9 +8,10 @@ import edu.hkcc.pacmanrobot.robot.core.Robot
 import edu.hkcc.pacmanrobot.robot.utils.{L298NAO, Mpu6050AO}
 import edu.hkcc.pacmanrobot.utils.Maths._
 import edu.hkcc.pacmanrobot.utils.Point2D
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.DeviceInfo
 
 
-class DeadlineRobot extends Robot {
+class DeadlineRobot(name: String) extends Robot {
   def gameSetup {
   }
 
@@ -50,11 +51,13 @@ class DeadlineRobot extends Robot {
   }
 
   def getTargetPosition: Point2D = {
-    new Point2D(range(Mpu6050AO.getZRotaion),5)
+    new Point2D(range(Mpu6050AO.getZRotaion), 5)
   }
 
   def range(d: Double) = {
     println("\t turn to: " + d)
     d
   }
+
+  override var deviceInfo: DeviceInfo = DeviceInfo.create(name, DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT)
 }

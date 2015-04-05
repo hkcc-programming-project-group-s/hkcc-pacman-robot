@@ -1,22 +1,20 @@
 package edu.hkcc.pacmanrobot.robot.studentrobot
 
-import java.io.ObjectInputStream
-import java.net.Socket
-
 import edu.hkcc.pacmanrobot.robot.core.Robot
-import edu.hkcc.pacmanrobot.robot.edu.hkcc.pacmanrobot.utils.studentrobot.MovementCommandMessenger
 import edu.hkcc.pacmanrobot.robot.utils.L298NAO
-import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.Config.MOTOR_CYCLE_INTERVAL
-import edu.hkcc.pacmanrobot.utils.message.MovementCommand
-
+import edu.hkcc.pacmanrobot.utils.message.{MovementCommand, MovementCommandMessenger}
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.DeviceInfo
 
 /**
  * Created by beenotung on 3/26/15.
  */
-class StudentRobot extends Robot {
-  val movementCommandMessenger: MovementCommandMessenger = new MovementCommandMessenger
-
+class StudentRobot(name: String) extends Robot {
+  val movementCommandMessenger: MovementCommandMessenger = new MovementCommandMessenger() {
+    override def autoGet_func(message: MovementCommand): Unit = {
+      movementCommand = message
+    }
+  }
 
   override def gameSetup: Unit = {
   }
@@ -29,7 +27,6 @@ class StudentRobot extends Robot {
 
   override def gameStop: Unit = ???
 
-
   override def run = {
     movementCommandMessenger.start
     while (true) {
@@ -38,14 +35,15 @@ class StudentRobot extends Robot {
     }
   }
 
-  override def loop: Unit = {
-    val movementCommand: MovementCommand = movementCommandMessenger.movementCommand
-    //val direction=in.readObject().asInstanceOf[java.lang.Double]
 
-    if (movementCommand.mode.equals(MovementCommand.MODE_POLAR)) {
-      L298NAO.move_pwm(movementCommand.point2D)
+  override def loop: Unit = {
+    //val direction=in.readObject().asInstanceOf[java.lang.Double]
+    if (movementCommandMessenger.movementCommand.mode.equals(MovementCommand.MODE_POLAR)) {
+      L298NAO.move_pwm(movementCommandMessenger.movementCommand.point2D)
     } else {
       //TODO calculate polar command from current location
     }
   }
+
+  override var deviceInfo: DeviceInfo = DeviceInfo.create(name, DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT)
 }
