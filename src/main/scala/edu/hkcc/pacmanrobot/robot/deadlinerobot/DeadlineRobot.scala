@@ -15,7 +15,7 @@ class DeadlineRobot(name: String) extends Robot {
   def gameSetup {
   }
 
-  def gameStart {
+  override def gameStart {
   }
 
   def gamePause {

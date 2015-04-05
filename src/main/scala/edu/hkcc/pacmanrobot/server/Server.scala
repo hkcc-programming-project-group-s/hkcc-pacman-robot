@@ -4,7 +4,7 @@ import java.net.ServerSocket
 import java.util.concurrent.ConcurrentHashMap
 
 import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
+import edu.hkcc.pacmanrobot.utils.map.{MapContent, MapKey, ObstacleMapManager, ObstacleMap}
 import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, MovementCommand, MovementCommandMessenger}
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.{DeviceInfo, GameStatus, Messenger, Position}
 
@@ -43,7 +43,10 @@ object Server extends App {
       val serverSocket = new ServerSocket(Config.PORT_MAP)
       while (true) {
         obstacleMapMessengers :+= new Messenger[ObstacleMap](serverSocket.accept(), Config.PORT_MAP) {
-          override def autoGet(message: ObstacleMap): Unit = {}
+          override def autoGet(message: ObstacleMap): Unit = {
+            obstacleMapMessengers.par.foreach(messenger =>  messenger.sendMessage(message))
+            obstacleMapManager.addMap(message)
+          }
         }
       }
     }
@@ -53,7 +56,9 @@ object Server extends App {
       val serverSocket = new ServerSocket(Config.PORT_POSITION)
       while (true) {
         positionMessengers :+= new Messenger[Position](serverSocket.accept(), Config.PORT_POSITION) {
-          override def autoGet(message: Position): Unit = {}
+          override def autoGet(message: Position): Unit = {
+            positionManager = message
+          }
         }
       }
     }
@@ -63,6 +68,8 @@ object Server extends App {
   var deviceInfos = new ConcurrentHashMap[Array[Byte], DeviceInfo]()
   var controllerRobotPairManager = new ControllerRobotPairManager
   var obstacleMapMessengers = Vector.empty[Messenger[ObstacleMap]]
+  var positionManager = new Position
+  var obstacleMapManager = new ObstacleMapManager{}
   var positionMessengers = Array.empty[Messenger[Position]]
 
   def switchGameStatus(gameStatus: GameStatus): Unit = {
