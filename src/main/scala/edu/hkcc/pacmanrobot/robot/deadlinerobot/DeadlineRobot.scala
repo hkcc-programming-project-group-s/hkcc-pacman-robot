@@ -42,22 +42,20 @@ class DeadlineRobot(name: String) extends Robot {
   }
 
   def loop: Unit = {
-    val dir: Point2D = getTargetPosition
+    val dir: Point2D[java.lang.Double] = getTargetPosition
     if (dir._1 > 0)
       dir._1 = R
     else if (dir._1 < 0)
       dir._1 = L
-    L298NAO.move_pwm(dir)
+    L298NAO.move(dir)
   }
 
-  def getTargetPosition: Point2D = {
-    new Point2D(range(Mpu6050AO.getZRotaion), 5)
+  def getTargetPosition: Point2D[java.lang.Double] = {
+    new Point2D[java.lang.Double](range(Mpu6050AO.getZRotaion), 5)
   }
 
-  def range(d: Double) = {
+  def range(d: java.lang.Double): java.lang.Double = {
     println("\t turn to: " + d)
     d
   }
-
-  override var deviceInfo: DeviceInfo = DeviceInfo.create(name, DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT)
 }

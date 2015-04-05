@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="NeuroEvolution">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
