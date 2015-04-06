@@ -15,7 +15,7 @@ import edu.hkcc.pacmanrobot.utils.studentrobot.code.Messenger
 /**
  * Created by beenotung on 3/27/15.
  */
-abstract class ObstacleMapManager extends Thread {
+class ObstacleMapManager extends Thread {
 
   val messenger: Messenger[ObstacleMap] = Messenger.create[ObstacleMap](Config.PORT_MAP)
 
@@ -56,21 +56,21 @@ abstract class ObstacleMapManager extends Thread {
     bufferedMap
   }
 
-  protected def getDeltaUpdatedMap(shouldUpdate: (MapKey, MapContent) => Boolean): ObstacleMap = {
+  protected def getDeltaUpdatedMap(shouldUpdate: (MapKey, Long) => Boolean): ObstacleMap = {
     semaphore.tryAcquire
     val bufferedMap = new ObstacleMap
-    map.forEach(new BiConsumer[MapKey, MapContent] {
-      override def accept(key: MapKey, value: MapContent) = {
+    map.forEach(new BiConsumer[MapKey, Long] {
+      override def accept(key: MapKey, value: Long) = {
         if (shouldUpdate(key, value))
-          bufferedMap.put(key.clone.asInstanceOf[MapKey], value.asInstanceOf[MapContent])
+          bufferedMap.put(key.clone.asInstanceOf[MapKey], value.asInstanceOf[Long])
       }
     })
     semaphore.release
     bufferedMap
   }
 
-  def shouldUpdate(key: MapKey, value: MapContent): Boolean = {
-    if(value.time<lastSendMapTime) true
+  def shouldUpdate(key: MapKey, time: Long): Boolean = {
+    if(time<lastSendMapTime) true
     else false
   }
 

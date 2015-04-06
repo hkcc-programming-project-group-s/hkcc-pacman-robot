@@ -8,7 +8,7 @@ import edu.hkcc.pacmanrobot.robot.core.Robot
 import edu.hkcc.pacmanrobot.robot.utils.{L298NAO, Mpu6050AO}
 import edu.hkcc.pacmanrobot.utils.Maths._
 import edu.hkcc.pacmanrobot.utils.Point2D
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.DeviceInfo
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
 
 
 class DeadlineRobot(name: String) extends Robot {

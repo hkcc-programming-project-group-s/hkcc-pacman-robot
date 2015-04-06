@@ -1,28 +1,26 @@
 package edu.hkcc.pacmanrobot.server
 
 import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.DeviceInfo
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
 
-import scala.collection.mutable
+import scala.collection.parallel.mutable.ParArray
 
 /**
  * Created by beenotung on 4/6/15.
  */
 class DeviceInfoManager {
-  val deviceInfos = new mutable.HashMap[Array[Byte], DeviceInfo]
-  val messengerManager = new MessengerManager[DeviceInfo](Config.PORT_DEVICE_INFO,
-    message => deviceInfos.put(message.MAC_ADDRESS, message)
-  )
+  var deviceInfos = ParArray.empty[DeviceInfo]
+  val messengerManager = new MessengerManager[DeviceInfo](Config.PORT_DEVICE_INFO, (_, message) =>
+    if (deviceInfos.foldLeft(false)((contain, deviceInfo) => contain || message.equals(deviceInfo)))
+      deviceInfos :+= message)
 
-  def getDeviceId(macAddress: Array[Byte]): Int = {
-    val keys = deviceInfos.keySet.toArray
+  def getDeviceIdByMacAddress(macAddress: Array[Byte]): Int = {
     var id = -1
-    Range(0, keys.length).foreach(i => if (keys(i).equals(macAddress)) id = i)
+    Range(0, deviceInfos.length).foreach(i => if (macAddress.equals(deviceInfos(i))) id = i)
     id
   }
 
-  def getMacAddress(id: Int): Array[Byte] = {
-    val keys = deviceInfos.keys.toArray
-    keys(id)
+  def getMacAddressByDeviceId(deviceId: Int): Array[Byte] = {
+    deviceInfos(deviceId).MAC_ADDRESS
   }
 }

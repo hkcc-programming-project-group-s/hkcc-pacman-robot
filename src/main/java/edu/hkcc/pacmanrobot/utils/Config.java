@@ -16,4 +16,5 @@ public class Config {
     public static long MOVEMENT_COMMAND_INTERVAL = 50;
     public static long MOTOR_CYCLE_INTERVAL = 500;
     public static long SYNC_MAP_CYCLE_INTERVAL = 1000;
+    public static long SAVE_INTERVAL=2000L;
 }

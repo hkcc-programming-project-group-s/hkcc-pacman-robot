@@ -10,28 +10,37 @@ import java.util.function.BiConsumer
 import edu.hkcc.pacmanrobot.utils.Config
 
 
-class ObstacleMap extends ConcurrentHashMap[MapKey, MapContent] with Cloneable with Message {
+class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Message {
   override val port: Int = Config.PORT_MAP
 
   def isExist(target: MapUnit): Boolean = {
-    keySet.contains(target.key)
+    keySet.contains(target.location)
   }
 
   /*alternative method to access the map*/
   def put(mapUnit: MapUnit) {
-    put(mapUnit.key, mapUnit.value)
+    put(mapUnit.location, mapUnit.time)
   }
 
   /*alternative method to access the map*/
   def get(mapUnit: MapUnit) {
-    mapUnit.value.set(get(mapUnit.key))
+    mapUnit.time = get(mapUnit.location)
+  }
+
+  def merge(obstacleMap: ObstacleMap): Unit =
+  {
+    obstacleMap.forEach(new BiConsumer[MapKey,Long] {
+      override def accept(key: MapKey, value: Long): Unit = {
+        put(key,value)
+      }
+    })
   }
 
   override def clone: AnyRef = {
     val newInstance: ObstacleMap = new ObstacleMap
-    forEach(new BiConsumer[MapKey, MapContent] {
-      override def accept(key: MapKey, value: MapContent) = {
-        newInstance.put(key.clone.asInstanceOf[MapKey], value.asInstanceOf[MapContent])
+    forEach(new BiConsumer[MapKey, Long] {
+      override def accept(key: MapKey, value: Long) = {
+        newInstance.put(key.clone.asInstanceOf[MapKey], value)
       }
     })
     newInstance

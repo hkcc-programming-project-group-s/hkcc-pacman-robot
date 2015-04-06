@@ -3,8 +3,5 @@ package edu.hkcc.pacmanrobot.utils.map
 /**
  * Created by beenotung on 3/21/15.
  */
-abstract class MapUnit(val key: MapKey, val value: MapContent = new MapContent) extends Cloneable {
-  def getLatestTime: Long
-
-  def setTime(Time: Long, preservedLong: Long)
+class MapUnit(val location: MapKey, var time: Long = System.currentTimeMillis()) extends Cloneable with Serializable {
 }
