@@ -9,13 +9,13 @@ import scala.collection.parallel.mutable.ParArray
 /**
  * Created by beenotung on 4/5/15.
  */
-class MessengerManager[Type](val servicePort: Int, autoGet_func: Type => Unit) {
+class MessengerManager[Type](val servicePort: Int, autoGet_func: (Array[Byte],Type) => Unit) {
   val thread = new Thread(new Runnable {
     override def run(): Unit = {
       while (true) {
         messengers :+= new Messenger[Type](serverSocket.accept(), servicePort) {
           override def autoGet(message: Type): Unit = {
-            autoGet_func(message)
+            autoGet_func(getRemoteMacAddress,message)
           }
         }
       }

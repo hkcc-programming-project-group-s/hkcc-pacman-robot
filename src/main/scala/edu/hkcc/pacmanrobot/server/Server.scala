@@ -3,8 +3,8 @@ package edu.hkcc.pacmanrobot.server
 import java.net.ServerSocket
 import java.util.concurrent.ConcurrentHashMap
 
-import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.map.{MapContent, MapKey, ObstacleMapManager, ObstacleMap}
+import edu.hkcc.pacmanrobot.utils.Config._
+import edu.hkcc.pacmanrobot.utils.map.{ObstacleMap, ObstacleMapManager}
 import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, MovementCommand, MovementCommandMessenger}
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.{DeviceInfo, GameStatus, Messenger, Position}
 
@@ -14,16 +14,23 @@ import scala.collection.mutable.ArrayBuffer
  * Created by 13058456a on 4/2/2015.
  */
 object Server extends App {
-  //val studentRobots = new ArrayBuffer[RobotInfo]
-  val deviceInfoMessengerManager = new MessengerManager[DeviceInfo](Config.PORT_DEVICE_INFO, { deviceInfo => deviceInfos.put(deviceInfo.MAC_ADDRESS, deviceInfo) })
-  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](Config.PORT_CONTROLLER_ROBOT_PAIR, { controllerRobotPair => controllerRobotPairManager.setControllerRobotPair(controllerId = controllerRobotPair.controllerId, robotId = controllerRobotPair.robotId) })
-  val gameStatusMessengerManager = new MessengerManager[GameStatus](Config.PORT_GAME_STATUS, { gamestatus => switchGameStatus(gamestatus) })
-  val movementCommandMessengers = new ArrayBuffer[MovementCommandMessenger]
+  val deviceInfoManager = new DeviceInfoManager
 
-  gameSetup
+  val positions = new ConcurrentHashMap[Int, Position]()
+  val positionMessengerManager = new MessengerManager[Position](PORT_POSITION, {
+    (macAddress, position) => {
+      positions.put(deviceInfoManager.getDeviceId(macAddress), position)
+    }
+  })
+
+  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, { (_,controllerRobotPair) => controllerRobotPairManager.setControllerRobotPair(controllerId = controllerRobotPair.controllerId, robotId = controllerRobotPair.robotId) })
+
+  val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS, { (_,gamestatus) => switchGameStatus(gamestatus) })
+
+  val movementCommandMessengers = new ArrayBuffer[MovementCommandMessenger]
   val MovementCommandThread = new Thread(new Runnable {
     override def run(): Unit = {
-      val serverSocket = new ServerSocket(Config.PORT_MOVEMENT_COMMAND)
+      val serverSocket = new ServerSocket(PORT_MOVEMENT_COMMAND)
       while (true) {
         movementCommandMessengers += new MovementCommandMessenger(serverSocket.accept()) {
           override def autoGet_func(message: MovementCommand): Unit = {
@@ -40,11 +47,11 @@ object Server extends App {
   })
   val ObstacleMapThread = new Thread(new Runnable {
     override def run(): Unit = {
-      val serverSocket = new ServerSocket(Config.PORT_MAP)
+      val serverSocket = new ServerSocket(PORT_MAP)
       while (true) {
-        obstacleMapMessengers :+= new Messenger[ObstacleMap](serverSocket.accept(), Config.PORT_MAP) {
+        obstacleMapMessengers :+= new Messenger[ObstacleMap](serverSocket.accept(), PORT_MAP) {
           override def autoGet(message: ObstacleMap): Unit = {
-            obstacleMapMessengers.par.foreach(messenger =>  messenger.sendMessage(message))
+            obstacleMapMessengers.par.foreach(messenger => messenger.sendMessage(message))
             obstacleMapManager.addMap(message)
           }
         }
@@ -53,9 +60,9 @@ object Server extends App {
   })
   val PositionThread = new Thread(new Runnable {
     override def run(): Unit = {
-      val serverSocket = new ServerSocket(Config.PORT_POSITION)
+      val serverSocket = new ServerSocket(PORT_POSITION)
       while (true) {
-        positionMessengers :+= new Messenger[Position](serverSocket.accept(), Config.PORT_POSITION) {
+        positionMessengers :+= new Messenger[Position](serverSocket.accept(), PORT_POSITION) {
           override def autoGet(message: Position): Unit = {
             positionManager = message
           }
@@ -66,11 +73,11 @@ object Server extends App {
   })
   var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
   var deviceInfos = new ConcurrentHashMap[Array[Byte], DeviceInfo]()
-  var controllerRobotPairManager = new ControllerRobotPairManager
-  var obstacleMapMessengers = Vector.empty[Messenger[ObstacleMap]]
-  var positionManager = new Position
-  var obstacleMapManager = new ObstacleMapManager{}
-  var positionMessengers = Array.empty[Messenger[Position]]
+  val controllerRobotPairManager = new ControllerRobotPairManager
+  val obstacleMapMessengers = Vector.empty[Messenger[ObstacleMap]]
+  val positionManager = new Position
+  val obstacleMapManager = new ObstacleMapManager {}
+  val positionMessengers = Array.empty[Messenger[Position]]
 
   def switchGameStatus(gameStatus: GameStatus): Unit = {
     gameStatusMessengerManager.messengers.foreach(messenger => messenger.sendMessage(gameStatus))
@@ -82,6 +89,8 @@ object Server extends App {
       case GameStatus.STATE_STOP => gameStop
     }
   }
+
+  gameSetup
 
   def gameResume: Unit = ???
 
