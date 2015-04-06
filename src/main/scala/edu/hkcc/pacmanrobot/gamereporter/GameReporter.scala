@@ -2,7 +2,7 @@ package edu.hkcc.pacmanrobot.gamereporter
 
 import java.util.Scanner
 
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.DeviceInfo
+
 
 /**
  * Created by Winner on 5/4/2015.

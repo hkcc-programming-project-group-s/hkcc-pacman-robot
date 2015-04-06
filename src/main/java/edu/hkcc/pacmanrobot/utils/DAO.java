@@ -30,7 +30,7 @@ public class DAO {
         /*
         send the position(x,y) and time to database per ?? s
         */
-        public void sendPosition(double x_axis, double y_axis, double z_axis, int robotID, Timestamp time) {
+        public void sendPosition(int x_axis, int y_axis, int z_axis, int robotID, long time) {
             sendPosition(robotID, new Position(x_axis, y_axis, z_axis, time));
         }
 
@@ -44,10 +44,10 @@ public class DAO {
             get position of this robot ID from database
         */
         public Position getTargetPosition(int robotID) {
-            double x, y, z;
+            int x, y, z;
             x = y = z = 0;
 
-            Position result = new Position(x, y, z, new Timestamp(System.currentTimeMillis()));
+            Position result = new Position(x, y, z, System.currentTimeMillis());
 
             return result;
         }

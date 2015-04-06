@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.studentrobot.code
+package edu.hkcc.pacmanrobot.utils.message
 
 import java.net.{InetAddress, NetworkInterface}
 
@@ -30,7 +30,7 @@ object DeviceInfo extends Message {
   }
 }
 
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.DeviceInfo.getLocalMacAddress
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
 
 class DeviceInfo(var name: String, var ip: String, var deviceType: Byte, var lastConnectionTime: Long = 0) extends Serializable {
   val MAC_ADDRESS: Array[Byte] = getLocalMacAddress

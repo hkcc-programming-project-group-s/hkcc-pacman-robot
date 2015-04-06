@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.utils
 
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{Messenger, DeviceInfo, GameStatus}
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.{Messenger, GameStatus}
 
 
 /**
