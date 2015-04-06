@@ -8,25 +8,23 @@ import scala.util.Random
 object Utils {
   val random = new Random(System.currentTimeMillis())
 
-  def getRangeLong[Type](array: Array[Type], getValue: Type => Long): Long = {
+  @deprecated
+  def getRangeInt[Type](array: Array[Type], getValue: Type => Int): Int = {
     if (array.length < 1) 0
     else {
-      var min: Long = 0L
-      var max: Long = 0L
-      (min, max) = array.foldLeft[(Long, Long)](getValue(array(0)), getValue(array(0)))
-      ((accum: (Long, Long), content: Type) => {
+      val range = array.foldLeft[(Int, Int)](getValue(array(0)), getValue(array(0)))((accum: (Int, Int), content: Type) => {
         ( {
-          if (accum._1 < getValue(content)) accum._1; else getValue(content)
+          if (accum._1 < getValue(content)) accum._1 else getValue(content)
         }, {
-          if (accum._2 > getValue(content)) accum._2; else getValue(content)
+          if (accum._2 > getValue(content)) accum._2 else getValue(content)
         })
       })
-      max - min + 1
+      range._2 - range._1 + 1
     }
   }
 
   def getTabularSize[T](array: Array[Array[T]]): Int = {
-    array.length * (array(0).length)
+    array.length * array(0).length
   }
 
   def minus(p1: Point2D[Int], p2: Point2D[Int]): Point2D[Int] = {

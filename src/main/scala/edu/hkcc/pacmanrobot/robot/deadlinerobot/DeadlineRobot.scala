@@ -47,7 +47,7 @@ class DeadlineRobot(name: String) extends Robot {
       dir._1 = R
     else if (dir._1 < 0)
       dir._1 = L
-    L298NAO.move(dir)
+    L298NAO.move_pwm(dir)
   }
 
   def getTargetPosition: Point2D[java.lang.Double] = {
