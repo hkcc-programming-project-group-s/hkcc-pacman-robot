@@ -69,7 +69,10 @@ abstract class ObstacleMapManager extends Thread {
     bufferedMap
   }
 
-  def shouldUpdate(key: MapKey, value: MapContent): Boolean
+  def shouldUpdate(key: MapKey, value: MapContent): Boolean = {
+    if(value.time<lastSendMapTime) true
+    else false
+  }
 
 
   protected def sendMap = {
@@ -85,7 +88,9 @@ abstract class ObstacleMapManager extends Thread {
   }
 
   //TODO get all from queue
-  protected def myReceiveMap
+  protected def myReceiveMap ={
+    addMap(messenger.getMessage)
+  }
 
   def addMap(deltaObstacleMap: ObstacleMap) {
     semaphore.tryAcquire
