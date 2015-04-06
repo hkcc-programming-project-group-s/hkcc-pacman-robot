@@ -43,10 +43,8 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, MapContent] with Cloneable w
   }
 
   def toArray: Array[Array[Boolean]] = {
-    var width: Int = 0
-    var height: Int = 0
-    (width, height) = getDimension
-    val array = Array.tabulate[Boolean](width, height) { (x, y) => {
+    val dimension = getDimension
+    val array = Array.tabulate[Boolean](dimension._1, dimension._2) { (x, y) => {
       val key: MapKey = searchKeys[MapKey](8, new java.util.function.Function[MapKey, MapKey] {
         override def apply(t: MapKey): MapKey = {
           if (t.x.toInt.equals(x) && t.y.toInt.equals(y)) t else null
@@ -70,12 +68,13 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, MapContent] with Cloneable w
     else 0d
   }
 
-  def getDimension: (Long, Long) = {
+  def getDimension: (Int, Int) = {
     val buffer: Array[MapKey] = keySet().toArray[MapKey](buffer)
-    val width = Utils.getRangeLong[MapKey](array = buffer, getValue = (mapKey: MapKey) => mapKey.x)
-    val height = Utils.getRangeLong[MapKey](array = buffer, getValue = (mapKey: MapKey) => mapKey.y)
+    buffer.maxBy(k => k.x)
+    val width = Utils.getRangeInt[MapKey](array = buffer, getValue = (mapKey: MapKey) => mapKey.x)
+    val height = Utils.getRangeInt[MapKey](array = buffer, getValue = (mapKey: MapKey) => mapKey.y)
     (width, height)
   }
-}
+
 
 }

@@ -1,13 +1,13 @@
 package edu.hkcc.pacmanrobot.robot.utils
 
-import java.util.concurrent.{Semaphore, ConcurrentHashMap}
+import java.util.concurrent.ConcurrentHashMap
 
+import edu.hkcc.pacmanrobot.robot.utils.PathFinder.Direction.direction_array
 import edu.hkcc.pacmanrobot.utils.Utils.{getTabularSize, minus}
 import edu.hkcc.pacmanrobot.utils.{Point2D, Utils}
 import neuroevolution.geneticalgorithm.{GA, ProblemType}
 
 import scala.collection.mutable.Set
-
 
 /**
  * Created by beenotung on 4/1/15.
@@ -15,7 +15,7 @@ import scala.collection.mutable.Set
 object PathFinder {
 
   val directionMapBuffer = new ConcurrentHashMap[String, Array[Int]]()
-  val bitInts = for (i <- 0 to 1024) yield Math.pow(2, i)
+  val bitInts = for (i <- 0 to 30) yield Math.round(Math.pow(2, i)).toInt
 
   def decode(rawCode: Array[Boolean]): Array[Int] = {
     var directionMap: Array[Int] = directionMapBuffer.get(rawCode.toString)
@@ -30,32 +30,20 @@ object PathFinder {
   def decode(rawCode: Array[Boolean], directionMap: Array[Int]) = {
     directionMap.indices.par.foreach(i => directionMap(i) = bitsToInt(rawCode, Direction.bitSize * i, Direction.bitSize))
   }
-  def encode( directionMap: Array[Int],rawCode: Array[Boolean]) = {
-    directionMap.indices.par.foreach(i=>)
-  }
-
 
   def bitsToInt(bits: Array[Boolean], start: Int, length: Int): Int = {
-    var value = 0
-    Range(start, start + length).foreach(i => if (bits(i)) value += bitInts(i - start + 1))
-    value
-  }
-  def intToBits(value:Int,bits: Array[Boolean], start: Int, length: Int) {
-    Range(1,length+1).reverse.foreach(i=>
-    if(value>=)
-    )
-    Range(start, start + length).foreach(i => if (bits(i)) result += bitInts(i - start + 1))
+    Range(start, start + length).foldLeft(0)((value, i) => if (bits(i)) value + bitInts(i - start) else value)
   }
 
   object Direction {
-    val UP = 0
-    val DOWN = 1
-    val LEFT = 2
-    val RIGHT = 3
-    val UP_LEFT = 4
-    val UP_RIGHT = 5
-    val DOWN_LEFT = 6
-    val DOWN_RIGHT = 7
+    val UP: Byte = 0
+    val DOWN: Byte = 1
+    val LEFT: Byte = 2
+    val RIGHT: Byte = 3
+    val UP_LEFT: Byte = 4
+    val UP_RIGHT: Byte = 5
+    val DOWN_LEFT: Byte = 6
+    val DOWN_RIGHT: Byte = 7
     val bitSize: Int = 3
     val UP_SET = Set(UP, UP_LEFT, UP_RIGHT)
     val DOWN_SET = Set(DOWN, DOWN_LEFT, DOWN_RIGHT)
@@ -64,19 +52,21 @@ object PathFinder {
     val ALL_SET = Set(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT)
     val ALL_SET_ARRAY = ALL_SET.toArray
 
-    def getDirection(xy: Point2D[Int]): Int = {
+    val direction_array = Array((0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (1, 1), (-1, -1), (1, -1))
+
+    def getDirection(xy: Point2D[Int]): Byte = {
       var result = ALL_SET
-      result.dropWhile({ s: Int => xy._2 < 0 && UP_SET.contains(s) })
-      result.dropWhile({ s: Int => xy._2 > 0 && DOWN_SET.contains(s) })
-      result.dropWhile({ s: Int => xy._1 > 0 && LEFT_SET.contains(s) })
-      result.dropWhile({ s: Int => xy._1 < 0 && RIGHT_SET.contains(s) })
+      result.dropWhile({ s: Byte => xy._2 < 0 && UP_SET.contains(s) })
+      result.dropWhile({ s: Byte => xy._2 > 0 && DOWN_SET.contains(s) })
+      result.dropWhile({ s: Byte => xy._1 > 0 && LEFT_SET.contains(s) })
+      result.dropWhile({ s: Byte => xy._1 < 0 && RIGHT_SET.contains(s) })
       if (result.isEmpty)
         randomDirection
       else
         result.head
     }
 
-    def randomDirection: Int = ALL_SET_ARRAY(Utils.random.nextInt(ALL_SET_ARRAY.length))
+    def randomDirection: Byte = ALL_SET_ARRAY(Utils.random.nextInt(ALL_SET_ARRAY.length))
   }
 }
 
@@ -84,6 +74,8 @@ class PathFinder(private var obstacleMap: Array[Array[Boolean]], var LOOP_INTERV
   var ai: GA = _
   var source = new Point2D[Int](0, 0)
   var destination = new Point2D[Int](0, 0)
+  val PUNISH_PER_OBSTACLE = 2
+  val PUNISH_FIRST_OBSTACLE = 1000
 
   def setMap(newObstacleMap: Array[Array[Boolean]]) = {
     val newSize = getTabularSize(newObstacleMap)
@@ -118,20 +110,29 @@ class PathFinder(private var obstacleMap: Array[Array[Boolean]], var LOOP_INTERV
   def setup = {
     /*ai = new GA(POP_SIZE = 32, BIT_SIZE = getTabularSize(obstacleMap) * PathFinder.Direction.bitSize,
       P_SELECTION = 0.25, P_MUTATION_POW = 2, A_MUTATION_POW = 4, EVAL_FITNESS_FUNCTION = eval, PROBLEM_TYPE = ProblemType.Minimize, LOOP_INTERVAL = 100)*/
-    ai=new GA(POP_SIZE = 32,BIT_SIZE = getTabularSize(obstacleMap)*PathFinder.Direction.bitSize,P_SELECTION = 0.25,
-    P_MUTATION_POW = 2,A_MUTATION_POW = 4,PARENT_IMMUTABLE = false,
-      EVAL_FITNESS_FUNCTION = eval,PROBLEM_TYPE = ProblemType.Minimize,
-    LOOP_INTERVAL=100L)
+    ai = new GA(POP_SIZE = 32, BIT_SIZE = getTabularSize(obstacleMap) * PathFinder.Direction.bitSize, P_SELECTION = 0.25,
+      P_MUTATION_POW = 2, A_MUTATION_POW = 4, PARENT_IMMUTABLE = false,
+      EVAL_FITNESS_FUNCTION = eval, PROBLEM_TYPE = ProblemType.Minimize,
+      LOOP_INTERVAL = 100L)
     ai.genes.foreach(gene => gene.rawCode)
   }
 
   def eval(rawCode: Array[Boolean]): Double = {
     val directionMap = PathFinder.decode(rawCode)
     val MAX_STEP = getMaxStep
-    var step = 0L
-    do {
-
-    } while (step < MAX_STEP)
+    var step = 0
+    val currentPosition = source
+    var obstacleCount = 0
+    while (step < MAX_STEP && !destination.equals(currentPosition)) {
+      currentPosition._1 += direction_array(directionMap(step))._1
+      currentPosition._2 += direction_array(directionMap(step))._2
+      if (obstacleMap(currentPosition._1)(currentPosition._2)) obstacleCount += 1
+      step += 1
+    }
+    if (obstacleCount >= 0)
+      step + PUNISH_FIRST_OBSTACLE + obstacleCount * PUNISH_PER_OBSTACLE
+    else
+      step
   }
 
   def getMaxStep: Long = {
