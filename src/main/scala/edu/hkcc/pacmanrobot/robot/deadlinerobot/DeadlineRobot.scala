@@ -12,6 +12,8 @@ import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
 
 
 class DeadlineRobot(name: String) extends Robot {
+  override var deviceInfo = DeviceInfo.create(name, DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT)
+
   def gameSetup {
   }
 
