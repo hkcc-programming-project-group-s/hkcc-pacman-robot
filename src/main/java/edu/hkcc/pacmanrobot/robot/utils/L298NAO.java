@@ -62,7 +62,7 @@ public class L298NAO {
         if (trueGpio.isLow()) trueGpio.high();
     }
 
-    public static void move_pwm(Point2D point2D) {
+    public static void move_pwm(Point2D<Double> point2D) {
         move_pwm(point2D._1, point2D._2);
     }
 
