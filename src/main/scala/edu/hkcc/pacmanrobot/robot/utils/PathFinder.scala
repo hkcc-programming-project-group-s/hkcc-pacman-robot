@@ -80,7 +80,7 @@ class PathFinder(private var obstacleMap: Array[Array[Boolean]], var LOOP_INTERV
   def setMap(newObstacleMap: Array[Array[Boolean]]) = {
     val newSize = getTabularSize(newObstacleMap)
     if (getTabularSize(obstacleMap) != newSize)
-      ai.resize(newSize)
+      ai.resize(newSize* PathFinder.Direction.bitSize)
     obstacleMap = newObstacleMap
   }
 

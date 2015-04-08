@@ -4,7 +4,6 @@ import java.net.ServerSocket
 
 import edu.hkcc.pacmanrobot.robot.utils.L298NAO
 import edu.hkcc.pacmanrobot.utils.map._
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.Messenger
 import edu.hkcc.pacmanrobot.utils.{Config, GameDevice}
 
 /**
@@ -13,9 +12,9 @@ import edu.hkcc.pacmanrobot.utils.{Config, GameDevice}
 abstract class Robot extends GameDevice {
   //public ObstacleMap<RobotMapUnit> map = new ObstacleMap<RobotMapUnit>();
 
-  val obstacleMapManager = new ObstacleMapManager{}
+  //TODO val obstacleMapManager = new ObstacleMapManager{}
    def gameStart ={
-    obstacleMapManager.run
+    //obstacleMapManager.run
   }
   override def setup = {
     L298NAO.both_stop()

@@ -1,13 +1,13 @@
-package edu.hkcc.pacmanrobot.utils.studentrobot.code
+package edu.hkcc.pacmanrobot.utils.message
 
-
-import java.io.{IOException, ObjectInputStream, ObjectOutputStream}
-import java.net.{NetworkInterface, Socket, SocketException}
-import java.util.Calendar
+import java.io.{ObjectInputStream, ObjectOutputStream}
+import java.net._
+import java.rmi.server.ServerNotActiveException
 import java.util.concurrent.{ConcurrentLinkedQueue, Semaphore}
 
+import edu.hkcc.pacmanrobot.server.MessengerManager
 import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.Config.RECONNECTION_TIMEOUT
+import edu.hkcc.pacmanrobot.utils.exception.ClientSocketClosedException
 
 
 /**
@@ -15,116 +15,161 @@ import edu.hkcc.pacmanrobot.utils.Config.RECONNECTION_TIMEOUT
  */
 
 object Messenger {
-  def create[MessageType](port: Int, autoGetFunc: (MessageType) => Unit = (message: MessageType) => {}): Messenger[MessageType] = {
-    println("try to connect to " + Config.serverAddress + ":" + port)
-    new Messenger[MessageType](port) {
-      override def autoGet(message: MessageType): Unit = {
+  def create[Type](port: Int, autoGetFunc: (Type) => Unit = (message: Type) => {}, messengerManager: MessengerManager[Type]): Messenger[Type] = {
+    println("creating messenger on port: " + port)
+    val messenger = new Messenger[Type](port, messengerManager) {
+      override def autoGet(message: Type): Unit = {
         autoGetFunc(message)
       }
     }
+    println("created messenger on port: " + port)
+    messenger
   }
 
+
+  @throws(classOf[ServerNotActiveException])
   def connect(port: Int): Socket = {
-    var socket: Socket = null
-    var ok: Boolean = false
-    do {
-      try {
-        println("try to reconnect to " + Config.serverAddress + ":" + port)
-        socket = new Socket(Config.serverAddress, port)
-        ok = true
+    var socket: Socket = new Socket()
+    try {
+      println("try to connect to " + Config.serverAddress + ":" + port)
+      socket = new Socket(Config.serverAddress, port)
+    }
+    catch {
+      case e: ConnectException => {
+        throw new ServerNotActiveException("Server is not available")
       }
-      catch {
-        case e: SocketException => {
-          printf("\n%s\n%s\n", Calendar.getInstance().getTime.toString, e.toString)
-          Thread.sleep(RECONNECTION_TIMEOUT)
-        }
-      }
-    } while (!ok)
+    }
+    println("connected to " + Config.serverAddress + ":" + port)
     socket
   }
 }
 
-abstract class Messenger[MessageType](var socket: Socket, val port: Int,
-                                      val SEND_INTERVAL: Long = 50, val GET_INTERVAL: Long = 50)
+abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerManager: MessengerManager[Type],
+                               val SEND_INTERVAL: Long = 50, val GET_INTERVAL: Long = 50)
   extends Thread {
-  var inputStream: ObjectInputStream = new ObjectInputStream(socket.getInputStream)
-  var outputStream: ObjectOutputStream = new ObjectOutputStream(socket.getOutputStream)
+  val currentMessenger = this
+  var inputStream: ObjectInputStream = null
+  var outputStream: ObjectOutputStream = null
   val inputThread: Thread = new Thread(new Runnable {
-    override def run = {
+
+    override def run: Unit = {
       while (true) {
-        try {
-          receiveMessage
-        }
-        catch {
-          case e: IOException => reconnect
-        }
+        receiveMessage
       }
     }
   })
   val outputThread: Thread = new Thread(new Runnable {
     override def run = {
       while (true) {
-        try {
-          sendMessage
-          Thread.sleep(SEND_INTERVAL)
-        }
-        catch {
-          case e: IOException => reconnect
-        }
-
+        sendMessage
+        Thread.sleep(SEND_INTERVAL)
       }
     }
   })
-  val outputQueue: ConcurrentLinkedQueue[MessageType] = new ConcurrentLinkedQueue[MessageType]
-  val inputQueue: ConcurrentLinkedQueue[MessageType] = new ConcurrentLinkedQueue[MessageType]
+
+  val outputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
+  val inputQueue: ConcurrentLinkedQueue[Type] = new ConcurrentLinkedQueue[Type]
   var active: Boolean = false
 
-  def reconnect = {
-    inputStream.close()
-    outputStream.close()
-    socket.close()
-    socket = Messenger.connect(socket.getPort)
+  @throws(classOf[ClientSocketClosedException[Type]])
+  def reconnect: Unit = {
+    try
+      inputStream.close()
+    catch {
+      case e: Exception => {}
+    }
+    try
+      outputStream.close()
+    catch {
+      case e: Exception => {}
+    }
+    try
+      socket.close()
+    catch {
+      case e: Exception => {}
+    }
+    do {
+      try
+        socket = Messenger.connect(socket.getPort)
+      catch {
+        case e: ServerNotActiveException =>
+          if (messengerManager != null)
+            throw e
+      }
+    } while (!socket.isConnected || socket.isClosed)
     inputStream = new ObjectInputStream(socket.getInputStream)
     outputStream = new ObjectOutputStream(socket.getOutputStream)
   }
 
-  def this(port: Int) = {
-    this(Messenger.connect(port), port)
+  def this(port: Int, messengerManager: MessengerManager[Type]) = {
+    this(Messenger.connect(port), port, messengerManager)
   }
 
   val socketSemaphore: Semaphore = new Semaphore(1)
 
-  def checkConnection = {
+  def checkConnection: Unit = {
+    println("check connection on port: " + port)
     socketSemaphore.tryAcquire()
     try {
-      if (socket.isClosed) {
+      if (socket.isClosed)
+        throw new SocketException("socket is closed (exception) on port: " + port)
+      if (inputStream == null)
+        inputStream = new ObjectInputStream(socket.getInputStream)
+      if (outputStream == null)
+        outputStream = new ObjectOutputStream(socket.getOutputStream)
+    } catch {
+      case e: SocketException => {
+        println(e.toString)
         reconnect
       }
-    } catch {
-      case e: SocketException => {}
+      case e: Exception => {
+        println(e.toString)
+        reconnect
+      }
     }
-    try
-      start
-    catch {
-      case e: IllegalThreadStateException => {}
-    }
+    if (!running)
+      try
+        run
+      catch {
+        case e: SocketException => {
+          println(e.toString)
+        }
+        case e: Exception => {
+          println(e.toString)
+        }
+      }
     socketSemaphore.release()
   }
 
-  def autoGet(message: MessageType): Unit
+  def autoGet(message: Type): Unit
 
-  override def run: Unit = {
-    checkConnection
+  var running = false
+
+  @throws(classOf[ClientSocketClosedException[Type]])
+  override def run :Unit= {
+    running = true
+    println("init messenger on port:" + port)
     try
+      checkConnection
+    catch {
+      case e: ClientSocketClosedException[Type] => {messengerManager.remove(currentMessenger);return}
+      case e:ServerNotActiveException=>if(messengerManager!=null){messengerManager.remove(currentMessenger);return}
+    }
+    try {
+      println("start to read from port:" + port)
       inputThread.start
+    }
     catch {
       case e: IllegalThreadStateException => {}
     }
-    try
+    try {
+      println("start to write to port:" + port)
       outputThread.start
+    }
     catch {
       case e: IllegalThreadStateException => {}
     }
+    println("started messenger on port:" + port)
   }
 
   override def interrupt = {
@@ -132,11 +177,11 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int,
     outputThread.interrupt
   }
 
-  def sendMessage(content: MessageType): Unit = {
+  def sendMessage(content: Type): Unit = {
     outputQueue.add(content)
   }
 
-  def getMessage: MessageType = {
+  def getMessage: Type = {
     while (inputQueue.isEmpty)
       Thread.sleep(GET_INTERVAL)
     inputQueue.poll
@@ -148,19 +193,21 @@ abstract class Messenger[MessageType](var socket: Socket, val port: Int,
 
   private def sendMessage: Unit = {
     if (!outputQueue.isEmpty) {
-      val message: MessageType = outputQueue.poll
+      val message: Type = outputQueue.poll
       outputStream.writeObject(message)
       println("sent " + message.toString)
     }
   }
 
   private def receiveMessage: Unit = {
-    val message: MessageType = inputStream.readObject.asInstanceOf[MessageType]
+    val message: Type = inputStream.readObject.asInstanceOf[Type]
     inputQueue.add(message)
     //println("received " + message.toString)
     autoGet(getMessage)
   }
-  def getRemoteMacAddress:Array[Byte]={
+
+  def getRemoteMacAddress: Array[Byte] = {
     NetworkInterface.getByInetAddress(socket.getInetAddress).getHardwareAddress
   }
+
 }

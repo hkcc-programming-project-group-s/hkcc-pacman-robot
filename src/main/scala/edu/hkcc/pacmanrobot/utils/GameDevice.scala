@@ -1,7 +1,7 @@
 package edu.hkcc.pacmanrobot.utils
 
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{Messenger, GameStatus}
+import edu.hkcc.pacmanrobot.utils.message.{Messenger, DeviceInfo}
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
 
 
 /**
@@ -34,7 +34,7 @@ abstract class Device extends Thread {
       case GameStatus.STATE_STOP => gameStop
     }
   }
-  })
+  },null)
 }
 
 abstract class GameDevice extends Device {
