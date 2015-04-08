@@ -5,15 +5,15 @@ import java.util.concurrent.ConcurrentHashMap
 
 import edu.hkcc.pacmanrobot.utils.Config._
 import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
-import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, MovementCommand, MovementCommandMessenger}
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{GameStatus, Messenger, Position}
+import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, Messenger, MovementCommand, MovementCommandMessenger}
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.{GameStatus, Position}
 
 import scala.collection.parallel.mutable.ParArray
 
 /**
  * Created by 13058456a on 4/2/2015.
  */
-object Server extends App {
+class Server extends Thread{
   val deviceInfoManager = new DeviceInfoManager
 
   val positions = new ConcurrentHashMap[Int, Position]()
@@ -31,11 +31,11 @@ object Server extends App {
   val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS, { (_, gamestatus) => switchGameStatus(gamestatus) })
 
   var movementCommandMessengers = ParArray.empty[MovementCommandMessenger]
-  val MovementCommandThread = new Thread(new Runnable {
+  val movementCommandThread = new Thread(new Runnable {
     override def run(): Unit = {
       val serverSocket = new ServerSocket(PORT_MOVEMENT_COMMAND)
       while (true) {
-        movementCommandMessengers :+= new MovementCommandMessenger(serverSocket.accept()) {
+        movementCommandMessengers :+= new MovementCommandMessenger(serverSocket.accept(),true) {
           override def autoGet_func(message: MovementCommand): Unit = {
             val robotId = controllerRobotPairManager.getRobotId(deviceInfoManager.getDeviceIdByMacAddress(messenger.getRemoteMacAddress))
             movementCommandMessengers.par.foreach(messenger =>
@@ -76,9 +76,9 @@ object Server extends App {
 
   def gameStop: Unit = ???
 
-  def gameSetup: Unit = ???
+  def gameSetup: Unit = {}
 
-  override def main(args: Array[String]) {
+  override def run={
     setup
     while (true) {
       Thread.sleep(SAVE_INTERVAL)
@@ -86,13 +86,23 @@ object Server extends App {
     }
   }
 
+  def startMessengerManagers = {
+    controllerRobotPairMessengerManager.start
+    gameStatusMessengerManager.start
+    movementCommandThread.start
+    obstacleMapMessengerManager.start
+    positionMessengerManager.start
+  }
+
   def setup: Unit = {
     load
-    gameSetup
+    startMessengerManagers
   }
 
   def load = {
     //TODO read last status from database
+    //if()
+    //gameSetup
   }
 
   def save = {

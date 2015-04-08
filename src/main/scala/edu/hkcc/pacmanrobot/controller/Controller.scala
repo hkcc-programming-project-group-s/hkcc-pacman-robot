@@ -1,14 +1,14 @@
 package edu.hkcc.pacmanrobot.controller
 
 import edu.hkcc.pacmanrobot.utils.GameDevice
-import edu.hkcc.pacmanrobot.utils.message.MovementCommand
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.Messenger
+import edu.hkcc.pacmanrobot.utils.message.{Messenger, MovementCommand}
+
 
 /**
  * Created by beenotung on 3/23/15.
  */
 abstract class Controller extends GameDevice {
-  val movementCommandMessenger: Messenger[MovementCommand] = Messenger.create[MovementCommand](MovementCommand.port)
+  val movementCommandMessenger: Messenger[MovementCommand] = Messenger.create[MovementCommand](MovementCommand.port,{message=>},null)
   var shouldSend = true
 
   def sendCommand(command: MovementCommand) {

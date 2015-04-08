@@ -10,7 +10,7 @@ import edu.hkcc.pacmanrobot.utils.message.{DeviceInfo, MovementCommand, Movement
  * Created by beenotung on 3/26/15.
  */
 class StudentRobot(name: String) extends Robot {
-  val movementCommandMessenger: MovementCommandMessenger = new MovementCommandMessenger() {
+  val movementCommandMessenger: MovementCommandMessenger = new MovementCommandMessenger(false) {
     override def autoGet_func(message: MovementCommand): Unit = {
       movementCommand = message
     }

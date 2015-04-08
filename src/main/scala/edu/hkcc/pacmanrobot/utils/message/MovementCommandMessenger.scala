@@ -3,21 +3,20 @@ package edu.hkcc.pacmanrobot.utils.message
 import java.net.Socket
 
 import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.Messenger
 
 
 /**
  * Created by beenotung on 3/26/15.
  */
-abstract class MovementCommandMessenger(socket: Socket) {
+abstract class MovementCommandMessenger(socket: Socket, val isServer: Boolean) {
   def autoGet_func(message: MovementCommand)
 
-  def this() = {
-    this(Messenger.connect(Config.PORT_MOVEMENT_COMMAND))
+  def this(isServer: Boolean) = {
+    this(Messenger.connect(Config.PORT_MOVEMENT_COMMAND), isServer)
   }
 
   var movementCommand: MovementCommand = MovementCommand.stop
-  val messenger = new Messenger[MovementCommand](Config.PORT_MOVEMENT_COMMAND) {
+  val messenger = new Messenger[MovementCommand](Config.PORT_MOVEMENT_COMMAND, null) {
     override def autoGet(message: MovementCommand): Unit = {
       autoGet_func(message)
     }

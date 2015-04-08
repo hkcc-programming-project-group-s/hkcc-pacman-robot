@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.controller.desktopcontroller;
+package edu.hkcc.pacmanrobot.controller.robotcontroller;
 
 
 import edu.hkcc.pacmanrobot.utils.Point2D;

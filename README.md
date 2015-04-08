@@ -28,8 +28,8 @@
 -	[ ]	Implement Server
 -	[ ]	Build Robot Absract Action API
 -	[ ]	Implement Java App
--	[ ]	Combine and Test the Robot Program with Android App, Server
--	[ ]	Final Test (Debug and Fine-tune)
+-	[ ]	Combine and edu.hkcc.pacmanrobot.launcher.Test the Robot Program with Android App, Server
+-	[ ]	Final edu.hkcc.pacmanrobot.launcher.Test (Debug and Fine-tune)
 -	[ ]	Complete Testing Report
 -	[ ]	Complete Demon Report
 -	[ ]	Present in HKTDC
