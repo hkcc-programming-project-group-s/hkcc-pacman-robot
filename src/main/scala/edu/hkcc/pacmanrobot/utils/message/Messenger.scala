@@ -28,17 +28,22 @@ object Messenger {
 
 
   @throws(classOf[ServerNotActiveException])
-  def connect(port: Int): Socket = {
+  def connect(port: Int, isServer: Boolean): Socket = {
     var socket: Socket = new Socket()
-    try {
-      println("try to connect to " + Config.serverAddress + ":" + port)
-      socket = new Socket(Config.serverAddress, port)
-    }
-    catch {
-      case e: ConnectException => {
-        throw new ServerNotActiveException("Server is not available")
+    do {
+      try {
+        println("try to connect to " + Config.serverAddress + ":" + port)
+        socket = new Socket(Config.serverAddress, port)
       }
-    }
+      catch {
+        case e: ConnectException => {
+          if (isServer)
+            throw new ServerNotActiveException("Server is not available")
+          else
+            Thread.sleep(Config.RECONNECTION_TIMEOUT)
+        }
+      }
+    } while (socket.isClosed || !socket.isConnected)
     println("connected to " + Config.serverAddress + ":" + port)
     socket
   }
@@ -90,7 +95,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
     }
     do {
       try
-        socket = Messenger.connect(socket.getPort)
+        socket = Messenger.connect(socket.getPort,messengerManager!=null)
       catch {
         case e: ServerNotActiveException =>
           if (messengerManager != null)
@@ -102,7 +107,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   }
 
   def this(port: Int, messengerManager: MessengerManager[Type]) = {
-    this(Messenger.connect(port), port, messengerManager)
+    this(Messenger.connect(port, false), port, messengerManager)
   }
 
   val socketSemaphore: Semaphore = new Semaphore(1)
@@ -146,14 +151,18 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   var running = false
 
   @throws(classOf[ClientSocketClosedException[Type]])
-  override def run :Unit= {
+  override def run: Unit = {
     running = true
     println("init messenger on port:" + port)
     try
       checkConnection
     catch {
-      case e: ClientSocketClosedException[Type] => {messengerManager.remove(currentMessenger);return}
-      case e:ServerNotActiveException=>if(messengerManager!=null){messengerManager.remove(currentMessenger);return}
+      case e: ClientSocketClosedException[Type] => {
+        messengerManager.remove(currentMessenger); return
+      }
+      case e: ServerNotActiveException => if (messengerManager != null) {
+        messengerManager.remove(currentMessenger); return
+      }
     }
     try {
       println("start to read from port:" + port)

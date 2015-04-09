@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot.iml" filepath="$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot-build.iml" filepath="$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/java-myutils/src/myutils.iml" filepath="$PROJECT_DIR$/lib/java-myutils/src/myutils.iml" />
     </modules>
   </component>
 </project>

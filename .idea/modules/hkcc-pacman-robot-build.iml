@@ -124,6 +124,5 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="lib-pacman" level="project" />
   </component>
 </module>

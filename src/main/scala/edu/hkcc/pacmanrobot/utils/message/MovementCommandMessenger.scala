@@ -12,7 +12,7 @@ abstract class MovementCommandMessenger(socket: Socket, val isServer: Boolean) {
   def autoGet_func(message: MovementCommand)
 
   def this(isServer: Boolean) = {
-    this(Messenger.connect(Config.PORT_MOVEMENT_COMMAND), isServer)
+    this(Messenger.connect(Config.PORT_MOVEMENT_COMMAND,isServer), isServer)
   }
 
   var movementCommand: MovementCommand = MovementCommand.stop

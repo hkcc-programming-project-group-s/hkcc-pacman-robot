@@ -11,4 +11,8 @@ class MapKey(val x: Int, val y: Int) extends Cloneable {
   def equal(mapKey: MapKey): Boolean = {
     x.equals(mapKey.x) && y.equals(mapKey.y)
   }
+
+  override def toString: String = {
+    "(" + x + "," + y + ")"
+  }
 }

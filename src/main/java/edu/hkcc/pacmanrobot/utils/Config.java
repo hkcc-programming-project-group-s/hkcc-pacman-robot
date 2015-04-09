@@ -4,6 +4,7 @@ package edu.hkcc.pacmanrobot.utils;
  * Created by beenotung on 3/26/15.
  */
 public class Config {
+    //40152-65535
     public static final int PORT_MAP = 4211;
     public static final int PORT_GAME_STATUS = 4212;
     public static final int PORT_MOVEMENT_COMMAND = 4218;
