@@ -703,9 +703,9 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-agent;0.13.8!test-agent.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-interface;1.0!test-interface.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.8!apply-macro.jar
-[debug] :: resolution report :: resolve 1649ms :: artifacts dl 29ms
+[debug] :: resolution report :: resolve 1647ms :: artifacts dl 37ms
 [debug] 	report for sbt_robot#sbt_robot$sbt_2.11;1.0 default produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sbt_2.11-default.xml
-[debug] 	resolve done (1649ms resolve - 29ms download)
+[debug] 	resolve done (1647ms resolve - 37ms download)
 [debug] Using inline dependencies specified in Scala.
 [debug] :: resolving dependencies :: sbt_robot#sbt_robot$sources_2.11;1.0
 [debug] 	confs: [default]
@@ -1069,6 +1069,6 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_8_2;0.13.8!precompiled-2_8_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_2;0.13.8!precompiled-2_9_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_3;0.13.8!precompiled-2_9_3.jar(src)
-[debug] :: resolution report :: resolve 180ms :: artifacts dl 53ms
+[debug] :: resolution report :: resolve 162ms :: artifacts dl 19ms
 [debug] 	report for sbt_robot#sbt_robot$sources_2.11;1.0 default produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_2.11-default.xml
-[debug] 	resolve done (180ms resolve - 53ms download)
+[debug] 	resolve done (162ms resolve - 19ms download)

@@ -7,14 +7,29 @@ package edu.hkcc.pacmanrobot.utils.map
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
-import edu.hkcc.pacmanrobot.utils.Config
+import edu.hkcc.pacmanrobot.utils.{Config, Point2D}
 
+object ObstacleMap {
+  var deprecate_rate: Double = estimated_game_duration_in_minutes / -1000d / 60d
+  private var _estimated_game_duration_in_minutes: Double = 5d
+
+  def estimated_game_duration_in_minutes: Double = _estimated_game_duration_in_minutes
+
+  def estimated_game_duration_in_minutes_=(newValue: Double) {
+    _estimated_game_duration_in_minutes = newValue
+    deprecate_rate = 1d / newValue / -1000d / 60d
+  }
+
+  def prob(discoverTime: Long, compareTime: Long): Double = {
+    Math.exp((compareTime - discoverTime) * deprecate_rate)
+  }
+}
 
 class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Message {
   override val port: Int = Config.PORT_MAP
 
   def isExist(target: MapUnit): Boolean = {
-    keySet.contains(target.location)
+    containsKey(target.location)
   }
 
   /*alternative method to access the map*/
@@ -27,11 +42,10 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
     mapUnit.time = get(mapUnit.location)
   }
 
-  def merge(obstacleMap: ObstacleMap): Unit =
-  {
-    obstacleMap.forEach(new BiConsumer[MapKey,Long] {
+  def merge(obstacleMap: ObstacleMap): Unit = {
+    obstacleMap.forEach(new BiConsumer[MapKey, Long] {
       override def accept(key: MapKey, value: Long): Unit = {
-        put(key,value)
+        put(key, value)
       }
     })
   }
@@ -44,5 +58,42 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
       }
     })
     newInstance
+  }
+
+  def to2DArrayBoolean: Array[Array[Boolean]] = {
+    val map = to2DArrayLong
+    if (map == null)
+      return null
+    else {
+      val now = System.currentTimeMillis()
+      Array.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
+    }
+  }
+
+  def to2DArrayLong: Array[Array[Long]] = {
+    if (isEmpty) null
+    else {
+      val range = new Point2D[Point2D[Int]](new Point2D[Int](0, 0), new Point2D[Int](0, 0))
+      forEach(new BiConsumer[MapKey, Long] {
+        override def accept(key: MapKey, value: Long) = {
+          if (range._1._1 > key.x)
+            range._1._1 = key.x
+          if (range._1._2 < key.x)
+            range._1._2 = key.x
+
+          if (range._1._1 > key.y)
+            range._2._1 = key.y
+          if (range._2._2 < key.y)
+            range._2._2 = key.y
+        }
+      })
+      Array.tabulate[Long](range._1._2 - range._1._1 + 1, range._2._2 - range._2._1 + 1)((x, y) => {
+        val key: MapKey = new MapKey(x, y)
+        if (containsKey(key))
+          get(key)
+        else
+          0L
+      })
+    }
   }
 }

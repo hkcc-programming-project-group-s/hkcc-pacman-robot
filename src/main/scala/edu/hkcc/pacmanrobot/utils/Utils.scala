@@ -8,18 +8,23 @@ import scala.util.Random
 object Utils {
   val random = new Random(System.currentTimeMillis())
 
-  @deprecated
-  def getRangeInt[Type](array: Array[Type], getValue: Type => Int): Int = {
-    if (array.length < 1) 0
+ 
+  def getObstacleMapRange[Boolean](array: Array[Array[Boolean]]): Point2D[Point2D[Int]] = {
+    val range=new Point2D[Point2D[Int]](new Point2D[Int](0,0),new Point2D[Int](0,0))
+    if (array.length < 1) range
     else {
-      val range = array.foldLeft[(Int, Int)](getValue(array(0)), getValue(array(0)))((accum: (Int, Int), content: Type) => {
+      val range=new Point2D[Point2D[Int]](new Point2D[Int](0,0),new Point2D[Int](0,0))
+      array.indices.foreach(x=>array(x).indices.foreach(y=> {
+        
+      }    ))
+      /*val range = array.foldLeft[(Int, Int)](getRange(array), getRange(array(0)))((accum: (Int, Int), content: Type) => {
         ( {
-          if (accum._1 < getValue(content)) accum._1 else getValue(content)
+          if (accum._1 < getRange(content)) accum._1 else getRange(content)
         }, {
-          if (accum._2 > getValue(content)) accum._2 else getValue(content)
+          if (accum._2 > getRange(content)) accum._2 else getRange(content)
         })
-      })
-      range._2 - range._1 + 1
+      })*/
+      range
     }
   }
 

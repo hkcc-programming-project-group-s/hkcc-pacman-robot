@@ -3,7 +3,9 @@ package edu.hkcc.pacmanrobot.robot.utils
 import java.util.concurrent.ConcurrentHashMap
 
 import edu.hkcc.pacmanrobot.robot.utils.PathFinder.Direction.direction_array
+import edu.hkcc.pacmanrobot.robot.utils.PathFinder._
 import edu.hkcc.pacmanrobot.utils.Utils.{getTabularSize, minus}
+import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
 import edu.hkcc.pacmanrobot.utils.{Point2D, Utils}
 import neuroevolution.geneticalgorithm.{GA, ProblemType}
 
@@ -17,10 +19,11 @@ object PathFinder {
   val directionMapBuffer = new ConcurrentHashMap[String, Array[Int]]()
   val bitInts = for (i <- 0 to 30) yield Math.round(Math.pow(2, i)).toInt
 
+
   def decode(rawCode: Array[Boolean]): Array[Int] = {
     var directionMap: Array[Int] = directionMapBuffer.get(rawCode.toString)
     if (directionMap == null) {
-      directionMap = Array.tabulate[Int](rawCode.length / Direction.bitSize)(i => PathFinder.Direction.randomDirection)
+      directionMap = Array.tabulate[Int](rawCode.length / Direction.bitSize)(i => Direction.randomDirection)
       directionMapBuffer.put(rawCode.toString, directionMap)
     }
     decode(rawCode, directionMap)
@@ -68,20 +71,30 @@ object PathFinder {
 
     def randomDirection: Byte = ALL_SET_ARRAY(Utils.random.nextInt(ALL_SET_ARRAY.length))
   }
+
 }
 
-class PathFinder(private var obstacleMap: Array[Array[Boolean]], var LOOP_INTERVAL: Int = 100) extends Thread {
+class PathFinder(private var obstacleMap: Array[Array[Boolean]], var LOOP_INTERVAL: Long = 100L) extends Thread {
+  val PUNISH_PER_OBSTACLE = 2
+  val PUNISH_FIRST_OBSTACLE = 1000
   var ai: GA = _
   var source = new Point2D[Int](0, 0)
   var destination = new Point2D[Int](0, 0)
-  val PUNISH_PER_OBSTACLE = 2
-  val PUNISH_FIRST_OBSTACLE = 1000
+  var directionMap: Array[Int] = Array.fill[Int](0)(0)
 
-  def setMap(newObstacleMap: Array[Array[Boolean]]) = {
-    val newSize = getTabularSize(newObstacleMap)
-    if (getTabularSize(obstacleMap) != newSize)
-      ai.resize(newSize* PathFinder.Direction.bitSize)
-    obstacleMap = newObstacleMap
+  def setMap(obstacleMap: ObstacleMap): Unit = {
+    val map = obstacleMap.to2DArrayBoolean
+    if (map != null)
+      setMap(map)
+  }
+
+  def setMap(newObstacleMap: Array[Array[Boolean]]): Unit = {
+    ai.resize({
+      val newSize = getTabularSize(newObstacleMap)
+      if (getTabularSize(obstacleMap) != newSize)
+        obstacleMap = newObstacleMap
+      newSize * Direction.bitSize
+    })
   }
 
   def setLocation(source: Point2D[Int], destination: Point2D[Int]) = {
@@ -90,7 +103,7 @@ class PathFinder(private var obstacleMap: Array[Array[Boolean]], var LOOP_INTERV
   }
 
   def getOverallDirectionType: Int = {
-    PathFinder.Direction.getDirection(minus(destination, source))
+    Direction.getDirection(minus(destination, source))
   }
 
   override def run = {
@@ -103,29 +116,30 @@ class PathFinder(private var obstacleMap: Array[Array[Boolean]], var LOOP_INTERV
   }
 
   def loop = {
-    //TODO
-
+    directionMap = decode(ai.getBestRawCode)
   }
 
   def setup = {
     /*ai = new GA(POP_SIZE = 32, BIT_SIZE = getTabularSize(obstacleMap) * PathFinder.Direction.bitSize,
       P_SELECTION = 0.25, P_MUTATION_POW = 2, A_MUTATION_POW = 4, EVAL_FITNESS_FUNCTION = eval, PROBLEM_TYPE = ProblemType.Minimize, LOOP_INTERVAL = 100)*/
-    ai = new GA(POP_SIZE = 32, BIT_SIZE = getTabularSize(obstacleMap) * PathFinder.Direction.bitSize, P_SELECTION = 0.25,
+    ai = new GA(POP_SIZE = 32, BIT_SIZE = getTabularSize(obstacleMap) * Direction.bitSize, P_SELECTION = 0.25,
       P_MUTATION_POW = 2, A_MUTATION_POW = 4, PARENT_IMMUTABLE = false,
       EVAL_FITNESS_FUNCTION = eval, PROBLEM_TYPE = ProblemType.Minimize,
-      LOOP_INTERVAL = 100L)
+      LOOP_INTERVAL = LOOP_INTERVAL)
     ai.genes.foreach(gene => gene.rawCode)
   }
 
+
   def eval(rawCode: Array[Boolean]): Double = {
-    val directionMap = PathFinder.decode(rawCode)
+    val directionMap = decode(rawCode)
     val MAX_STEP = getMaxStep
     var step = 0
     val currentPosition = source
     var obstacleCount = 0
     while (step < MAX_STEP && !destination.equals(currentPosition)) {
-      currentPosition._1 += direction_array(directionMap(step))._1
-      currentPosition._2 += direction_array(directionMap(step))._2
+      val direction = direction_array(currentPosition._1 * obstacleMap.length + currentPosition._2)
+      currentPosition._1 += direction._1
+      currentPosition._2 += direction._2
       if (obstacleMap(currentPosition._1)(currentPosition._2)) obstacleCount += 1
       step += 1
     }
