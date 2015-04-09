@@ -4,3 +4,6 @@
 [submodule "lib/java-myutils"]
 	path = lib/java-myutils
 	url = https://aabbcc1241:Asd770cc8@github.com/aabbcc1241/java-myutils.git
+[submodule "lib/myutils"]
+	path = lib/myutils
+	url = https://aabbcc1241:Asd770cc8@github.com/aabbcc1241/myutils.git
