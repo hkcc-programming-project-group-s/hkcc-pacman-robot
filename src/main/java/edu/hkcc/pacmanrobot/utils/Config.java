@@ -14,7 +14,8 @@ public class Config {
     public static final int PORT_CONTROLLER_ROBOT_PAIR = 4220;
     //public static String serverAddress = "192.168.43.1";
     //public static String serverAddress = "192.168.1.3";
-    public static String serverAddress = "172.26.3.180";
+    //public static String serverAddress = "172.26.3.180";
+    public static String serverAddress = "172.25.56.109";
     public static long RECONNECTION_TIMEOUT = 500;
     public static long MOVEMENT_COMMAND_INTERVAL = 50;
     public static long MOTOR_CYCLE_INTERVAL = 500;

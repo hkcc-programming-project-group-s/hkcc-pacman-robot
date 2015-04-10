@@ -9,6 +9,8 @@ import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.utils.{Config, Point2D}
 
+import scala.collection.parallel.mutable.ParArray
+
 object ObstacleMap {
   var deprecate_rate: Double = estimated_game_duration_in_minutes / -1000d / 60d
   private var _estimated_game_duration_in_minutes: Double = 5d
@@ -67,6 +69,15 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
     else {
       val now = System.currentTimeMillis()
       Array.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
+    }
+  }
+  def to2DParArrayBoolean: ParArray[ParArray[Boolean]] = {
+    val map = to2DArrayLong
+    if (map == null)
+      return null
+    else {
+      val now = System.currentTimeMillis()
+      ParArray.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
     }
   }
 

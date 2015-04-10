@@ -1,7 +1,9 @@
 <component name="libraryTable">
   <library name="lwjgl3">
     <CLASSES />
-    <JAVADOC />
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/lib/lwjgl3/doc" />
+    </JAVADOC>
     <NATIVE>
       <root url="file://$PROJECT_DIR$/lib/lwjgl3/native/linux/x64" />
       <root url="file://$PROJECT_DIR$/lib/lwjgl3/native/linux/x86" />
