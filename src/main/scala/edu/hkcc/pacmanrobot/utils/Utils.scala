@@ -19,13 +19,6 @@ object Utils {
         if (y < range._2._1) range._2.set_1(y)
         else if (y > range._2._2) range._2.set_2(y)
       }))
-      /*val range = array.foldLeft[(Int, Int)](getRange(array), getRange(array(0)))((accum: (Int, Int), content: Type) => {
-        ( {
-          if (accum._1 < getRange(content)) accum._1 else getRange(content)
-        }, {
-          if (accum._2 > getRange(content)) accum._2 else getRange(content)
-        })
-      })*/
       range
     }
   }

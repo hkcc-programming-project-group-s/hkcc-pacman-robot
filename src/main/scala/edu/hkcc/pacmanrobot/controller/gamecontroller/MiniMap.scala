@@ -4,7 +4,7 @@ import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
 import edu.hkcc.pacmanrobot.utils.message.Messenger
-import edu.hkcc.pacmanrobot.utils.{Point2D, Config, Timer}
+import edu.hkcc.pacmanrobot.utils.{Utils, Point2D, Config, Timer}
 import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11._
@@ -89,15 +89,8 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
       super.myTick
       if (!updated) return
       binaryMap = obstacleMap.to2DArrayLong
-      var x=new Point2D[Int](0,0)
-      var y=new Point2D[Int](0,0)
-      binaryMap.foldLeft()
-
-      obstacle_radius=Math.min(WINDOW_WIDTH*0.8f * )
-      //range = DEFAULT_OBSTACLE_RADIUS * Math.max(binaryMap.length, binaryMap(0).length)
-      //range = Math.max(binaryMap.length, binaryMap(0).length) / 2f
-      //    /cx= range /2f
-      //      cy= - range /2f
+      val range = Utils.getObstacleMapRange(binaryMap)
+      obstacle_radius = Math.min(WINDOW_WIDTH * 0.8f / (range._1._2 - range._1._1), WINDOW_HEIGHT * 0.8f / (range._2._2 - range._2._1))
     }
 
     override protected def debugInfo: Unit = {}
@@ -168,7 +161,8 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
       glVertex3f(cx - r, cy + r, 0)
       glEnd()
     }
-    var obstacle_radius=0.8f
+
+    var obstacle_radius = 0.8f
   }
 
 
