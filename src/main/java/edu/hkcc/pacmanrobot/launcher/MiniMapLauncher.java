@@ -7,7 +7,7 @@ import edu.hkcc.pacmanrobot.controller.gamecontroller.MiniMap;
  */
 public class MiniMapLauncher {
     public static void main(String[] args) {
-        MiniMap miniMap = new MiniMap(800,600);
+        MiniMap miniMap = new MiniMap(400,400);
         miniMap.start();
     }
 }
