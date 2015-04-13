@@ -1,15 +1,12 @@
 package edu.hkcc.pacmanrobot.controller.gamecontroller
 
-import java.util.function.BiConsumer
-
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
 import edu.hkcc.pacmanrobot.utils.message.Messenger
-import edu.hkcc.pacmanrobot.utils.{Utils, Point2D, Config, Timer}
+import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Timer, Utils}
 import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11._
 
-import scala.collection.parallel.mutable.ParArray
 import scala.util.Random
 
 
@@ -58,12 +55,29 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
 
 
     val DEFAULT_OBSTACLE_RADIUS = 10f
+    var obstacle_radius = 0.8f
+    var range: Point2D[Point2D[Int]] = null
     protected var l: Float = 10f
     protected var l2: Float = 1f
     protected var xl: Float = l
     protected var yl: Float = l
+
+
+    //    override protected def keyInvoke(window: Long, key: Int, scanCode: Int, action: Int, mode: Int): Unit = {
+    //      super.keyInvoke()
+    //    }
     protected var zl: Float = l
-    private var _range: Float = DEFAULT_OBSTACLE_RADIUS
+
+    def SetXYZRange_=(newValue: Float) {
+      xRange = newValue
+      yRange = newValue
+      zRange = newValue
+    }
+
+    def debugXYZ = {
+      println("cx=" + cx + ", cy=" + cy + ", cz=" + cz)
+      println("cxr=" + cxr + ", ryr=" + cyr + ", czr=" + czr)
+    }
 
     override protected def myInit: Unit = {
       super.myInit
@@ -77,10 +91,6 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
       cxr = 180f
     }
 
-    //    override protected def keyInvoke(window: Long, key: Int, scanCode: Int, action: Int, mode: Int): Unit = {
-    //      super.keyInvoke()
-    //    }
-
     override protected def myKeyInvoke(window: Long, key: Int, scanCode: Int, action: Int, mode: Int): Unit = {}
 
     override protected def reshape: Unit = {}
@@ -89,56 +99,28 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
       super.myTick
       if (!updated) return
       binaryMap = obstacleMap.to2DArrayLong
-      val range = Utils.getObstacleMapRange(binaryMap)
+      range = Utils.getObstacleMapRange(binaryMap)
       obstacle_radius = Math.min(WINDOW_WIDTH * 0.8f / (range._1._2 - range._1._1), WINDOW_HEIGHT * 0.8f / (range._2._2 - range._2._1))
     }
 
     override protected def debugInfo: Unit = {}
 
     override protected def myRender: Unit = {
-      //super.reshape
-      //println("check render")
       if (binaryMap == null) return
-      //println("render")
-      val r: Float = 1f
-      val g: Float = r * .5f
-      val b: Float = r * .5f
-      glColor3f(r, g, b)
-      //glBegin(GL_POINT)
-      Range(0, binaryMap.length).foreach(x => Range(0, binaryMap(x).length).foreach(y =>
-        if (binaryMap(x)(y)) {
-          //println("drawing sphere: "+x+", "+y)
-          //renderSpherePoint(x, y, 0f, DEFAULT_OBSTACLE_RADIUS, 10f)
-          //glVertex3f(x,y,0)
-        }
+      val r = 1d
+      val g = r * .5d
+      val b = r * .5d
+      val now = System.currentTimeMillis
+      var ratio = 1d
+      Range(0, binaryMap.length).foreach(x => Range(0, binaryMap(x).length).foreach(y => {
+        ratio = ObstacleMap.prob(binaryMap(x)(y), now)
+        glColor3d(r * ratio, g * ratio, b * ratio)
+        render_obstacle(
+          x - range._1._1,
+          y - range._2._1,
+          0, obstacle_radius)
+      }
       ))
-      //glEnd()
-
-      glColor3f(r, g, b)
-      //renderSphereLine(0f, 0f, 0f, DEFAULT_OBSTACLE_RADIUS, 10f)
-      var edge: Float = range * 2
-      edge *= 0.5f
-      glColor3f(g, b, r)
-      //renderSphereLine(edge,edge, 0f, DEFAULT_OBSTACLE_RADIUS, 10f)
-      render_obstacle(0, 0, 0, 0.25f)
-      println()
-      println("range is " + edge)
-      debugXYZ
-
-    }
-
-    def range = _range
-
-    def range_=(newValue: Float) {
-      _range = newValue
-      xRange = newValue
-      yRange = newValue
-      zRange = newValue
-    }
-
-    def debugXYZ = {
-      println("cx=" + cx + ", cy=" + cy + ", cz=" + cz)
-      println("cxr=" + cxr + ", ryr=" + cyr + ", czr=" + czr)
     }
 
     /**
@@ -155,14 +137,12 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
 
     def render_obstacle(cx: Float, cy: Float, cz: Float, r: Float = DEFAULT_OBSTACLE_RADIUS) = {
       glBegin(GL11.GL_QUADS)
-      glVertex3f(cx - r, cy - r, 0)
-      glVertex3f(cx + r, cy - r, 0)
-      glVertex3f(cx + r, cy + r, 0)
-      glVertex3f(cx - r, cy + r, 0)
+      glVertex3f(cx - r, cy - r, cz)
+      glVertex3f(cx + r, cy - r, cz)
+      glVertex3f(cx + r, cy + r, cz)
+      glVertex3f(cx - r, cy + r, cz)
       glEnd()
     }
-
-    var obstacle_radius = 0.8f
   }
 
 
