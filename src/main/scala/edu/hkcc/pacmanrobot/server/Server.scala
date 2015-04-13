@@ -1,19 +1,22 @@
 package edu.hkcc.pacmanrobot.server
 
-import java.net.ServerSocket
+import java.net.{InetAddress, ServerSocket}
 import java.util.concurrent.ConcurrentHashMap
 
 import edu.hkcc.pacmanrobot.utils.Config._
-import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
+import edu.hkcc.pacmanrobot.utils.Utils.random
+import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
 import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, Messenger, MovementCommand, MovementCommandMessenger}
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.{GameStatus, Position}
+import edu.hkcc.pacmanrobot.utils.{Config, Timer}
 
 import scala.collection.parallel.mutable.ParArray
+
 
 /**
  * Created by 13058456a on 4/2/2015.
  */
-class Server extends Thread{
+class Server extends Thread {
   val deviceInfoManager = new DeviceInfoManager
 
   val positions = new ConcurrentHashMap[Int, Position]()
@@ -35,7 +38,7 @@ class Server extends Thread{
     override def run(): Unit = {
       val serverSocket = new ServerSocket(PORT_MOVEMENT_COMMAND)
       while (true) {
-        movementCommandMessengers :+= new MovementCommandMessenger(serverSocket.accept(),true) {
+        movementCommandMessengers :+= new MovementCommandMessenger(serverSocket.accept(), true) {
           override def autoGet_func(message: MovementCommand): Unit = {
             val robotId = controllerRobotPairManager.getRobotId(deviceInfoManager.getDeviceIdByMacAddress(messenger.getRemoteMacAddress))
             movementCommandMessengers.par.foreach(messenger =>
@@ -54,7 +57,7 @@ class Server extends Thread{
     obstacleMapSubscribers.foreach(messenger => if (!macAddress.equals(messenger.getRemoteMacAddress)) messenger.sendMessage(message))
     obstacleMap.merge(message)
   })
-  val obstacleMapSubscribers: ParArray[Messenger[ObstacleMap]] = obstacleMapMessengerManager.messengers
+  def obstacleMapSubscribers: ParArray[Messenger[ObstacleMap]] = obstacleMapMessengerManager.messengers
 
   def switchGameStatus(gameStatus: GameStatus): Unit = {
     gameStatusMessengerManager.messengers.foreach(messenger => messenger.sendMessage(gameStatus))
@@ -78,8 +81,21 @@ class Server extends Thread{
 
   def gameSetup: Unit = {}
 
-  override def run={
+  def test = {
+    val bufferedMap = new ObstacleMap
+    Timer.setTimeInterval({
+      //println("random put")
+      bufferedMap.put(new MapUnit(new MapKey(random.nextInt, random.nextInt), System.currentTimeMillis()))
+      println("number of obstacleMapSubscribers="+obstacleMapSubscribers.size)
+      obstacleMapSubscribers.foreach(m => m.sendMessage(bufferedMap))
+      obstacleMap.merge(bufferedMap)
+      bufferedMap.clear
+    }, true, 100)
+  }
+
+  override def run = {
     setup
+    test
     while (true) {
       Thread.sleep(SAVE_INTERVAL)
       save
@@ -95,6 +111,8 @@ class Server extends Thread{
   }
 
   def setup: Unit = {
+    Config.serverAddress = InetAddress.getLocalHost.getHostAddress
+    println("server ip: " + Config.serverAddress)
     load
     startMessengerManagers
   }

@@ -6,7 +6,8 @@ import java.rmi.server.ServerNotActiveException
 import java.util.concurrent.{ConcurrentLinkedQueue, Semaphore}
 
 import edu.hkcc.pacmanrobot.server.MessengerManager
-import edu.hkcc.pacmanrobot.utils.Config
+import edu.hkcc.pacmanrobot.utils.Worker.forkAndStart
+import edu.hkcc.pacmanrobot.utils.{Worker, Config}
 import edu.hkcc.pacmanrobot.utils.exception.ClientSocketClosedException
 
 
@@ -95,7 +96,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
     }
     do {
       try
-        socket = Messenger.connect(socket.getPort,messengerManager!=null)
+        socket = Messenger.connect(socket.getPort, messengerManager != null)
       catch {
         case e: ServerNotActiveException =>
           if (messengerManager != null)
@@ -114,15 +115,29 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
 
   def checkConnection: Unit = {
     println("check connection on port: " + port)
-    socketSemaphore.tryAcquire()
+    socketSemaphore.acquire()
     try {
-      if (socket.isClosed)
+      println("check if socket is closed")
+      if (socket.isClosed || !socket.isConnected)
         throw new SocketException("socket is closed (exception) on port: " + port)
-      if (inputStream == null)
-        inputStream = new ObjectInputStream(socket.getInputStream)
-      if (outputStream == null)
-        outputStream = new ObjectOutputStream(socket.getOutputStream)
-    } catch {
+      val inThread=forkAndStart({println("check if input stream is null")
+        if (inputStream == null) {
+          println("get input stream")
+          val in = socket.getInputStream
+          println("create object input stream")
+          inputStream = new ObjectInputStream(in)
+          println("created object input stream")
+        }})
+      val outThread=forkAndStart({println("check if output stream is null")
+        if (outputStream == null) {
+          println("get output stream")
+          val out = socket.getOutputStream
+          println("create object output stream")
+          outputStream = new ObjectOutputStream(out)
+          println("created object output stream")
+        }})
+      inThread.join
+      outThread.join    } catch {
       case e: SocketException => {
         println(e.toString)
         reconnect
@@ -144,6 +159,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
         }
       }
     socketSemaphore.release()
+    println("checked connection on port: " + port)
   }
 
   def autoGet(message: Type): Unit
@@ -158,10 +174,12 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
       checkConnection
     catch {
       case e: ClientSocketClosedException[Type] => {
-        messengerManager.remove(currentMessenger); return
+        messengerManager.remove(currentMessenger);
+        return
       }
       case e: ServerNotActiveException => if (messengerManager != null) {
-        messengerManager.remove(currentMessenger); return
+        messengerManager.remove(currentMessenger);
+        return
       }
     }
     try {
