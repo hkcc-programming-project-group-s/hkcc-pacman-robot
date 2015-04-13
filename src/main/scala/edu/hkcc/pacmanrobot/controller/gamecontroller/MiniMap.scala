@@ -1,8 +1,10 @@
 package edu.hkcc.pacmanrobot.controller.gamecontroller
 
+import java.util.function.BiConsumer
+
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
 import edu.hkcc.pacmanrobot.utils.message.Messenger
-import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Utils}
+import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Timer, Utils}
 import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11._
@@ -22,21 +24,22 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
     obstacleMap.merge(map)
     updated = true
   }, null)
+  val random = new Random(System.currentTimeMillis())
   val testThread: Thread = new Thread {
     val current = this
 
     override def run(): Unit = {
-      val random = new Random(System.currentTimeMillis())
-      /*Timer.setTimeInterval({
+
+      Timer.setTimeInterval({
         //println("random put")
         obstacleMap.put(new MapUnit(new MapKey(random.nextInt(WINDOW_WIDTH), random.nextInt(WINDOW_HEIGHT)), System.currentTimeMillis()))
         updated = true
-      }, true, 100)*/
+      }, true, 100)
 
-      (1 to 1000).foreach(i => {
+      /*(1 to 1000).foreach(i => {
         obstacleMap.put(new MapUnit(new MapKey(random.nextInt(WINDOW_WIDTH), random.nextInt(WINDOW_HEIGHT)), System.currentTimeMillis()))
         updated = true
-      })
+      })*/
     }
   }
   var updated = false
@@ -86,6 +89,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
     }
 
     override protected def myInit: Unit = {
+      ObstacleMap.estimated_game_duration_in_minutes_=(1d/6d)
       super.myInit
       scrollSpeed = 1f
       rollSpeed = 10f
@@ -126,29 +130,16 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
       val b = r * .5d
       val now = System.currentTimeMillis
       var ratio = 1d
-      //var count=0
-      Range(0, binaryMap.length).foreach(x => Range(0, binaryMap(x).length).foreach(y => {
-        ratio = ObstacleMap.prob(binaryMap(x)(y), now)
-        glColor3d(r * ratio, g * ratio, b * ratio)
-        render_obstacle(
-          getXForOpenGL(x),
-          getYForOpenGL(y),
-          0, obstacle_radius)
-        //println("\n" + x + "," + y)
-        //println(getXForOpenGL(x) + "," + getYForOpenGL(y))
-        //println(obstacle_radius)
-        //println(now-binaryMap(x)(y))
-        //if(binaryMap(x)(y)!=0)count+=1
-
-      }
-      ))
-//      println()
-//      println(count)
-//      println(binaryMap(0)(0))
-//      println(binaryMap(10)(10))
-//      println(ObstacleMap.prob(0,now))
-//      println(now)
-      // render_obstacle(1, 1, 0, obstacle_radius)
+      obstacleMap.forEach(new BiConsumer[MapKey,Long] {
+        override def accept(k: MapKey, v: Long): Unit = {
+          ratio = ObstacleMap.prob(v, now)
+          glColor3d(r * ratio, g * ratio, b * ratio)
+          render_obstacle(
+            getXForOpenGL(k.x),
+            getYForOpenGL(k.y),
+            0, obstacle_radius)
+        }
+      })
     }
 
     def getXForOpenGL(x: Int): Float = {
