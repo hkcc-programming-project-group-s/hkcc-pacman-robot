@@ -12,7 +12,7 @@ import edu.hkcc.pacmanrobot.utils.{Config, Point2D}
 import scala.collection.parallel.mutable.ParArray
 
 object ObstacleMap {
-  var deprecate_rate: Double = estimated_game_duration_in_minutes / -1000d / 60d
+  var deprecate_rate: Double = 1d / estimated_game_duration_in_minutes / -1000d / 60d
   private var _estimated_game_duration_in_minutes: Double = 5d
 
   def estimated_game_duration_in_minutes: Double = _estimated_game_duration_in_minutes
