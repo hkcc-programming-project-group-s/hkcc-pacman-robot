@@ -1,13 +1,16 @@
 package edu.hkcc.pacmanrobot.controller.gamecontroller
 
+import java.util.function.BiConsumer
+
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
 import edu.hkcc.pacmanrobot.utils.message.Messenger
-import edu.hkcc.pacmanrobot.utils.{Config, Timer}
+import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Timer, Utils}
 import myutils.gui.opengl.AbstractSimpleOpenGLApplication
+import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11._
 
-import scala.collection.parallel.mutable.ParArray
 import scala.util.Random
+
 
 /**
  * Created by beenotung on 4/8/15.
@@ -21,19 +24,26 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
     obstacleMap.merge(map)
     updated = true
   }, null)
+  val random = new Random(System.currentTimeMillis())
   val testThread: Thread = new Thread {
     val current = this
+
     override def run(): Unit = {
-      val random = new Random(System.currentTimeMillis())
+
       Timer.setTimeInterval({
         //println("random put")
         obstacleMap.put(new MapUnit(new MapKey(random.nextInt(WINDOW_WIDTH), random.nextInt(WINDOW_HEIGHT)), System.currentTimeMillis()))
         updated = true
       }, true, 100)
+
+      /*(1 to 1000).foreach(i => {
+        obstacleMap.put(new MapUnit(new MapKey(random.nextInt(WINDOW_WIDTH), random.nextInt(WINDOW_HEIGHT)), System.currentTimeMillis()))
+        updated = true
+      })*/
     }
   }
   var updated = false
-  var binaryMap: ParArray[ParArray[Boolean]] = null
+  var binaryMap: Array[Array[Long]] = null
 
   override def run = {
     println("start obstacle map messenger on mini map")
@@ -53,35 +63,42 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
 
 
     val DEFAULT_OBSTACLE_RADIUS = 10f
+    val minPixel = 10
+    var obstacle_radius = 0.8f
+    var range: Point2D[Point2D[Int]] = null
+    var x_range: Float = 1f
+    var y_range: Float = 1f
     protected var l: Float = 10f
     protected var l2: Float = 1f
     protected var xl: Float = l
     protected var yl: Float = l
-    protected var zl: Float = l
-    private var _range: Float = DEFAULT_OBSTACLE_RADIUS
-
-    def range = _range
-
     //    override protected def keyInvoke(window: Long, key: Int, scanCode: Int, action: Int, mode: Int): Unit = {
     //      super.keyInvoke()
     //    }
+    protected var zl: Float = l
 
-    def range_=(newValue: Float) {
-      _range = newValue
+    def SetXYZRange_=(newValue: Float) {
       xRange = newValue
       yRange = newValue
       zRange = newValue
     }
 
+    def debugXYZ = {
+      println("cx=" + cx + ", cy=" + cy + ", cz=" + cz)
+      println("cxr=" + cxr + ", ryr=" + cyr + ", czr=" + czr)
+    }
+
     override protected def myInit: Unit = {
+      ObstacleMap.estimated_game_duration_in_minutes_=(1d/6d)
       super.myInit
       scrollSpeed = 1f
+      rollSpeed = 10f
       //range = 100f
-      zEquilateral = true
+      //zEquilateral = true
       //isCameraOrtho=false
-      zMax = -10f
-      zMin = 100f
-      cxr=180f
+      zMax = 100f
+      zMin = -100f
+      cxr = 180f
     }
 
     override protected def myKeyInvoke(window: Long, key: Int, scanCode: Int, action: Int, mode: Int): Unit = {}
@@ -90,45 +107,70 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
 
     override protected def myTick: Unit = {
       super.myTick
-      //println("check tick")
       if (!updated) return
-      //println("tick")
-      binaryMap = obstacleMap.to2DParArrayBoolean
-      //range = DEFAULT_OBSTACLE_RADIUS * Math.max(binaryMap.length, binaryMap(0).length)
-      range = Math.max(binaryMap.length, binaryMap(0).length) / 2f
-      cx= range /2f
-      cy= - range /2f
+      binaryMap = obstacleMap.to2DArrayLong
+      range = Utils.getObstacleMapRange(binaryMap)
+      //obstacle_radius = Math.min(WINDOW_WIDTH * 0.8f / (range._1._2 - range._1._1), WINDOW_HEIGHT * 0.8f / (range._2._2 - range._2._1))
+      x_range = range._1._2 - range._1._1
+      y_range = range._2._2 - range._2._1
+      obstacle_radius = Math.min(
+        Math.max(
+          0.8f / x_range, 1f / WINDOW_WIDTH * minPixel),
+        Math.max(
+          0.8f / y_range, 1f / WINDOW_HEIGHT * minPixel
+        ))
     }
 
     override protected def debugInfo: Unit = {}
 
     override protected def myRender: Unit = {
-      super.reshape
-      //println("check render")
       if (binaryMap == null) return
-      //println("render")
-      val r: Float = 1f
-      val g: Float = r * .5f
-      val b: Float = r * .5f
-      glColor3f(r, g, b)
-      //glBegin(GL_POINT)
-      Range(0, binaryMap.length).foreach(x => Range(0, binaryMap(x).length).foreach(y =>
-        if (binaryMap(x)(y)) {
-          //println("drawing sphere: "+x+", "+y)
-          //renderSpherePoint(x, y, 0f, DEFAULT_OBSTACLE_RADIUS, 10f)
-          //glVertex3f(x,y,0)
+      val r = 1d
+      val g = r * .5d
+      val b = r * .5d
+      val now = System.currentTimeMillis
+      var ratio = 1d
+      obstacleMap.forEach(new BiConsumer[MapKey,Long] {
+        override def accept(k: MapKey, v: Long): Unit = {
+          ratio = ObstacleMap.prob(v, now)
+          glColor3d(r * ratio, g * ratio, b * ratio)
+          render_obstacle(
+            getXForOpenGL(k.x),
+            getYForOpenGL(k.y),
+            0, obstacle_radius)
         }
-      ))
-      //glEnd()
+      })
+    }
 
-      glColor3f(r, g, b)
-      renderSphereLine(0f, 0f, 0f, DEFAULT_OBSTACLE_RADIUS, 10f)
-      var edge:Float=range
-      edge*=0.5f
-      glColor3f( g, b,r)
-      renderSphereLine(edge,edge, 0f, DEFAULT_OBSTACLE_RADIUS, 10f)
-      println("range is "+edge)
+    def getXForOpenGL(x: Int): Float = {
+      ((x - range._1._1) / x_range * 2 - 1 ) * 0.8f
+    }
+
+    def getYForOpenGL(y: Int): Float = {
+      ((y - range._2._1) / y_range * 2 - 1 )*0.8f
+    }
+
+    /**
+     *
+     * @param cx
+     * x-center
+     * @param cy
+     * y-center
+     * @param cz
+     * z-center
+     * @param r
+     * half of side length
+     */
+
+    def render_obstacle(cx: Float, cy: Float, cz: Float, r: Float = DEFAULT_OBSTACLE_RADIUS) = {
+      glBegin(GL11.GL_QUADS)
+      glVertex3f(cx - r, cy - r, cz)
+      glVertex3f(cx + r, cy - r, cz)
+      glVertex3f(cx + r, cy + r, cz)
+      glVertex3f(cx - r, cy + r, cz)
+      glEnd()
     }
   }
+
 
 }

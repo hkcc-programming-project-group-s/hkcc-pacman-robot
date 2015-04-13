@@ -12,8 +12,9 @@ import edu.hkcc.pacmanrobot.utils.{Config, Point2D}
 import scala.collection.parallel.mutable.ParArray
 
 object ObstacleMap {
-  var deprecate_rate: Double = estimated_game_duration_in_minutes / -1000d / 60d
   private var _estimated_game_duration_in_minutes: Double = 5d
+  private var deprecate_rate: Double = 1d / estimated_game_duration_in_minutes / -1000d / 60d
+  def get_deprecate_rate=deprecate_rate
 
   def estimated_game_duration_in_minutes: Double = _estimated_game_duration_in_minutes
 
@@ -71,10 +72,11 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
       Array.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
     }
   }
+
   def to2DParArrayBoolean: ParArray[ParArray[Boolean]] = {
     val map = to2DArrayLong
     if (map == null)
-      return null
+      null
     else {
       val now = System.currentTimeMillis()
       ParArray.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
@@ -92,14 +94,18 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
           if (range._1._2 < key.x)
             range._1._2 = key.x
 
-          if (range._1._1 > key.y)
+          if (range._2._1 > key.y)
             range._2._1 = key.y
           if (range._2._2 < key.y)
             range._2._2 = key.y
         }
       })
+      //println()
+      //println(range._1)
+      //println(range._2)
       Array.tabulate[Long](range._1._2 - range._1._1 + 1, range._2._2 - range._2._1 + 1)((x, y) => {
-        val key: MapKey = new MapKey(x, y)
+        val key: MapKey = new MapKey(x + range._1._1, y+range._2._1)
+        //println(key)
         if (containsKey(key))
           get(key)
         else

@@ -8,7 +8,13 @@ class MapKey(val x: Int, val y: Int) extends Cloneable {
     new MapKey(x, y)
   }
 
-  def equal(mapKey: MapKey): Boolean = {
+  override def equals(o: Any): Boolean = {
+    if (o.isInstanceOf[MapKey])
+      equals(o.asInstanceOf[MapKey])
+    else false
+  }
+
+  def equals(mapKey: MapKey): Boolean = {
     x.equals(mapKey.x) && y.equals(mapKey.y)
   }
 
