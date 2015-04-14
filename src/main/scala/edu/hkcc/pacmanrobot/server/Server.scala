@@ -3,6 +3,7 @@ package edu.hkcc.pacmanrobot.server
 import java.net.{InetAddress, ServerSocket}
 import java.util.Calendar
 import java.util.concurrent.ConcurrentHashMap
+import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.utils.Config._
 import edu.hkcc.pacmanrobot.utils.Utils.random
@@ -55,13 +56,18 @@ class Server extends Thread {
 
   val obstacleMap = new ObstacleMap
   val obstacleMapMessengerManager = new MessengerManager[ObstacleMap](PORT_MAP, (macAddress, message) => {
-    obstacleMapSubscribers.foreach(messenger => if (!macAddress.equals(messenger.getRemoteMacAddress)) messenger.sendMessage(message))
+    obstacleMapSubscribers.forEach(new BiConsumer[Messenger[ObstacleMap], Messenger[ObstacleMap]] {
+      override def accept(t: Messenger[ObstacleMap], messenger: Messenger[ObstacleMap]): Unit = {
+        if (!macAddress.equals(messenger.getRemoteMacAddress)) messenger.sendMessage(message)
+      }
+    })
     obstacleMap.merge(message)
   })
-  def obstacleMapSubscribers: ParArray[Messenger[ObstacleMap]] = obstacleMapMessengerManager.messengers
+
+  var obstacleMapSubscribers: ConcurrentHashMap[Messenger[ObstacleMap], Messenger[ObstacleMap]] = obstacleMapMessengerManager.messengers
 
   def switchGameStatus(gameStatus: GameStatus): Unit = {
-    gameStatusMessengerManager.messengers.foreach(messenger => messenger.sendMessage(gameStatus))
+    gameStatusMessengerManager.foreach(messenger => messenger.sendMessage(gameStatus))
     gameStatus.status match {
       case GameStatus.STATE_SETUP => gameSetup
       case GameStatus.STATE_START => gameStart
@@ -89,8 +95,12 @@ class Server extends Thread {
       println(Calendar.getInstance().getTime)
       println("random put")
       bufferedMap.put(new MapUnit(new MapKey(random.nextInt, random.nextInt), System.currentTimeMillis()))
-      println("number of obstacleMapSubscribers="+obstacleMapSubscribers.size)
-      obstacleMapSubscribers.foreach(m => m.sendMessage(bufferedMap))
+      println("number of obstacleMapSubscribers=" + obstacleMapSubscribers.size)
+      obstacleMapSubscribers.forEach(new BiConsumer[Messenger[ObstacleMap],Messenger[ObstacleMap]] {
+        override def accept(t: Messenger[ObstacleMap], m: Messenger[ObstacleMap]): Unit = {
+           m.sendMessage(bufferedMap)
+        }
+      })
       obstacleMap.merge(bufferedMap)
       bufferedMap.clear
     }, true, 500)

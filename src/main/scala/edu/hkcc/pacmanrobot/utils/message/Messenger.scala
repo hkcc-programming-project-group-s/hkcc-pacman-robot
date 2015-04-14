@@ -55,8 +55,12 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   extends Thread {
 
   def stopThread = {
-    inputThread.interrupt()
-    outputThread.interrupt()
+    inputThread.interrupt
+    outputThread.interrupt
+    currentMessenger.interrupt
+    inputThread.stop
+    outputThread.stop
+    currentMessenger.stop
   }
 
   val currentMessenger = this
