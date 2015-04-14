@@ -25,23 +25,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
     updated = true
   }, null)
   val random = new Random(System.currentTimeMillis())
-  val testThread: Thread = new Thread {
-    val current = this
 
-    override def run(): Unit = {
-
-      Timer.setTimeInterval({
-        //println("random put")
-        obstacleMap.put(new MapUnit(new MapKey(random.nextInt(WINDOW_WIDTH), random.nextInt(WINDOW_HEIGHT)), System.currentTimeMillis()))
-        updated = true
-      }, true, 100)
-
-      /*(1 to 1000).foreach(i => {
-        obstacleMap.put(new MapUnit(new MapKey(random.nextInt(WINDOW_WIDTH), random.nextInt(WINDOW_HEIGHT)), System.currentTimeMillis()))
-        updated = true
-      })*/
-    }
-  }
   var updated = false
   var binaryMap: Array[Array[Long]] = null
 
@@ -54,7 +38,6 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
 
   override def start = {
     super.start
-    testThread.start
   }
 
 
