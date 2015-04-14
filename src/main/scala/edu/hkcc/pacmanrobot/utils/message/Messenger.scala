@@ -260,11 +260,11 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
     !inputQueue.isEmpty
   }
 
-  private def sendMessage: Unit = {
+  protected def sendMessage: Unit = {
     if (!outputQueue.isEmpty) {
       val message: Type = outputQueue.poll
       outputStream.writeObject(message)
-      println("sent " + message.toString)
+      //println("sent " + message.toString)
     }
   }
 

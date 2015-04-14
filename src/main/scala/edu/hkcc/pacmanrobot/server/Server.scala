@@ -94,7 +94,7 @@ class Server extends Thread {
       println
       println(Calendar.getInstance().getTime)
       println("random put")
-      bufferedMap.put(new MapUnit(new MapKey(random.nextInt, random.nextInt), System.currentTimeMillis()))
+      bufferedMap.put(new MapUnit(new MapKey(random nextInt 4000, random nextInt 4000), System.currentTimeMillis()))
       val toSend=bufferedMap.clone
       println("number of obstacleMapSubscribers=" + obstacleMapSubscribers.size)
       obstacleMapSubscribers.forEach(new BiConsumer[Messenger[ObstacleMap],Messenger[ObstacleMap]] {
@@ -104,7 +104,7 @@ class Server extends Thread {
       })
       obstacleMap.merge(bufferedMap)
       bufferedMap.clear
-    }, true, 500)
+    }, true, 10)
   }
 
   override def run = {

@@ -107,14 +107,26 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
   def to2DArrayLong: Array[Array[Long]] = {
     if (isEmpty) null
     else {
-      val range = ObstacleMap.getRange(this)
-      //println()
-      //println(range._1)
-      //println(range._2)
+      val map=clone
+      val range = ObstacleMap.getRange(map)
       val array = Array.fill[Long](range._1._2 - range._1._1 + 1, range._2._2 - range._2._1 + 1)(0L)
-      forEach(new BiConsumer[MapKey, Long] {
+      map.forEach(new BiConsumer[MapKey, Long] {
         override def accept(k: MapKey, v: Long): Unit = {
+      try
           array(k.x-range._1._1)(k.y-range._2._1) = v
+          catch{
+            case e:Exception=>{
+              println(e.toString)
+              e.printStackTrace()
+              println()
+              println("range:")
+              println(range._1)
+              println(range._2)
+              println
+              println("array size= "+ array.length +", "+array(0).length)
+              println(k.x+", "+k.y)
+            }
+          }
         }
       })
       array
