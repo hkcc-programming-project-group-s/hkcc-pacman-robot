@@ -4,51 +4,48 @@ import java.util.concurrent.Semaphore
 
 import edu.hkcc.pacmanrobot.server.MessengerManager
 import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
+import edu.hkcc.pacmanrobot.utils.map.{ObstacleMap, ObstacleMapManager}
 
 /**
  * Created by beenotung on 4/14/15.
  */
-class ObstacleMapMessenger(messengerManager: MessengerManager[ObstacleMap]) extends Messenger[ObstacleMap](Config.PORT_MAP, messengerManager: MessengerManager[ObstacleMap]) {
-  val bufferedObstacleMap = new ObstacleMap
-  val obstacleMapSemaphore = new Semaphore(1)
-  val bufferedObstacleMapSemaphore = new Semaphore(1)
-  private val obstacleMap_ = new ObstacleMap
+class ObstacleMapMessenger(val obstacleMap: ObstacleMap = new ObstacleMap, manager: ObstacleMapManager) extends Messenger[ObstacleMap](Config.PORT_MAP, manager: MessengerManager[ObstacleMap]) {
+  val bufferedObstacleMap = Array.fill[ObstacleMap](2)(new ObstacleMap)
+  val switchBufferIndexSemaphore = new Semaphore(1)
+  private var bufferIndex: Int = 0
 
-  def _obstacleMap(newMap: ObstacleMap) = {
-    bufferedObstacleMapSemaphore.acquire()
-    bufferedObstacleMap.merge(newMap)
-    bufferedObstacleMapSemaphore.release()
+  def switchBufferIndex = {
+    switchBufferIndexSemaphore.acquire()
+    bufferIndex = 1 - bufferIndex
+    switchBufferIndexSemaphore.release()
   }
 
   override def sendMessage(deltaMap: ObstacleMap): Unit = {
-    bufferedObstacleMapSemaphore.acquire()
-    bufferedObstacleMap.merge(deltaMap)
-    bufferedObstacleMapSemaphore.release()
+    switchBufferIndexSemaphore.acquire
+    bufferedObstacleMap(bufferIndex).merge(deltaMap)
+    switchBufferIndexSemaphore.release
   }
 
   override def autoGet(message: ObstacleMap): Unit = {
-    if (messengerManager != null)
-      messengerManager.foreach(m => {
+    if (manager != null)
+      manager.foreach(m => {
         if (!m.getRemoteMacAddress.equals(DeviceInfo.getLocalMacAddress))
           m.sendMessage(message)
         obstacleMap.merge(message)
       })
   }
 
-  def obstacleMap: ObstacleMap = {
-    obstacleMapSemaphore.acquire
-    val result = obstacleMap_.clone
-    obstacleMapSemaphore.release
-    result
+  override def getMessage: ObstacleMap = {
+    obstacleMap.clone
   }
 
   override protected def sendMessage: Unit = {
-    bufferedObstacleMapSemaphore.acquire()
-    if (!bufferedObstacleMap.isEmpty) {
-      outputStream.writeObject(bufferedObstacleMap)
-      bufferedObstacleMap.clear
+    val operateBufferedObstacleMap = bufferedObstacleMap(1 - bufferIndex);
+    if (!operateBufferedObstacleMap.isEmpty) {
+      outputStream.writeObject(operateBufferedObstacleMap)
+      obstacleMap.merge(operateBufferedObstacleMap)
+      operateBufferedObstacleMap.clear
     }
-    bufferedObstacleMapSemaphore.release()
+    switchBufferIndexSemaphore
   }
 }
