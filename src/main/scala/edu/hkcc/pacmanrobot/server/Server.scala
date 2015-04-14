@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.server
 
 import java.net.{InetAddress, ServerSocket}
+import java.util.Calendar
 import java.util.concurrent.ConcurrentHashMap
 
 import edu.hkcc.pacmanrobot.utils.Config._
@@ -84,13 +85,15 @@ class Server extends Thread {
   def test = {
     val bufferedMap = new ObstacleMap
     Timer.setTimeInterval({
-      //println("random put")
+      println
+      println(Calendar.getInstance().getTime)
+      println("random put")
       bufferedMap.put(new MapUnit(new MapKey(random.nextInt, random.nextInt), System.currentTimeMillis()))
       println("number of obstacleMapSubscribers="+obstacleMapSubscribers.size)
       obstacleMapSubscribers.foreach(m => m.sendMessage(bufferedMap))
       obstacleMap.merge(bufferedMap)
       bufferedMap.clear
-    }, true, 100)
+    }, true, 500)
   }
 
   override def run = {

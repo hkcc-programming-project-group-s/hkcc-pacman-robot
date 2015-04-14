@@ -13,7 +13,6 @@ object Timer {
         callback
         sleep(time)
       }
-      null
     })
   }
 
@@ -25,7 +24,6 @@ object Timer {
     forkAndStart({
       sleep(time)
       callback
-      null
     })
   }
 }
