@@ -8,22 +8,17 @@ import scala.util.Random
 object Utils {
   val random = new Random(System.currentTimeMillis())
 
- 
-  def getObstacleMapRange[Boolean](array: Array[Array[Boolean]]): Point2D[Point2D[Int]] = {
-    val range=new Point2D[Point2D[Int]](new Point2D[Int](0,0),new Point2D[Int](0,0))
+
+  def getObstacleMapRange[AnyValCompanion](array: Array[Array[AnyValCompanion]]): Point2D[Point2D[Int]] = {
+    val range = new Point2D[Point2D[Int]](new Point2D[Int](0, 0), new Point2D[Int](0, 0))
     if (array.length < 1) range
     else {
-      val range=new Point2D[Point2D[Int]](new Point2D[Int](0,0),new Point2D[Int](0,0))
-      array.indices.foreach(x=>array(x).indices.foreach(y=> {
-        
-      }    ))
-      /*val range = array.foldLeft[(Int, Int)](getRange(array), getRange(array(0)))((accum: (Int, Int), content: Type) => {
-        ( {
-          if (accum._1 < getRange(content)) accum._1 else getRange(content)
-        }, {
-          if (accum._2 > getRange(content)) accum._2 else getRange(content)
-        })
-      })*/
+      array.indices.foreach(x => array(x).indices.foreach(y => {
+        if (x < range._1._1) range._1.set_1(x)
+        else if (x > range._1._2) range._1.set_2(x)
+        if (y < range._2._1) range._2.set_1(y)
+        else if (y > range._2._2) range._2.set_2(y)
+      }))
       range
     }
   }

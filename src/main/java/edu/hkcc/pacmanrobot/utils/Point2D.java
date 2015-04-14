@@ -1,6 +1,5 @@
 package edu.hkcc.pacmanrobot.utils;
 
-import java.awt.*;
 import java.io.Serializable;
 
 /**
@@ -11,6 +10,19 @@ public class Point2D<Type> implements Serializable, Cloneable {
 
     public Point2D(Type _1, Type _2) {
         this._1 = _1;
+        this._2 = _2;
+    }
+
+    public void set(Type _1, Type _2) {
+        this._1 = _1;
+        this._2 = _2;
+    }
+
+    public void set_1(Type _1) {
+        this._1 = _1;
+    }
+
+    public void set_2(Type _2) {
         this._2 = _2;
     }
 

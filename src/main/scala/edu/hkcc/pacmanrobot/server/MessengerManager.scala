@@ -1,12 +1,14 @@
 package edu.hkcc.pacmanrobot.server
 
 import java.net.ServerSocket
-import java.util.concurrent.Semaphore
+import java.util.concurrent.{ConcurrentHashMap, Semaphore}
+import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.utils.message.Messenger
+import edu.hkcc.pacmanrobot.utils.{Timer, Worker}
 
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.parallel.mutable.ParArray
+import scala.collection.JavaConverters._
+import scala.collection.immutable.HashMap
 
 /**
  * Created by beenotung on 4/5/15.
@@ -14,10 +16,18 @@ import scala.collection.parallel.mutable.ParArray
 class MessengerManager[Type](val servicePort: Int, autoGet_func: (Array[Byte], Type) => Unit)
   extends Thread {
   val semaphore = new Semaphore(1)
-  var messengers = ParArray.empty[Messenger[Type]]
+  var messengers = new ConcurrentHashMap[Messenger[Type], Messenger[Type]]()
   var serverSocket = new ServerSocket(servicePort)
 
   override def run(): Unit = {
+    Timer.setTimeInterval({
+      foreach(m => {
+        if (m.socket.isClosed || !m.socket.isConnected && m.messengerManager != null) {
+          println("removing lost subscriber from: " + m.socket.getRemoteSocketAddress + "(" + m.port + ")")
+          remove(m)
+        }
+      })
+    }, isAlive, 1000)
     while (true) {
       println("waiting incoming request from port: " + servicePort)
       val newMessenger = new Messenger[Type](serverSocket.accept(), servicePort, this) {
@@ -33,16 +43,27 @@ class MessengerManager[Type](val servicePort: Int, autoGet_func: (Array[Byte], T
 
   def add(newMessenger: Messenger[Type]) = {
     semaphore.acquire()
-    messengers :+= newMessenger
+    messengers.put(newMessenger, newMessenger)
     semaphore.release()
   }
 
   def remove(removeTarget: Messenger[Type]) = {
-    println("removeing client: " + removeTarget.socket.getInetAddress.getHostAddress + ":" +removeTarget.socket.getPort +"("+removeTarget.port+")")
-    semaphore.acquire()
-    val newMessengers = new ArrayBuffer[Messenger[Type]]
-    messengers.toArray.foreach(messenger => if (!removeTarget.equals(messenger)) newMessengers += messenger)
-    messengers = newMessengers.toParArray
-    semaphore.release()
+    Worker.forkAndStart({
+      semaphore.acquire()
+      if(messengers.containsKey(removeTarget)) {
+        println("removeing client: " + removeTarget.socket.getInetAddress.getHostAddress + ":" + removeTarget.socket.getPort + "(" + removeTarget.port + ")")
+        removeTarget.stopThread
+        messengers.remove(removeTarget)
+      }
+      semaphore.release()
+    })
+  }
+
+  def foreach(op: Messenger[Type] => Unit) = {
+    messengers.forEach(new BiConsumer[Messenger[Type], Messenger[Type]] {
+      override def accept(t: Messenger[Type], u: Messenger[Type]): Unit = {
+        op(t)
+      }
+    })
   }
 }

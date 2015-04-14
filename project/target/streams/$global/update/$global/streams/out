@@ -16,7 +16,7 @@
 [debug] == resolving dependencies for default#hkcc-pacman-robot-build;0.1-SNAPSHOT [provided]
 [debug] == resolving dependencies default#hkcc-pacman-robot-build;0.1-SNAPSHOT->org.scala-lang#scala-library;2.10.4 [provided->default(compile)]
 [info] Resolving org.scala-lang#scala-library;2.10.4 ...
-[debug] sbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@78260f8b
+[debug] sbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@6b6652d9
 [debug] sbt-chain: module revision found in cache: org.scala-lang#scala-library;2.10.4
 [debug] 	found org.scala-lang#scala-library;2.10.4 in sbt-chain
 [debug] 	[2.10.4] org.scala-lang#scala-library;2.10.4
@@ -1766,7 +1766,7 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.8!apply-macro.jar
 [debug] 	[NOT REQUIRED] org.scala-lang#jline;2.10.4!jline.jar
 [debug] 	[NOT REQUIRED] org.fusesource.jansi#jansi;1.4!jansi.jar
-[debug] :: resolution report :: resolve 2658ms :: artifacts dl 55ms
+[debug] :: resolution report :: resolve 1215ms :: artifacts dl 31ms
 [debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT compile produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-compile.xml
 [debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT runtime produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-runtime.xml
 [debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT test produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-test.xml
@@ -1780,5 +1780,5 @@
 [debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT docs produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-docs.xml
 [debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT pom produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-pom.xml
 [debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT scala-tool produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-scala-tool.xml
-[debug] 	resolve done (2658ms resolve - 55ms download)
+[debug] 	resolve done (1215ms resolve - 31ms download)
 [info] Done updating.
