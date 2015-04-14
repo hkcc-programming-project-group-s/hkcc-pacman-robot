@@ -271,7 +271,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   private def receiveMessage: Unit = {
     val message: Type = inputStream.readObject.asInstanceOf[Type]
     inputQueue.add(message)
-    //println("received " + message.toString)
+    println("received " + message.toString)
     autoGet(getMessage)
   }
 

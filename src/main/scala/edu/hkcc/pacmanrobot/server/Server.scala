@@ -95,10 +95,11 @@ class Server extends Thread {
       println(Calendar.getInstance().getTime)
       println("random put")
       bufferedMap.put(new MapUnit(new MapKey(random.nextInt, random.nextInt), System.currentTimeMillis()))
+      val toSend=bufferedMap.clone
       println("number of obstacleMapSubscribers=" + obstacleMapSubscribers.size)
       obstacleMapSubscribers.forEach(new BiConsumer[Messenger[ObstacleMap],Messenger[ObstacleMap]] {
         override def accept(t: Messenger[ObstacleMap], m: Messenger[ObstacleMap]): Unit = {
-           m.sendMessage(bufferedMap)
+           m.sendMessage(toSend)
         }
       })
       obstacleMap.merge(bufferedMap)
