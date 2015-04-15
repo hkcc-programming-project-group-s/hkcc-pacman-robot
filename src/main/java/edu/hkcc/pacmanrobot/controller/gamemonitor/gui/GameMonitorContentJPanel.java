@@ -2,8 +2,6 @@ package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger;
-import scala.Function1;
-import scala.runtime.BoxedUnit;
 
 import javax.swing.*;
 
