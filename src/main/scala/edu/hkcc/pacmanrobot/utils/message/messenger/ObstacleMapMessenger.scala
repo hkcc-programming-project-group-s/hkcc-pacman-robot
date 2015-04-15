@@ -28,8 +28,8 @@ class ObstacleMapMessenger(val obstacleMap: ObstacleMap, socket: Socket, manager
       manager.foreach(messenger => {
         if (!messenger.getRemoteMacAddress.equals(DeviceInfo.getLocalMacAddress))
           messenger.sendMessage(message)
-        obstacleMap.merge(message)
       })
+    obstacleMap.merge(message)
   }
 
   override def getMessage: ObstacleMap = {
@@ -37,7 +37,7 @@ class ObstacleMapMessenger(val obstacleMap: ObstacleMap, socket: Socket, manager
   }
 
   override protected def sendMessage: Unit = {
-    val operateBufferedObstacleMap = bufferedObstacleMap(1 - bufferIndex);
+    val operateBufferedObstacleMap = bufferedObstacleMap(1 - bufferIndex)
     if (!operateBufferedObstacleMap.isEmpty) {
       outputStream.writeObject(operateBufferedObstacleMap)
       obstacleMap.merge(operateBufferedObstacleMap)

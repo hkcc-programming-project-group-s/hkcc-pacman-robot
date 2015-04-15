@@ -1,5 +1,6 @@
 package edu.hkcc.pacmanrobot.controller.gamecontroller
 
+import java.awt.Color
 import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, ObstacleMap}
@@ -9,6 +10,7 @@ import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11._
 
+import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
 
@@ -45,6 +47,9 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
     extends AbstractSimpleOpenGLApplication(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, backgroundColors = backgroundColors) {
     val DEFAULT_OBSTACLE_RADIUS = 10f
     val minPixel = 10
+    val obstacles = new ArrayBuffer[OpenglObstacle]()
+    val emptyColor = new Color(204, 230, 255)
+    val obstacleColor = new Color(0, 0, 0)
     var obstacle_radius = 0.8f
     var range: Point2D[Point2D[Int]] = null
     var x_range: Float = 1f
@@ -88,10 +93,14 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
 
     override protected def myTick: Unit = {
       super.myTick
+    }
+
+    override protected def debugInfo: Unit = {}
+
+    override protected def myRender: Unit = {
+      //println("rendering")
       if (!updated) return
-      binaryMap = obstacleMap.to2DArrayLong
-      range = Utils.getObstacleMapRange(binaryMap)
-      // obstacle_radius = Math.min(WINDOW_WIDTH * 0.8f / (range._1._2 - range._1._1), WINDOW_HEIGHT * 0.8f / (range._2._2 - range._2._1))
+      range = Utils.getObstacleMapRange(obstacleMap)
       x_range = range._1._2 - range._1._1
       y_range = range._2._2 - range._2._1
       obstacle_radius = Math.min(
@@ -100,28 +109,19 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
         Math.max(
           0.8f / y_range, 1f / WINDOW_HEIGHT * minPixel
         ))
-    }
-
-    override protected def debugInfo: Unit = {}
-
-    override protected def myRender: Unit = {
-      if (binaryMap == null) return
-      val r = 1d
-      val g = r * .5d
-      val b = r * .5d
       val now = System.currentTimeMillis
-      var ratio = 1d
+      var ratio = 1f
+      obstacles.clear()
+      //  println("here")
       obstacleMap.forEach(new BiConsumer[MapKey, Long] {
         override def accept(k: MapKey, v: Long): Unit = {
-          ratio = ObstacleMap.prob(v, now)
-          glColor3d(r * ratio, g * ratio, b * ratio)
-          render_obstacle(
-            getXForOpenGL(k.x),
-            getYForOpenGL(k.y),
-            0, obstacle_radius)
+          ratio = ObstacleMap.prob(v, now).toFloat
+          obstacles += new OpenglObstacle(getXForOpenGL(k.x), getYForOpenGL(k.y), ratio)
         }
       })
-      //println("rendered")
+      //println("there")
+      obstacles.toArray.sorted.foreach(o => render_obstacle(o))
+      //  println("rendered")
     }
 
     def getXForOpenGL(x: Int): Float = {
@@ -130,6 +130,11 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
 
     def getYForOpenGL(y: Int): Float = {
       ((y - range._2._1) / y_range * 2 - 1) * 0.8f
+    }
+
+    def render_obstacle(obstacle: OpenglObstacle): Unit = {
+      glColor3f(obstacle.R, obstacle.G, obstacle.B)
+      render_obstacle(obstacle.x, obstacle.y, 0, obstacle_radius)
     }
 
     /**
@@ -143,8 +148,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
      * @param r
      * half of side length
      */
-
-    def render_obstacle(cx: Float, cy: Float, cz: Float, r: Float = DEFAULT_OBSTACLE_RADIUS) = {
+    def render_obstacle(cx: Float, cy: Float, cz: Float, r: Float = DEFAULT_OBSTACLE_RADIUS): Unit = {
       glBegin(GL11.GL_QUADS)
       glVertex3f(cx - r, cy - r, cz)
       glVertex3f(cx + r, cy - r, cz)
@@ -152,6 +156,21 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
       glVertex3f(cx - r, cy + r, cz)
       glEnd()
     }
+
+    class OpenglObstacle(val x: Float, val y: Float, ratio: Float) extends Comparable[OpenglObstacle] {
+      val R = obstacleColor.getRed / 256f * ratio + emptyColor.getRed / 256f * (1 - ratio)
+      val G = obstacleColor.getGreen / 256f * ratio + emptyColor.getGreen / 256f * (1 - ratio)
+      val B = obstacleColor.getBlue / 256f * ratio + emptyColor.getBlue / 256f * (1 - ratio)
+      println(ratio)
+      println(Vector(R,G,B))
+      val luma: Float = (R + R + R + B + G + G + G + G) / 6f
+      //println(ratio + "\t" + luma)
+
+      override def compareTo(o: OpenglObstacle): Int = {
+        luma.compareTo(o.luma)
+      }
+    }
+
   }
 
 
