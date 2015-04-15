@@ -247,7 +247,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     boolean onKeyReleased(KeyEvent e) throws IOException {
         if (clicked == null) return false;
         //System.out.println("I am here.");
-        if (DeviceInfo.isRobot(clicked.deviceInfo.deviceType())) {
+        if (DeviceInfo.isRobot(clicked.deviceInfo._deviceType())) {
             if (e.getKeyCode() == KeyEvent.VK_A) {
                 clicked.transfer(assignment_robot_panel);
                 clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(),clicked.deviceInfo.lastConnectionTime()));

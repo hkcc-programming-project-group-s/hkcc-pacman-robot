@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils;
 
 import com.sun.istack.internal.NotNull;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import java.util.Vector;
 
@@ -12,4 +13,6 @@ public interface DeviceInfoJPanelHandler {
     void onDeviceInfoJPanelClicked(DeviceInfoJPanel deviceInfoJPanel);
 
     Vector<DeviceInfoContainer> getDeviceInfoContainers();
+
+    public void receivedDeviceInfo(DeviceInfo deviceInfo);
 }

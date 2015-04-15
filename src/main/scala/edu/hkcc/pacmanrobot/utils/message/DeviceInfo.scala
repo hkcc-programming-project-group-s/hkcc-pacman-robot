@@ -32,7 +32,7 @@ object DeviceInfo extends Message {
   }
 
   def request(deviceType: Byte, messenger: Messenger[DeviceInfo]) = {
-    messenger.sendMessage(new DeviceInfo(deviceType = deviceType, shouldSave = false, name = "", ip = ""))
+    messenger.sendMessage(new DeviceInfo(_deviceType = deviceType, shouldSave = false, name = "", ip = ""))
   }
 
   def isRobot(deviceType: Byte): Boolean = {
@@ -52,23 +52,25 @@ import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
  *
  * @param name
  * @param ip
- * @param deviceType
+ * @param _deviceType
  * @param lastConnectionTime
  * @param shouldSave
  * true => server save
  * false => server response to client (send all that type)
  */
-class DeviceInfo(var name: String, var ip: String, var deviceType: Byte, var lastConnectionTime: Long = 0, val shouldSave: Boolean) extends Serializable {
+class DeviceInfo(var name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0, val shouldSave: Boolean) extends Serializable {
   val MAC_ADDRESS: Array[Byte] = getLocalMacAddress
 
   def deviceType_=(newType: Byte): Unit = {
-    deviceType = newType
+    _deviceType = newType
   }
+
+  def deviceType = _deviceType
 
   def set(newInfo: DeviceInfo): Unit = {
     name = newInfo.name
     ip = newInfo.ip
-    deviceType = newInfo.deviceType
+    _deviceType = newInfo._deviceType
     lastConnectionTime = newInfo.lastConnectionTime
   }
 }

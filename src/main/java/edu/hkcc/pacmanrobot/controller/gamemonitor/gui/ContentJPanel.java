@@ -18,10 +18,10 @@ public class ContentJPanel extends AbstractCardJPanel {
     @Override
     protected void myInit() {
         contents = new Vector<>();
-        contents.add(new SetDeviceName());
-        contents.add(new SetDeviceInfo());
-        contents.add(new PairControllerRobotJPanel());
-        contents.add(new PositionSetting());
+        contents.add(new SetDeviceName(master));
+        contents.add(new SetDeviceInfo(master));
+        contents.add(new PairControllerRobotJPanel(master));
+        contents.add(new PositionSetting(master));
 
         for (int i = 0; i < contents.size(); i++)
             addToCards(contents.get(i), i + "");
@@ -33,7 +33,7 @@ public class ContentJPanel extends AbstractCardJPanel {
     }
 
     public void next() {
-        if (canNext()&&contents.get(currentPage).onLeave())
+        if (canNext() && contents.get(currentPage).onLeave())
             currentPage++;
         switchToCard(currentPage + "");
     }

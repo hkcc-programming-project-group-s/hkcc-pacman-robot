@@ -67,7 +67,7 @@ public class DeviceInfoJPanel extends JPanel {
         setLayout(new BorderLayout(0, 0));
 
         try {
-            lblIcon = new JLabel(ControllerImages.getIconByDeviceType(deviceInfo.deviceType()));
+            lblIcon = new JLabel(ControllerImages.getIconByDeviceType(deviceInfo._deviceType()));
             add(lblIcon, BorderLayout.WEST);
         } catch (IOException e) {
             add(emptyBox, BorderLayout.WEST);
@@ -94,7 +94,7 @@ public class DeviceInfoJPanel extends JPanel {
         remove(lblIcon);
         remove(emptyBox);
         try {
-            lblIcon = new JLabel(ControllerImages.getIconByDeviceType(deviceInfo.deviceType()));
+            lblIcon = new JLabel(ControllerImages.getIconByDeviceType(deviceInfo._deviceType()));
             add(lblIcon, BorderLayout.WEST);
         } catch (MalformedURLException e) {
             add(emptyBox, BorderLayout.WEST);
@@ -120,7 +120,7 @@ public class DeviceInfoJPanel extends JPanel {
     }
 
     public String toString() {
-        return deviceInfo.deviceType() + "," + deviceInfo.name() + "," + deviceInfo.ip();
+        return deviceInfo._deviceType() + "," + deviceInfo.name() + "," + deviceInfo.ip();
     }
 
     public void unPair() {

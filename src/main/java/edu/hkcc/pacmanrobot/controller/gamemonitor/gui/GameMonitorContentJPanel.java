@@ -22,7 +22,5 @@ public abstract class GameMonitorContentJPanel extends JPanel {
         deviceInfoMessenger = master.sao.deviceInfoMessenger;
     }
 
-    public abstract Function1<DeviceInfo, BoxedUnit> getAutogetFunc();
-
     public final Messenger<DeviceInfo> deviceInfoMessenger;
 }

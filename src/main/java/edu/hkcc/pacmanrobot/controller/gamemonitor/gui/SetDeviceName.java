@@ -1,5 +1,6 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
+import com.pi4j.device.Device;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
@@ -117,6 +118,14 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         return deviceInfoContainers;
     }
 
+    @Override
+    public void receivedDeviceInfo(DeviceInfo deviceInfo) {
+        addDeviceInfo(deviceInfo, handler);
+//        controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+        revalidate();
+        updateUI();
+    }
+
     boolean onKeyPressed(KeyEvent e) {
         return true;
     }
@@ -147,7 +156,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         }
         controller_panel.clear();
         robot_panel.clear();
-        master.sao.resetAutoget();
+        master.sao.setHandler(null);
         return true;
     }
 
@@ -156,7 +165,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     public void onEnter() {
         controller_panel.clear();
         robot_panel.clear();
-        master.sao.autoget = getAutogetFunc();
+        master.sao.setHandler(this);
         //start request
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT(), master.sao.deviceInfoMessenger);
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), master.sao.deviceInfoMessenger);
@@ -165,26 +174,14 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), master.sao.deviceInfoMessenger);
     }
 
-    public Function1<DeviceInfo, BoxedUnit> autoget = new Function1<DeviceInfo, BoxedUnit>() {
-        @Override
-        public BoxedUnit apply(DeviceInfo v1) {
-            addDeviceInfo(v1, handler);
-            controller_panel.add(new DeviceInfoJPanel(v1, handler));
-            revalidate();
-            updateUI();
-            return null;
-        }
-    };
 
-    @Override
-    public Function1<DeviceInfo, BoxedUnit> getAutogetFunc() {
-        return autoget;
-    }
+
+
 
     public void addDeviceInfo(DeviceInfo deviceInfo, DeviceInfoJPanelHandler handler) {
-        if (DeviceInfo.isRobot(deviceInfo.deviceType()))
+        if (DeviceInfo.isRobot(deviceInfo._deviceType()))
             robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
-        else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())
+        else if (deviceInfo._deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())
             controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
     }
 

@@ -3,6 +3,8 @@ package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
+import edu.hkcc.pacmanrobot.utils.message.FlashRequest;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,7 +15,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 
-public class PositionSetting extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler{
+public class PositionSetting extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
 
     DeviceInfoContainer robot_panel = new DeviceInfoContainer("Pending Robot");
     DeviceInfoContainer moving_robot_panel = new DeviceInfoContainer("Moving Robots");
@@ -22,7 +24,8 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
     /**
      * Create the frame.
      */
-    public PositionSetting() {
+    public PositionSetting(GameMonitorJFrame gameMonitorJFrame) {
+        super(gameMonitorJFrame);
         setBounds(100, 100, 800, 600);
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setLayout(new GridLayout(0, 1, 0, 10));
@@ -44,6 +47,11 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
 
         JButton btnLightOn = new JButton("Light on");
         btnLightOn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnLightOn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setting(true);
+            }
+        });
         button_panel.add(btnLightOn);
 
         Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
@@ -54,7 +62,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         button_panel.add(settingbutton);
         settingbutton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setting();
+                setting(false);
             }
         });
 
@@ -88,11 +96,12 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
             checkPanel.unclick();
     }
 
-    void setting() {
+    void setting(boolean light_on) {
         DeviceInfoJPanel settingRobot = null;
         for (DeviceInfoJPanel pendingRobotDeviceJPanel : robot_panel.deviceInfoJPanels)
             if (pendingRobotDeviceJPanel.isClicked && !pendingRobotDeviceJPanel.isSelected) {
                 settingRobot = pendingRobotDeviceJPanel;
+                sendRequest(settingRobot.deviceInfo,light_on);
             }
         robot_panel.remove(settingRobot);
 
@@ -111,10 +120,25 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         clicked = deviceInfoJPanel;
     }
 
+    Vector<DeviceInfoContainer> deviceInfoContainers = null;
+
     @Override
     public Vector<DeviceInfoContainer> getDeviceInfoContainers() {
-        return null;
+        if (deviceInfoContainers == null) {
+            deviceInfoContainers = new Vector<DeviceInfoContainer>();
+            deviceInfoContainers.add(robot_panel);
+            deviceInfoContainers.add(moving_robot_panel);
+        }
+        return deviceInfoContainers;
     }
+
+    @Override
+    public void receivedDeviceInfo(DeviceInfo deviceInfo) {
+        robot_panel.add(new DeviceInfoJPanel(deviceInfo, this));
+        revalidate();
+        updateUI();
+    }
+
 
     @Override
     public boolean onLeave() {
@@ -138,11 +162,16 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
             System.out.println(e2.toString());
             return false;
         }
+        robot_panel.clear();
+        moving_robot_panel.clear();
+        master.sao.setHandler(null);
         return true;
     }
 
     @Override
-    public void onEnter() throws IOException {
+    public void onEnter() {
+        robot_panel.clear();
+        moving_robot_panel.clear();
         /*robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.4", "Robot 1"), this));
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.5", "Robot 2"), this));
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.6", "Robot 3"), this));
@@ -151,6 +180,14 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.9", "Robot 6"), this));
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.132", "Robot 7"), this));
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.131", "Robot 8"), this));*/
-        revalidate();
+
+        master.sao.setHandler(this);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
+    }
+
+    public void sendRequest(DeviceInfo deviceInfo,boolean lightOn) {
+        master.sao.flashRequestMessenger.sendMessage(new FlashRequest(deviceInfo.MAC_ADDRESS(), lightOn));
     }
 }

@@ -33,7 +33,8 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
      * @throws IOException
      * @throws MalformedURLException
      */
-    public PairControllerRobotJPanel() {
+    public PairControllerRobotJPanel(GameMonitorJFrame gameMonitorJFrame) {
+        super(gameMonitorJFrame);
         setBounds(100, 100, 800, 600);
         setBorder(new EmptyBorder(5, 5, 5, 5));
         //getContentPane().add(contentPane);
@@ -121,7 +122,7 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
     public void onDeviceInfoJPanelClicked(DeviceInfoJPanel clickedDeviceInfoJPanel) {
         //System.out.println("this, here, there, right here");
         //update color
-        if (DeviceInfo.isRobot(clickedDeviceInfoJPanel.deviceInfo.deviceType())) {
+        if (DeviceInfo.isRobot(clickedDeviceInfoJPanel.deviceInfo._deviceType())) {
             if (clickedControllerJPanel != null && !clickedControllerJPanel.equals(clickedDeviceInfoJPanel))
                 clickedControllerJPanel.unclick();
             clickedControllerJPanel = clickedDeviceInfoJPanel;
@@ -141,6 +142,11 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
     @Override
     public Vector<DeviceInfoContainer> getDeviceInfoContainers() {
         return null;
+    }
+
+    @Override
+    public void receivedDeviceInfo(DeviceInfo deviceInfo) {
+
     }
 
     public void makePair() {
@@ -204,6 +210,14 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
                 break;
             }
     }*/
+    @Override
+    public void receivedDeviceInfo(DeviceInfo deviceInfo) {
+        if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT())
+            robot_container.add(new DeviceInfoJPanel(deviceInfo, this));
+        controller_container.add(new DeviceInfoJPanel(deviceInfo,this));
+        revalidate();
+        updateUI();
+    }
 
     @Override
     public boolean onLeave() {
@@ -233,7 +247,10 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
     }
 
     @Override
-    public void onEnter() throws IOException {
+    public void onEnter(){
+        controller_container.clear();
+        robot_container.clear();
+        pair_panel.clear();
         /*controller_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.3", "Controller 1"), this));
         controller_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.1", "Controller 2"), this));
         controller_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.2", "Controller 3"), this));
@@ -241,6 +258,9 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         robot_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.5", "Robot 2"), this));
         robot_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.6", "Robot 3"), this));
         robot_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.7", "Robot 4"), this));
-   */
+        */
+        master.sao.setHandler(this);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), deviceInfoMessenger);
     }
 }
