@@ -2,9 +2,9 @@ package edu.hkcc.pacmanrobot.controller.gamecontroller
 
 import java.util.function.BiConsumer
 
-import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
-import edu.hkcc.pacmanrobot.utils.message.Messenger
-import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Timer, Utils}
+import edu.hkcc.pacmanrobot.utils.map.{MapKey, ObstacleMap}
+import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
+import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Utils}
 import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11._
@@ -15,7 +15,7 @@ import scala.util.Random
 /**
  * Created by beenotung on 4/8/15.
  */
-class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
+class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
   extends Thread {
   val WINDOW_TITLE = "Pacman Mini Map"
   val runnable = new MiniMapRunnable(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE = "Pacman Mini Map")
@@ -43,8 +43,6 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
 
   class MiniMapRunnable(WINDOW_WIDTH: Int, WINDOW_HEIGHT: Int, WINDOW_TITLE: String, backgroundColors: Array[Float] = Array.fill[Float](4)(0f))
     extends AbstractSimpleOpenGLApplication(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, backgroundColors = backgroundColors) {
-
-
     val DEFAULT_OBSTACLE_RADIUS = 10f
     val minPixel = 10
     var obstacle_radius = 0.8f
@@ -55,9 +53,9 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
     protected var l2: Float = 1f
     protected var xl: Float = l
     protected var yl: Float = l
-    //    override protected def keyInvoke(window: Long, key: Int, scanCode: Int, action: Int, mode: Int): Unit = {
-    //      super.keyInvoke()
-    //    }
+    // override protected def keyInvoke(window: Long, key: Int, scanCode: Int, action: Int, mode: Int): Unit = {
+    //   super.keyInvoke()
+    // }
     protected var zl: Float = l
 
     def SetXYZRange_=(newValue: Float) {
@@ -72,13 +70,13 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
     }
 
     override protected def myInit: Unit = {
-      ObstacleMap.estimated_game_duration_in_minutes_=(1d/6d)
+      ObstacleMap.estimated_game_duration_in_minutes_=(1d / 6d)
       super.myInit
       scrollSpeed = 1f
       rollSpeed = 10f
-      //range = 100f
-      //zEquilateral = true
-      //isCameraOrtho=false
+      // range = 100f
+      // zEquilateral = true
+      // isCameraOrtho=false
       zMax = 100f
       zMin = -100f
       cxr = 180f
@@ -93,7 +91,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
       if (!updated) return
       binaryMap = obstacleMap.to2DArrayLong
       range = Utils.getObstacleMapRange(binaryMap)
-      //obstacle_radius = Math.min(WINDOW_WIDTH * 0.8f / (range._1._2 - range._1._1), WINDOW_HEIGHT * 0.8f / (range._2._2 - range._2._1))
+      // obstacle_radius = Math.min(WINDOW_WIDTH * 0.8f / (range._1._2 - range._1._1), WINDOW_HEIGHT * 0.8f / (range._2._2 - range._2._1))
       x_range = range._1._2 - range._1._1
       y_range = range._2._2 - range._2._1
       obstacle_radius = Math.min(
@@ -113,7 +111,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
       val b = r * .5d
       val now = System.currentTimeMillis
       var ratio = 1d
-      obstacleMap.forEach(new BiConsumer[MapKey,Long] {
+      obstacleMap.forEach(new BiConsumer[MapKey, Long] {
         override def accept(k: MapKey, v: Long): Unit = {
           ratio = ObstacleMap.prob(v, now)
           glColor3d(r * ratio, g * ratio, b * ratio)
@@ -123,14 +121,15 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 600)
             0, obstacle_radius)
         }
       })
+      println("rendered")
     }
 
     def getXForOpenGL(x: Int): Float = {
-      ((x - range._1._1) / x_range * 2 - 1 ) * 0.8f
+      ((x - range._1._1) / x_range * 2 - 1) * 0.8f
     }
 
     def getYForOpenGL(y: Int): Float = {
-      ((y - range._2._1) / y_range * 2 - 1 )*0.8f
+      ((y - range._2._1) / y_range * 2 - 1) * 0.8f
     }
 
     /**

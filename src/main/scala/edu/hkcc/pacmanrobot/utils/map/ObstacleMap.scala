@@ -7,14 +7,16 @@ package edu.hkcc.pacmanrobot.utils.map
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
-import edu.hkcc.pacmanrobot.utils.{Config, Point2D}
+import edu.hkcc.pacmanrobot.utils.message.Message
+import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Utils}
 
 import scala.collection.parallel.mutable.ParArray
 
 object ObstacleMap {
   private var _estimated_game_duration_in_minutes: Double = 5d
   private var deprecate_rate: Double = 1d / estimated_game_duration_in_minutes / -1000d / 60d
-  def get_deprecate_rate=deprecate_rate
+
+  def get_deprecate_rate = deprecate_rate
 
   def estimated_game_duration_in_minutes: Double = _estimated_game_duration_in_minutes
 
@@ -26,9 +28,29 @@ object ObstacleMap {
   def prob(discoverTime: Long, compareTime: Long): Double = {
     Math.exp((compareTime - discoverTime) * deprecate_rate)
   }
+
+  def getRange(obstacleMap: ObstacleMap): Point2D[Point2D[Int]] = {
+    val range = new Point2D[Point2D[Int]](new Point2D[Int](0, 0), new Point2D[Int](0, 0))
+    if (obstacleMap != null)
+      obstacleMap.forEach(new BiConsumer[MapKey, Long] {
+        override def accept(key: MapKey, value: Long) = {
+          if (range._1._1 > key.x)
+            range._1._1 = key.x
+          if (range._1._2 < key.x)
+            range._1._2 = key.x
+
+          if (range._2._1 > key.y)
+            range._2._1 = key.y
+          if (range._2._2 < key.y)
+            range._2._2 = key.y
+        }
+      })
+    range
+  }
 }
 
-class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Message {
+class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Message
+{
   override val port: Int = Config.PORT_MAP
 
   def isExist(target: MapUnit): Boolean = {
@@ -53,11 +75,11 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
     })
   }
 
-  override def clone: AnyRef = {
+  override def clone: ObstacleMap = {
     val newInstance: ObstacleMap = new ObstacleMap
     forEach(new BiConsumer[MapKey, Long] {
       override def accept(key: MapKey, value: Long) = {
-        newInstance.put(key.clone.asInstanceOf[MapKey], value)
+        newInstance.put(key.clone.asInstanceOf[MapKey], value.toLong)
       }
     })
     newInstance
@@ -66,10 +88,11 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
   def to2DArrayBoolean: Array[Array[Boolean]] = {
     val map = to2DArrayLong
     if (map == null)
-      return null
+      null
     else {
       val now = System.currentTimeMillis()
-      Array.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
+      //Array.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
+      Array.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > Utils.random.nextDouble())
     }
   }
 
@@ -86,31 +109,29 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
   def to2DArrayLong: Array[Array[Long]] = {
     if (isEmpty) null
     else {
-      val range = new Point2D[Point2D[Int]](new Point2D[Int](0, 0), new Point2D[Int](0, 0))
-      forEach(new BiConsumer[MapKey, Long] {
-        override def accept(key: MapKey, value: Long) = {
-          if (range._1._1 > key.x)
-            range._1._1 = key.x
-          if (range._1._2 < key.x)
-            range._1._2 = key.x
-
-          if (range._2._1 > key.y)
-            range._2._1 = key.y
-          if (range._2._2 < key.y)
-            range._2._2 = key.y
+      val map=clone
+      val range = ObstacleMap.getRange(map)
+      val array = Array.fill[Long](range._1._2 - range._1._1 + 1, range._2._2 - range._2._1 + 1)(0L)
+      map.forEach(new BiConsumer[MapKey, Long] {
+        override def accept(k: MapKey, v: Long): Unit = {
+      try
+          array(k.x-range._1._1)(k.y-range._2._1) = v
+          catch{
+            case e:Exception=>{
+              println(e.toString)
+              e.printStackTrace()
+              println()
+              println("range:")
+              println(range._1)
+              println(range._2)
+              println
+              println("array size= "+ array.length +", "+array(0).length)
+              println(k.x+", "+k.y)
+            }
+          }
         }
       })
-      //println()
-      //println(range._1)
-      //println(range._2)
-      Array.tabulate[Long](range._1._2 - range._1._1 + 1, range._2._2 - range._2._1 + 1)((x, y) => {
-        val key: MapKey = new MapKey(x + range._1._1, y+range._2._1)
-        //println(key)
-        if (containsKey(key))
-          get(key)
-        else
-          0L
-      })
+      array
     }
   }
 }

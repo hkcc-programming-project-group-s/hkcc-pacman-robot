@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.message
+package edu.hkcc.pacmanrobot.utils.message.messenger
 
 import java.io.{EOFException, ObjectInputStream, ObjectOutputStream}
 import java.net._
@@ -18,7 +18,7 @@ import edu.hkcc.pacmanrobot.utils.exception.ClientSocketClosedException
 object Messenger {
   def create[Type](port: Int, autoGetFunc: (Type) => Unit = (message: Type) => {}, messengerManager: MessengerManager[Type]): Messenger[Type] = {
     println("creating messenger on port: " + port)
-    val messenger = new Messenger[Type](port, messengerManager) {
+    val messenger = new Messenger[Type](connect(port, messengerManager != null), port, messengerManager) {
       override def autoGet(message: Type): Unit = {
         autoGetFunc(message)
       }
@@ -56,10 +56,10 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
 
   def stopThread = {
     inputThread.interrupt
-    outputThread.interrupt
-    currentMessenger.interrupt
     inputThread.stop
+    outputThread.interrupt
     outputThread.stop
+    currentMessenger.interrupt
     currentMessenger.stop
   }
 
@@ -133,8 +133,8 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
     println("reconnected on: " + socket.getRemoteSocketAddress + "(" + port + ")")
   }
 
-  def this(port: Int, messengerManager: MessengerManager[Type]) = {
-    this(Messenger.connect(port, false), port, messengerManager)
+  def this(port: Int) = {
+    this(Messenger.connect(port, isServer = false), port, null)
   }
 
   val socketSemaphore: Semaphore = new Semaphore(1)
@@ -189,22 +189,24 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
         reconnect
       }
     }
-   /* if (!running)
-      try
-        run
-      catch {
-        case e: SocketException => {
-          println(e.toString)
-        }
-        case e: Exception => {
-          println(e.toString)
-        }
-      }*/
+    /* if (!running)
+       try
+         run
+       catch {
+         case e: SocketException => {
+           println(e.toString)
+         }
+         case e: Exception => {
+           println(e.toString)
+         }
+       }*/
     socketSemaphore.release()
     println("checked connection on: " + socket.getRemoteSocketAddress + "(" + port + ")")
   }
 
   def autoGet(message: Type): Unit
+
+  //def autoGet(controllerMacAddress:Array[Byte],message: Type): Unit
 
   //var running = false
 
@@ -260,18 +262,18 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
     !inputQueue.isEmpty
   }
 
-  private def sendMessage: Unit = {
+  protected def sendMessage: Unit = {
     if (!outputQueue.isEmpty) {
       val message: Type = outputQueue.poll
       outputStream.writeObject(message)
-      println("sent " + message.toString)
+      //println("sent " + message.toString)
     }
   }
 
   private def receiveMessage: Unit = {
     val message: Type = inputStream.readObject.asInstanceOf[Type]
     inputQueue.add(message)
-    //println("received " + message.toString)
+    println("received " + message.toString)
     autoGet(getMessage)
   }
 

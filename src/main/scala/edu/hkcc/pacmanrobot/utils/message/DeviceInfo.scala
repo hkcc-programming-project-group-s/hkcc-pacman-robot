@@ -3,7 +3,8 @@ package edu.hkcc.pacmanrobot.utils.message
 import java.net.{InetAddress, NetworkInterface}
 
 import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.map.Message
+import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
+
 
 /**
  * Created by 13058456a on 3/21/2015.
@@ -11,6 +12,7 @@ import edu.hkcc.pacmanrobot.utils.map.Message
 object DeviceInfo extends Message {
   override val port: Int = Config.PORT_DEVICE_INFO
 
+  val DEVICE_TYPE_DELETE: Byte = 0
   val DEVICE_TYPE_CONTROLLER: Byte = 1
   val DEVICE_TYPE_UNCLASSED_ROBOT: Byte = 2
   val DEVICE_TYPE_ASSIGNMENT_ROBOT: Byte = 3
@@ -26,19 +28,49 @@ object DeviceInfo extends Message {
   }
 
   def create(name: String, deviceType: Byte): DeviceInfo = {
-    new DeviceInfo(name, InetAddress.getLocalHost.getHostAddress, deviceType, 0)
+    new DeviceInfo(name, InetAddress.getLocalHost.getHostAddress, deviceType, shouldSave = true)
+  }
+
+  def request(deviceType: Byte, messenger: Messenger[DeviceInfo]) = {
+    messenger.sendMessage(new DeviceInfo(_deviceType = deviceType, shouldSave = false, name = "", ip = ""))
+  }
+
+  def isRobot(deviceType: Byte): Boolean = {
+    deviceType match {
+      case DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT => true
+      case DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT => true
+      case DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT => true
+      case DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT => true
+      case _ => false
+    }
   }
 }
 
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
 
-class DeviceInfo(var name: String, var ip: String, var deviceType: Byte, var lastConnectionTime: Long = 0) extends Serializable {
+/**
+ *
+ * @param name
+ * @param ip
+ * @param _deviceType
+ * @param lastConnectionTime
+ * @param shouldSave
+ * true => server save
+ * false => server response to client (send all that type)
+ */
+class DeviceInfo(var name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0, val shouldSave: Boolean) extends Serializable {
   val MAC_ADDRESS: Array[Byte] = getLocalMacAddress
+
+  def deviceType_=(newType: Byte): Unit = {
+    _deviceType = newType
+  }
+
+  def deviceType = _deviceType
 
   def set(newInfo: DeviceInfo): Unit = {
     name = newInfo.name
     ip = newInfo.ip
-    deviceType = newInfo.deviceType
+    _deviceType = newInfo._deviceType
     lastConnectionTime = newInfo.lastConnectionTime
   }
 }

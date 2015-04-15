@@ -3,7 +3,7 @@ package edu.hkcc.pacmanrobot.utils.map
 /**
  * Created by beenotung on 3/21/15.
  */
-class MapKey(val x: Int, val y: Int) extends Cloneable {
+class MapKey(val x: Int, val y: Int) extends Cloneable with Serializable {
   override def clone: AnyRef = {
     new MapKey(x, y)
   }

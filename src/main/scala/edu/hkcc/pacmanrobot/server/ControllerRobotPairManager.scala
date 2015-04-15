@@ -8,35 +8,39 @@ import java.util.function.BiConsumer
  */
 class ControllerRobotPairManager {
   val semaphore = new Semaphore(1)
-  val controllerRobotPairs = new ConcurrentHashMap[Int, Int]()
+  /**
+   * key : controller
+   * value : student robot
+   */
+  val controllerRobotPairs = new ConcurrentHashMap[Array[Byte], Array[Byte]]()
 
-  def setControllerRobotPair(controllerId: Int, robotId: Int) = {
+  def setControllerRobotPair(controller_macAddress: Array[Byte], robot_macAddress: Array[Byte]) = {
     semaphore.acquire()
-    removeControllerRobotPair(controllerId, robotId)
-    controllerRobotPairs.put(controllerId, robotId)
+    removeControllerRobotPair(controller_macAddress, robot_macAddress)
+    controllerRobotPairs.put(controller_macAddress, robot_macAddress)
     semaphore.release()
   }
 
-  def removeControllerRobotPair(controllerId: Int, robotId: Int) = {
-    removeController(controllerId)
-    removeRobot(robotId)
+  def removeControllerRobotPair(controller_macAddress: Array[Byte], robot_macAddress: Array[Byte]) = {
+    removeController(controller_macAddress)
+    removeRobot(robot_macAddress)
   }
 
-  def removeController(controllerId: Int) = {
+  def removeController(controllerId: Array[Byte]) = {
     controllerRobotPairs.remove(controllerId)
   }
 
-  def removeRobot(robotId: Int) = {
-    controllerRobotPairs.forEach(new BiConsumer[Int, Int] {
-      override def accept(key: Int, value: Int): Unit = {
-        if (value.equals(robotId))
+  def removeRobot(robot_macAddress: Array[Byte]) = {
+    controllerRobotPairs.forEach(new BiConsumer[Array[Byte], Array[Byte]] {
+      override def accept(key: Array[Byte], value: Array[Byte]): Unit = {
+        if (value.equals(robot_macAddress))
           controllerRobotPairs.remove(key)
       }
     })
   }
 
-  def getRobotId(controllerId: Int): Int = {
-    controllerRobotPairs.get(controllerId)
+  def getRobot_macAddress(controller_macAddress: Array[Byte]): Array[Byte] = {
+    controllerRobotPairs.get(controller_macAddress)
   }
 }
 

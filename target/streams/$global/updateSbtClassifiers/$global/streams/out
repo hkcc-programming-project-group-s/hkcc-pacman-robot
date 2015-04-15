@@ -703,9 +703,9 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-agent;0.13.8!test-agent.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-interface;1.0!test-interface.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.8!apply-macro.jar
-[debug] :: resolution report :: resolve 997ms :: artifacts dl 24ms
-[debug] 	report for sbt_robot#sbt_robot$sbt_2.11;1.0 default produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sbt_2.11-default.xml
-[debug] 	resolve done (997ms resolve - 24ms download)
+[debug] :: resolution report :: resolve 527ms :: artifacts dl 21ms
+[debug] 	report for sbt_robot#sbt_robot$sbt_2.11;1.0 default produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\target\resolution-cache\reports\sbt_robot-sbt_robot$sbt_2.11-default.xml
+[debug] 	resolve done (527ms resolve - 21ms download)
 [debug] Using inline dependencies specified in Scala.
 [debug] :: resolving dependencies :: sbt_robot#sbt_robot$sources_2.11;1.0
 [debug] 	confs: [default]
@@ -1069,6 +1069,6 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_8_2;0.13.8!precompiled-2_8_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_2;0.13.8!precompiled-2_9_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_3;0.13.8!precompiled-2_9_3.jar(src)
-[debug] :: resolution report :: resolve 114ms :: artifacts dl 22ms
-[debug] 	report for sbt_robot#sbt_robot$sources_2.11;1.0 default produced in /home/beenotung/git/workspace/hkcc-pacman-robot/target/resolution-cache/reports/sbt_robot-sbt_robot$sources_2.11-default.xml
-[debug] 	resolve done (114ms resolve - 22ms download)
+[debug] :: resolution report :: resolve 175ms :: artifacts dl 28ms
+[debug] 	report for sbt_robot#sbt_robot$sources_2.11;1.0 default produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\target\resolution-cache\reports\sbt_robot-sbt_robot$sources_2.11-default.xml
+[debug] 	resolve done (175ms resolve - 28ms download)
