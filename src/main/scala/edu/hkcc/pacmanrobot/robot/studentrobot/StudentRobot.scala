@@ -2,19 +2,23 @@ package edu.hkcc.pacmanrobot.robot.studentrobot
 
 import edu.hkcc.pacmanrobot.robot.core.Robot
 import edu.hkcc.pacmanrobot.robot.utils.L298NAO
+import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.Config.MOTOR_CYCLE_INTERVAL
-import edu.hkcc.pacmanrobot.utils.message.{DeviceInfo, MovementCommand, MovementCommandMessenger}
+import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
+
+import edu.hkcc.pacmanrobot.utils.message.{DeviceInfo, MovementCommand}
 
 
 /**
  * Created by beenotung on 3/26/15.
  */
 class StudentRobot(name: String) extends Robot {
-  val movementCommandMessenger: MovementCommandMessenger = new MovementCommandMessenger(false) {
-    override def autoGet_func(message: MovementCommand): Unit = {
-      movementCommand = message
-    }
+  var movementCommand:MovementCommand=MovementCommand.stop
+  val movementCommandMessenger = new Messenger[MovementCommand](Config.PORT_MOVEMENT_COMMAND) {
+    override def autoGet(message: MovementCommand): Unit = {movementCommand = message}
   }
+
+
 
   override def gameSetup: Unit = {
   }
@@ -38,8 +42,8 @@ class StudentRobot(name: String) extends Robot {
 
   override def loop: Unit = {
     //val direction=in.readObject().asInstanceOf[java.lang.Double]
-    if (movementCommandMessenger.movementCommand.mode.equals(MovementCommand.MODE_POLAR)) {
-      L298NAO.move_pwm(movementCommandMessenger.movementCommand.point2D)
+    if (movementCommand.mode.equals(MovementCommand.MODE_POLAR)) {
+      L298NAO.move_pwm(movementCommand.point2D)
     } else {
       //TODO calculate polar command from current location
     }

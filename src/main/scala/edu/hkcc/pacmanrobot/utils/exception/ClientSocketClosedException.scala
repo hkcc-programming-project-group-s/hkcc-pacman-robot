@@ -1,6 +1,6 @@
 package edu.hkcc.pacmanrobot.utils.exception
 
-import edu.hkcc.pacmanrobot.utils.message.Messenger
+import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
 
 /**
  * Created by beenotung on 4/8/15.

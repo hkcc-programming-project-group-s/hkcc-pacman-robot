@@ -3,7 +3,7 @@ package edu.hkcc.pacmanrobot.controller.gamecontroller
 import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, ObstacleMap}
-import edu.hkcc.pacmanrobot.utils.message.Messenger
+import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
 import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Utils}
 import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11

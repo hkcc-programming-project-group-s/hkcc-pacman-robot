@@ -11,6 +11,7 @@ import edu.hkcc.pacmanrobot.utils.map.Message
 object DeviceInfo extends Message {
   override val port: Int = Config.PORT_DEVICE_INFO
 
+  val DEVICE_TYPE_DELETE: Byte = 0
   val DEVICE_TYPE_CONTROLLER: Byte = 1
   val DEVICE_TYPE_UNCLASSED_ROBOT: Byte = 2
   val DEVICE_TYPE_ASSIGNMENT_ROBOT: Byte = 3
