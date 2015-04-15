@@ -18,7 +18,7 @@ import edu.hkcc.pacmanrobot.utils.exception.ClientSocketClosedException
 object Messenger {
   def create[Type](port: Int, autoGetFunc: (Type) => Unit = (message: Type) => {}, messengerManager: MessengerManager[Type]): Messenger[Type] = {
     println("creating messenger on port: " + port)
-    val messenger = new Messenger[Type](port, messengerManager) {
+    val messenger = new Messenger[Type](connect(port, messengerManager != null), port, messengerManager) {
       override def autoGet(message: Type): Unit = {
         autoGetFunc(message)
       }
@@ -133,8 +133,8 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
     println("reconnected on: " + socket.getRemoteSocketAddress + "(" + port + ")")
   }
 
-  def this(port: Int, messengerManager: MessengerManager[Type]) = {
-    this(Messenger.connect(port, false), port, messengerManager)
+  def this(port: Int) = {
+    this(Messenger.connect(port, isServer = false), port, null)
   }
 
   val socketSemaphore: Semaphore = new Semaphore(1)
@@ -189,17 +189,17 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
         reconnect
       }
     }
-   /* if (!running)
-      try
-        run
-      catch {
-        case e: SocketException => {
-          println(e.toString)
-        }
-        case e: Exception => {
-          println(e.toString)
-        }
-      }*/
+    /* if (!running)
+       try
+         run
+       catch {
+         case e: SocketException => {
+           println(e.toString)
+         }
+         case e: Exception => {
+           println(e.toString)
+         }
+       }*/
     socketSemaphore.release()
     println("checked connection on: " + socket.getRemoteSocketAddress + "(" + port + ")")
   }

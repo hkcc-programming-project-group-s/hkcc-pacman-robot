@@ -1,7 +1,7 @@
 package edu.hkcc.pacmanrobot.utils.studentrobot.code
 
 import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.map.Message
+import edu.hkcc.pacmanrobot.utils.message.Message
 
 /**
  * Created by 13058456a on 3/21/2015.

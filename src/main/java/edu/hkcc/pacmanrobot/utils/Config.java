@@ -15,6 +15,9 @@ public class Config {
     public static final int PORT_POSITION = 4214;
     //public static final int PORT_CONNECTION_INFO = 4219;
     public static final int PORT_CONTROLLER_ROBOT_PAIR = 4220;
+    public static final int PORT_FLASH_REQUEST = 40160;
+
+
     //public static String serverAddress = "192.168.43.1";
     public static String serverAddress = "192.168.1.3";
     //public static String serverAddress = "172.26.3.180";

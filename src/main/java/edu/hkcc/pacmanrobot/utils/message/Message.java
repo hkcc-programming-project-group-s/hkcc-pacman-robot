@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.map;
+package edu.hkcc.pacmanrobot.utils.message;
 
 import java.io.Serializable;
 
