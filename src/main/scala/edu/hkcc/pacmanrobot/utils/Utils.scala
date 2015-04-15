@@ -1,9 +1,5 @@
 package edu.hkcc.pacmanrobot.utils
 
-import java.util.function.BiConsumer
-
-import edu.hkcc.pacmanrobot.utils.map.{MapKey, ObstacleMap}
-
 import scala.util.Random
 
 /**
@@ -11,8 +7,6 @@ import scala.util.Random
  */
 object Utils {
   val random = new Random(System.currentTimeMillis())
-
-
 
   @Deprecated
   def getObstacleMapRange[AnyValCompanion](array: Array[Array[AnyValCompanion]]): Point2D[Point2D[Int]] = {

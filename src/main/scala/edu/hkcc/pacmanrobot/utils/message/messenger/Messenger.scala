@@ -73,8 +73,8 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
           receiveMessage
         }
         catch {
-          case e: SocketException => checkConnection(false)
-          case e: EOFException => checkConnection(false)
+          case e: SocketException => checkConnection(e)
+          case e: EOFException => checkConnection(e)
           case e: InterruptedException => interrupt
           case e: Exception => e.printStackTrace()
         }
@@ -88,8 +88,8 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
           sendMessage
           Thread.sleep(SEND_INTERVAL)
         } catch {
-          case e: SocketException => checkConnection(false)
-          case e: EOFException => checkConnection(false)
+          case e: SocketException => checkConnection(e)
+          case e: EOFException => checkConnection(e)
           case e: InterruptedException => interrupt
           case e: Exception => e.printStackTrace()
         }
@@ -140,9 +140,12 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   val socketSemaphore: Semaphore = new Semaphore(1)
 
 
-  def checkConnection(normal: Boolean): Unit = {
-    if (!normal && messengerManager != null) {
+  def checkConnection(lastException: Exception = null): Unit = {
+    if (lastException != null)
+      println("checkConnection: last exception=" + lastException)
+    if (lastException != null && messengerManager != null) {
       messengerManager.remove(this)
+      //println("new size=" + messengerManager.messengers.size())
       return
     }
     println("checking connection on: " + socket.getRemoteSocketAddress + "(" + port + ")")
@@ -152,28 +155,42 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
       println("check if socket is closed")
       if (socket.isClosed || !socket.isConnected)
         throw new SocketException("socket is closed (exception) on port: " + port)
+      var inOk = true
       val inThread = forkAndStart({
         println("check if input stream is null")
-        if (inputStream == null) {
+        if (inputStream == null || (lastException!=null && lastException.isInstanceOf[EOFException])) {
           println("get input stream")
           val in = socket.getInputStream
-          println("create object input stream")
-          inputStream = new ObjectInputStream(in)
-          println("created object input stream")
+          println("creating object input stream")
+          try {
+            inputStream = new ObjectInputStream(in)
+            println("created object input stream")
+          }
+          catch {
+            case e: EOFException => inOk = false
+          }
         }
       })
+      var outOk = true
       val outThread = forkAndStart({
         println("check if output stream is null")
-        if (outputStream == null) {
+        if (outputStream == null || (lastException!=null && lastException.isInstanceOf[EOFException])) {
           println("get output stream")
           val out = socket.getOutputStream
-          println("create object output stream")
-          outputStream = new ObjectOutputStream(out)
-          println("created object output stream")
+          println("creating object output stream")
+          try {
+            outputStream = new ObjectOutputStream(out)
+            println("created object output stream")
+          }
+          catch {
+            case e: EOFException => outOk = false
+          }
         }
       })
       inThread.join
       outThread.join
+      if (!(inOk && outOk))
+        throw new EOFException()
       if (socket.getLocalSocketAddress.toString.equals(socket.getRemoteSocketAddress.toString)) {
         println("connected to itself?!")
         throw new IllegalArgumentException
@@ -181,6 +198,10 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
     } catch {
       case e: SocketException => {
         println(e.toString)
+        reconnect
+      }
+      case e: EOFException => {
+        println("IO stream is not ready")
         reconnect
       }
       case e: IllegalArgumentException => messengerManager.remove(this)
@@ -210,12 +231,12 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
 
   //var running = false
 
-  @throws(classOf[ClientSocketClosedException[Type]])
+  //  @throws(classOf[ClientSocketClosedException[Type]])
   override def run: Unit = {
     //running = true
     println("init messenger on port:" + port)
     try
-      checkConnection(true)
+      checkConnection()
     catch {
       case e: ClientSocketClosedException[Type] => {
         messengerManager.remove(currentMessenger)
@@ -246,6 +267,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   override def interrupt = {
     inputThread.interrupt
     outputThread.interrupt
+    super.interrupt
   }
 
   def sendMessage(content: Type): Unit = {

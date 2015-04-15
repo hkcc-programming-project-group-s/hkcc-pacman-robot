@@ -1,32 +1,32 @@
 package edu.hkcc.pacmanrobot.server
 
 import java.net.{ServerSocket, Socket}
-import java.util.concurrent.Semaphore
+import java.util.concurrent.{ConcurrentHashMap, Semaphore}
+import java.util.function.BiConsumer
 
+import edu.hkcc.pacmanrobot.utils.Worker
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
-import edu.hkcc.pacmanrobot.utils.{Timer, Worker}
-
-import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by beenotung on 4/5/15.
  */
 class MessengerManager[Type](val servicePort: Int, autoGet_func: (Array[Byte], Type) => Unit)
   extends Thread {
-  val semaphore = new Semaphore(1)
 
-  val _messengers = new ArrayBuffer[Messenger[Type]]
+  val messengers = new ConcurrentHashMap[Array[Byte], Messenger[Type]]()
+  val semaphore = new Semaphore(1)
   var serverSocket = new ServerSocket(servicePort)
 
   override def run(): Unit = {
-    Timer.setTimeInterval({
-      foreach(m => {
-        if (m.socket.isClosed || !m.socket.isConnected && m.messengerManager != null) {
-          println("removing lost subscriber from: " + m.socket.getRemoteSocketAddress + "(" + m.port + ")")
-          remove(m)
-        }
-      })
-    }, isAlive, 1000)
+    //    Timer.setTimeInterval({
+    //      foreach(m => {
+    //        println("checking m: " + m.toString)
+    //        if (m.socket.isClosed || !m.socket.isConnected && m.messengerManager != null) {
+    //          println("removing lost subscriber from: " + m.socket.getRemoteSocketAddress + "(" + m.port + ")")
+    //          remove(m)
+    //        }
+    //      })
+    //    }, isAlive, 1000)
     while (true) {
       println("waiting incoming request from port: " + servicePort)
       genMessenger(serverSocket.accept())
@@ -45,30 +45,44 @@ class MessengerManager[Type](val servicePort: Int, autoGet_func: (Array[Byte], T
   }
 
   def add(newMessenger: Messenger[Type]) = {
-    semaphore.acquire()
-    messengers :+ newMessenger
-    semaphore.release()
+    messengers.put(newMessenger.getRemoteMacAddress, newMessenger)
   }
-
-  def messengers = _messengers
 
   def remove(removeTarget: Messenger[Type]) = {
     Worker.forkAndStart({
       semaphore.acquire()
       println("removing client: " + removeTarget.socket.getInetAddress.getHostAddress + ":" + removeTarget.socket.getPort + "(" + removeTarget.port + ")")
-      removeTarget.stopThread
-      messengers -= removeTarget
+      val key = getKey(removeTarget)
+      if (key != null) {
+        messengers.remove(key)
+        removeTarget.stopThread
+      }
       semaphore.release()
     })
   }
 
+  def getKey(messenger: Messenger[Type]): Array[Byte] = {
+    var key: Array[Byte] = null
+    messengers.forEach(new BiConsumer[Array[Byte], Messenger[Type]] {
+      override def accept(k: Array[Byte], v: Messenger[Type]): Unit = {
+        if (messenger.equals(v))
+          key = k
+      }
+    })
+    key
+  }
+
   def foreach(op: Messenger[Type] => Unit) = {
-    messengers.foreach(messenger => op(messenger))
+    messengers.forEach(new BiConsumer[Array[Byte], Messenger[Type]] {
+      override def accept(macAddress: Array[Byte], messenger: Messenger[Type]): Unit = {
+        op(messenger)
+      }
+    })
   }
 
   def sendByMacAddress(macAddress: Array[Byte], message: Type) = {
     if (macAddress != null)
-      messengers.filter(m => macAddress.equals(m.getRemoteMacAddress)).foreach(m =>
-        m.sendMessage(message))
+      if (messengers.containsKey(macAddress))
+        messengers.get(macAddress).sendMessage(message)
   }
 }

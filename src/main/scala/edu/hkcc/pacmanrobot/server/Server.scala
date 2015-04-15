@@ -1,7 +1,6 @@
 package edu.hkcc.pacmanrobot.server
 
 import java.net.InetAddress
-import java.util.Calendar
 import java.util.concurrent.ConcurrentHashMap
 
 import edu.hkcc.pacmanrobot.server.ObstacleMapManager.obstacleMap
@@ -89,18 +88,20 @@ class Server extends Thread {
   def test = {
     val bufferedMap = new ObstacleMap
     Timer.setTimeInterval({
-      println
-      println(Calendar.getInstance().getTime)
-      println("random put")
-      bufferedMap.put(new MapUnit(new MapKey(random nextInt 4000, random nextInt 4000), System.currentTimeMillis()))
+      //println
+      //println(Calendar.getInstance().getTime)
+      //println("random put")
+      (1 to 1000).foreach(i=>
+        bufferedMap.put(new MapUnit(new MapKey(random nextInt 4000, random nextInt 4000), System.currentTimeMillis()))
+      )
       val toSend = bufferedMap.clone
-      println("number of obstacleMapSubscribers=" + obstacleMapManager.messengers.length)
-      obstacleMapManager.messengers.foreach(m =>
+      //println("number of obstacleMapSubscribers=" + obstacleMapManager.messengers.size)
+      obstacleMapManager.foreach(m =>
         m.sendMessage(toSend)
       )
       obstacleMap.merge(bufferedMap)
       bufferedMap.clear
-    }, true, 10)
+    }, true, 500)
   }
 
   //def obstacleMapSubscribers = obstacleMapMessengerManager.messengers

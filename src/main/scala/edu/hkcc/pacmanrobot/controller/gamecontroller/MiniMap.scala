@@ -121,7 +121,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
             0, obstacle_radius)
         }
       })
-      println("rendered")
+      //println("rendered")
     }
 
     def getXForOpenGL(x: Int): Float = {
