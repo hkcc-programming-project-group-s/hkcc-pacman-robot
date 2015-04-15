@@ -13,6 +13,7 @@ object GameStatus extends Message {
     type GameStatus = Value
     val SETUP,START,RESUME,STOP,PAUSE,WIN,LOSE=Value
   }*/
+  val STATE_NORMAL:Byte = 0x08
   val STATE_SETUP: Byte = 0x01
   val STATE_START: Byte = 0x02
   val STATE_RESUME: Byte = 0x03

@@ -14,5 +14,5 @@ public interface DeviceInfoJPanelHandler {
 
     Vector<DeviceInfoContainer> getDeviceInfoContainers();
 
-    public void receivedDeviceInfo(DeviceInfo deviceInfo);
+    public void receiveDeviceInfo(DeviceInfo deviceInfo);
 }

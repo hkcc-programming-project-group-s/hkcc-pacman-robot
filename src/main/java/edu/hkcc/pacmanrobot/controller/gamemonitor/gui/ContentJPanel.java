@@ -20,7 +20,9 @@ public class ContentJPanel extends AbstractCardJPanel {
         contents = new Vector<>();
         contents.add(new SetDeviceName(master));
         contents.add(new SetDeviceInfo(master));
-        contents.add(new PairControllerRobotJPanel(master));
+        PairControllerRobotJPanel pairControllerRobotJPanel = new PairControllerRobotJPanel(master);
+        master.sao.pairControllerRobotJPanel_$eq(pairControllerRobotJPanel);
+        contents.add(pairControllerRobotJPanel);
         contents.add(new PositionSetting(master));
 
         for (int i = 0; i < contents.size(); i++)

@@ -40,7 +40,8 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     /**
      * Create the frame.
      */
-    public SetDeviceInfo() {
+    public SetDeviceInfo(GameMonitorJFrame gameMonitorJFrame) {
+        super(gameMonitorJFrame);
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(myDispatcher);
 
@@ -169,6 +170,8 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         if (clicked == null) return;
         //System.out.println("REMOVE HERE!!!");
         clicked.deviceInfoContainer.remove(clicked);
+        clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DELETE());
+        deviceInfoMessenger.sendMessage(clicked.deviceInfo);
         //TODO call messenger
 
     }
@@ -190,6 +193,15 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         return deviceInfoContainers;
     }
 
+    @Override
+    public void receiveDeviceInfo(DeviceInfo deviceInfo) {
+        if (DeviceInfo.isRobot(deviceInfo.deviceType()))
+            unclasses_panel.add(new DeviceInfoJPanel(deviceInfo, this));
+        controller_panel.add(new DeviceInfoJPanel(deviceInfo, this));
+        revalidate();
+        updateUI();
+    }
+
 
     @Override
     public boolean onLeave() {
@@ -209,6 +221,10 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         try {
             //TODO sent robot types to server
             // use messenger to send to server
+            controller_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
+            student_robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
+            deadline_robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
+            assignment_robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
             if (new Random().nextBoolean())
                 throw new IOException();
         } catch (IOException e1) {
@@ -223,13 +239,29 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
             return false;
         }
 
+        unclasses_panel.clear();
+        assignment_robot_panel.clear();
+        deadline_robot_panel.clear();
+        student_robot_panel.clear();
+        controller_panel.clear();
         System.out.println();
         return true;
 
     }
 
     @Override
-    public void onEnter() throws IOException {
+    public void onEnter(){
+        unclasses_panel.clear();
+        student_robot_panel.clear();
+        assignment_robot_panel.clear();
+        deadline_robot_panel.clear();
+        controller_panel.clear();
+        master.sao.deviceInfoJPanelHandler_$eq(this);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT(), deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), deviceInfoMessenger);
         /*controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.3", "Controller 1"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.1", "Controller 2"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.2", "Controller 3"), this));
@@ -250,15 +282,15 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         if (DeviceInfo.isRobot(clicked.deviceInfo._deviceType())) {
             if (e.getKeyCode() == KeyEvent.VK_A) {
                 clicked.transfer(assignment_robot_panel);
-                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(),clicked.deviceInfo.lastConnectionTime()));
+                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(),clicked.deviceInfo.lastConnectionTime(),true));
                 System.out.println("changed to assignment.");
             } else if (e.getKeyCode() == KeyEvent.VK_D) {
                 clicked.transfer(deadline_robot_panel);
-                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(),clicked.deviceInfo.lastConnectionTime()));;
+                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(),clicked.deviceInfo.lastConnectionTime(),true));;
                 System.out.println("changed to deadline.");
             } else if (e.getKeyCode() == KeyEvent.VK_S) {
                 clicked.transfer(student_robot_panel);
-                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(),clicked.deviceInfo.lastConnectionTime()));
+                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(),clicked.deviceInfo.lastConnectionTime(),true));
                 System.out.println("changed to student.");
             } else return false;
         }

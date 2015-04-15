@@ -96,7 +96,7 @@ public class DeviceInfoJPanel extends JPanel {
         try {
             lblIcon = new JLabel(ControllerImages.getIconByDeviceType(deviceInfo._deviceType()));
             add(lblIcon, BorderLayout.WEST);
-        } catch (MalformedURLException e) {
+        } catch (IOException e) {
             add(emptyBox, BorderLayout.WEST);
         }
         lblName.setText(deviceInfo.name());

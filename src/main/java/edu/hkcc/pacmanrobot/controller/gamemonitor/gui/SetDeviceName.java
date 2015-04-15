@@ -1,12 +1,9 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
-import com.pi4j.device.Device;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
-import scala.Function1;
-import scala.runtime.BoxedUnit;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -89,6 +86,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         if (clicked == null) return;
         clicked.deviceInfoContainer.remove(clicked);
         clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DELETE());
+        deviceInfoMessenger.sendMessage(clicked.deviceInfo);
         //TODO call messenger
 
     }
@@ -119,7 +117,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     }
 
     @Override
-    public void receivedDeviceInfo(DeviceInfo deviceInfo) {
+    public void receiveDeviceInfo(DeviceInfo deviceInfo) {
         addDeviceInfo(deviceInfo, handler);
 //        controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
         revalidate();
@@ -156,7 +154,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         }
         controller_panel.clear();
         robot_panel.clear();
-        master.sao.setHandler(null);
+        master.sao.deviceInfoJPanelHandler_$eq(null);
         return true;
     }
 
@@ -165,13 +163,13 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     public void onEnter() {
         controller_panel.clear();
         robot_panel.clear();
-        master.sao.setHandler(this);
+        master.sao.deviceInfoJPanelHandler_$eq(this);
         //start request
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT(), master.sao.deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), master.sao.deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), master.sao.deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), master.sao.deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), master.sao.deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT(), master.sao.deviceInfoMessenger());
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), master.sao.deviceInfoMessenger());
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), master.sao.deviceInfoMessenger());
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), master.sao.deviceInfoMessenger());
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), master.sao.deviceInfoMessenger());
     }
 
 

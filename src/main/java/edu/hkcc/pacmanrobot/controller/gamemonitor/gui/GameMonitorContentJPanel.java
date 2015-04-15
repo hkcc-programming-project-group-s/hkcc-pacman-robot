@@ -19,7 +19,7 @@ public abstract class GameMonitorContentJPanel extends JPanel {
 
     public GameMonitorContentJPanel(GameMonitorJFrame gameMonitorJFrame) {
         this.master = gameMonitorJFrame;
-        deviceInfoMessenger = master.sao.deviceInfoMessenger;
+        deviceInfoMessenger = master.sao.deviceInfoMessenger();
     }
 
     public final Messenger<DeviceInfo> deviceInfoMessenger;

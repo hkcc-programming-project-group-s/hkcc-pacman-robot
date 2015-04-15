@@ -133,7 +133,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
     }
 
     @Override
-    public void receivedDeviceInfo(DeviceInfo deviceInfo) {
+    public void receiveDeviceInfo(DeviceInfo deviceInfo) {
         robot_panel.add(new DeviceInfoJPanel(deviceInfo, this));
         revalidate();
         updateUI();
@@ -164,7 +164,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         }
         robot_panel.clear();
         moving_robot_panel.clear();
-        master.sao.setHandler(null);
+        master.sao.deviceInfoJPanelHandler_$eq(null);
         return true;
     }
 
@@ -181,13 +181,13 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.132", "Robot 7"), this));
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.131", "Robot 8"), this));*/
 
-        master.sao.setHandler(this);
+        master.sao.deviceInfoJPanelHandler_$eq(this);
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), deviceInfoMessenger);
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), deviceInfoMessenger);
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
     }
 
     public void sendRequest(DeviceInfo deviceInfo,boolean lightOn) {
-        master.sao.flashRequestMessenger.sendMessage(new FlashRequest(deviceInfo.MAC_ADDRESS(), lightOn));
+        master.sao.flashRequestMessenger().sendMessage(new FlashRequest(deviceInfo.MAC_ADDRESS(), lightOn));
     }
 }

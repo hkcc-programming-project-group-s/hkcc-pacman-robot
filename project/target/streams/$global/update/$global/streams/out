@@ -1,4 +1,4 @@
-[info] Updating {file:/home/beenotung/git/workspace/hkcc-pacman-robot/project/}hkcc-pacman-robot-build...
+[info] Updating {file:/E:/tool/portableapps/PortableApps/GitPortable/Data/home/source/hkcc-pacman-robot/project/}hkcc-pacman-robot-build...
 [debug] :: resolving dependencies :: default#hkcc-pacman-robot-build;0.1-SNAPSHOT
 [debug] 	confs: [compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool]
 [debug] 	validate = true
@@ -16,7 +16,7 @@
 [debug] == resolving dependencies for default#hkcc-pacman-robot-build;0.1-SNAPSHOT [provided]
 [debug] == resolving dependencies default#hkcc-pacman-robot-build;0.1-SNAPSHOT->org.scala-lang#scala-library;2.10.4 [provided->default(compile)]
 [info] Resolving org.scala-lang#scala-library;2.10.4 ...
-[debug] sbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@1b16e2ba
+[debug] sbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@2930b810
 [debug] sbt-chain: module revision found in cache: org.scala-lang#scala-library;2.10.4
 [debug] 	found org.scala-lang#scala-library;2.10.4 in sbt-chain
 [debug] 	[2.10.4] org.scala-lang#scala-library;2.10.4
@@ -1766,19 +1766,19 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.8!apply-macro.jar
 [debug] 	[NOT REQUIRED] org.scala-lang#jline;2.10.4!jline.jar
 [debug] 	[NOT REQUIRED] org.fusesource.jansi#jansi;1.4!jansi.jar
-[debug] :: resolution report :: resolve 2105ms :: artifacts dl 105ms
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT compile produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-compile.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT runtime produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-runtime.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT test produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-test.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT provided produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-provided.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT optional produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-optional.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT compile-internal produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-compile-internal.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT runtime-internal produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-runtime-internal.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT test-internal produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-test-internal.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT plugin produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-plugin.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT sources produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-sources.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT docs produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-docs.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT pom produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-pom.xml
-[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT scala-tool produced in /home/beenotung/git/workspace/hkcc-pacman-robot/project/target/resolution-cache/reports/default-hkcc-pacman-robot-build-scala-tool.xml
-[debug] 	resolve done (2105ms resolve - 105ms download)
+[debug] :: resolution report :: resolve 1272ms :: artifacts dl 48ms
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT compile produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-compile.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT runtime produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-runtime.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT test produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-test.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT provided produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-provided.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT optional produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-optional.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT compile-internal produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-compile-internal.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT runtime-internal produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-runtime-internal.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT test-internal produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-test-internal.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT plugin produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-plugin.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT sources produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-sources.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT docs produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-docs.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT pom produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-pom.xml
+[debug] 	report for default#hkcc-pacman-robot-build;0.1-SNAPSHOT scala-tool produced in E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\project\target\resolution-cache\reports\default-hkcc-pacman-robot-build-scala-tool.xml
+[debug] 	resolve done (1272ms resolve - 48ms download)
 [info] Done updating.

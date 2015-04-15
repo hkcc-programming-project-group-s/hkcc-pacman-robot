@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DevicePairJPanel;
+import edu.hkcc.pacmanrobot.utils.message.ControllerRobotPair;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
@@ -139,15 +140,18 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
             checkPanel.unclick();
     }*/
 
+    public Vector<DeviceInfoContainer> deviceInfoContainers = null;
+
     @Override
     public Vector<DeviceInfoContainer> getDeviceInfoContainers() {
-        return null;
+        if (deviceInfoContainers == null) {
+            deviceInfoContainers = new Vector<DeviceInfoContainer>();
+            deviceInfoContainers.add(controller_container);
+            deviceInfoContainers.add(robot_container);
+        }
+        return deviceInfoContainers;
     }
 
-    @Override
-    public void receivedDeviceInfo(DeviceInfo deviceInfo) {
-
-    }
 
     public void makePair() {
         for (DeviceInfoJPanel controllerPanel : controller_container.deviceInfoJPanels)
@@ -210,11 +214,13 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
                 break;
             }
     }*/
+
+
     @Override
-    public void receivedDeviceInfo(DeviceInfo deviceInfo) {
-        if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT())
+    public void receiveDeviceInfo(DeviceInfo deviceInfo) {
+        if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT())
             robot_container.add(new DeviceInfoJPanel(deviceInfo, this));
-        controller_container.add(new DeviceInfoJPanel(deviceInfo,this));
+        controller_container.add(new DeviceInfoJPanel(deviceInfo, this));
         revalidate();
         updateUI();
     }
@@ -229,6 +235,7 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
             try {
                 //TODO
                 // use messenger to send to server
+                for (DevicePairJPanel pairControllerRobot : devicePairJPanels) sendRequest(pairControllerRobot);
                 if (new Random().nextBoolean())
                     throw new IOException();
             } catch (IOException e1) {
@@ -242,12 +249,16 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
                 System.out.println(e2.toString());
                 return false;
             }
+
+            pair_panel.clear();
+            controller_container.clear();
+            robot_container.clear();
             return true;
         }
     }
 
     @Override
-    public void onEnter(){
+    public void onEnter() {
         controller_container.clear();
         robot_container.clear();
         pair_panel.clear();
@@ -259,8 +270,16 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         robot_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.6", "Robot 3"), this));
         robot_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.7", "Robot 4"), this));
         */
-        master.sao.setHandler(this);
+        master.sao.deviceInfoJPanelHandler_$eq(this);
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), deviceInfoMessenger);
+    }
+
+    public void sendRequest(DevicePairJPanel clickedPairJPanel) {
+        master.sao.controllerRobotPairMessenger().sendMessage(new ControllerRobotPair(clickedPairJPanel.controllerJPanel.deviceInfo.MAC_ADDRESS(), clickedPairJPanel.robotJPanel.deviceInfo.MAC_ADDRESS()));
+    }
+
+    public void receivePair(ControllerRobotPair pair) {
+        //TODO
     }
 }

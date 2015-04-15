@@ -19,29 +19,34 @@ import edu.hkcc.pacmanrobot.utils.{Config, Timer}
 class Server extends Thread {
   val deviceInfoManager = new DeviceInfoManager
 
-  val positions = new ConcurrentHashMap[Int, Position]()
+  val positions = new ConcurrentHashMap[Array[Byte], Position]()
   val positionMessengerManager = new MessengerManager[Position](PORT_POSITION, {
     (macAddress, position) => {
-      positions.put(deviceInfoManager.getDeviceIdByMacAddress(macAddress), position)
+      positions.put(macAddress, position)
     }
   })
 
   val controllerRobotPairManager = new ControllerRobotPairManager
-  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, { (_, controllerRobotPair) =>
-    controllerRobotPairManager.setControllerRobotPair(controllerId = deviceInfoManager.getDeviceIdByMacAddress(controllerRobotPair.controllerId), robotId = deviceInfoManager.getDeviceIdByMacAddress(controllerRobotPair.robotId))
-  })
+  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, (_, controllerRobotPair: ControllerRobotPair) =>
+    controllerRobotPairManager.setControllerRobotPair(controllerRobotPair.controller_macAddress, controllerRobotPair.robot_macAddress)
+  )
 
-  val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS, { (_, gamestatus) => switchGameStatus(gamestatus) })
+
+  val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS, { (remoteMacAddress, gamestatus) => {
+    if (GameStatus.STATE_NORMAL.equals(gamestatus))
+      deviceInfoManager.update(remoteMacAddress)
+    else
+      switchGameStatus(gamestatus)
+  }
+  })
 
   val movementCommandMessengerManager = new MessengerManager[MovementCommand](PORT_MOVEMENT_COMMAND, (remoteMacAddress, message) => {
     copyMovementCommand(remoteMacAddress, message)
   })
   val obstacleMapManager = new ObstacleMapManager
 
-  def copyMovementCommand(controllerMacAddress: Array[Byte], message: MovementCommand) :Unit= {
-    val robotId = controllerRobotPairManager.getRobotId(deviceInfoManager.getDeviceIdByMacAddress(controllerMacAddress))
-    if (robotId != 0)
-      movementCommandMessengerManager.sendByMacAddress(deviceInfoManager.getMacAddressByDeviceId(robotId), message)
+  def copyMovementCommand(controllerMacAddress: Array[Byte], message: MovementCommand): Unit = {
+    movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
   }
 
   /*
@@ -108,6 +113,7 @@ class Server extends Thread {
   }
 
   def startMessengerManagers = {
+    //TODO check missed?
     controllerRobotPairMessengerManager.start
     gameStatusMessengerManager.start
     movementCommandMessengerManager.start
@@ -126,4 +132,5 @@ class Server extends Thread {
   def save = {
     //TODO save status to database
   }
+
 }

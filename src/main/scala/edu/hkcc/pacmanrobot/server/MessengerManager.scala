@@ -67,7 +67,8 @@ class MessengerManager[Type](val servicePort: Int, autoGet_func: (Array[Byte], T
   }
 
   def sendByMacAddress(macAddress: Array[Byte], message: Type) = {
-    messengers.filter(m => macAddress.equals(m.getRemoteMacAddress)).foreach(m =>
-      m.sendMessage(message))
+    if (macAddress != null)
+      messengers.filter(m => macAddress.equals(m.getRemoteMacAddress)).foreach(m =>
+        m.sendMessage(message))
   }
 }
