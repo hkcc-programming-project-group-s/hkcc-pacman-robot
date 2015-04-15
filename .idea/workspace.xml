@@ -10,69 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf246d11-94ea-43da-8c8e-00acd35fd887" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/ContentJPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/ControlJPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/controller/utils/ControllerImages.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/CopyOfDeviceInfoPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/utils/DeviceInfoContainer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/utils/DeviceInfoJPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/utils/DeviceInfoJPanelHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/utils/DevicePairJPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/FlashRequest.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/GameMonitorContentJPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/GameMonitorJFrame.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/launcher/GameMonitorLauncher.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/LogoJPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/PairControllerRobotJPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/pccontroller/PauseInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/pccontroller/Pc_controllerSetting.java.orig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/pccontroller/Pc_controllerSetting.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/PositionSetting.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/SetDeviceInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/SetDeviceName.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/utils/Utils.java" />
-      <change type="DELETED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\src\main\scala\edu\hkcc\pacmanrobot\utils\map\MapContent.scala" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/myutils" afterPath="$PROJECT_DIR$/lib/myutils" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/launcher/AbstractLauncher.java" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/launcher/AbstractLauncher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/utils/Config.java" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/utils/Config.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/ControllerRobotPair.scala" afterPath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/ControllerRobotPair.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/DeviceInfo.scala" afterPath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/DeviceInfo.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/GameStatus.scala" afterPath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/GameStatus.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/Messenger.scala" afterPath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/Messenger.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/utils/message/MovementCommand.java.orig" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/utils/message/MovementCommand.java.orig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/utils/message/MovementCommand.java" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/utils/message/MovementCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/map/ObstacleMap.scala" afterPath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/map/ObstacleMap.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/Position.scala" afterPath="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/Position.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_library_2_11_6_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_library_2_11_6_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot.iml" afterPath="$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid10817.log" afterPath="$PROJECT_DIR$/log/hs_err_pid10817.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid11991.log" afterPath="$PROJECT_DIR$/log/hs_err_pid11991.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid13566.log" afterPath="$PROJECT_DIR$/log/hs_err_pid13566.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid13652.log" afterPath="$PROJECT_DIR$/log/hs_err_pid13652.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid13794.log" afterPath="$PROJECT_DIR$/log/hs_err_pid13794.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid13971.log" afterPath="$PROJECT_DIR$/log/hs_err_pid13971.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid14117.log" afterPath="$PROJECT_DIR$/log/hs_err_pid14117.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid14173.log" afterPath="$PROJECT_DIR$/log/hs_err_pid14173.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid14409.log" afterPath="$PROJECT_DIR$/log/hs_err_pid14409.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid14601.log" afterPath="$PROJECT_DIR$/log/hs_err_pid14601.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid14846.log" afterPath="$PROJECT_DIR$/log/hs_err_pid14846.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid15053.log" afterPath="$PROJECT_DIR$/log/hs_err_pid15053.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid22387.log" afterPath="$PROJECT_DIR$/log/hs_err_pid22387.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid2864.log" afterPath="$PROJECT_DIR$/log/hs_err_pid2864.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid3089.log" afterPath="$PROJECT_DIR$/log/hs_err_pid3089.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid31602.log" afterPath="$PROJECT_DIR$/log/hs_err_pid31602.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid3308.log" afterPath="$PROJECT_DIR$/log/hs_err_pid3308.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid3570.log" afterPath="$PROJECT_DIR$/log/hs_err_pid3570.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid3660.log" afterPath="$PROJECT_DIR$/log/hs_err_pid3660.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid3810.log" afterPath="$PROJECT_DIR$/log/hs_err_pid3810.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid4012.log" afterPath="$PROJECT_DIR$/log/hs_err_pid4012.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid4095.log" afterPath="$PROJECT_DIR$/log/hs_err_pid4095.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid4167.log" afterPath="$PROJECT_DIR$/log/hs_err_pid4167.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid4391.log" afterPath="$PROJECT_DIR$/log/hs_err_pid4391.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\hs_err_pid7340.log" afterPath="$PROJECT_DIR$/log/hs_err_pid7340.log" />
-      <change type="MOVED" beforePath="E:\tool\portableapps\PortableApps\GitPortable\Data\home\source\hkcc-pacman-robot\src\main\java\edu\hkcc\pacmanrobot\utils\map\Message.java" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/utils/message/Message.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/SetDeviceName.java" afterPath="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/SetDeviceName.java" />
     </list>
     <ignored path="SBT_robot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -117,11 +55,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SetDeviceName.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SetDeviceName.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/SetDeviceName.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="106" column="27" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.34542817">
+              <caret line="105" column="164" selection-start-line="105" selection-start-column="164" selection-end-line="105" selection-end-column="164" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -133,7 +71,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/utils/DeviceInfoJPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="71" column="28" selection-start-line="71" selection-start-column="28" selection-end-line="71" selection-end-column="28" />
+              <caret line="90" column="16" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -141,10 +79,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MovementCommandMessenger.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MovementCommandMessenger.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/MovementCommandMessenger.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33236575">
+            <state vertical-scroll-proportion="0.0">
               <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
               <folding />
             </state>
@@ -242,10 +180,10 @@
         <option value="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/FlashRequest.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/DeviceInfo.scala" />
         <option value="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/utils/DeviceInfoContainer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/SetDeviceName.java" />
         <option value="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/controller/utils/ControllerImages.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/Messenger.scala" />
         <option value="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/utils/DeviceInfoJPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/SetDeviceName.java" />
       </list>
     </option>
   </component>
@@ -1584,16 +1522,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/SetDeviceName.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="106" column="27" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/controller/utils/ControllerImages.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
@@ -1640,7 +1568,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/utils/DeviceInfoJPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="28" selection-start-line="71" selection-start-column="28" selection-end-line="71" selection-end-column="28" />
+          <caret line="90" column="16" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1649,9 +1577,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hkcc/pacmanrobot/utils/message/MovementCommandMessenger.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33236575">
+        <state vertical-scroll-proportion="0.0">
           <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/hkcc/pacmanrobot/controller/gamemonitor/gui/SetDeviceName.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34542817">
+          <caret line="105" column="164" selection-start-line="105" selection-start-column="164" selection-end-line="105" selection-end-column="164" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -103,11 +103,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         Object name = JOptionPane.showInputDialog(this, "What is the new name?", "Device Name", JOptionPane.QUESTION_MESSAGE, null, null, null);
         System.out.println(name);
         if (name != null) {
-            try {
-                clicked.update(new DeviceInfo((String)name, clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(),clicked.deviceInfo.lastConnectionTime()));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            clicked.update(new DeviceInfo((String)name, clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(),clicked.deviceInfo.lastConnectionTime()));
             //TODO message(send new name)
         }
     }
