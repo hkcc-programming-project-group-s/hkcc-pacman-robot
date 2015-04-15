@@ -154,7 +154,7 @@ CodeCache: size=245760Kb used=2717Kb max_used=2717Kb free=243042Kb
 Compilation events (10 events):
 Event: 24.741 Thread 0x00007efc280ba800  556       3       java.util.concurrent.ConcurrentLinkedQueue::updateHead (20 bytes)
 Event: 24.741 Thread 0x00007efc280ba800 nmethod 556 0x00007efc192a7810 code [0x00007efc192a7980, 0x00007efc192a7c90]
-Event: 24.741 Thread 0x00007efc280ba800  557       3       edu.hkcc.pacmanrobot.utils.message.Messenger::SEND_INTERVAL (5 bytes)
+Event: 24.741 Thread 0x00007efc280ba800  557       3       edu.hkcc.pacmanrobot.utils.message.messenger.Messenger::SEND_INTERVAL (5 bytes)
 Event: 24.742 Thread 0x00007efc280ba800 nmethod 557 0x00007efc192a7d90 code [0x00007efc192a7ee0, 0x00007efc192a8030]
 Event: 26.978 Thread 0x00007efc280ba800  559       1       myutils.gui.opengl.AbstractOpenGLApplication::debug_interval (5 bytes)
 Event: 26.978 Thread 0x00007efc280ba800 nmethod 559 0x00007efc192a8450 code [0x00007efc192a85a0, 0x00007efc192a86b0]

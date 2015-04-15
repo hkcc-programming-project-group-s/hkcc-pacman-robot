@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.message
+package edu.hkcc.pacmanrobot.utils.message.messenger
 
 import java.io.{EOFException, ObjectInputStream, ObjectOutputStream}
 import java.net._
@@ -56,10 +56,10 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
 
   def stopThread = {
     inputThread.interrupt
-    outputThread.interrupt
-    currentMessenger.interrupt
     inputThread.stop
+    outputThread.interrupt
     outputThread.stop
+    currentMessenger.interrupt
     currentMessenger.stop
   }
 
@@ -206,6 +206,8 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
 
   def autoGet(message: Type): Unit
 
+  //def autoGet(controllerMacAddress:Array[Byte],message: Type): Unit
+
   //var running = false
 
   @throws(classOf[ClientSocketClosedException[Type]])
@@ -260,18 +262,18 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
     !inputQueue.isEmpty
   }
 
-  private def sendMessage: Unit = {
+  protected def sendMessage: Unit = {
     if (!outputQueue.isEmpty) {
       val message: Type = outputQueue.poll
       outputStream.writeObject(message)
-      println("sent " + message.toString)
+      //println("sent " + message.toString)
     }
   }
 
   private def receiveMessage: Unit = {
     val message: Type = inputStream.readObject.asInstanceOf[Type]
     inputQueue.add(message)
-    //println("received " + message.toString)
+    println("received " + message.toString)
     autoGet(getMessage)
   }
 

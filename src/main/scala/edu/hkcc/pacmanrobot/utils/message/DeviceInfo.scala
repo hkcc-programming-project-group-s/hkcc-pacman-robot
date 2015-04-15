@@ -4,8 +4,8 @@ import edu.hkcc.pacmanrobot.utils.{map, Config}
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
 import java.net.{InetAddress, NetworkInterface}
 
-
-
+import edu.hkcc.pacmanrobot.utils.Config
+import edu.hkcc.pacmanrobot.utils.map.Message
 
 /**
  * Created by 13058456a on 3/21/2015.
@@ -13,7 +13,7 @@ import java.net.{InetAddress, NetworkInterface}
 object DeviceInfo extends Message {
   override val port: Int = Config.PORT_DEVICE_INFO
 
-  val DEVICE_TYPE_DELETER: Byte = 0
+  val DEVICE_TYPE_DELETE: Byte = 0
   val DEVICE_TYPE_CONTROLLER: Byte = 1
   val DEVICE_TYPE_UNCLASSED_ROBOT: Byte = 2
   val DEVICE_TYPE_ASSIGNMENT_ROBOT: Byte = 3
@@ -43,6 +43,7 @@ object DeviceInfo extends Message {
   }
 }
 
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
 
 class DeviceInfo(var name: String, var ip: String, var deviceType: Byte, var lastConnectionTime: Long = 0) extends Serializable {
   val MAC_ADDRESS: Array[Byte] = getLocalMacAddress
