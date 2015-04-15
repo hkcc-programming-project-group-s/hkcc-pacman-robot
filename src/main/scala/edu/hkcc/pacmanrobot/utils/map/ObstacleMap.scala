@@ -7,6 +7,7 @@ package edu.hkcc.pacmanrobot.utils.map
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
+import edu.hkcc.pacmanrobot.utils.message.Message
 import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Utils}
 
 import scala.collection.parallel.mutable.ParArray
@@ -48,7 +49,8 @@ object ObstacleMap {
   }
 }
 
-class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Message {
+class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Message
+{
   override val port: Int = Config.PORT_MAP
 
   def isExist(target: MapUnit): Boolean = {

@@ -1,5 +1,7 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
+import edu.hkcc.pacmanrobot.controller.gamemonitor.core.SAO;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -56,4 +58,5 @@ public class GameMonitorJFrame extends JFrame {
     public boolean canFinish() {
         return !hasNext();
     }
+    public SAO sao=new SAO();
 }

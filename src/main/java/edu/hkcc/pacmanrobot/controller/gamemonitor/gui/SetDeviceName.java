@@ -1,13 +1,9 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
-import edu.hkcc.pacmanrobot.server.DeviceInfoManager;
-import edu.hkcc.pacmanrobot.utils.Config;
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
-import edu.hkcc.pacmanrobot.utils.message.Message;
-import edu.hkcc.pacmanrobot.utils.message.Messenger;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import scala.Function1;
 import scala.runtime.BoxedUnit;
 
@@ -21,8 +17,8 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 
-public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler  {
-    public DeviceInfoJPanelHandler handler=this;
+public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
+    public DeviceInfoJPanelHandler handler = this;
     DeviceInfoContainer controller_panel = new DeviceInfoContainer("controller");
     DeviceInfoContainer robot_panel = new DeviceInfoContainer("Robots");
     MyDispatcher myDispatcher = new MyDispatcher();
@@ -30,10 +26,8 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     Vector<DeviceInfoContainer> deviceInfoContainers = new Vector<>();
 
 
-    /**
-     * Create the frame.
-     */
-    public SetDeviceName() {
+    public SetDeviceName(GameMonitorJFrame gameMonitorJFrame) {
+        super(gameMonitorJFrame);
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(myDispatcher);
 
@@ -93,6 +87,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     void remove() {
         if (clicked == null) return;
         clicked.deviceInfoContainer.remove(clicked);
+        clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DELETE());
         //TODO call messenger
 
     }
@@ -103,8 +98,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         Object name = JOptionPane.showInputDialog(this, "What is the new name?", "Device Name", JOptionPane.QUESTION_MESSAGE, null, null, null);
         System.out.println(name);
         if (name != null) {
-            clicked.update(new DeviceInfo((String)name, clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(),clicked.deviceInfo.lastConnectionTime()));
-            //TODO message(send new name)
+            clicked.update(new DeviceInfo((String) name, clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
         }
     }
 
@@ -153,33 +147,45 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         }
         controller_panel.clear();
         robot_panel.clear();
+        master.sao.resetAutoget();
         return true;
     }
 
-    Messenger<DeviceInfo> deviceInfoMessenger = Messenger.create(Config.PORT_DEVICE_INFO,new Function1<DeviceInfo, BoxedUnit>(){
+
+    @Override
+    public void onEnter() {
+        controller_panel.clear();
+        robot_panel.clear();
+        master.sao.autoget = getAutogetFunc();
+        //start request
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT(), master.sao.deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), master.sao.deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), master.sao.deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), master.sao.deviceInfoMessenger);
+        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), master.sao.deviceInfoMessenger);
+    }
+
+    public Function1<DeviceInfo, BoxedUnit> autoget = new Function1<DeviceInfo, BoxedUnit>() {
         @Override
         public BoxedUnit apply(DeviceInfo v1) {
-            addDeviceInfo(v1,handler);
+            addDeviceInfo(v1, handler);
             controller_panel.add(new DeviceInfoJPanel(v1, handler));
             revalidate();
             updateUI();
             return null;
         }
-    },null);
+    };
 
     @Override
-    public void onEnter() throws IOException {
-        //start request
-        controller_panel.clear();
-        robot_panel.clear();
-
+    public Function1<DeviceInfo, BoxedUnit> getAutogetFunc() {
+        return autoget;
     }
 
-    public void addDeviceInfo(DeviceInfo deviceInfo,DeviceInfoJPanelHandler handler){
-        if(DeviceInfo.isRobot(deviceInfo.deviceType()))
-            robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
-        else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_CONTROLLER())
-            controller_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
+    public void addDeviceInfo(DeviceInfo deviceInfo, DeviceInfoJPanelHandler handler) {
+        if (DeviceInfo.isRobot(deviceInfo.deviceType()))
+            robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+        else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())
+            controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
     }
 
     class MyDispatcher implements KeyEventDispatcher {
