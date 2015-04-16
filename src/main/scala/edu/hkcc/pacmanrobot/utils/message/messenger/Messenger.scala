@@ -295,7 +295,8 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   private def receiveMessage: Unit = {
     val message: Type = inputStream.readObject.asInstanceOf[Type]
     inputQueue.add(message)
-    println("received " + message.toString)
+    //println("received " + (message.toString.length/1024f) + " kbs from "+socket.getInetAddress.getHostAddress)
+    println("received from "+socket.getRemoteSocketAddress)
     autoGet(getMessage)
   }
 

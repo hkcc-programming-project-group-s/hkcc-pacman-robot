@@ -49,8 +49,7 @@ object ObstacleMap {
   }
 }
 
-class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Message
-{
+class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Message {
   override val port: Int = Config.PORT_MAP
 
   def isExist(target: MapUnit): Boolean = {
@@ -75,16 +74,6 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
     })
   }
 
-  override def clone: ObstacleMap = {
-    val newInstance: ObstacleMap = new ObstacleMap
-    forEach(new BiConsumer[MapKey, Long] {
-      override def accept(key: MapKey, value: Long) = {
-        newInstance.put(key.clone.asInstanceOf[MapKey], value.toLong)
-      }
-    })
-    newInstance
-  }
-
   def to2DArrayBoolean: Array[Array[Boolean]] = {
     val map = to2DArrayLong
     if (map == null)
@@ -96,28 +85,18 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
     }
   }
 
-  def to2DParArrayBoolean: ParArray[ParArray[Boolean]] = {
-    val map = to2DArrayLong
-    if (map == null)
-      null
-    else {
-      val now = System.currentTimeMillis()
-      ParArray.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
-    }
-  }
-
   def to2DArrayLong: Array[Array[Long]] = {
     if (isEmpty) null
     else {
-      val map=clone
+      val map = clone
       val range = ObstacleMap.getRange(map)
       val array = Array.fill[Long](range._1._2 - range._1._1 + 1, range._2._2 - range._2._1 + 1)(0L)
       map.forEach(new BiConsumer[MapKey, Long] {
         override def accept(k: MapKey, v: Long): Unit = {
-      try
-          array(k.x-range._1._1)(k.y-range._2._1) = v
-          catch{
-            case e:Exception=>{
+          try
+            array(k.x - range._1._1)(k.y - range._2._1) = v
+          catch {
+            case e: Exception => {
               println(e.toString)
               e.printStackTrace()
               println()
@@ -125,13 +104,33 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
               println(range._1)
               println(range._2)
               println
-              println("array size= "+ array.length +", "+array(0).length)
-              println(k.x+", "+k.y)
+              println("array size= " + array.length + ", " + array(0).length)
+              println(k.x + ", " + k.y)
             }
           }
         }
       })
       array
+    }
+  }
+
+  override def clone: ObstacleMap = {
+    val newInstance: ObstacleMap = new ObstacleMap
+    forEach(new BiConsumer[MapKey, Long] {
+      override def accept(key: MapKey, value: Long) = {
+        newInstance.put(key.clone.asInstanceOf[MapKey], value.toLong)
+      }
+    })
+    newInstance
+  }
+
+  def to2DParArrayBoolean: ParArray[ParArray[Boolean]] = {
+    val map = to2DArrayLong
+    if (map == null)
+      null
+    else {
+      val now = System.currentTimeMillis()
+      ParArray.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
     }
   }
 }

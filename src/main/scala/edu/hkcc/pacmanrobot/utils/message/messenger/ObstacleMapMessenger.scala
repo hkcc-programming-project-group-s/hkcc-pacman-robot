@@ -17,6 +17,10 @@ class ObstacleMapMessenger(val obstacleMap: ObstacleMap, socket: Socket, manager
   val switchBufferIndexSemaphore = new Semaphore(1)
   private var bufferIndex: Int = 0
 
+  def this(obstacleMap: ObstacleMap=new ObstacleMap) = {
+    this(obstacleMap = obstacleMap, Messenger.connect(Config.PORT_MAP, isServer = false), null)
+  }
+
   override def sendMessage(deltaMap: ObstacleMap): Unit = {
     switchBufferIndexSemaphore.acquire
     bufferedObstacleMap(bufferIndex).merge(deltaMap)
@@ -28,16 +32,22 @@ class ObstacleMapMessenger(val obstacleMap: ObstacleMap, socket: Socket, manager
       manager.foreach(messenger => {
         if (!messenger.getRemoteMacAddress.equals(DeviceInfo.getLocalMacAddress))
           messenger.sendMessage(message)
-        obstacleMap.merge(message)
       })
+    //println("autoget")
+//    message.forEach(new BiConsumer[MapKey,Long] {
+//      override def accept(t: MapKey, u: Long): Unit = {
+//        println(Vector(t,u))
+//      }
+//    })
+    obstacleMap.merge(message)
   }
 
-  override def getMessage: ObstacleMap = {
+  def getMap: ObstacleMap = {
     obstacleMap.clone
   }
 
   override protected def sendMessage: Unit = {
-    val operateBufferedObstacleMap = bufferedObstacleMap(1 - bufferIndex);
+    val operateBufferedObstacleMap = bufferedObstacleMap(1 - bufferIndex)
     if (!operateBufferedObstacleMap.isEmpty) {
       outputStream.writeObject(operateBufferedObstacleMap)
       obstacleMap.merge(operateBufferedObstacleMap)

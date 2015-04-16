@@ -2,47 +2,69 @@ package edu.hkcc.pacmanrobot.server
 
 import java.net.InetAddress
 import java.util.concurrent.ConcurrentHashMap
+import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.server.ObstacleMapManager.obstacleMap
 import edu.hkcc.pacmanrobot.utils.Config._
 import edu.hkcc.pacmanrobot.utils.Utils.random
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
-import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, MovementCommand}
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{GameStatus, Position}
+import edu.hkcc.pacmanrobot.utils.message._
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
 import edu.hkcc.pacmanrobot.utils.{Config, Timer}
 
 
 /**
- * Created by 13058456a on 4/2/2015.
+ * Created by beenotung on 4/2/2015.
  */
 class Server extends Thread {
   val deviceInfoManager = new DeviceInfoManager
 
-  val positions = new ConcurrentHashMap[Array[Byte], Position]()
+  val positions = new ConcurrentHashMap[DeviceInfo, Position]()
   val positionMessengerManager = new MessengerManager[Position](PORT_POSITION, {
     (macAddress, position) => {
-      positions.put(macAddress, position)
+      positions.put(deviceInfoManager.getDeviceInfoByMacAddress(macAddress), position)
+    }
+  })
+
+  val robotPositionMessengerManager = new MessengerManager[RobotPosition](PORT_ROBOT_POSITION, {
+    (macAddress, position) => {
+      response_robotPosition(macAddress, position.deviceInfo.deviceType)
     }
   })
 
   val controllerRobotPairManager = new ControllerRobotPairManager
-  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, (_, controllerRobotPair: ControllerRobotPair) =>
-    controllerRobotPairManager.setControllerRobotPair(controllerRobotPair.controller_macAddress, controllerRobotPair.robot_macAddress)
+  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, (macAddress, controllerRobotPair: ControllerRobotPair) => {
+    if (controllerRobotPair.shouldSave)
+      controllerRobotPairManager.setControllerRobotPair(controllerRobotPair.controller_macAddress, controllerRobotPair.robot_macAddress)
+    else
+      response_pair(macAddress)
+  }
   )
-
-
   val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS, { (remoteMacAddress, gamestatus) => {
-    if (GameStatus.STATE_NORMAL.equals(gamestatus))
+    if (GameStatus.STATE_NORMAL.equals(gamestatus.status))
       deviceInfoManager.update(remoteMacAddress)
     else
       switchGameStatus(gamestatus)
   }
   })
-
   val movementCommandMessengerManager = new MessengerManager[MovementCommand](PORT_MOVEMENT_COMMAND, (remoteMacAddress, message) => {
     copyMovementCommand(remoteMacAddress, message)
   })
   val obstacleMapManager = new ObstacleMapManager
+
+  def response_pair(macAddress: Array[Byte]) = {
+    controllerRobotPairManager.controllerRobotPairs.forEach(new BiConsumer[Array[Byte], Array[Byte]] {
+      override def accept(t: Array[Byte], u: Array[Byte]): Unit = {
+        controllerRobotPairMessengerManager.sendByMacAddress(macAddress,
+          new ControllerRobotPair(t, u, true))
+      }
+    })
+
+  }
+
+  def response_robotPosition(macAddress: Array[Byte], robotType: Byte): Unit = {
+
+  }
 
   def copyMovementCommand(controllerMacAddress: Array[Byte], message: MovementCommand): Unit = {
     movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
@@ -91,7 +113,7 @@ class Server extends Thread {
       //println
       //println(Calendar.getInstance().getTime)
       //println("random put")
-      (1 to 1000).foreach(i=>
+      (1 to 1).foreach(i =>
         bufferedMap.put(new MapUnit(new MapKey(random nextInt 4000, random nextInt 4000), System.currentTimeMillis()))
       )
       val toSend = bufferedMap.clone

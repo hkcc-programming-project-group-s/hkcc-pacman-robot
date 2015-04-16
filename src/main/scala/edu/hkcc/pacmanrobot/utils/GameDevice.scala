@@ -10,8 +10,8 @@ import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
  */
 
 abstract class Device extends Thread {
-
   var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
+  var deviceInfo: DeviceInfo
 
   def gameSetup
 
@@ -24,7 +24,12 @@ abstract class Device extends Thread {
   def gameStop
 
   def setup
+}
 
+abstract class GameDevice extends Device {
+  val deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create[DeviceInfo](Config.PORT_DEVICE_INFO, message => {
+    deviceInfo.set(message)
+  }, null)
   val gameStatusMessenger: Messenger[GameStatus] = Messenger.create[GameStatus](Config.PORT_GAME_STATUS, { gameStatus: GameStatus => {
     this.gameStatus = gameStatus
     gameStatus.status match {
@@ -35,13 +40,7 @@ abstract class Device extends Thread {
       case GameStatus.STATE_STOP => gameStop
     }
   }
-  },null)
-}
-
-abstract class GameDevice extends Device {
-  var deviceInfo: DeviceInfo
-
-  //val deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create[DeviceInfo](Config.PORT_DEVICE_INFO, { newDeviceInfo: DeviceInfo => deviceInfo.set(newDeviceInfo) })
+  }, null)
 
   override def start = {
     println(deviceInfo.name + " start ")
@@ -50,4 +49,10 @@ abstract class GameDevice extends Device {
   }
 
   def loop
+
+  override def run = {
+    while (true) {
+      loop
+    }
+  }
 }

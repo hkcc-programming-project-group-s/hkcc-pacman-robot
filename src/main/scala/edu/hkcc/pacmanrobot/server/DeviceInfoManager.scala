@@ -44,6 +44,18 @@ class DeviceInfoManager {
     result.toArray
   }
 
+  def getDeviceInfoByMacAddress(macAddress: Array[Byte]): DeviceInfo = {
+    var device: DeviceInfo = null
+    deviceInfos.forEach(new BiConsumer[Array[Byte], DeviceInfo] {
+
+      override def accept(k: Array[Byte], v: DeviceInfo): Unit = {
+        if (macAddress.equals(v.MAC_ADDRESS))
+          device = v
+      }
+    })
+    device
+  }
+
   def update(macAddress: Array[Byte]) = {
     deviceInfos.get(macAddress).lastConnectionTime = System.currentTimeMillis()
   }
