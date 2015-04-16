@@ -1,32 +1,43 @@
 package edu.hkcc.pacmanrobot.controller.gamecontroller
 
 import java.awt.Color
+import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
+import edu.hkcc.pacmanrobot.controller.gamecontroller.MiniMap._
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, ObstacleMap}
-import edu.hkcc.pacmanrobot.utils.message.messenger.ObstacleMapMessenger
-import edu.hkcc.pacmanrobot.utils.{Point2D, Utils}
+import edu.hkcc.pacmanrobot.utils.message.messenger.{Messenger, ObstacleMapMessenger}
+import edu.hkcc.pacmanrobot.utils.message.{DeviceInfo, Position, RobotPosition}
+import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Utils}
 import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11._
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
-import MiniMap._
 
 /**
  * Created by beenotung on 4/8/15.
  */
-object MiniMap{
+object MiniMap {
   val emptyColor = new Color(204, 230, 255)
   val obstacleColor = new Color(0, 0, 0)
+  val deadlineColor = new Color(255, 255, 0)
+  val studentColor = new Color(0, 255, 0)
+  val assignmentColor = new Color(255, 0, 0)
 }
+
 class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
   extends Thread {
   val WINDOW_TITLE = "Pacman Mini Map"
   val runnable = new MiniMapRunnable(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE = "Pacman Mini Map")
   //val obstacleMap: ObstacleMap = new ObstacleMap
-  val messenger = new ObstacleMapMessenger() {
+  val positionMessenger = Messenger.create[RobotPosition](Config.PORT_ROBOT_POSITION, message => {
+    positions.put(message.deviceInfo, message.position)
+  }
+    , null)
+  val positions = new ConcurrentHashMap[DeviceInfo, Position]()
+  val mapMessenger = new ObstacleMapMessenger() {
     override def autoGet(message: ObstacleMap): Unit = {
       super.autoGet(message)
       updated = true
@@ -44,7 +55,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
 
   override def run = {
     println("start obstacle map messenger on mini map")
-    messenger.start()
+    mapMessenger.start()
     println("start opengl window")
     runnable.run
   }
@@ -54,9 +65,8 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
   }
 
 
-
   class MiniMapRunnable(WINDOW_WIDTH: Int, WINDOW_HEIGHT: Int, WINDOW_TITLE: String,
-                        backgroundColors: Array[Float] = Array(emptyColor.getRed/256f,emptyColor.getGreen/256f,emptyColor.getBlue/256f,0))
+                        backgroundColors: Array[Float] = Array(emptyColor.getRed / 256f, emptyColor.getGreen / 256f, emptyColor.getBlue / 256f, 0))
     extends AbstractSimpleOpenGLApplication(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, backgroundColors = backgroundColors) {
     val DEFAULT_OBSTACLE_RADIUS = 10f
     val minPixel = 10
@@ -111,7 +121,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
     override protected def myRender: Unit = {
       //println("rendering")
       if (!updated) return
-      val obstacleMap = messenger.getMap
+      val obstacleMap = mapMessenger.getMap
       range = Utils.getObstacleMapRange(obstacleMap)
       x_range = range._1._2 - range._1._1
       y_range = range._2._2 - range._2._1
@@ -132,6 +142,20 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
         }
       })
       obstacles.toArray.sorted.foreach(o => render_obstacle(o))
+      positions.forEach(new BiConsumer[DeviceInfo, Position] {
+        override def accept(t: DeviceInfo, u: Position): Unit = {
+          t.deviceType match {
+            case DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT => render_robot(u.x, u.y, studentColor)
+            case DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT => render_robot(u.x, u.y, assignmentColor)
+            case DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT => render_robot(u.x, u.y, deadlineColor)
+          }
+        }
+      })
+    }
+
+    def render_robot(x: Int, y: Int, color: Color) = {
+      glColor3f(color.getRed / 256f, color.getGreen / 256f, color.getBlue / 256f)
+      render_square(getXForOpenGL(x), getYForOpenGL(y), 0, obstacle_radius * 2)
     }
 
     def getXForOpenGL(x: Int): Float = {
@@ -144,7 +168,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
 
     def render_obstacle(obstacle: OpenglObstacle): Unit = {
       glColor3f(obstacle.R, obstacle.G, obstacle.B)
-      render_obstacle(obstacle.x, obstacle.y, 0, obstacle_radius)
+      render_square(obstacle.x, obstacle.y, 0, obstacle_radius)
     }
 
     /**
@@ -158,7 +182,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
      * @param r
      * half of side length
      */
-    def render_obstacle(cx: Float, cy: Float, cz: Float, r: Float = DEFAULT_OBSTACLE_RADIUS): Unit = {
+    def render_square(cx: Float, cy: Float, cz: Float, r: Float): Unit = {
       glBegin(GL11.GL_QUADS)
       glVertex3f(cx - r, cy - r, cz)
       glVertex3f(cx + r, cy - r, cz)

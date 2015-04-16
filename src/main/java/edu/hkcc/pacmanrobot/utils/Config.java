@@ -8,18 +8,19 @@ import java.net.UnknownHostException;
  */
 public class Config {
     //40152-65535
-    public static final int PORT_MAP = 4211;
-    public static final int PORT_GAME_STATUS = 4212;
-    public static final int PORT_MOVEMENT_COMMAND = 4218;
-    public static final int PORT_DEVICE_INFO = 4213;
-    public static final int PORT_POSITION = 4214;
+    public static final int PORT_MAP = 40211;
+    public static final int PORT_GAME_STATUS = 40212;
+    public static final int PORT_MOVEMENT_COMMAND = 40213;
+    public static final int PORT_DEVICE_INFO = 40214;
+    public static final int PORT_POSITION = 40215;
+    public static final int PORT_ROBOT_POSITION = 40016;
     //public static final int PORT_CONNECTION_INFO = 4219;
-    public static final int PORT_CONTROLLER_ROBOT_PAIR = 4220;
-    public static final int PORT_FLASH_REQUEST = 40160;
+    public static final int PORT_CONTROLLER_ROBOT_PAIR = 40217;
+    public static final int PORT_FLASH_REQUEST = 40218;
 
 
-    //public static String serverAddress = "192.168.43.1";
-    public static String serverAddress = "192.168.1.3";
+    public static String serverAddress = "192.168.43.1";
+    //public static String serverAddress = "192.168.1.3";
     //public static String serverAddress = "172.26.3.180";
     //public static String serverAddress = "172.25.56.109";
     public static long RECONNECTION_TIMEOUT = 500;
@@ -31,7 +32,7 @@ public class Config {
     static {
         try {
             //serverAddress= InetAddress.getByName("BeenoTung-ArchLinux-Home").getHostAddress();
-            serverAddress=InetAddress.getByName("BeenoTung_ArchLinux_Notebook").getHostAddress();
+            serverAddress = InetAddress.getByName("BeenoTung_ArchLinux_Notebook").getHostAddress();
             System.out.println("server ip: " + Config.serverAddress);
         } catch (UnknownHostException e) {
             //e.printStackTrace();
