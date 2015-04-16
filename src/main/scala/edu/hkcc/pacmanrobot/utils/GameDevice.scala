@@ -49,4 +49,10 @@ abstract class GameDevice extends Device {
   }
 
   def loop
+
+  override def run = {
+    while (true) {
+      loop
+    }
+  }
 }

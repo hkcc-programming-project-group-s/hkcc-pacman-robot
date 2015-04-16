@@ -15,9 +15,11 @@ class DefaultRobot extends GameDevice {
   val obstacleMapMessenger = new ObstacleMapMessenger
   val positionMessenger = Messenger.create[Position](Config.PORT_POSITION, message => {}, null)
   override var deviceInfo: DeviceInfo = DeviceInfo.create("noname_robot", DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT)
-  var newRobot: Robot
+  var newRobot: Robot=null
 
-  override def loop: Unit = ???
+  override def loop: Unit = {
+
+  }
 
   override def gameResume: Unit = ???
 
