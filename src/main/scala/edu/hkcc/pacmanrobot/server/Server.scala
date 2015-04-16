@@ -91,7 +91,7 @@ class Server extends Thread {
       //println
       //println(Calendar.getInstance().getTime)
       //println("random put")
-      (1 to 1000).foreach(i=>
+      (1 to 1).foreach(i =>
         bufferedMap.put(new MapUnit(new MapKey(random nextInt 4000, random nextInt 4000), System.currentTimeMillis()))
       )
       val toSend = bufferedMap.clone

@@ -4,28 +4,39 @@ import java.awt.Color
 import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, ObstacleMap}
-import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
-import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Utils}
+import edu.hkcc.pacmanrobot.utils.message.messenger.ObstacleMapMessenger
+import edu.hkcc.pacmanrobot.utils.{Point2D, Utils}
 import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11._
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
-
+import MiniMap._
 
 /**
  * Created by beenotung on 4/8/15.
  */
+object MiniMap{
+  val emptyColor = new Color(204, 230, 255)
+  val obstacleColor = new Color(0, 0, 0)
+}
 class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
   extends Thread {
   val WINDOW_TITLE = "Pacman Mini Map"
   val runnable = new MiniMapRunnable(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE = "Pacman Mini Map")
-  val obstacleMap: ObstacleMap = new ObstacleMap
-  val messenger: Messenger[ObstacleMap] = Messenger.create(Config.PORT_MAP, map => {
-    obstacleMap.merge(map)
-    updated = true
-  }, null)
+  //val obstacleMap: ObstacleMap = new ObstacleMap
+  val messenger = new ObstacleMapMessenger() {
+    override def autoGet(message: ObstacleMap): Unit = {
+      super.autoGet(message)
+      updated = true
+      //println("received")
+    }
+  }
+  //  val messenger: Messenger[ObstacleMap] = Messenger.create(Config.PORT_MAP, map => {
+  //    obstacleMap.merge(map)
+  //    updated = true
+  //  }, null)
   val random = new Random(System.currentTimeMillis())
 
   var updated = false
@@ -43,13 +54,13 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
   }
 
 
-  class MiniMapRunnable(WINDOW_WIDTH: Int, WINDOW_HEIGHT: Int, WINDOW_TITLE: String, backgroundColors: Array[Float] = Array.fill[Float](4)(0f))
+
+  class MiniMapRunnable(WINDOW_WIDTH: Int, WINDOW_HEIGHT: Int, WINDOW_TITLE: String,
+                        backgroundColors: Array[Float] = Array(emptyColor.getRed/256f,emptyColor.getGreen/256f,emptyColor.getBlue/256f,0))
     extends AbstractSimpleOpenGLApplication(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, backgroundColors = backgroundColors) {
     val DEFAULT_OBSTACLE_RADIUS = 10f
     val minPixel = 10
     val obstacles = new ArrayBuffer[OpenglObstacle]()
-    val emptyColor = new Color(204, 230, 255)
-    val obstacleColor = new Color(0, 0, 0)
     var obstacle_radius = 0.8f
     var range: Point2D[Point2D[Int]] = null
     var x_range: Float = 1f
@@ -75,7 +86,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
     }
 
     override protected def myInit: Unit = {
-      ObstacleMap.estimated_game_duration_in_minutes_=(1d / 6d)
+      //ObstacleMap.estimated_game_duration_in_minutes_=(1d / 6d)
       super.myInit
       scrollSpeed = 1f
       rollSpeed = 10f
@@ -100,6 +111,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
     override protected def myRender: Unit = {
       //println("rendering")
       if (!updated) return
+      val obstacleMap = messenger.getMap
       range = Utils.getObstacleMapRange(obstacleMap)
       x_range = range._1._2 - range._1._1
       y_range = range._2._2 - range._2._1
@@ -112,16 +124,14 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
       val now = System.currentTimeMillis
       var ratio = 1f
       obstacles.clear()
-      //  println("here")
+
       obstacleMap.forEach(new BiConsumer[MapKey, Long] {
         override def accept(k: MapKey, v: Long): Unit = {
           ratio = ObstacleMap.prob(v, now).toFloat
           obstacles += new OpenglObstacle(getXForOpenGL(k.x), getYForOpenGL(k.y), ratio)
         }
       })
-      //println("there")
       obstacles.toArray.sorted.foreach(o => render_obstacle(o))
-      //  println("rendered")
     }
 
     def getXForOpenGL(x: Int): Float = {
@@ -161,13 +171,11 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
       val R = obstacleColor.getRed / 256f * ratio + emptyColor.getRed / 256f * (1 - ratio)
       val G = obstacleColor.getGreen / 256f * ratio + emptyColor.getGreen / 256f * (1 - ratio)
       val B = obstacleColor.getBlue / 256f * ratio + emptyColor.getBlue / 256f * (1 - ratio)
-      println(ratio)
-      println(Vector(R,G,B))
       val luma: Float = (R + R + R + B + G + G + G + G) / 6f
-      //println(ratio + "\t" + luma)
 
       override def compareTo(o: OpenglObstacle): Int = {
-        luma.compareTo(o.luma)
+        o.luma.compareTo(luma)
+        //luma.compareTo(o.luma)
       }
     }
 
