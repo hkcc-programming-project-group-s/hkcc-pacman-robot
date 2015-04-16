@@ -1,72 +1,62 @@
 package edu.hkcc.pacmanrobot.server
 
-import java.net.ServerSocket
+import java.net.InetAddress
 import java.util.concurrent.ConcurrentHashMap
 
-import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
-import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, MovementCommand, MovementCommandMessenger}
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.{DeviceInfo, GameStatus, Messenger, Position}
+import edu.hkcc.pacmanrobot.server.ObstacleMapManager.obstacleMap
+import edu.hkcc.pacmanrobot.utils.Config._
+import edu.hkcc.pacmanrobot.utils.Utils.random
+import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
+import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, MovementCommand}
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.{GameStatus, Position}
+import edu.hkcc.pacmanrobot.utils.{Config, Timer}
 
-import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by 13058456a on 4/2/2015.
  */
-object Server extends App {
-  //val studentRobots = new ArrayBuffer[RobotInfo]
-  val deviceInfoMessengerManager = new MessengerManager[DeviceInfo](Config.PORT_DEVICE_INFO, { deviceInfo => deviceInfos.put(deviceInfo.MAC_ADDRESS, deviceInfo) })
-  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](Config.PORT_CONTROLLER_ROBOT_PAIR, { controllerRobotPair => controllerRobotPairManager.setControllerRobotPair(controllerId = controllerRobotPair.controllerId, robotId = controllerRobotPair.robotId) })
-  val gameStatusMessengerManager = new MessengerManager[GameStatus](Config.PORT_GAME_STATUS, { gamestatus => switchGameStatus(gamestatus) })
-  val movementCommandMessengers = new ArrayBuffer[MovementCommandMessenger]
+class Server extends Thread {
+  val deviceInfoManager = new DeviceInfoManager
 
-  gameSetup
-  val MovementCommandThread = new Thread(new Runnable {
-    override def run(): Unit = {
-      val serverSocket = new ServerSocket(Config.PORT_MOVEMENT_COMMAND)
-      while (true) {
-        movementCommandMessengers += new MovementCommandMessenger(serverSocket.accept()) {
-          override def autoGet_func(message: MovementCommand): Unit = {
-            val robotId = controllerRobotPairManager.getRobotId(messenger.
-              getRemoteMacAddress)
-            movementCommandMessengers.par.foreach(messenger =>
-              if (messenger.getRemoteMacAddress.equals(robotId))
-                messenger.sendMessage(message)
-            )
-          }
-        }
-      }
+  val positions = new ConcurrentHashMap[Array[Byte], Position]()
+  val positionMessengerManager = new MessengerManager[Position](PORT_POSITION, {
+    (macAddress, position) => {
+      positions.put(macAddress, position)
     }
   })
-  val ObstacleMapThread = new Thread(new Runnable {
-    override def run(): Unit = {
-      val serverSocket = new ServerSocket(Config.PORT_MAP)
-      while (true) {
-        obstacleMapMessengers :+= new Messenger[ObstacleMap](serverSocket.accept(), Config.PORT_MAP) {
-          override def autoGet(message: ObstacleMap): Unit = {}
-        }
-      }
-    }
-  })
-  val PositionThread = new Thread(new Runnable {
-    override def run(): Unit = {
-      val serverSocket = new ServerSocket(Config.PORT_POSITION)
-      while (true) {
-        positionMessengers :+= new Messenger[Position](serverSocket.accept(), Config.PORT_POSITION) {
-          override def autoGet(message: Position): Unit = {}
-        }
-      }
-    }
 
+  val controllerRobotPairManager = new ControllerRobotPairManager
+  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, (_, controllerRobotPair: ControllerRobotPair) =>
+    controllerRobotPairManager.setControllerRobotPair(controllerRobotPair.controller_macAddress, controllerRobotPair.robot_macAddress)
+  )
+
+
+  val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS, { (remoteMacAddress, gamestatus) => {
+    if (GameStatus.STATE_NORMAL.equals(gamestatus))
+      deviceInfoManager.update(remoteMacAddress)
+    else
+      switchGameStatus(gamestatus)
+  }
   })
-  var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
-  var deviceInfos = new ConcurrentHashMap[Array[Byte], DeviceInfo]()
-  var controllerRobotPairManager = new ControllerRobotPairManager
-  var obstacleMapMessengers = Vector.empty[Messenger[ObstacleMap]]
-  var positionMessengers = Array.empty[Messenger[Position]]
+
+  val movementCommandMessengerManager = new MessengerManager[MovementCommand](PORT_MOVEMENT_COMMAND, (remoteMacAddress, message) => {
+    copyMovementCommand(remoteMacAddress, message)
+  })
+  val obstacleMapManager = new ObstacleMapManager
+
+  def copyMovementCommand(controllerMacAddress: Array[Byte], message: MovementCommand): Unit = {
+    movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
+  }
+
+  /*
+  val obstacleMapMessengerManager = new MessengerManager[ObstacleMap](PORT_MAP, (macAddress, message) => {
+    obstacleMapSubscribers.foreach(messenger =>
+      if (!macAddress.equals(messenger.getRemoteMacAddress)) messenger.sendMessage(message))
+    obstacleMap.merge(message)
+  })*/
 
   def switchGameStatus(gameStatus: GameStatus): Unit = {
-    gameStatusMessengerManager.messengers.foreach(messenger => messenger.sendMessage(gameStatus))
+    gameStatusMessengerManager.foreach(messenger => messenger.sendMessage(gameStatus))
     gameStatus.status match {
       case GameStatus.STATE_SETUP => gameSetup
       case GameStatus.STATE_START => gameStart
@@ -84,12 +74,64 @@ object Server extends App {
 
   def gameStop: Unit = ???
 
-  def gameSetup: Unit = ???
+  def gameSetup: Unit = {}
 
-  override def main(args: Array[String]) {
-    //TODO
+  override def run = {
     setup
+    test
+    while (true) {
+      Thread.sleep(SAVE_INTERVAL)
+      save
+    }
   }
 
-  def setup: Unit = ???
+  def test = {
+    val bufferedMap = new ObstacleMap
+    Timer.setTimeInterval({
+      //println
+      //println(Calendar.getInstance().getTime)
+      //println("random put")
+      (1 to 1).foreach(i =>
+        bufferedMap.put(new MapUnit(new MapKey(random nextInt 4000, random nextInt 4000), System.currentTimeMillis()))
+      )
+      val toSend = bufferedMap.clone
+      //println("number of obstacleMapSubscribers=" + obstacleMapManager.messengers.size)
+      obstacleMapManager.foreach(m =>
+        m.sendMessage(toSend)
+      )
+      obstacleMap.merge(bufferedMap)
+      bufferedMap.clear
+    }, true, 500)
+  }
+
+  //def obstacleMapSubscribers = obstacleMapMessengerManager.messengers
+
+  def setup: Unit = {
+    Config.serverAddress = InetAddress.getLocalHost.getHostAddress
+    println("server ip: " + Config.serverAddress)
+    load
+    startMessengerManagers
+  }
+
+  def startMessengerManagers = {
+    //TODO check missed?
+    controllerRobotPairMessengerManager.start
+    gameStatusMessengerManager.start
+    movementCommandMessengerManager.start
+    //movementCommandThread.start
+    obstacleMapManager.start
+    //obstacleMapMessengerManager.start
+    positionMessengerManager.start
+  }
+
+  def load = {
+    //TODO read last status from database
+    //if()
+    //gameSetup
+  }
+
+  def save = {
+    //TODO save status to database
+  }
+
 }

@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="lib-myutils">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/myutils/lib" />
+      <root url="file://$PROJECT_DIR$/lib/myutils/lib/opengl" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/lib/myutils/lib/opengl/native/linux/x64" />
+      <root url="file://$PROJECT_DIR$/lib/myutils/lib/opengl/native/linux/x86" />
+      <root url="file://$PROJECT_DIR$/lib/myutils/lib/opengl/native/macosx/x64" />
+      <root url="file://$PROJECT_DIR$/lib/myutils/lib/opengl/native/windows/x64" />
+      <root url="file://$PROJECT_DIR$/lib/myutils/lib/opengl/native/windows/x86" />
+    </NATIVE>
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/myutils/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/myutils/lib/opengl" recursive="false" />
+  </library>
+</component>

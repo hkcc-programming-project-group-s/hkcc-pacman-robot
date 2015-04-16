@@ -1,7 +1,8 @@
 package edu.hkcc.pacmanrobot.robot.assignmentrobot
 
 import edu.hkcc.pacmanrobot.robot.core.Robot
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.DeviceInfo
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
+
 
 /**
  * Created by beenotung on 4/5/15.

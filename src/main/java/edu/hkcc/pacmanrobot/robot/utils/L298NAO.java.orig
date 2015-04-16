@@ -62,7 +62,30 @@ public class L298NAO {
         if (trueGpio.isLow()) trueGpio.high();
     }
 
+<<<<<<< HEAD
     public static void move_pwm(Point2D point2D) {
+=======
+    public static void both_stop() {
+        left_stop();
+        right_stop();
+    }
+
+    public static void both_forward() {
+        left_forward();
+        right_forward();
+    }
+
+    public static void both_backward() {
+        left_backward();
+        right_backward();
+    }
+
+    public static void move(Point2D<Double> point2D) {
+        move(point2D._1, point2D._2);
+    }
+
+    public static void move_pwm(Point2D<Double> point2D) {
+>>>>>>> AI
         move_pwm(point2D._1, point2D._2);
     }
 
@@ -119,7 +142,7 @@ public class L298NAO {
 =======
             left_backward();
             right_forward();
->>>>>>> server
+>>>>>>> AI
 
         } else if (isInRange(direction, F_L)) {
             l = 0;

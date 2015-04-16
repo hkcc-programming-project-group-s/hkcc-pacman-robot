@@ -8,14 +8,16 @@ import edu.hkcc.pacmanrobot.robot.core.Robot
 import edu.hkcc.pacmanrobot.robot.utils.{L298NAO, Mpu6050AO}
 import edu.hkcc.pacmanrobot.utils.Maths._
 import edu.hkcc.pacmanrobot.utils.Point2D
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.DeviceInfo
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
 
 
 class DeadlineRobot(name: String) extends Robot {
+  override var deviceInfo = DeviceInfo.create(name, DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT)
+
   def gameSetup {
   }
 
-  def gameStart {
+  override def gameStart {
   }
 
   def gamePause {
@@ -42,7 +44,7 @@ class DeadlineRobot(name: String) extends Robot {
   }
 
   def loop: Unit = {
-    val dir: Point2D = getTargetPosition
+    val dir: Point2D[java.lang.Double] = getTargetPosition
     if (dir._1 > 0)
       dir._1 = R
     else if (dir._1 < 0)
@@ -50,14 +52,12 @@ class DeadlineRobot(name: String) extends Robot {
     L298NAO.move_pwm(dir)
   }
 
-  def getTargetPosition: Point2D = {
-    new Point2D(range(Mpu6050AO.getZRotaion), 5)
+  def getTargetPosition: Point2D[java.lang.Double] = {
+    new Point2D[java.lang.Double](range(Mpu6050AO.getZRotaion), 5)
   }
 
-  def range(d: Double) = {
+  def range(d: java.lang.Double): java.lang.Double = {
     println("\t turn to: " + d)
     d
   }
-
-  override var deviceInfo: DeviceInfo = DeviceInfo.create(name, DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT)
 }
