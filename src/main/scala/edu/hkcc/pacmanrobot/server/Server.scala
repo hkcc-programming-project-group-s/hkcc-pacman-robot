@@ -52,7 +52,7 @@ class Server extends Thread {
   })
   val obstacleMapManager = new ObstacleMapManager
 
-  def response_pair(macAddress: Array[Byte]) = {
+  def response_pair(macAddress: Array[Byte]):Unit = {
     controllerRobotPairManager.controllerRobotPairs.forEach(new BiConsumer[Array[Byte], Array[Byte]] {
       override def accept(t: Array[Byte], u: Array[Byte]): Unit = {
         controllerRobotPairMessengerManager.sendByMacAddress(macAddress,
@@ -113,7 +113,7 @@ class Server extends Thread {
       //println
       //println(Calendar.getInstance().getTime)
       //println("random put")
-      (1 to 1).foreach(i =>
+      (1 to 100).foreach(i =>
         bufferedMap.put(new MapUnit(new MapKey(random nextInt 4000, random nextInt 4000), System.currentTimeMillis()))
       )
       val toSend = bufferedMap.clone

@@ -96,7 +96,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
     }
 
     override protected def myInit: Unit = {
-      //ObstacleMap.estimated_game_duration_in_minutes_=(1d / 6d)
+      ObstacleMap.estimated_game_duration_in_minutes_=(1d / 6d)
       super.myInit
       scrollSpeed = 1f
       rollSpeed = 10f

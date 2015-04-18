@@ -1,6 +1,6 @@
 package edu.hkcc.pacmanrobot.utils;
 
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.Position;
+import edu.hkcc.pacmanrobot.utils.message.Position;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

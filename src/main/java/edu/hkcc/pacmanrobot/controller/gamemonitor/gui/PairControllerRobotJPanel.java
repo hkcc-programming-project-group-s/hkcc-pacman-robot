@@ -1,11 +1,11 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DevicePairJPanel;
-import edu.hkcc.pacmanrobot.utils.message.ControllerRobotPair;
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DevicePairJPanel;
+import edu.hkcc.pacmanrobot.utils.message.ControllerRobotPair;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -23,10 +23,16 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
     public final DeviceInfoContainer robot_container = new DeviceInfoContainer("Robots");
     public final DeviceInfoContainer pair_panel = new DeviceInfoContainer("Controller-Robot pair");
     public Vector<DevicePairJPanel> devicePairJPanels = new Vector<>();
-    int makePairAttempt = 0;
     public DeviceInfoJPanel clickedControllerJPanel = null;
     public DeviceInfoJPanel clickedRobotJPanel = null;
+    public Vector<DeviceInfoContainer> deviceInfoContainers = null;
+    int makePairAttempt = 0;
     DevicePairJPanel clickedPairJPanel = null;
+
+    /*public void checkUnclickOnPairedDeviceInfoJPanel(DevicePairJPanel checkPanel, DevicePairJPanel clickedPanel) {
+        if (!clickedPanel.equals(checkPanel))
+            checkPanel.unclick();
+    }*/
 
     /**
      * Create the frame.
@@ -96,11 +102,6 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         initView();
     }
 
-    /*public void checkUnclickOnPairedDeviceInfoJPanel(DevicePairJPanel checkPanel, DevicePairJPanel clickedPanel) {
-        if (!clickedPanel.equals(checkPanel))
-            checkPanel.unclick();
-    }*/
-
     public void onPairedDeviceInfoPanelClicked(DevicePairJPanel clickedPanel) {
         //update color
         if (clickedPairJPanel != null && !clickedPairJPanel.equals(clickedPanel))
@@ -119,6 +120,12 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         pair_panel.updateUI();*/
     }
 
+    /*private void checkUnclickDeviceInfoJPanel(DeviceInfoJPanel checkPanel, DeviceInfoJPanel clickedPanel) {
+        //System.out.println("checkUnclickDeviceInfoJPanel");
+        if (!clickedPanel.equals(checkPanel))
+            checkPanel.unclick();
+    }*/
+
     @Override
     public void onDeviceInfoJPanelClicked(DeviceInfoJPanel clickedDeviceInfoJPanel) {
         //System.out.println("this, here, there, right here");
@@ -133,14 +140,6 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
             clickedRobotJPanel = clickedDeviceInfoJPanel;
         }
     }
-
-    /*private void checkUnclickDeviceInfoJPanel(DeviceInfoJPanel checkPanel, DeviceInfoJPanel clickedPanel) {
-        //System.out.println("checkUnclickDeviceInfoJPanel");
-        if (!clickedPanel.equals(checkPanel))
-            checkPanel.unclick();
-    }*/
-
-    public Vector<DeviceInfoContainer> deviceInfoContainers = null;
 
     @Override
     public Vector<DeviceInfoContainer> getDeviceInfoContainers() {
@@ -235,7 +234,7 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
             try {
                 //TODO
                 // use messenger to send to server
-                for (DevicePairJPanel pairControllerRobot : devicePairJPanels) sendRequest(pairControllerRobot);
+                for (DevicePairJPanel pairControllerRobot : devicePairJPanels) sendPair(pairControllerRobot);
                 if (new Random().nextBoolean())
                     throw new IOException();
             } catch (IOException e1) {
@@ -275,8 +274,11 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), deviceInfoMessenger);
     }
 
-    public void sendRequest(DevicePairJPanel clickedPairJPanel) {
-        master.sao.controllerRobotPairMessenger().sendMessage(new ControllerRobotPair(clickedPairJPanel.controllerJPanel.deviceInfo.MAC_ADDRESS(), clickedPairJPanel.robotJPanel.deviceInfo.MAC_ADDRESS()));
+    public void sendPair(DevicePairJPanel clickedPairJPanel) {
+        byte[] controller_mac = clickedPairJPanel.controllerJPanel.deviceInfo.MAC_ADDRESS();
+        byte[] robot_mac = clickedPairJPanel.robotJPanel.deviceInfo.MAC_ADDRESS();
+        ControllerRobotPair pair = new ControllerRobotPair(controller_mac, robot_mac, true);
+        master.sao.controllerRobotPairMessenger().sendMessage(pair);
     }
 
     public void receivePair(ControllerRobotPair pair) {
