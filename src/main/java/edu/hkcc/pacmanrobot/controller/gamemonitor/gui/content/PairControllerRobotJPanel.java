@@ -1,5 +1,7 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
+package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
 
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DevicePairJPanel;
 import edu.hkcc.pacmanrobot.utils.message.ControllerRobotPair;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
@@ -235,7 +237,7 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
             try {
                 //TODO
                 // use messenger to send to server
-                for (DevicePairJPanel pairControllerRobot : devicePairJPanels) sendRequest(pairControllerRobot);
+                for (DevicePairJPanel pairControllerRobot : devicePairJPanels) savePair(pairControllerRobot);
                 if (new Random().nextBoolean())
                     throw new IOException();
             } catch (IOException e1) {
@@ -275,8 +277,8 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), deviceInfoMessenger);
     }
 
-    public void sendRequest(DevicePairJPanel clickedPairJPanel) {
-        master.sao.controllerRobotPairMessenger().sendMessage(new ControllerRobotPair(clickedPairJPanel.controllerJPanel.deviceInfo.MAC_ADDRESS(), clickedPairJPanel.robotJPanel.deviceInfo.MAC_ADDRESS()));
+    public void savePair(DevicePairJPanel clickedPairJPanel) {
+        master.sao.controllerRobotPairMessenger().sendMessage(new ControllerRobotPair(clickedPairJPanel.controllerJPanel.deviceInfo.MAC_ADDRESS(), clickedPairJPanel.robotJPanel.deviceInfo.MAC_ADDRESS(), true));
     }
 
     public void receivePair(ControllerRobotPair pair) {

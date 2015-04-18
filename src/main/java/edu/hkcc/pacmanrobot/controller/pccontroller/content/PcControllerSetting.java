@@ -1,5 +1,7 @@
-package edu.hkcc.pacmanrobot.controller.pccontroller;
+package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 
+import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
+import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJPanel;
 import edu.hkcc.pacmanrobot.controller.utils.Utils;
 
 import javax.swing.*;
@@ -12,13 +14,13 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Vector;
 
-import static edu.hkcc.pacmanrobot.controller.pccontroller.Pc_controllerSetting.Range.isBetween;
+import static edu.hkcc.pacmanrobot.controller.pccontroller.content.PcControllerSetting.Range.isBetween;
 import static java.awt.event.KeyEvent.*;
 
-public class Pc_controllerSetting extends JFrame {
+public class PcControllerSetting extends PcControllerJPanel {
     public static Vector<Range> direction_keys = new Vector<>();
     static HashMap<Integer, String> keyNames = new HashMap<>();
-    Pc_controllerSetting jFrame = this;
+    PcControllerSetting jFrame = this;
     JPanel ballLocation;
     JPanel ballLastLocation;
     boolean setting = false;
@@ -49,15 +51,14 @@ public class Pc_controllerSetting extends JFrame {
     private JLabel upArrowLbl;
     private Direction_Lable_Key key_to_edit = null;
 
-    public Pc_controllerSetting() throws MalformedURLException, IOException {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new BorderLayout(0, 0));
+    public PcControllerSetting(PcControllerJFrame pcControllerJFrame){
+        super(pcControllerJFrame);
 
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(myDispatcher);
 
         panel_center = new JPanel();
-        getContentPane().add(panel_center, BorderLayout.NORTH);
+        add(panel_center, BorderLayout.NORTH);
         GridBagLayout gbl_clockwiseTurmLbl = new GridBagLayout();
         gbl_clockwiseTurmLbl.columnWidths = new int[]{0, 0, 0, 0, 0};
         gbl_clockwiseTurmLbl.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0,
@@ -124,8 +125,12 @@ public class Pc_controllerSetting extends JFrame {
         gbc_ballpanel.gridy = 3;
         panel_center.add(ballpanel, gbc_ballpanel);
 
-        ball = new JLabel(
-                Utils.getImageIcon("https://dl.dropboxusercontent.com/u/13757442/htm/ball.png"));
+        try {
+            ball = new JLabel(
+                    Utils.getImageIcon("https://dl.dropboxusercontent.com/u/13757442/htm/ball.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ballJPanels = new JPanel[3][3];
         for (int y = 0; y < 3; y++)
@@ -258,7 +263,7 @@ public class Pc_controllerSetting extends JFrame {
         panel_center.add(editRightBtn, gbc_editRightBtn);
 
         JPanel panel_buttom = new JPanel();
-        getContentPane().add(panel_buttom, BorderLayout.SOUTH);
+        add(panel_buttom, BorderLayout.SOUTH);
 
         JButton btnPause = new JButton("Pause");
         panel_buttom.add(btnPause);
@@ -271,7 +276,6 @@ public class Pc_controllerSetting extends JFrame {
         ballLocation.add(ball);
 
 
-        pack();
         setLocation(100, 100);
 
         direction_keys.add(new Range('a', 'z'));
@@ -325,19 +329,6 @@ public class Pc_controllerSetting extends JFrame {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Pc_controllerSetting frame = new Pc_controllerSetting();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     boolean onKeyPressed(KeyEvent e) {
         if (setting) {
             boolean result;

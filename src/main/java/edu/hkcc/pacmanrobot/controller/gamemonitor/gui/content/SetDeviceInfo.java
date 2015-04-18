@@ -1,7 +1,9 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
+package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
 
 //import com.sun.istack.internal.NotNull;
 
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
