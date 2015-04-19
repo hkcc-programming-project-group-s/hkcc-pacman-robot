@@ -1,3 +1,5 @@
-target/
-out/
+target/*
+target
+out/*
+out
 *.class

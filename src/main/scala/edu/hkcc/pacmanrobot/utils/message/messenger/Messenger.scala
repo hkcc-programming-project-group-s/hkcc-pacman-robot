@@ -158,7 +158,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
       var inOk = true
       val inThread = forkAndStart({
         println("check if input stream is null")
-        if (inputStream == null || (lastException!=null && lastException.isInstanceOf[EOFException])) {
+        if (inputStream == null || (lastException != null && lastException.isInstanceOf[EOFException])) {
           println("get input stream")
           val in = socket.getInputStream
           println("creating object input stream")
@@ -174,7 +174,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
       var outOk = true
       val outThread = forkAndStart({
         println("check if output stream is null")
-        if (outputStream == null || (lastException!=null && lastException.isInstanceOf[EOFException])) {
+        if (outputStream == null || (lastException != null && lastException.isInstanceOf[EOFException])) {
           println("get output stream")
           val out = socket.getOutputStream
           println("creating object output stream")
@@ -296,7 +296,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
     val message: Type = inputStream.readObject.asInstanceOf[Type]
     inputQueue.add(message)
     //println("received " + (message.toString.length/1024f) + " kbs from "+socket.getInetAddress.getHostAddress)
-    println("received from "+socket.getRemoteSocketAddress)
+    println("received from " + socket.getRemoteSocketAddress)
     autoGet(getMessage)
   }
 

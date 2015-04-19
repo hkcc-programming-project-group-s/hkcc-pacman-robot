@@ -35,10 +35,10 @@ public class DeviceInfoJPanel extends JPanel {
     public boolean isClicked = false;
     public boolean isSelected = false;
     public DeviceInfoJPanelHandler deviceInfoJPanelHandler = null;
+    public Component emptyBox = Box.createRigidArea(new Dimension(64, 64));
     JLabel lblIcon;
     JLabel lblIp;
     JLabel lblName;
-
 
     public DeviceInfoJPanel(DeviceInfo deviceInfo, DeviceInfoJPanelHandler handler) {
         this.deviceInfo = deviceInfo;
@@ -103,8 +103,6 @@ public class DeviceInfoJPanel extends JPanel {
         revalidate();
         updateUI();
     }
-
-    public Component emptyBox = Box.createRigidArea(new Dimension(64, 64));
 
     public void click() {
         isClicked = true;

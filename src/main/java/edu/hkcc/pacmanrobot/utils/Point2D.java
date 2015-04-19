@@ -1,5 +1,7 @@
 package edu.hkcc.pacmanrobot.utils;
 
+import com.sun.istack.internal.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -8,9 +10,13 @@ import java.io.Serializable;
 public class Point2D<Type> implements Serializable, Cloneable {
     public Type _1, _2;
 
-    public Point2D(Type _1, Type _2) {
+    public Point2D(@NotNull Type _1, @NotNull Type _2) {
         this._1 = _1;
         this._2 = _2;
+    }
+
+    public static Point2D<Double> create(double _1, double _2) {
+        return new Point2D<Double>(_1, _2);
     }
 
     public void set(Type _1, Type _2) {
@@ -24,10 +30,6 @@ public class Point2D<Type> implements Serializable, Cloneable {
 
     public void set_2(Type _2) {
         this._2 = _2;
-    }
-
-    public static Point2D<Double> create(double _1, double _2) {
-        return new Point2D<Double>(_1, _2);
     }
 
     @Override

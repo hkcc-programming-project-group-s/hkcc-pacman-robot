@@ -17,7 +17,7 @@ class ObstacleMapMessenger(val obstacleMap: ObstacleMap, socket: Socket, manager
   val switchBufferIndexSemaphore = new Semaphore(1)
   private var bufferIndex: Int = 0
 
-  def this(obstacleMap: ObstacleMap=new ObstacleMap) = {
+  def this(obstacleMap: ObstacleMap = new ObstacleMap) = {
     this(obstacleMap = obstacleMap, Messenger.connect(Config.PORT_MAP, isServer = false), null)
   }
 
@@ -34,11 +34,11 @@ class ObstacleMapMessenger(val obstacleMap: ObstacleMap, socket: Socket, manager
           messenger.sendMessage(message)
       })
     //println("autoget")
-//    message.forEach(new BiConsumer[MapKey,Long] {
-//      override def accept(t: MapKey, u: Long): Unit = {
-//        println(Vector(t,u))
-//      }
-//    })
+    //    message.forEach(new BiConsumer[MapKey,Long] {
+    //      override def accept(t: MapKey, u: Long): Unit = {
+    //        println(Vector(t,u))
+    //      }
+    //    })
     obstacleMap.merge(message)
   }
 

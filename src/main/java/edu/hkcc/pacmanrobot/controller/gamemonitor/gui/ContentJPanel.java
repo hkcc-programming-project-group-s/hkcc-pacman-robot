@@ -1,5 +1,9 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.PairControllerRobotJPanel;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.PositionSetting;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.SetDeviceInfo;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.SetDeviceName;
 import myutils.gui.cardlayout.AbstractCardJPanel;
 
 import java.util.Vector;

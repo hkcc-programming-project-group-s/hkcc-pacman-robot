@@ -1,11 +1,13 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
+package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
 
 //import com.sun.istack.internal.NotNull;
 
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -36,6 +38,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     DeviceInfoJPanel clicked = null;
     Vector<DeviceInfoJPanel> unclassedJPanels = new Vector<>();
     Vector<DeviceInfoContainer> deviceInfoContainers = new Vector<>();
+    public DeviceInfoJPanelHandler handler = this;
 
     /**
      * Create the frame.
@@ -193,13 +196,20 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         return deviceInfoContainers;
     }
 
-    @Override
-    public void receiveDeviceInfo(DeviceInfo deviceInfo) {
-        if (DeviceInfo.isRobot(deviceInfo.deviceType()))
-            unclasses_panel.add(new DeviceInfoJPanel(deviceInfo, this));
-        controller_panel.add(new DeviceInfoJPanel(deviceInfo, this));
-        revalidate();
-        updateUI();
+    public void addDeviceInfo() {
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        for(DeviceInfo deviceInfo:deviceInfos){
+            if (DeviceInfo.isRobot(deviceInfo.deviceType()))
+                unclasses_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+            else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())
+                controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT())
+                assignment_robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
+            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT())
+                deadline_robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
+            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT())
+                student_robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
+        }
     }
 
 
@@ -250,18 +260,13 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     }
 
     @Override
-    public void onEnter(){
+    public void onEnter() {
         unclasses_panel.clear();
         student_robot_panel.clear();
         assignment_robot_panel.clear();
         deadline_robot_panel.clear();
         controller_panel.clear();
-        master.sao.deviceInfoJPanelHandler_$eq(this);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), deviceInfoMessenger);
+        addDeviceInfo();
         /*controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.3", "Controller 1"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.1", "Controller 2"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.2", "Controller 3"), this));
@@ -282,15 +287,16 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         if (DeviceInfo.isRobot(clicked.deviceInfo._deviceType())) {
             if (e.getKeyCode() == KeyEvent.VK_A) {
                 clicked.transfer(assignment_robot_panel);
-                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(),clicked.deviceInfo.lastConnectionTime(),true));
+                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
                 System.out.println("changed to assignment.");
             } else if (e.getKeyCode() == KeyEvent.VK_D) {
                 clicked.transfer(deadline_robot_panel);
-                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(),clicked.deviceInfo.lastConnectionTime(),true));;
+                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
+                ;
                 System.out.println("changed to deadline.");
             } else if (e.getKeyCode() == KeyEvent.VK_S) {
                 clicked.transfer(student_robot_panel);
-                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(),clicked.deviceInfo.lastConnectionTime(),true));
+                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
                 System.out.println("changed to student.");
             } else return false;
         }

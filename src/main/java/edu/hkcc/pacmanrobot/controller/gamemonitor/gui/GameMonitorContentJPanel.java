@@ -10,15 +10,14 @@ import javax.swing.*;
  */
 public abstract class GameMonitorContentJPanel extends JPanel {
     public final GameMonitorJFrame master;
-
-    public abstract boolean onLeave();
-
-    public abstract void onEnter();
+    public final Messenger<DeviceInfo> deviceInfoMessenger;
 
     public GameMonitorContentJPanel(GameMonitorJFrame gameMonitorJFrame) {
         this.master = gameMonitorJFrame;
         deviceInfoMessenger = master.sao.deviceInfoMessenger();
     }
 
-    public final Messenger<DeviceInfo> deviceInfoMessenger;
+    public abstract boolean onLeave();
+
+    public abstract void onEnter();
 }

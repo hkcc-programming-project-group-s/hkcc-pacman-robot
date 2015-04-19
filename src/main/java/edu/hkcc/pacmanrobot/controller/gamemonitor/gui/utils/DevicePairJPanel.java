@@ -1,7 +1,6 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.PairControllerRobotJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.PairControllerRobotJPanel;
 
 import javax.swing.*;
 import java.awt.*;

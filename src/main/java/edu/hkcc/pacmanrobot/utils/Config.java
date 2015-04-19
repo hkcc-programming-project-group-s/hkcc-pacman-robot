@@ -17,6 +17,7 @@ public class Config {
     //public static final int PORT_CONNECTION_INFO = 4219;
     public static final int PORT_CONTROLLER_ROBOT_PAIR = 40217;
     public static final int PORT_FLASH_REQUEST = 40218;
+    public static final int PORT_SERVER_DISCOVER = 40219;
 
 
     public static String serverAddress = "192.168.43.1";
@@ -31,8 +32,8 @@ public class Config {
 
     static {
         try {
-            //serverAddress= InetAddress.getByName("BeenoTung-ArchLinux-Home").getHostAddress();
-            serverAddress = InetAddress.getByName("BeenoTung_ArchLinux_Notebook").getHostAddress();
+            serverAddress = InetAddress.getByName("BeenoTung_Archlinux_Home").getHostAddress();
+            //serverAddress = InetAddress.getByName("BeenoTung_ArchLinux_Notebook").getHostAddress();
             System.out.println("server ip: " + Config.serverAddress);
         } catch (UnknownHostException e) {
             //e.printStackTrace();

@@ -1,4 +1,7 @@
-package edu.hkcc.pacmanrobot.controller.pccontroller;
+package edu.hkcc.pacmanrobot.controller.pccontroller.content;
+
+import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
+import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -6,19 +9,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PauseInfo extends JFrame {
+public class PauseInfo extends PcControllerJPanel {
 
     private JPanel contentPane;
 
     /**
      * Create the frame.
      */
-    public PauseInfo() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public PauseInfo(PcControllerJFrame pcControllerJFrame) {
+        super(pcControllerJFrame);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
 
         JLabel GameResumeLabel = new JLabel("Game Pause Reason");
@@ -41,16 +43,4 @@ public class PauseInfo extends JFrame {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    PauseInfo frame = new PauseInfo();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 }

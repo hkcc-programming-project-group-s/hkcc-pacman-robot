@@ -1,5 +1,7 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
+package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
 
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
@@ -16,10 +18,23 @@ import java.util.Random;
 import java.util.Vector;
 
 public class PositionSetting extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
-
+    public DeviceInfoJPanelHandler handler = this;
     DeviceInfoContainer robot_panel = new DeviceInfoContainer("Pending Robot");
     DeviceInfoContainer moving_robot_panel = new DeviceInfoContainer("Moving Robots");
     DeviceInfoJPanel clicked = null;
+    Vector<DeviceInfoContainer> deviceInfoContainers = null;
+
+    /*public void onRobotSettingJPPanelsclick(DeviceInfoJPanel clickedPanel) {
+        //System.out.print("onRobotSettingJPPanelsclick");
+        try {
+            if (clickedPanel.deviceInfo.deviceType == DeviceInfo.ROBOT_UNCLASSED) {
+                pendingRobotJPanels.forEach(p -> checkClick(p, clickedPanel));
+            }
+        } catch (ConcurrentModificationException e) {
+            System.out.println(e.toString());
+        }
+
+    }*/
 
     /**
      * Create the frame.
@@ -72,18 +87,6 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         initView();
     }
 
-    /*public void onRobotSettingJPPanelsclick(DeviceInfoJPanel clickedPanel) {
-        //System.out.print("onRobotSettingJPPanelsclick");
-        try {
-            if (clickedPanel.deviceInfo.deviceType == DeviceInfo.ROBOT_UNCLASSED) {
-                pendingRobotJPanels.forEach(p -> checkClick(p, clickedPanel));
-            }
-        } catch (ConcurrentModificationException e) {
-            System.out.println(e.toString());
-        }
-
-    }*/
-
     void initView() {
         robot_panel.deviceInfoJPanels.forEach(p -> robot_panel.add(p));
 
@@ -101,7 +104,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         for (DeviceInfoJPanel pendingRobotDeviceJPanel : robot_panel.deviceInfoJPanels)
             if (pendingRobotDeviceJPanel.isClicked && !pendingRobotDeviceJPanel.isSelected) {
                 settingRobot = pendingRobotDeviceJPanel;
-                sendRequest(settingRobot.deviceInfo,light_on);
+                sendRequest(settingRobot.deviceInfo, light_on);
             }
         robot_panel.remove(settingRobot);
 
@@ -120,8 +123,6 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         clicked = deviceInfoJPanel;
     }
 
-    Vector<DeviceInfoContainer> deviceInfoContainers = null;
-
     @Override
     public Vector<DeviceInfoContainer> getDeviceInfoContainers() {
         if (deviceInfoContainers == null) {
@@ -132,13 +133,13 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         return deviceInfoContainers;
     }
 
-    @Override
-    public void receiveDeviceInfo(DeviceInfo deviceInfo) {
-        robot_panel.add(new DeviceInfoJPanel(deviceInfo, this));
-        revalidate();
-        updateUI();
+    public void addDeviceInfo() {
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        for(DeviceInfo deviceInfo:deviceInfos){
+            if (DeviceInfo.isRobot(deviceInfo.deviceType()))
+                robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+        }
     }
-
 
     @Override
     public boolean onLeave() {
@@ -164,7 +165,6 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         }
         robot_panel.clear();
         moving_robot_panel.clear();
-        master.sao.deviceInfoJPanelHandler_$eq(null);
         return true;
     }
 
@@ -180,14 +180,10 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.9", "Robot 6"), this));
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.132", "Robot 7"), this));
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.131", "Robot 8"), this));*/
-
-        master.sao.deviceInfoJPanelHandler_$eq(this);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
+        addDeviceInfo();
     }
 
-    public void sendRequest(DeviceInfo deviceInfo,boolean lightOn) {
+    public void sendRequest(DeviceInfo deviceInfo, boolean lightOn) {
         master.sao.flashRequestMessenger().sendMessage(new FlashRequest(deviceInfo.MAC_ADDRESS(), lightOn));
     }
 }
