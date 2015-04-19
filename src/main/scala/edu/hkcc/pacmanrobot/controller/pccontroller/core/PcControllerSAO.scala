@@ -22,4 +22,6 @@ class PcControllerSAO extends GameDevice{
   override def gameStop: Unit = ???
 
   override def gameSetup: Unit = ???
+
+
 }

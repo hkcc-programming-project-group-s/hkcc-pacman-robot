@@ -118,14 +118,6 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         return deviceInfoContainers;
     }
 
-    @Override
-    public void receiveDeviceInfo(DeviceInfo deviceInfo) {
-        addDeviceInfo(deviceInfo, handler);
-//        controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
-        revalidate();
-        updateUI();
-    }
-
     boolean onKeyPressed(KeyEvent e) {
         return true;
     }
@@ -156,7 +148,6 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         }
         controller_panel.clear();
         robot_panel.clear();
-        master.sao.deviceInfoJPanelHandler_$eq(null);
         return true;
     }
 
@@ -165,24 +156,22 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     public void onEnter() {
         controller_panel.clear();
         robot_panel.clear();
-        master.sao.deviceInfoJPanelHandler_$eq(this);
+        addDeviceInfo();
         //start request
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT(), master.sao.deviceInfoMessenger());
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), master.sao.deviceInfoMessenger());
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), master.sao.deviceInfoMessenger());
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), master.sao.deviceInfoMessenger());
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), master.sao.deviceInfoMessenger());
     }
 
 
 
 
 
-    public void addDeviceInfo(DeviceInfo deviceInfo, DeviceInfoJPanelHandler handler) {
-        if (DeviceInfo.isRobot(deviceInfo._deviceType()))
-            robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
-        else if (deviceInfo._deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())
-            controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+    public void addDeviceInfo() {
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        for(DeviceInfo deviceInfo:deviceInfos){
+            if (DeviceInfo.isRobot(deviceInfo.deviceType()))
+                robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+            else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())
+                controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+        }
     }
 
     class MyDispatcher implements KeyEventDispatcher {

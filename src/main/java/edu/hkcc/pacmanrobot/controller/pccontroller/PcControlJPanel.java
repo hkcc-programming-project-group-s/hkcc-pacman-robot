@@ -21,29 +21,27 @@ public class PcControlJPanel extends JPanel {
      */
     public PcControlJPanel(final PcControllerJFrame master) {
         this.master = master;
-        btnPrevious = new JButton("Previous");
+        btnPrevious = new JButton("Prase");
         btnPrevious.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        add(btnPrevious);
+
+        btnNext = new JButton("Resume");
+        btnNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 master.prev();
                 updateView();
             }
         });
-        add(btnPrevious);
-
-        btnNext = new JButton("Next");
-        btnNext.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                master.next();
-                updateView();
-            }
-        });
         add(btnNext);
 
-        btnFinish = new JButton("Finish");
+        btnFinish = new JButton("Stop");
         btnFinish.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.finish();
-                updateView();
+
             }
         });
         add(btnFinish);
