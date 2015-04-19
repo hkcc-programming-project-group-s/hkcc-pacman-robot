@@ -29,6 +29,7 @@ class Point3D(var x: Double = 0d, var y: Double = 0d, var z: Double = 0d) extend
   implicit def -(point3D: Point3D): Point3D = {
     new Point3D(x - point3D.x, y - point3D.y, z - point3D.z)
   }
+
   implicit def *(multiple: Double): Point3D = {
     new Point3D(x * multiple, y * multiple, z * multiple)
   }

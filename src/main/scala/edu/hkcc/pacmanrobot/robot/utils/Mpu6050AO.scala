@@ -17,7 +17,8 @@ object Mpu6050AO extends Thread {
   private val ONE_SECOND: Long = 1000000000L
   //default +- 2g per second
   // in unit of ms-2
-  private val ACCEL_RATIO: Double = 1.0 / 32768d * 2 * 9.80665 //* 100
+  private val ACCEL_RATIO: Double = 1.0 / 32768d * 2 * 9.80665
+  //* 100
   //default +- 250 deg per second
   // in unit of rad
   private val GYRO_RATION: Double = 1.0 / 32768d * 250d / 180d * Math.PI
@@ -61,8 +62,9 @@ object Mpu6050AO extends Thread {
   def getRotation: Point3D = {
     angularDisplacement
   }
-  def getDisplacement:Point3D={
-    linearDisplacement/100d
+
+  def getDisplacement: Point3D = {
+    linearDisplacement / 100d
   }
 
   @throws(classOf[IOException])

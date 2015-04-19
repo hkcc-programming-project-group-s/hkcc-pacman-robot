@@ -1,11 +1,10 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
 
-
+import edu.hkcc.pacmanrobot.controller.utils.Utils;
 
 import javax.swing.*;
 import java.io.IOException;
-import edu.hkcc.pacmanrobot.controller.utils.Utils;
 
 public class LogoJPanel extends JPanel {
 

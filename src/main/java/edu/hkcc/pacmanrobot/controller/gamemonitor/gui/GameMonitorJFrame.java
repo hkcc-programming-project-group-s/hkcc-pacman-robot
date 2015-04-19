@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class GameMonitorJFrame extends JFrame {
 
+    public GameMonitorSAO sao = new GameMonitorSAO();
     int WINDOW_WIDTH = 960;
     int WINDOW_HEIGHT = 720;
     LogoJPanel logoJPanel = new LogoJPanel();
@@ -16,6 +17,7 @@ public class GameMonitorJFrame extends JFrame {
     public GameMonitorJFrame() {
         initialize();
     }
+
     public GameMonitorJFrame(int width, int height) {
         WINDOW_WIDTH = width;
         WINDOW_HEIGHT = height;
@@ -58,5 +60,4 @@ public class GameMonitorJFrame extends JFrame {
     public boolean canFinish() {
         return !hasNext();
     }
-    public GameMonitorSAO sao =new GameMonitorSAO();
 }

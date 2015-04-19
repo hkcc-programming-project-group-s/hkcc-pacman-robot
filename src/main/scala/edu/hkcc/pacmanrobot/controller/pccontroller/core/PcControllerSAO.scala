@@ -6,8 +6,8 @@ import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
 /**
  * Created by 13058456a on 4/15/2015.
  */
-class PcControllerSAO extends GameDevice{
-  override var deviceInfo: DeviceInfo = DeviceInfo.create("PC Controller",DeviceInfo.DEVICE_TYPE_CONTROLLER)
+class PcControllerSAO extends GameDevice {
+  override var deviceInfo: DeviceInfo = DeviceInfo.create("PC Controller", DeviceInfo.DEVICE_TYPE_CONTROLLER)
 
   override def loop: Unit = ???
 

@@ -20,6 +20,4 @@ abstract class Robot(val defaultRobot: DefaultRobot) extends Thread {
       }
     }
   })
-
-  override def run
 }

@@ -14,7 +14,7 @@ object Utils {
 
   def getObstacleMapRange(obstacleMap: ObstacleMap): Point2D[Point2D[Int]] = {
     val range = new Point2D[Point2D[Int]](new Point2D[Int](0, 0), new Point2D[Int](0, 0))
-    if (obstacleMap==null || obstacleMap.size < 1) range
+    if (obstacleMap == null || obstacleMap.size < 1) range
     else {
       obstacleMap.forEach(new BiConsumer[MapKey, Long] {
         override def accept(k: MapKey, v: Long): Unit = {

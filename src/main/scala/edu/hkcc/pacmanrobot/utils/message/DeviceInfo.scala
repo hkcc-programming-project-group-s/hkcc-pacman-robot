@@ -4,7 +4,7 @@ import java.net.{InetAddress, NetworkInterface}
 
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
-
+import DeviceInfo.getLocalMacAddress
 
 /**
  * Created by 13058456a on 3/21/2015.
@@ -28,7 +28,7 @@ object DeviceInfo extends Message {
   }
 
   def create(name: String, deviceType: Byte): DeviceInfo = {
-    new DeviceInfo(name, InetAddress.getLocalHost.getHostAddress, deviceType, shouldSave = true)
+    new DeviceInfo(name = name, ip = InetAddress.getLocalHost.getHostAddress, _deviceType = deviceType, shouldSave = true)
   }
 
   def request(deviceType: Byte, messenger: Messenger[DeviceInfo]) = {
@@ -44,6 +44,10 @@ object DeviceInfo extends Message {
       case _ => false
     }
   }
+
+  def MakeRequest(macAddress: Array[Byte]): DeviceInfo = {
+    new DeviceInfo(MAC_ADDRESS = macAddress, name = null, ip = null, shouldSave = false, _deviceType = 0)
+  }
 }
 
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
@@ -58,14 +62,12 @@ import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
  * true => server save
  * false => server response to client (send all that type)
  */
-class DeviceInfo(var name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0, val shouldSave: Boolean) extends Serializable {
-  val MAC_ADDRESS: Array[Byte] = getLocalMacAddress
+class DeviceInfo(val MAC_ADDRESS: Array[Byte] = getLocalMacAddress, var name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0, val shouldSave: Boolean) extends Serializable {
+  def deviceType = _deviceType
 
   def deviceType_=(newType: Byte): Unit = {
     _deviceType = newType
   }
-
-  def deviceType = _deviceType
 
   def set(newInfo: DeviceInfo): Unit = {
     name = newInfo.name

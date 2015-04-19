@@ -3,16 +3,16 @@ package edu.hkcc.pacmanrobot.controller.pccontroller;
 /**
  * Created by Winner on 18/4/2015.
  */
+
 import edu.hkcc.pacmanrobot.controller.gamemonitor.core.GameMonitorSAO;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.LogoJPanel;
-import  edu.hkcc.pacmanrobot.controller.pccontroller.PcControlJPanel;
-import   edu.hkcc.pacmanrobot.controller.pccontroller.PcContentJPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PcControllerJFrame extends JFrame {
 
+    public GameMonitorSAO sao = new GameMonitorSAO();
     int WINDOW_WIDTH = 960;
     int WINDOW_HEIGHT = 720;
     LogoJPanel logoJPanel = new LogoJPanel();
@@ -22,6 +22,7 @@ public class PcControllerJFrame extends JFrame {
     public PcControllerJFrame() {
         initialize();
     }
+
     public PcControllerJFrame(int width, int height) {
         WINDOW_WIDTH = width;
         WINDOW_HEIGHT = height;
@@ -64,5 +65,4 @@ public class PcControllerJFrame extends JFrame {
     public boolean canFinish() {
         return !hasNext();
     }
-    public GameMonitorSAO sao =new GameMonitorSAO();
 }
