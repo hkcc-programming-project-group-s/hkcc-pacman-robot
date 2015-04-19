@@ -11,47 +11,47 @@ import java.awt.event.ActionListener;
 public class PcControlJPanel extends JPanel {
 
     private final PcControllerJFrame master;
-    JButton btnPrevious;
-    JButton btnNext;
-    JButton btnFinish;
+    JButton btnResume;
+    JButton btnStop;
+    JButton btnRecheck;
 
     /**
      * Create the panel.
      */
     public PcControlJPanel(final PcControllerJFrame master) {
         this.master = master;
-        btnPrevious = new JButton("Prase");
-        btnPrevious.addActionListener(new ActionListener() {
+
+        btnRecheck = new JButton("Recheck");
+        btnRecheck.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
             }
         });
-        add(btnPrevious);
+        add(btnRecheck);
 
-        btnNext = new JButton("Resume");
-        btnNext.addActionListener(new ActionListener() {
+        btnResume = new JButton("Resume");
+        btnResume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.prev();
                 updateView();
             }
         });
-        add(btnNext);
+        add(btnResume);
 
-        btnFinish = new JButton("Stop");
-        btnFinish.addActionListener(new ActionListener() {
+        btnStop = new JButton("Stop");
+        btnStop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
             }
         });
-        add(btnFinish);
+        add(btnStop);
 
         updateView();
     }
 
     public void updateView() {
         // TODO Auto-generated method stub
-        btnPrevious.setVisible(master.hasPrev());
-        btnNext.setVisible(master.hasNext());
-        btnFinish.setVisible(master.canFinish());
+        btnRecheck.setVisible(master.unresumePage());
+        btnStop.setVisible(master.stopPage());
+        btnResume.setVisible(master.resumePage());
     }
 }

@@ -10,6 +10,8 @@ public class ControlJPanel extends JPanel {
     JButton btnPrevious;
     JButton btnNext;
     JButton btnFinish;
+    JButton btnResume;
+    JButton btnStop;
 
     /**
      * Create the panel.
@@ -44,12 +46,39 @@ public class ControlJPanel extends JPanel {
         add(btnFinish);
 
         updateView();
-    }
+
+
+    btnResume = new JButton("Resume");
+        btnResume.setEnabled(false);
+    btnResume.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            master.finish();
+            updateView();
+        }
+    });
+    add(btnResume);
+
+    updateView();
+
+
+btnStop = new JButton("Stop");
+        btnStop.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+    //JOptionPane.showConfirmDialog(this, "Do you want to end the game?", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+        updateView();
+        }
+        });
+        add(btnStop);
+
+        updateView();
+        }
 
     public void updateView() {
         // TODO Auto-generated method stub
         btnPrevious.setVisible(master.hasPrev());
         btnNext.setVisible(master.hasNext());
         btnFinish.setVisible(master.canFinish());
+        btnResume.setVisible(master.resumePage());
+        btnStop.setVisible(master.resumePage());
     }
 }

@@ -56,6 +56,12 @@ public class ContentJPanel extends AbstractCardJPanel {
         return currentPage + 1 < contents.size();
     }
 
+    public boolean resumePage(){
+        return (currentPage+1<contents.size());
+    }
+
+    public boolean finish(){return (currentPage+2<contents.size());}
+
     public boolean hasPrev() {
         return currentPage > 0;
     }

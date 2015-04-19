@@ -14,14 +14,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-    public class PauseReason extends JFrame {
+    public class PauseReason extends GameMonitorContentJPanel {
 
     private JPanel contentPane;
 
     /**
      * Create the frame.
      */
-    public PauseReason() {
+    public PauseReason(GameMonitorJFrame gameMonitorJFrame) {
+        super(gameMonitorJFrame);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -44,7 +45,17 @@ import java.awt.event.ActionListener;
         });
     }
 
-    /**
+        @Override
+        public boolean onLeave() {
+            return false;
+        }
+
+        @Override
+        public void onEnter() {
+
+        }
+
+        /**
      * Launch the application.
      */
 }

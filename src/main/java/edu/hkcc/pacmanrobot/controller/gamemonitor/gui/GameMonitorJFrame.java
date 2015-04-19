@@ -49,15 +49,17 @@ public class GameMonitorJFrame extends JFrame {
         // TODO Auto-generated method stub
     }
 
-    public boolean hasNext() {
-        return contentJPanel.hasNext();
+    public boolean resumePage() {
+        return !contentJPanel.resumePage();
     }
+
+    public boolean hasNext(){return contentJPanel.hasNext();}
 
     public boolean hasPrev() {
         return contentJPanel.hasPrev();
     }
 
     public boolean canFinish() {
-        return !hasNext();
+        return !contentJPanel.finish();
     }
 }

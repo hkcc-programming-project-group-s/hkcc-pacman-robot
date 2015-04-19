@@ -9,14 +9,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PauseInfo extends PcControllerJPanel {
+public class PauseUnresumable extends PcControllerJPanel {
 
     private JPanel contentPane;
 
     /**
      * Create the frame.
      */
-    public PauseInfo(PcControllerJFrame pcControllerJFrame) {
+    public PauseUnresumable(PcControllerJFrame pcControllerJFrame) {
         super(pcControllerJFrame);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -31,16 +31,25 @@ public class PauseInfo extends PcControllerJPanel {
         contentPane.add(textPane, BorderLayout.CENTER);
         textPane.setEditable(false);
 
-        JButton btnRepairRobot = new JButton("Pair Controller & Robot");
-        contentPane.add(btnRepairRobot, BorderLayout.SOUTH);
-        btnRepairRobot.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnRepairRobot.addActionListener(new ActionListener() {
+        JPanel panel = new JPanel();
+        contentPane.add(panel, BorderLayout.SOUTH);
+
+        JButton btnRecheck = new JButton("Recheck");
+        btnRecheck.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            }
+        });
+        panel.add(btnRecheck);
+
+        Component horizontalStrut = Box.createHorizontalStrut(20);
+        panel.add(horizontalStrut);
+
+        JButton btnStop = new JButton("Stop");
+        btnStop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             }
         });
+        panel.add(btnStop);
     }
 
-    /**
-     * Launch the application.
-     */
 }

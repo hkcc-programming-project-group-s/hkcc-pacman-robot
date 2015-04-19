@@ -6,13 +6,14 @@ package edu.hkcc.pacmanrobot.controller.pccontroller;
 
 import edu.hkcc.pacmanrobot.controller.gamemonitor.core.GameMonitorSAO;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.LogoJPanel;
+import edu.hkcc.pacmanrobot.controller.pccontroller.core.PcControllerSAO;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PcControllerJFrame extends JFrame {
 
-    public GameMonitorSAO sao = new GameMonitorSAO();
+    public PcControllerSAO sao = new PcControllerSAO();
     int WINDOW_WIDTH = 960;
     int WINDOW_HEIGHT = 720;
     LogoJPanel logoJPanel = new LogoJPanel();
@@ -41,28 +42,12 @@ public class PcControllerJFrame extends JFrame {
         getContentPane().add(controlJPanel, BorderLayout.SOUTH);
     }
 
-    public void next() {
-        contentJPanel.pause();
+    public boolean resumePage() {
+        return contentJPanel.resumePage();
     }
 
-    public void prev() {
-        contentJPanel.resume();
-    }
+    public boolean unresumePage(){return contentJPanel.unresumePage();}
 
-    public void finish() {
-        // TODO Auto-generated method stub
+    public boolean stopPage() {return contentJPanel.stopPage();}
 
-    }
-
-    public boolean hasNext() {
-        return contentJPanel.hasNext();
-    }
-
-    public boolean hasPrev() {
-        return contentJPanel.hasPrev();
-    }
-
-    public boolean canFinish() {
-        return !hasNext();
-    }
 }

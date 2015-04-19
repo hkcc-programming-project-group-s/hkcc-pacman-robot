@@ -3,6 +3,7 @@ package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJPanel;
 import edu.hkcc.pacmanrobot.controller.utils.Utils;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,7 +90,7 @@ public class PcControllerSetting extends PcControllerJPanel {
         gbc_ipAddressLbl.gridy = 1;
         panel_center.add(ipAddressLbl, gbc_ipAddressLbl);
 
-        controllerNameLbl = new JLabel("Patrick Controller");
+        controllerNameLbl = new JLabel(" ");
         GridBagConstraints gbc_controllerNameLbl = new GridBagConstraints();
         gbc_controllerNameLbl.insets = new Insets(0, 0, 5, 5);
         gbc_controllerNameLbl.gridx = 2;
@@ -342,6 +343,7 @@ public class PcControllerSetting extends PcControllerJPanel {
             else if (e.getKeyCode() == direction_lable_keys[3].keycode)
                 x = 1;
             else return false;
+            master.sao.sendMovementCommand( x, y);
             updateBallLocation();
             return true;
         }

@@ -4,7 +4,8 @@ package edu.hkcc.pacmanrobot.controller.pccontroller;
  * Created by Winner on 18/4/2015.
  */
 
-import edu.hkcc.pacmanrobot.controller.pccontroller.content.PauseInfo;
+import edu.hkcc.pacmanrobot.controller.pccontroller.content.PauseResumable;
+import edu.hkcc.pacmanrobot.controller.pccontroller.content.PauseUnresumable;
 import edu.hkcc.pacmanrobot.controller.pccontroller.content.PcControllerSetting;
 import myutils.gui.cardlayout.AbstractCardJPanel;
 
@@ -25,8 +26,8 @@ public class PcContentJPanel extends AbstractCardJPanel {
     protected void myInit() {
         contents = new Vector<>();
         contents.add(new PcControllerSetting(master));
-        contents.add(new PauseInfo(master));
-
+        contents.add(new PauseUnresumable(master));
+        contents.add(new PauseResumable(master));
 
         for (int i = 0; i < contents.size(); i++)
             addToCards(contents.get(i), i + "");
@@ -43,9 +44,15 @@ public class PcContentJPanel extends AbstractCardJPanel {
         switchToCard(currentPage + "");
     }
 
+    public void playing() {
+        if (canPrev())
+            currentPage=currentPage-2;
+        switchToCard(currentPage + "");
+    }
+
     public void resume() {
         if (canPrev())
-            currentPage--;
+            currentPage++;
         switchToCard(currentPage + "");
     }
 
@@ -61,4 +68,11 @@ public class PcContentJPanel extends AbstractCardJPanel {
     public boolean hasPrev() {
         return currentPage > 0;
     }
+
+    public boolean unresumePage(){return hasNext()&& hasPrev();}
+
+    public boolean stopPage(){return hasPrev();}
+
+    public boolean resumePage(){return !hasPrev(); }
+
 }
