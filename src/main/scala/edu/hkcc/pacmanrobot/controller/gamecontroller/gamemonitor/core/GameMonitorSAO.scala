@@ -18,7 +18,7 @@ import collection.JavaConversions._
  * Created by beenotung on 4/15/15.
  */
 class GameMonitorSAO {
-  var deviceInfos: Vector[DeviceInfo] = new Vector[DeviceInfo]
+  //var deviceInfos: Vector[DeviceInfo] = new Vector[DeviceInfo]
 
   var deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create(Config.PORT_DEVICE_INFO, message => {
    //don't use autoget

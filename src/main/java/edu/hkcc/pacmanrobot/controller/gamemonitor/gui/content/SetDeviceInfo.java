@@ -287,16 +287,16 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         if (DeviceInfo.isRobot(clicked.deviceInfo._deviceType())) {
             if (e.getKeyCode() == KeyEvent.VK_A) {
                 clicked.transfer(assignment_robot_panel);
-                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
+                clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT());
+                clicked.refreshView();
                 System.out.println("changed to assignment.");
             } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                clicked.transfer(deadline_robot_panel);
-                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
-                ;
+                clicked.deviceInfo._deviceType_$eq(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT());
+                clicked.refreshView();
                 System.out.println("changed to deadline.");
             } else if (e.getKeyCode() == KeyEvent.VK_S) {
-                clicked.transfer(student_robot_panel);
-                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
+                clicked.deviceInfo._deviceType_$eq(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT());
+                clicked.refreshView();
                 System.out.println("changed to student.");
             } else return false;
         }
