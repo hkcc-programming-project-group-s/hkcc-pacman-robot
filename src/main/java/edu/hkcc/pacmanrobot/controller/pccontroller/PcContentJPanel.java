@@ -37,13 +37,13 @@ public class PcContentJPanel extends AbstractCardJPanel {
         return hasNext();
     }
 
-    public void next() {
+    public void pause() {
         if (canNext())
             currentPage++;
         switchToCard(currentPage + "");
     }
 
-    public void prev() {
+    public void resume() {
         if (canPrev())
             currentPage--;
         switchToCard(currentPage + "");

@@ -265,13 +265,6 @@ public class PcControllerSetting extends PcControllerJPanel {
         JPanel panel_buttom = new JPanel();
         add(panel_buttom, BorderLayout.SOUTH);
 
-        JButton btnPause = new JButton("Pause");
-        panel_buttom.add(btnPause);
-
-        JButton btnStop = new JButton("Stop");
-        panel_buttom.add(btnStop);
-
-
         ballLocation = ballJPanels[1][1];
         ballLocation.add(ball);
 
@@ -474,6 +467,9 @@ public class PcControllerSetting extends PcControllerJPanel {
                 label.setText(keyNames.get(keycode));
             else
                 label.setText(String.valueOf((char) keycode));
+        }
+        public void getControllerInfo(){
+
         }
     }
 

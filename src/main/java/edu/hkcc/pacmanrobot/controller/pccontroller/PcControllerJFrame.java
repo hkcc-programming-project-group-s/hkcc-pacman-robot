@@ -42,11 +42,11 @@ public class PcControllerJFrame extends JFrame {
     }
 
     public void next() {
-        contentJPanel.next();
+        contentJPanel.pause();
     }
 
     public void prev() {
-        contentJPanel.prev();
+        contentJPanel.resume();
     }
 
     public void finish() {

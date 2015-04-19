@@ -38,6 +38,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     DeviceInfoJPanel clicked = null;
     Vector<DeviceInfoJPanel> unclassedJPanels = new Vector<>();
     Vector<DeviceInfoContainer> deviceInfoContainers = new Vector<>();
+    public DeviceInfoJPanelHandler handler = this;
 
     /**
      * Create the frame.
@@ -195,13 +196,20 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         return deviceInfoContainers;
     }
 
-    @Override
-    public void receiveDeviceInfo(DeviceInfo deviceInfo) {
-        if (DeviceInfo.isRobot(deviceInfo.deviceType()))
-            unclasses_panel.add(new DeviceInfoJPanel(deviceInfo, this));
-        controller_panel.add(new DeviceInfoJPanel(deviceInfo, this));
-        revalidate();
-        updateUI();
+    public void addDeviceInfo() {
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        for(DeviceInfo deviceInfo:deviceInfos){
+            if (DeviceInfo.isRobot(deviceInfo.deviceType()))
+                unclasses_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+            else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())
+                controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT())
+                assignment_robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
+            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT())
+                deadline_robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
+            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT())
+                student_robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
+        }
     }
 
 
@@ -258,12 +266,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         assignment_robot_panel.clear();
         deadline_robot_panel.clear();
         controller_panel.clear();
-        master.sao.deviceInfoJPanelHandler_$eq(this);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_CONTROLLER(), deviceInfoMessenger);
+        addDeviceInfo();
         /*controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.3", "Controller 1"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.1", "Controller 2"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.2", "Controller 3"), this));

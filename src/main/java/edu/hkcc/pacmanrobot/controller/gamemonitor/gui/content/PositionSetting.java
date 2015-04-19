@@ -18,7 +18,7 @@ import java.util.Random;
 import java.util.Vector;
 
 public class PositionSetting extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
-
+    public DeviceInfoJPanelHandler handler = this;
     DeviceInfoContainer robot_panel = new DeviceInfoContainer("Pending Robot");
     DeviceInfoContainer moving_robot_panel = new DeviceInfoContainer("Moving Robots");
     DeviceInfoJPanel clicked = null;
@@ -133,13 +133,13 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         return deviceInfoContainers;
     }
 
-    @Override
-    public void receiveDeviceInfo(DeviceInfo deviceInfo) {
-        robot_panel.add(new DeviceInfoJPanel(deviceInfo, this));
-        revalidate();
-        updateUI();
+    public void addDeviceInfo() {
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        for(DeviceInfo deviceInfo:deviceInfos){
+            if (DeviceInfo.isRobot(deviceInfo.deviceType()))
+                robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+        }
     }
-
 
     @Override
     public boolean onLeave() {
@@ -165,7 +165,6 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         }
         robot_panel.clear();
         moving_robot_panel.clear();
-        master.sao.deviceInfoJPanelHandler_$eq(null);
         return true;
     }
 
@@ -181,11 +180,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.9", "Robot 6"), this));
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.132", "Robot 7"), this));
         robot_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.131", "Robot 8"), this));*/
-
-        master.sao.deviceInfoJPanelHandler_$eq(this);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), deviceInfoMessenger);
-        DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
+        addDeviceInfo();
     }
 
     public void sendRequest(DeviceInfo deviceInfo, boolean lightOn) {
