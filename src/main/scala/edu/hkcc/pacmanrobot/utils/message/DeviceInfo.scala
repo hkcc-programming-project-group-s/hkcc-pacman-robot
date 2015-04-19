@@ -4,7 +4,7 @@ import java.net.{InetAddress, NetworkInterface}
 
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
-
+import DeviceInfo.getLocalMacAddress
 
 /**
  * Created by 13058456a on 3/21/2015.
@@ -28,7 +28,7 @@ object DeviceInfo extends Message {
   }
 
   def create(name: String, deviceType: Byte): DeviceInfo = {
-    new DeviceInfo(name, InetAddress.getLocalHost.getHostAddress, deviceType, shouldSave = true)
+    new DeviceInfo(name = name, ip = InetAddress.getLocalHost.getHostAddress, _deviceType = deviceType, shouldSave = true)
   }
 
   def request(deviceType: Byte, messenger: Messenger[DeviceInfo]) = {
