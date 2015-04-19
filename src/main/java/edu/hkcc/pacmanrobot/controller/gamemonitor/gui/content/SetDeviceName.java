@@ -99,7 +99,8 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         Object name = JOptionPane.showInputDialog(this, "What is the new name?", "Device Name", JOptionPane.QUESTION_MESSAGE, null, null, null);
         System.out.println(name);
         if (name != null) {
-            clicked.update(new DeviceInfo((String) name, clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
+            clicked.deviceInfo.name_((String) name);
+            clicked.refreshView();
         }
     }
 
@@ -161,12 +162,9 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     }
 
 
-
-
-
     public void addDeviceInfo() {
         Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
-        for(DeviceInfo deviceInfo:deviceInfos){
+        for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))
                 robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
             else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())

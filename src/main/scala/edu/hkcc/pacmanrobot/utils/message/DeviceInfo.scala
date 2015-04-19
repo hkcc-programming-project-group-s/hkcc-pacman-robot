@@ -4,7 +4,6 @@ import java.net.{InetAddress, NetworkInterface}
 
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
-import DeviceInfo.getLocalMacAddress
 
 /**
  * Created by 13058456a on 3/21/2015.
@@ -28,11 +27,11 @@ object DeviceInfo extends Message {
   }
 
   def create(name: String, deviceType: Byte): DeviceInfo = {
-    new DeviceInfo(name = name, ip = InetAddress.getLocalHost.getHostAddress, _deviceType = deviceType, shouldSave = true)
+    new DeviceInfo(_name = name, ip = InetAddress.getLocalHost.getHostAddress, _deviceType = deviceType, shouldSave = true)
   }
 
   def request(deviceType: Byte, messenger: Messenger[DeviceInfo]) = {
-    messenger.sendMessage(new DeviceInfo(_deviceType = deviceType, shouldSave = false, name = "", ip = ""))
+    messenger.sendMessage(new DeviceInfo(_deviceType = deviceType, shouldSave = false, _name = "", ip = ""))
   }
 
   def isRobot(deviceType: Byte): Boolean = {
@@ -46,7 +45,7 @@ object DeviceInfo extends Message {
   }
 
   def MakeRequest(macAddress: Array[Byte]): DeviceInfo = {
-    new DeviceInfo(MAC_ADDRESS = macAddress, name = null, ip = null, shouldSave = false, _deviceType = 0)
+    new DeviceInfo(MAC_ADDRESS = macAddress, _name = null, ip = null, shouldSave = false, _deviceType = 0)
   }
 }
 
@@ -54,7 +53,7 @@ import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
 
 /**
  *
- * @param name
+ * @param _name
  * @param ip
  * @param _deviceType
  * @param lastConnectionTime
@@ -62,17 +61,28 @@ import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
  * true => server save
  * false => server response to client (send all that type)
  */
-class DeviceInfo(val MAC_ADDRESS: Array[Byte] = getLocalMacAddress, var name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0, val shouldSave: Boolean) extends Serializable {
+class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, private var _name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0, var shouldSave: Boolean) extends Serializable {
   def deviceType = _deviceType
 
-  def deviceType_=(newType: Byte): Unit = {
+  def deviceType_=(newType: Byte) = {
     _deviceType = newType
+    set_shouldSave
+  }
+
+  def set_shouldSave = shouldSave = true
+
+  def name = _name
+
+  def name_(name: String) = {
+    _name = name
+    set_shouldSave
   }
 
   def set(newInfo: DeviceInfo): Unit = {
-    name = newInfo.name
+    name_(newInfo.name)
     ip = newInfo.ip
     _deviceType = newInfo._deviceType
     lastConnectionTime = newInfo.lastConnectionTime
+    set_shouldSave
   }
 }
