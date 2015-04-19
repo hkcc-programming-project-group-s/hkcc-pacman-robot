@@ -1,6 +1,6 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.core
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.{PairControllerRobotJPanel, PositionSetting}
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.PairControllerRobotJPanel
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.ControllerRobotPair
