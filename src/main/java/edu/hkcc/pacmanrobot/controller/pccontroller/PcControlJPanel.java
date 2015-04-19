@@ -3,7 +3,6 @@ package edu.hkcc.pacmanrobot.controller.pccontroller;
 /**
  * Created by Winner on 18/4/2015.
  */
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

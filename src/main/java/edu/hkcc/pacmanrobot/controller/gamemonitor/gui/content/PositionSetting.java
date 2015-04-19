@@ -22,6 +22,19 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
     DeviceInfoContainer robot_panel = new DeviceInfoContainer("Pending Robot");
     DeviceInfoContainer moving_robot_panel = new DeviceInfoContainer("Moving Robots");
     DeviceInfoJPanel clicked = null;
+    Vector<DeviceInfoContainer> deviceInfoContainers = null;
+
+    /*public void onRobotSettingJPPanelsclick(DeviceInfoJPanel clickedPanel) {
+        //System.out.print("onRobotSettingJPPanelsclick");
+        try {
+            if (clickedPanel.deviceInfo.deviceType == DeviceInfo.ROBOT_UNCLASSED) {
+                pendingRobotJPanels.forEach(p -> checkClick(p, clickedPanel));
+            }
+        } catch (ConcurrentModificationException e) {
+            System.out.println(e.toString());
+        }
+
+    }*/
 
     /**
      * Create the frame.
@@ -74,18 +87,6 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         initView();
     }
 
-    /*public void onRobotSettingJPPanelsclick(DeviceInfoJPanel clickedPanel) {
-        //System.out.print("onRobotSettingJPPanelsclick");
-        try {
-            if (clickedPanel.deviceInfo.deviceType == DeviceInfo.ROBOT_UNCLASSED) {
-                pendingRobotJPanels.forEach(p -> checkClick(p, clickedPanel));
-            }
-        } catch (ConcurrentModificationException e) {
-            System.out.println(e.toString());
-        }
-
-    }*/
-
     void initView() {
         robot_panel.deviceInfoJPanels.forEach(p -> robot_panel.add(p));
 
@@ -103,7 +104,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         for (DeviceInfoJPanel pendingRobotDeviceJPanel : robot_panel.deviceInfoJPanels)
             if (pendingRobotDeviceJPanel.isClicked && !pendingRobotDeviceJPanel.isSelected) {
                 settingRobot = pendingRobotDeviceJPanel;
-                sendRequest(settingRobot.deviceInfo,light_on);
+                sendRequest(settingRobot.deviceInfo, light_on);
             }
         robot_panel.remove(settingRobot);
 
@@ -121,8 +122,6 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         }
         clicked = deviceInfoJPanel;
     }
-
-    Vector<DeviceInfoContainer> deviceInfoContainers = null;
 
     @Override
     public Vector<DeviceInfoContainer> getDeviceInfoContainers() {
@@ -189,7 +188,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
         DeviceInfo.request(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), deviceInfoMessenger);
     }
 
-    public void sendRequest(DeviceInfo deviceInfo,boolean lightOn) {
+    public void sendRequest(DeviceInfo deviceInfo, boolean lightOn) {
         master.sao.flashRequestMessenger().sendMessage(new FlashRequest(deviceInfo.MAC_ADDRESS(), lightOn));
     }
 }

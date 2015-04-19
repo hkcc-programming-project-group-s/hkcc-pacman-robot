@@ -3,7 +3,7 @@ package edu.hkcc.pacmanrobot.controller.pccontroller;
 /**
  * Created by Winner on 18/4/2015.
  */
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
+
 import edu.hkcc.pacmanrobot.controller.pccontroller.content.PauseInfo;
 import edu.hkcc.pacmanrobot.controller.pccontroller.content.PcControllerSetting;
 import myutils.gui.cardlayout.AbstractCardJPanel;
@@ -26,7 +26,6 @@ public class PcContentJPanel extends AbstractCardJPanel {
         contents = new Vector<>();
         contents.add(new PcControllerSetting(master));
         contents.add(new PauseInfo(master));
-
 
 
         for (int i = 0; i < contents.size(); i++)

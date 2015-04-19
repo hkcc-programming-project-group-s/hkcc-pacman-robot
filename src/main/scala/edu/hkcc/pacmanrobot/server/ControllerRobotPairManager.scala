@@ -17,7 +17,8 @@ class ControllerRobotPairManager {
   def setControllerRobotPair(controller_macAddress: Array[Byte], robot_macAddress: Array[Byte]) = {
     semaphore.acquire()
     removeControllerRobotPair(controller_macAddress, robot_macAddress)
-    controllerRobotPairs.put(controller_macAddress, robot_macAddress)
+    if (!controller_macAddress.equals(robot_macAddress))
+      controllerRobotPairs.put(controller_macAddress, robot_macAddress)
     semaphore.release()
   }
 

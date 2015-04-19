@@ -175,9 +175,6 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     }
 
 
-
-
-
     public void addDeviceInfo(DeviceInfo deviceInfo, DeviceInfoJPanelHandler handler) {
         if (DeviceInfo.isRobot(deviceInfo._deviceType()))
             robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));

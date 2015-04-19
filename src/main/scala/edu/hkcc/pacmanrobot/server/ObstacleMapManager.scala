@@ -38,9 +38,9 @@ class ObstacleMapManager extends MessengerManager[ObstacleMap](Config.PORT_MAP, 
     new ObstacleMapMessenger(ObstacleMapManager.obstacleMap, socket, this)
   }*/
   override def genMessenger(socket: Socket) = {
-    val newMessenger=new Messenger[ObstacleMap](socket,Config.PORT_MAP,this) {
+    val newMessenger = new Messenger[ObstacleMap](socket, Config.PORT_MAP, this) {
       override def autoGet(message: ObstacleMap): Unit = {
-        ObstacleMapManager.autoGet_func(getRemoteMacAddress,message)
+        ObstacleMapManager.autoGet_func(getRemoteMacAddress, message)
       }
     }
     //val newMessenger = new ObstacleMapMessenger(ObstacleMapManager.obstacleMap, socket, this)

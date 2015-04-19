@@ -32,7 +32,7 @@ public class Config {
 
     static {
         try {
-            serverAddress= InetAddress.getByName("BeenoTung_Archlinux_Home").getHostAddress();
+            serverAddress = InetAddress.getByName("BeenoTung_Archlinux_Home").getHostAddress();
             //serverAddress = InetAddress.getByName("BeenoTung_ArchLinux_Notebook").getHostAddress();
             System.out.println("server ip: " + Config.serverAddress);
         } catch (UnknownHostException e) {

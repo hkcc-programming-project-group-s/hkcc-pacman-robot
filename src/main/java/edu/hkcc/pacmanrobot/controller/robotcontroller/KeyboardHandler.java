@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.controller.robotcontroller;
 
 
+import com.sun.istack.internal.NotNull;
 import edu.hkcc.pacmanrobot.utils.Point2D;
 
 import java.awt.event.KeyAdapter;
@@ -13,7 +14,7 @@ public class KeyboardHandler extends KeyAdapter {
     private final KeyboardSettings settings;
     public KeyboardStatus up, down, left, right;
 
-    public KeyboardHandler(KeyboardSettings settings) {
+    public KeyboardHandler(@NotNull KeyboardSettings settings) {
         this.settings = settings;
         up = new KeyboardStatus(settings.up);
         down = new KeyboardStatus(settings.down);

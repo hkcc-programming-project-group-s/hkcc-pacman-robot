@@ -44,6 +44,10 @@ object DeviceInfo extends Message {
       case _ => false
     }
   }
+
+  def MakeRequest(macAddress: Array[Byte]): DeviceInfo = {
+    new DeviceInfo(MAC_ADDRESS = macAddress, name = null, ip = null, shouldSave = false, _deviceType = 0)
+  }
 }
 
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
@@ -58,14 +62,12 @@ import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
  * true => server save
  * false => server response to client (send all that type)
  */
-class DeviceInfo(var name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0, val shouldSave: Boolean) extends Serializable {
-  val MAC_ADDRESS: Array[Byte] = getLocalMacAddress
+class DeviceInfo(val MAC_ADDRESS: Array[Byte] = getLocalMacAddress, var name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0, val shouldSave: Boolean) extends Serializable {
+  def deviceType = _deviceType
 
   def deviceType_=(newType: Byte): Unit = {
     _deviceType = newType
   }
-
-  def deviceType = _deviceType
 
   def set(newInfo: DeviceInfo): Unit = {
     name = newInfo.name

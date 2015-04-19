@@ -31,6 +31,7 @@ class DeviceInfoManager {
     getDeviceInfosByDeviceType(deviceInfo.deviceType).foreach(deviceInfo =>
       messengerManager.sendByMacAddress(remoteMacAddress, deviceInfo)
     )
+    messengerManager.sendByMacAddress(remoteMacAddress, null)
   }
 
   def getDeviceInfosByDeviceType(deviceType: Byte): Array[DeviceInfo] = {

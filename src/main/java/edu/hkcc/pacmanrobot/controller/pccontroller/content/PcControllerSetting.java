@@ -51,7 +51,7 @@ public class PcControllerSetting extends PcControllerJPanel {
     private JLabel upArrowLbl;
     private Direction_Lable_Key key_to_edit = null;
 
-    public PcControllerSetting(PcControllerJFrame pcControllerJFrame){
+    public PcControllerSetting(PcControllerJFrame pcControllerJFrame) {
         super(pcControllerJFrame);
 
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();

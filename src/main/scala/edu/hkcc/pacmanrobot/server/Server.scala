@@ -52,14 +52,14 @@ class Server extends Thread {
   })
   val obstacleMapManager = new ObstacleMapManager
 
-  def response_pair(macAddress: Array[Byte]):Unit = {
+  def response_pair(macAddress: Array[Byte]): Unit = {
     controllerRobotPairManager.controllerRobotPairs.forEach(new BiConsumer[Array[Byte], Array[Byte]] {
       override def accept(t: Array[Byte], u: Array[Byte]): Unit = {
         controllerRobotPairMessengerManager.sendByMacAddress(macAddress,
           new ControllerRobotPair(t, u, true))
       }
     })
-
+    controllerRobotPairMessengerManager.sendByMacAddress(macAddress, null)
   }
 
   def response_robotPosition(macAddress: Array[Byte], robotType: Byte): Unit = {

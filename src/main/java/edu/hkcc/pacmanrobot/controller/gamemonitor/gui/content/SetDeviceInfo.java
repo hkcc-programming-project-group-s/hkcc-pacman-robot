@@ -4,10 +4,10 @@ package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
 
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -252,7 +252,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     }
 
     @Override
-    public void onEnter(){
+    public void onEnter() {
         unclasses_panel.clear();
         student_robot_panel.clear();
         assignment_robot_panel.clear();
@@ -284,15 +284,16 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         if (DeviceInfo.isRobot(clicked.deviceInfo._deviceType())) {
             if (e.getKeyCode() == KeyEvent.VK_A) {
                 clicked.transfer(assignment_robot_panel);
-                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(),clicked.deviceInfo.lastConnectionTime(),true));
+                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
                 System.out.println("changed to assignment.");
             } else if (e.getKeyCode() == KeyEvent.VK_D) {
                 clicked.transfer(deadline_robot_panel);
-                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(),clicked.deviceInfo.lastConnectionTime(),true));;
+                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
+                ;
                 System.out.println("changed to deadline.");
             } else if (e.getKeyCode() == KeyEvent.VK_S) {
                 clicked.transfer(student_robot_panel);
-                clicked.update(new DeviceInfo( clicked.deviceInfo.name(), clicked.deviceInfo.ip(),DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(),clicked.deviceInfo.lastConnectionTime(),true));
+                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
                 System.out.println("changed to student.");
             } else return false;
         }

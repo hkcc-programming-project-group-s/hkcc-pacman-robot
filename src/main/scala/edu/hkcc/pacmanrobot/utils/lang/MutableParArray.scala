@@ -12,23 +12,13 @@ class MutableParArray[Type] extends {
 
   var _self: ParArray[Type] = ParArray.empty[Type]
 
-  def add(contents: ParArray[Type]) :Unit= {
+  def add(contents: ParArray[Type]): Unit = {
     contents.foreach(m => add(m))
   }
 
-  def add(content: Type) :Unit= {
+  def add(content: Type): Unit = {
     semaphore.acquire()
     self_(self :+ content)
-    semaphore.release()
-  }
-
-  def remove(contents: ParArray[Type]) :Unit= {
-    contents.foreach(m => remove(m))
-  }
-
-  def remove(newContent: Type) :Unit= {
-    semaphore.acquire()
-    self_(self.filter(m => newContent.equals(m)))
     semaphore.release()
   }
 
@@ -37,4 +27,14 @@ class MutableParArray[Type] extends {
   }
 
   def self: ParArray[Type] = _self
+
+  def remove(contents: ParArray[Type]): Unit = {
+    contents.foreach(m => remove(m))
+  }
+
+  def remove(newContent: Type): Unit = {
+    semaphore.acquire()
+    self_(self.filter(m => newContent.equals(m)))
+    semaphore.release()
+  }
 }
