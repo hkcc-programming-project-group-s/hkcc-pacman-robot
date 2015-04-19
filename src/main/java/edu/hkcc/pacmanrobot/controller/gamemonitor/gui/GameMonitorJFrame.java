@@ -43,8 +43,8 @@ public class GameMonitorJFrame extends JFrame {
     }
 
     public void finish() {
-        // TODO Auto-generated method stub
 
+        // TODO Auto-generated method stub
     }
 
     public boolean hasNext() {

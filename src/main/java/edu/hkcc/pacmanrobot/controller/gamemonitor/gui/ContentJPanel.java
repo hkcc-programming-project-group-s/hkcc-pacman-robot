@@ -1,9 +1,6 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.PairControllerRobotJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.PositionSetting;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.SetDeviceInfo;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.SetDeviceName;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.*;
 import myutils.gui.cardlayout.AbstractCardJPanel;
 
 import java.util.Vector;
@@ -45,7 +42,7 @@ public class ContentJPanel extends AbstractCardJPanel {
     }
 
     public void prev() {
-        if (canPrev())
+        if (canPrev()&& contents.get(currentPage).onLeave())
             currentPage--;
         switchToCard(currentPage + "");
     }

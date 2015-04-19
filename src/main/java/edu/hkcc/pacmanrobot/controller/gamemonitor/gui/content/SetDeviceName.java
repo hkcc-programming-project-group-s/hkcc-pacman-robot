@@ -151,7 +151,6 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         return true;
     }
 
-
     @Override
     public void onEnter() {
         controller_panel.clear();
@@ -159,9 +158,6 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         addDeviceInfo();
         //start request
     }
-
-
-
 
 
     public void addDeviceInfo() {
