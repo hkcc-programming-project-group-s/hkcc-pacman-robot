@@ -1,65 +1,54 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
+package edu.hkcc.pacmanrobot.controller.pccontroller;
+
+/**
+ * Created by Winner on 18/4/2015.
+ */
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ControlJPanel extends JPanel {
+public class PcController_buttomJPanel extends JPanel {
 
-    private final ControlJPanel current = this;
-    private final GameMonitorJFrame master;
-    JButton btnPrevious;
-    JButton btnNext;
-    JButton btnFinish;
+    private final PcControllerJFrame master;
+    private final PcController_buttomJPanel current = this;
     JButton btnResume;
     JButton btnStop;
+    JButton btnRecheck;
+    JButton btnPause;
 
     /**
      * Create the panel.
      */
-    public ControlJPanel(final GameMonitorJFrame master) {
+    public PcController_buttomJPanel(final PcControllerJFrame master) {
         this.master = master;
-        btnPrevious = new JButton("Previous");
-        btnPrevious.addActionListener(new ActionListener() {
+
+        btnPause = new JButton("Pause");
+        btnPause.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.prev();
+                //TODO send pause to server
                 updateView();
             }
         });
-        add(btnPrevious);
+        add(btnPause);
 
-        btnNext = new JButton("Next");
-        btnNext.addActionListener(new ActionListener() {
+        btnRecheck = new JButton("Recheck");
+        btnRecheck.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.next();
+                if (master.sao.canResume()) master.reaume();
                 updateView();
             }
         });
-        add(btnNext);
-
-        btnFinish = new JButton("Finish");
-        btnFinish.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                master.finish();
-                updateView();
-            }
-        });
-        add(btnFinish);
-
-        updateView();
-
+        add(btnRecheck);
 
         btnResume = new JButton("Resume");
-        btnResume.setEnabled(false);
         btnResume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                //TODO send resume to server
+                updateView();
             }
         });
         add(btnResume);
-
-        updateView();
-
 
         btnStop = new JButton("Stop");
         btnStop.addActionListener(new ActionListener() {
@@ -70,17 +59,18 @@ public class ControlJPanel extends JPanel {
                 }
             }
         });
+
         add(btnStop);
 
         updateView();
+
     }
 
     public void updateView() {
         // TODO Auto-generated method stub
-        btnPrevious.setVisible(master.hasPrev());
-        btnNext.setVisible(master.hasNext());
-        btnFinish.setVisible(master.canFinish());
+        btnRecheck.setVisible(master.unresumePage());
+        btnStop.setVisible(master.stopPage());
         btnResume.setVisible(master.resumePage());
-        btnStop.setVisible(master.resumePage());
+        btnPause.setVisible(master.playing());
     }
 }

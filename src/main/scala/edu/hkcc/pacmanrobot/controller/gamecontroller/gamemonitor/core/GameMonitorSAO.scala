@@ -5,6 +5,7 @@ import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHan
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, DeviceInfo, FlashRequest}
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
 import scala.Function1
 import scala.runtime.BoxedUnit
 
@@ -51,5 +52,12 @@ class GameMonitorSAO {
     //TODO get deviceinfo and save it
   }
 
-  def savePair (controllerRobotPair:ControllerRobotPair) {}
+  def savePair (controllerRobotPair:ControllerRobotPair) {//TODO send pair of controller and robot to server
+   }
+
+  var gameStatusMessenger:Messenger[GameStatus]=Messenger.create(Config.PORT_GAME_STATUS,message=>{},null)
+
+    def fetchGameStatus:Unit={
+    //TODO
+  }
 }

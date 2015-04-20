@@ -3,7 +3,6 @@ package edu.hkcc.pacmanrobot.utils.message;
 import edu.hkcc.pacmanrobot.utils.Config;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.Socket;
 
 /**
@@ -11,9 +10,9 @@ import java.net.Socket;
  */
 public class Messenger_Java<T> extends Thread {
 
+    static final int MOVEMENT_COMMAND = 16;
     final boolean isServer;
     Socket socket;
-    static final int MOVEMENT_COMMAND=16;
 
     public Messenger_Java(int port) {
         this(connect(port), false);
@@ -24,11 +23,6 @@ public class Messenger_Java<T> extends Thread {
         this.socket = socket;
         init();
     }
-
-    private void init() {
-        //new ObjectInputStream(socket.getInputStream())
-    }
-
 
     //will not call by server
     public static Socket connect(int port) {
@@ -47,6 +41,10 @@ public class Messenger_Java<T> extends Thread {
             }
         } while (socket == null);
         return socket;
+    }
+
+    private void init() {
+        //new ObjectInputStream(socket.getInputStream())
     }
 
 }

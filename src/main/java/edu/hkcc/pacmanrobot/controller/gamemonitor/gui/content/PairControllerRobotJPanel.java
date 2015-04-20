@@ -2,12 +2,12 @@ package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
 
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DevicePairJPanel;
-import edu.hkcc.pacmanrobot.utils.message.ControllerRobotPair;
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DevicePairJPanel;
+import edu.hkcc.pacmanrobot.utils.message.ControllerRobotPair;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -25,11 +25,16 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
     public final DeviceInfoContainer robot_container = new DeviceInfoContainer("Robots");
     public final DeviceInfoContainer pair_panel = new DeviceInfoContainer("Controller-Robot pair");
     public Vector<DevicePairJPanel> devicePairJPanels = new Vector<>();
-    int makePairAttempt = 0;
     public DeviceInfoJPanel clickedControllerJPanel = null;
     public DeviceInfoJPanel clickedRobotJPanel = null;
+    public Vector<DeviceInfoContainer> deviceInfoContainers = null;
+    int makePairAttempt = 0;
     DevicePairJPanel clickedPairJPanel = null;
 
+    /*public void checkUnclickOnPairedDeviceInfoJPanel(DevicePairJPanel checkPanel, DevicePairJPanel clickedPanel) {
+        if (!clickedPanel.equals(checkPanel))
+            checkPanel.unclick();
+    }*/
 
     /**
      * Create the frame.
@@ -99,11 +104,6 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         initView();
     }
 
-    /*public void checkUnclickOnPairedDeviceInfoJPanel(DevicePairJPanel checkPanel, DevicePairJPanel clickedPanel) {
-        if (!clickedPanel.equals(checkPanel))
-            checkPanel.unclick();
-    }*/
-
     public void onPairedDeviceInfoPanelClicked(DevicePairJPanel clickedPanel) {
         //update color
         if (clickedPairJPanel != null && !clickedPairJPanel.equals(clickedPanel))
@@ -122,6 +122,12 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         pair_panel.updateUI();*/
     }
 
+    /*private void checkUnclickDeviceInfoJPanel(DeviceInfoJPanel checkPanel, DeviceInfoJPanel clickedPanel) {
+        //System.out.println("checkUnclickDeviceInfoJPanel");
+        if (!clickedPanel.equals(checkPanel))
+            checkPanel.unclick();
+    }*/
+
     @Override
     public void onDeviceInfoJPanelClicked(DeviceInfoJPanel clickedDeviceInfoJPanel) {
         //System.out.println("this, here, there, right here");
@@ -136,14 +142,6 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
             clickedRobotJPanel = clickedDeviceInfoJPanel;
         }
     }
-
-    /*private void checkUnclickDeviceInfoJPanel(DeviceInfoJPanel checkPanel, DeviceInfoJPanel clickedPanel) {
-        //System.out.println("checkUnclickDeviceInfoJPanel");
-        if (!clickedPanel.equals(checkPanel))
-            checkPanel.unclick();
-    }*/
-
-    public Vector<DeviceInfoContainer> deviceInfoContainers = null;
 
     @Override
     public Vector<DeviceInfoContainer> getDeviceInfoContainers() {
@@ -222,7 +220,7 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
     @Override
     public boolean onLeave() {
         if (robot_container.deviceInfoJPanels.size() * controller_container.deviceInfoJPanels.size() > 0) {
-            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             return false;
         } else {
             //send to server
@@ -234,11 +232,11 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
                     throw new IOException();
             } catch (IOException e1) {
                 //TODO network / server problem, retry
-                JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
                 return false;
             } catch (Exception e2) {
                 //TODO network / server problem, retry
-                JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
                 //e2.printStackTrace();
                 System.out.println(e2.toString());
                 return false;
@@ -278,33 +276,32 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         DeviceInfo controller = null;
         DeviceInfo robot = null;
         for (ControllerRobotPair pair : pairs) {
-            for(DeviceInfo deviceInfo:deviceInfos){
-                if(pair.controller_macAddress().equals(deviceInfo.MAC_ADDRESS()))
-                    controller=deviceInfo;
-                else if(pair.robot_macAddress().equals(deviceInfo.MAC_ADDRESS()))
-                    robot=deviceInfo;
+            for (DeviceInfo deviceInfo : deviceInfos) {
+                if (pair.controller_macAddress().equals(deviceInfo.MAC_ADDRESS()))
+                    controller = deviceInfo;
+                else if (pair.robot_macAddress().equals(deviceInfo.MAC_ADDRESS()))
+                    robot = deviceInfo;
             }
 
-            if (controller!=null&&robot!=null) {
+            if (controller != null && robot != null) {
                 //valid pair
                 makePair(new DeviceInfoJPanel(controller, this), new DeviceInfoJPanel(robot, this));
                 deviceInfos.remove(controller);
                 deviceInfos.remove(robot);
-                controller=null;
-                robot=null;
-            }
-                else {
-                if(controller==null)
-                    master.sao.savePair(new ControllerRobotPair(controller.MAC_ADDRESS(),controller.MAC_ADDRESS(), true));
-                if(robot==null)
-                    master.sao.savePair(new ControllerRobotPair(robot.MAC_ADDRESS(),robot.MAC_ADDRESS(), true));
+                controller = null;
+                robot = null;
+            } else {
+                if (controller == null)
+                    master.sao.savePair(new ControllerRobotPair(controller.MAC_ADDRESS(), controller.MAC_ADDRESS(), true));
+                if (robot == null)
+                    master.sao.savePair(new ControllerRobotPair(robot.MAC_ADDRESS(), robot.MAC_ADDRESS(), true));
             }
         }
-        for(DeviceInfo deviceInfo:deviceInfos){
-            if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_CONTROLLER())
-                controller_container.add(new DeviceInfoJPanel(deviceInfo,this));
-            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT())
-                robot_container.add(new DeviceInfoJPanel(deviceInfo,this));
+        for (DeviceInfo deviceInfo : deviceInfos) {
+            if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())
+                controller_container.add(new DeviceInfoJPanel(deviceInfo, this));
+            else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT())
+                robot_container.add(new DeviceInfoJPanel(deviceInfo, this));
         }
         //master.sao.controllerRobotPairMessenger().sendMessage(new ControllerRobotPair(null,null,false));
     }

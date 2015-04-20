@@ -53,7 +53,9 @@ public class GameMonitorJFrame extends JFrame {
         return !contentJPanel.resumePage();
     }
 
-    public boolean hasNext(){return contentJPanel.hasNext();}
+    public boolean hasNext() {
+        return contentJPanel.hasNext();
+    }
 
     public boolean hasPrev() {
         return contentJPanel.hasPrev();

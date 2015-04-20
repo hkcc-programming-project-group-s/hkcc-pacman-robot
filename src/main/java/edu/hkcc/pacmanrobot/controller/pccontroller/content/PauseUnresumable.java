@@ -1,16 +1,16 @@
 package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
-import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Calendar;
 
-public class PauseUnresumable extends PcControllerJPanel {
+public class PauseUnresumable extends PcController_contentJPanel {
 
+
+    public String reason = null;
     private JPanel contentPane;
 
     /**
@@ -28,28 +28,20 @@ public class PauseUnresumable extends PcControllerJPanel {
         contentPane.add(GameResumeLabel, BorderLayout.NORTH);
 
         JTextPane textPane = new JTextPane();
+        Calendar now = Calendar.getInstance();
+        int h = now.get(Calendar.HOUR_OF_DAY);
+        int m = now.get(Calendar.MINUTE);
+        int s = now.get(Calendar.SECOND);
+        textPane.setText("The time is " + h + ":" + m + ":" + s + "\n" + master.sao.getReason() + " Please check the device. If the problem is solved, click recheck and server will check the problem again.");
         contentPane.add(textPane, BorderLayout.CENTER);
         textPane.setEditable(false);
 
         JPanel panel = new JPanel();
         contentPane.add(panel, BorderLayout.SOUTH);
 
-        JButton btnRecheck = new JButton("Recheck");
-        btnRecheck.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-            }
-        });
-        panel.add(btnRecheck);
-
         Component horizontalStrut = Box.createHorizontalStrut(20);
         panel.add(horizontalStrut);
 
-        JButton btnStop = new JButton("Stop");
-        btnStop.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-        panel.add(btnStop);
     }
 
 }

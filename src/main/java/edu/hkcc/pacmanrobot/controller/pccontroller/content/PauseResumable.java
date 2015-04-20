@@ -1,15 +1,16 @@
 package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
-import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 
-public class PauseResumable extends PcControllerJPanel {
+public class PauseResumable extends PcController_contentJPanel {
+    private final PauseResumable current = this;
 
     private JPanel contentPane;
 
@@ -23,24 +24,25 @@ public class PauseResumable extends PcControllerJPanel {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
 
+        Calendar now = Calendar.getInstance();
+        int h = now.get(Calendar.HOUR_OF_DAY);
+        int m = now.get(Calendar.MINUTE);
+        int s = now.get(Calendar.SECOND);
+
         JLabel GameResumeLabel = new JLabel("Game Pause");
         GameResumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         contentPane.add(GameResumeLabel, BorderLayout.NORTH);
 
         JTextPane textPane = new JTextPane();
-        textPane.setText("The problem is solved. You can resume the game now.");
+        if (!master.sao.isControllerPause()) {
+            textPane.setText("The time is " + h + ":" + m + ":" + s + "\n" + "The problem is solved. You can resume the game now.");
+        } else if (master.sao.isControllerPause())
+            textPane.setText("The time is " + h + ":" + m + ":" + s + "\n" + master.sao.getReason() + " You can resume the game if you want.");
         contentPane.add(textPane, BorderLayout.CENTER);
         textPane.setEditable(false);
 
         JPanel panel = new JPanel();
         contentPane.add(panel, BorderLayout.SOUTH);
-
-        JButton btnPause = new JButton("Resume");
-        btnPause.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-        panel.add(btnPause);
 
         Component horizontalStrut = Box.createHorizontalStrut(20);
         panel.add(horizontalStrut);
@@ -48,6 +50,10 @@ public class PauseResumable extends PcControllerJPanel {
         JButton btnStop = new JButton("Stop");
         btnStop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                int result = JOptionPane.showConfirmDialog(current, "Do you want to end the game?", "title", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    //TODO send stop to server
+                }
             }
         });
         panel.add(btnStop);

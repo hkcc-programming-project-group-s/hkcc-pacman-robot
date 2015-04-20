@@ -3,10 +3,9 @@ package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
 /**
  * Created by Winner on 19/4/2015.
  */
+
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
-import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,9 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-    public class PauseReason extends GameMonitorContentJPanel {
-
-    private JPanel contentPane;
+public class PauseReason extends GameMonitorContentJPanel {
 
     /**
      * Create the frame.
@@ -24,7 +21,7 @@ import java.awt.event.ActionListener;
     public PauseReason(GameMonitorJFrame gameMonitorJFrame) {
         super(gameMonitorJFrame);
         setBounds(100, 100, 450, 300);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
 
@@ -45,17 +42,16 @@ import java.awt.event.ActionListener;
         });
     }
 
-        @Override
-        public boolean onLeave() {
-            return false;
-        }
+    @Override
+    public boolean onLeave() {
+        return false;
+    }
 
-        @Override
-        public void onEnter() {
+    @Override
+    public void onEnter() {
+    }
 
-        }
-
-        /**
+    /**
      * Launch the application.
      */
 }

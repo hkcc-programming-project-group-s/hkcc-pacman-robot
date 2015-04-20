@@ -99,7 +99,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         Object name = JOptionPane.showInputDialog(this, "What is the new name?", "Device Name", JOptionPane.QUESTION_MESSAGE, null, null, null);
         System.out.println(name);
         if (name != null) {
-            clicked.deviceInfo.name_$eq((String)name);
+            clicked.deviceInfo.name_$eq((String) name);
             clicked.refreshView();
         }
     }
@@ -138,11 +138,11 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
                 throw new IOException();
         } catch (IOException e1) {
             //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (Exception e2) {
             //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             //e2.printStackTrace();
             System.out.println(e2.toString());
             return false;
@@ -163,7 +163,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
 
     public void addDeviceInfo() {
         Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
-        for(DeviceInfo deviceInfo:deviceInfos){
+        for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))
                 robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
             else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())

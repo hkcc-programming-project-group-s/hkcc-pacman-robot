@@ -4,6 +4,7 @@ package edu.hkcc.pacmanrobot.controller.pccontroller;
  * Created by Winner on 18/4/2015.
  */
 
+import edu.hkcc.pacmanrobot.controller.pccontroller.content.PcController_contentJPanel;
 import edu.hkcc.pacmanrobot.controller.pccontroller.content.PauseResumable;
 import edu.hkcc.pacmanrobot.controller.pccontroller.content.PauseUnresumable;
 import edu.hkcc.pacmanrobot.controller.pccontroller.content.PcControllerSetting;
@@ -11,13 +12,13 @@ import myutils.gui.cardlayout.AbstractCardJPanel;
 
 import java.util.Vector;
 
-public class PcContentJPanel extends AbstractCardJPanel {
+public class PcController_centerJPanel extends AbstractCardJPanel {
 
     private final PcControllerJFrame master;
     public int currentPage = 0;
-    Vector<PcControllerJPanel> contents;
+    Vector<PcController_contentJPanel> contents;
 
-    public PcContentJPanel(PcControllerJFrame master) {
+    public PcController_centerJPanel(PcControllerJFrame master) {
         super();
         this.master = master;
     }
@@ -46,13 +47,15 @@ public class PcContentJPanel extends AbstractCardJPanel {
 
     public void playing() {
         if (canPrev())
-            currentPage=currentPage-2;
+            currentPage = currentPage - 2;
         switchToCard(currentPage + "");
     }
 
     public void resume() {
-        if (canPrev())
+        if (canNext() && canPrev())
             currentPage++;
+        else if (canNext() && !canPrev())
+            currentPage = currentPage + 2;
         switchToCard(currentPage + "");
     }
 
@@ -69,10 +72,16 @@ public class PcContentJPanel extends AbstractCardJPanel {
         return currentPage > 0;
     }
 
-    public boolean unresumePage(){return hasNext()&& hasPrev();}
+    public boolean unresumePage() {
+        return hasNext() && hasPrev();
+    }
 
-    public boolean stopPage(){return hasPrev();}
+    public boolean stopPage() {
+        return hasPrev() || hasNext();
+    }
 
-    public boolean resumePage(){return !hasPrev(); }
+    public boolean resumePage() {
+        return !hasPrev();
+    }
 
 }
