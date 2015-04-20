@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.utils.message;
 
 import edu.hkcc.pacmanrobot.utils.Config;
+import edu.hkcc.pacmanrobot.utils.Point2D;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,7 +43,7 @@ public class UDPMessageSingleton {
         else {
             switch (messageType) {
                 case Config.PORT_DEVICE_INFO:
-                    length = 6 + DEFAULT_STRING_LENGTH + DEFAULT_STRING_LENGTH + 1 + Long.BYTES + 1;
+                    length = DeviceInfo.MAC_ADDRESS_BYTES() + DEFAULT_STRING_LENGTH + DEFAULT_STRING_LENGTH + 1 + Long.BYTES + 1;
                     break;
             }
             if (length != -1)
@@ -64,14 +65,23 @@ public class UDPMessageSingleton {
     }
 
     DeviceInfo getDeviceInfo(byte[] array) {
-        Byte[] macAddress;
-        StringBuilder name;
-        StringBuilder ip;
-        byte deviceType;
-        long lastConnectionTime;
-        boolean shouldSave;
+        byte[] macAddress = new byte[DeviceInfo.MAC_ADDRESS_BYTES()];
+        StringBuilder name = new StringBuilder();
+        StringBuilder ip = new StringBuilder();
+        ByteBuffer deviceType=ByteBuffer.allocate(1);
+        AtomicLong lastConnectionTime=new AtomicLong();
+        AtomicBoolean shouldSave=new AtomicBoolean();
         int index = 0;
-        new DeviceInfo(macAddress, name, ip, deviceType, lastConnectionTime, shouldSave);
+        index=loadFromArray(array, index, macAddress);
+        index=loadFromArray(array, index, DEFAULT_STRING_LENGTH, name);
+        index=loadFromArray(array, index, DEFAULT_STRING_LENGTH, ip);
+        index=loadFromArray(array, index, deviceType);
+        return new DeviceInfo(macAddress, name.toString().trim(), ip.toString().trim(), deviceType.get(), lastConnectionTime.get(), shouldSave.get());
+    }
+
+    MovementCommand getMovementCommand(byte[]array){
+
+        return new MovementCommand(mode,new Point2D<Double>(p1,p2));
     }
     //TODO movement, gamestatus
 

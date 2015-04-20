@@ -22,6 +22,8 @@ object DeviceInfo extends Message {
 
   val ROBOT_SET = Set(DEVICE_TYPE_ASSIGNMENT_ROBOT, DEVICE_TYPE_DEADLINE_ROBOT, DEVICE_TYPE_STUDENT_ROBOT, DEVICE_TYPE_UNCLASSED_ROBOT)
 
+  val MAC_ADDRESS_BYTES=6
+
   def getLocalMacAddress: Array[Byte] = {
     NetworkInterface.getByInetAddress(InetAddress.getLocalHost).getHardwareAddress
   }
