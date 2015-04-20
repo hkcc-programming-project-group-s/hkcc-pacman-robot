@@ -13,7 +13,8 @@ public class UDPMessenger extends Thread {
 
     final boolean isServer;
     final int messageType;
-    final int byte_length = UDPMessageSingleton.getLength(messageType);
+
+    final int byte_length() {return UDPMessageSingleton.getInstance().getLength(messageType);}
     Socket socket;
 
 
