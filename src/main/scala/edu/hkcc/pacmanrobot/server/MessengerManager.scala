@@ -10,7 +10,11 @@ import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
 /**
  * Created by beenotung on 4/5/15.
  */
-class MessengerManager[Type](val servicePort: Int, autoGet_func: (Array[Byte], Type) => Unit)
+object MessengerManager {
+  def nothing[Type](messenger: Messenger[Type]): Unit = {}
+}
+
+class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenger[Type] => Unit), autoGet_func: ((Array[Byte], Type) => Unit))
   extends Thread {
 
   val messengers = new ConcurrentHashMap[Array[Byte], Messenger[Type]]()
@@ -42,6 +46,7 @@ class MessengerManager[Type](val servicePort: Int, autoGet_func: (Array[Byte], T
     println("client connected: " + newMessenger.socket.getInetAddress.getHostAddress + ":" + servicePort)
     newMessenger.start
     add(newMessenger)
+    initMessenger_func(newMessenger)
   }
 
   def add(newMessenger: Messenger[Type]) = {

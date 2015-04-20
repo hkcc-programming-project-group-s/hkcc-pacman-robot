@@ -26,6 +26,7 @@ public class ContentJPanel extends AbstractCardJPanel {
         contents.add(pairControllerRobotJPanel);
         contents.add(new PositionSetting(master));
         contents.add(new PauseReason(master));
+        contents.add(pairControllerRobotJPanel);
 
         for (int i = 0; i < contents.size(); i++)
             addToCards(contents.get(i), i + "");
@@ -58,11 +59,15 @@ public class ContentJPanel extends AbstractCardJPanel {
     }
 
     public boolean resumePage() {
-        return (currentPage + 1 < contents.size());
+        return (currentPage + 2 < contents.size());
     }
 
     public boolean finish() {
-        return (currentPage + 2 < contents.size());
+        return (currentPage + 3 >= contents.size()) || (currentPage + 1 >= contents.size());
+    }
+
+    public boolean pairControllerRobotPage() {
+        return currentPage + 1 >= contents.size();
     }
 
     public boolean hasPrev() {

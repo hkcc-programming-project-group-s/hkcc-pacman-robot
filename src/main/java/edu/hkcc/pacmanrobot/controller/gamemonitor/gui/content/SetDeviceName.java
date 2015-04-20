@@ -1,5 +1,6 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
 
+import com.sun.istack.internal.NotNull;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
@@ -57,7 +58,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         JButton btnRename = new JButton("Rename");
         btnRename.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                rename();
+                if (clicked != null) rename(clicked);
             }
         });
         button_panel.add(btnRename);
@@ -68,7 +69,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         JButton btnRomove = new JButton("Romove");
         btnRomove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                remove();
+                if (clicked != null) remove(clicked);
             }
         });
         button_panel.add(btnRomove);
@@ -84,23 +85,26 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         robot_panel.updateUI();
     }
 
-    void remove() {
-        if (clicked == null) return;
-        clicked.deviceInfoContainer.remove(clicked);
-        clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DELETE());
-        deviceInfoMessenger.sendMessage(clicked.deviceInfo);
+    void remove(@NotNull DeviceInfoJPanel target) {
+        target.deviceInfoContainer.remove(target);
+        target.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DELETE());
+        deviceInfoMessenger.sendMessage(target.deviceInfo);
         //TODO call messenger
-
     }
 
-    void rename() {
-        if (clicked == null) return;
+    void rename(@NotNull DeviceInfoJPanel target) {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(myDispatcher);
         Object name = JOptionPane.showInputDialog(this, "What is the new name?", "Device Name", JOptionPane.QUESTION_MESSAGE, null, null, null);
-        System.out.println(name);
-        if (name != null) {
-            clicked.deviceInfo.name_$eq((String) name);
-            clicked.refreshView();
+        try {
+            System.out.println(name);
+            String newName = (String) name;
+            if (newName != null && newName.length() > 0 && newName.length() < DeviceInfo.NAME_MIN_LENGTH()) {
+                target.deviceInfo.name_$eq(newName);
+                target.refreshView();
+            } else
+                JOptionPane.showConfirmDialog(this, "The name size is more than " + DeviceInfo.NAME_MIN_LENGTH() + ". Please enter again.", "Name Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+
         }
     }
 
@@ -138,11 +142,11 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
                 throw new IOException();
         } catch (IOException e1) {
             //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "Connect Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (Exception e2) {
             //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "Connect Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             //e2.printStackTrace();
             System.out.println(e2.toString());
             return false;

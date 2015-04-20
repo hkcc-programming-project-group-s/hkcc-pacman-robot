@@ -17,9 +17,8 @@ class DefaultRobot extends GameDevice {
   override var deviceInfo: DeviceInfo = DeviceInfo.create("noname_robot", DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT)
   var newRobot: Robot = null
 
-  override def loop: Unit = {
+  override def loop: Unit = ???
 
-  }
 
   override def gameResume: Unit = ???
 
@@ -55,4 +54,6 @@ class DefaultRobot extends GameDevice {
     positionMessenger.start()
     obstacleMapMessenger.start()
   }
+
+  override def init: Unit = ???
 }

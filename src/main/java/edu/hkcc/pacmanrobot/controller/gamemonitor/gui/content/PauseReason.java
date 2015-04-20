@@ -6,6 +6,7 @@ package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
 
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PauseReason extends GameMonitorContentJPanel {
+
+    boolean change_pair = false;
 
     /**
      * Create the frame.
@@ -30,6 +33,7 @@ public class PauseReason extends GameMonitorContentJPanel {
         contentPane.add(GameResumeLabel, BorderLayout.NORTH);
 
         JTextPane textPane = new JTextPane();
+        textPane.setText(master.sao.reason());
         contentPane.add(textPane, BorderLayout.CENTER);
         textPane.setEditable(false);
 
@@ -38,13 +42,18 @@ public class PauseReason extends GameMonitorContentJPanel {
         btnRepairRobot.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnRepairRobot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                change_pair = true;
+                master.contentJPanel.next();
+                //TODO
             }
         });
     }
 
     @Override
     public boolean onLeave() {
-        return false;
+        //GameStatus gameStatus=master.sao.gameStatus();
+        GameStatus gameStatus = master.sao.gameStatus();
+        return true;
     }
 
     @Override

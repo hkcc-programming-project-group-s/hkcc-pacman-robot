@@ -20,12 +20,13 @@ class DeviceInfoManager {
     deviceInfos.put(server.MAC_ADDRESS, server)
   }
 
-  val messengerManager = new MessengerManager[DeviceInfo](Config.PORT_DEVICE_INFO, (remoteMacAddress, message) =>
+  val messengerManager = new MessengerManager[DeviceInfo](Config.PORT_DEVICE_INFO, initMessenger_func = { _ => {} }, autoGet_func = { (remoteMacAddress, message) => {
     if (message.shouldSave)
       deviceInfos.put(message.MAC_ADDRESS, message)
     else
       response(remoteMacAddress, message)
-  )
+  }
+  })
 
   def response(remoteMacAddress: Array[Byte], deviceInfo: DeviceInfo): Unit = {
     getDeviceInfosByDeviceType(deviceInfo.deviceType).foreach(deviceInfo =>

@@ -13,7 +13,7 @@ import java.awt.*;
 public class PcControllerJFrame extends JFrame {
 
     public PcControllerSAO sao = new PcControllerSAO();
-    public PcControllerJFrame jframe=this;
+    public PcControllerJFrame jframe = this;
     int WINDOW_WIDTH = 960;
     int WINDOW_HEIGHT = 720;
     LogoJPanel logoJPanel = new LogoJPanel();

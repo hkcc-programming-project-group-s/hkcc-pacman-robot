@@ -32,7 +32,7 @@ object ObstacleMapManager {
   }
 }
 
-class ObstacleMapManager extends MessengerManager[ObstacleMap](Config.PORT_MAP, (remoteMacAddress, map) => ObstacleMapManager.autoGet_func(remoteMacAddress, map)) {
+class ObstacleMapManager extends MessengerManager[ObstacleMap](Config.PORT_MAP, initMessenger_func = messenger => messenger.sendMessage(ObstacleMapManager.obstacleMap), autoGet_func = (remoteMacAddress, map) => ObstacleMapManager.autoGet_func(remoteMacAddress, map)) {
   //override def messengers = ???
   /*override def genMessenger(socket: Socket): Messenger[ObstacleMap] = {
     new ObstacleMapMessenger(ObstacleMapManager.obstacleMap, socket, this)
@@ -46,7 +46,7 @@ class ObstacleMapManager extends MessengerManager[ObstacleMap](Config.PORT_MAP, 
     //val newMessenger = new ObstacleMapMessenger(ObstacleMapManager.obstacleMap, socket, this)
     println("client connected: " + newMessenger.socket.getInetAddress.getHostAddress + ":" + servicePort)
     newMessenger.start
-    newMessenger.sendMessage(ObstacleMapManager.obstacleMap)
+    //   newMessenger.sendMessage(ObstacleMapManager.obstacleMap)
     add(newMessenger)
   }
 

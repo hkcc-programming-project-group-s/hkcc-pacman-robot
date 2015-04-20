@@ -1,5 +1,6 @@
 package edu.hkcc.pacmanrobot.launcher;
 
+import edu.hkcc.pacmanrobot.controller.gamemonitor.core.GameMonitorSAO;
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
 
 import java.awt.*;
@@ -20,7 +21,9 @@ public class GameMonitorLauncher {
              */
             public void run() {
                 try {
-                    GameMonitorJFrame frame = new GameMonitorJFrame();
+                    //TODO this launcher will be deprecated
+                    GameMonitorSAO gameMonitorSAO = new GameMonitorSAO(null);
+                    GameMonitorJFrame frame = new GameMonitorJFrame(gameMonitorSAO);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

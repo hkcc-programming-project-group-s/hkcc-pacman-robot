@@ -2,6 +2,7 @@ package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
 import edu.hkcc.pacmanrobot.controller.utils.Utils;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -83,10 +84,16 @@ public class PcControllerSetting extends PcController_contentJPanel {
             public void actionPerformed(ActionEvent e) {
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(myDispatcher);
                 Object name = JOptionPane.showInputDialog(jFrame, "What is the new name?", "Device Name", JOptionPane.QUESTION_MESSAGE, null, null, null);
-                System.out.println(name);
-                if (name != null) {
-                    controllerNameLbl.setText((String) name);
-                    //TODO message(send new name)
+                try {
+                    System.out.println(name);
+                    String newName = (String) name;
+                    if (newName != null && newName.length() > 0 && newName.length() < DeviceInfo.NAME_MIN_LENGTH()) {
+                        //TODO send name to server
+
+                    } else
+                        JOptionPane.showConfirmDialog(jFrame, "The name size is more than " + DeviceInfo.NAME_MIN_LENGTH() + ". Please enter again.", "Name Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e1) {
+
                 }
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(myDispatcher);
             }

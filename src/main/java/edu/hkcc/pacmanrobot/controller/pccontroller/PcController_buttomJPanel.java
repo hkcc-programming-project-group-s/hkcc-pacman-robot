@@ -4,6 +4,8 @@ package edu.hkcc.pacmanrobot.controller.pccontroller;
  * Created by Winner on 18/4/2015.
  */
 
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +28,7 @@ public class PcController_buttomJPanel extends JPanel {
         btnPause = new JButton("Pause");
         btnPause.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //TODO send pause to server
+                master.sao.sendGameStatus(GameStatus.STATE_RESUME());
                 updateView();
             }
         });
@@ -44,7 +46,7 @@ public class PcController_buttomJPanel extends JPanel {
         btnResume = new JButton("Resume");
         btnResume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //TODO send resume to server
+                master.sao.sendGameStatus(GameStatus.STATE_RESUME());
                 updateView();
             }
         });
@@ -55,7 +57,7 @@ public class PcController_buttomJPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int result = JOptionPane.showConfirmDialog(current, "Do you want to end the game?", "title", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
-                    //TODO send stop to server
+                    master.sao.sendGameStatus(GameStatus.STATE_STOP());
                 }
             }
         });
