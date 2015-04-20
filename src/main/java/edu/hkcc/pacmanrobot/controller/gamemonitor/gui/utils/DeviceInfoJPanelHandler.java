@@ -1,7 +1,6 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils;
 
 import com.sun.istack.internal.NotNull;
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import java.util.Vector;
 

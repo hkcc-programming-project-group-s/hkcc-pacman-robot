@@ -135,7 +135,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
 
     public void addDeviceInfo() {
         Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
-        for(DeviceInfo deviceInfo:deviceInfos){
+        for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))
                 robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
         }

@@ -468,7 +468,8 @@ public class PcControllerSetting extends PcControllerJPanel {
             else
                 label.setText(String.valueOf((char) keycode));
         }
-        public void getControllerInfo(){
+
+        public void getControllerInfo() {
 
         }
     }

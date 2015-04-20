@@ -49,10 +49,8 @@ object DeviceInfo extends Message {
   }
 }
 
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
-
 /**
- *
+ * @param MAC_ADDRESS
  * @param _name
  * @param ip
  * @param _deviceType

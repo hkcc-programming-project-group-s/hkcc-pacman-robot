@@ -18,6 +18,7 @@ public class Config {
     public static final int PORT_CONTROLLER_ROBOT_PAIR = 40217;
     public static final int PORT_FLASH_REQUEST = 40218;
     public static final int PORT_SERVER_DISCOVER = 40219;
+    public static final int PORT_UDP = 40220;
 
 
     public static String serverAddress = "192.168.43.1";

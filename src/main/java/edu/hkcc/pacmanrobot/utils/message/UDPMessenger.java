@@ -7,27 +7,26 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 /**
- * Created by 13058536A on 4/19/2015.
+ * Created by beenotung on 4/19/2015.
  */
-public class Messenger_Java<T> extends Thread {
+public class UDPMessenger extends Thread {
 
     final boolean isServer;
+    final int messageType;
+    final int byte_length = UDPMessageSingleton.getLength(messageType);
     Socket socket;
 
-    public Messenger_Java(int port) {
-        this(connect(port), false);
+
+    public UDPMessenger(int messageType) {
+        this(connect(Config.PORT_UDP), messageType, false);
     }
 
-    public Messenger_Java(Socket socket, boolean isServer) {
-        this.isServer = isServer;
+    public UDPMessenger(Socket socket, int messageType, boolean isServer) {
         this.socket = socket;
+        this.messageType = messageType;
+        this.isServer = isServer;
         init();
     }
-
-    private void init() {
-    new ObjectInputStream(socket.getInputStream())
-    }
-
 
     //will not call by server
     public static Socket connect(int port) {
@@ -46,6 +45,10 @@ public class Messenger_Java<T> extends Thread {
             }
         } while (socket == null);
         return socket;
+    }
+
+    private void init() {
+        new ObjectInputStream(socket.getInputStream())
     }
 
 }
