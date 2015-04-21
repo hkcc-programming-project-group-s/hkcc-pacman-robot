@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.message;
+package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 
 import edu.hkcc.pacmanrobot.utils.Config;
 
@@ -13,14 +13,12 @@ public class UDPMessenger extends Thread {
 
     final boolean isServer;
     final int messageType;
-
-    final int byte_length() {return UDPMessageSingleton.getInstance().getLength(messageType);}
     Socket socket;
-
 
     public UDPMessenger(int messageType) {
         this(connect(Config.PORT_UDP), messageType, false);
     }
+
 
     public UDPMessenger(Socket socket, int messageType, boolean isServer) {
         this.socket = socket;
@@ -46,6 +44,10 @@ public class UDPMessenger extends Thread {
             }
         } while (socket == null);
         return socket;
+    }
+
+    final int byte_length() {
+        return UDPMessageSingleton.getInstance().getLength(messageType);
     }
 
     private void init() {
