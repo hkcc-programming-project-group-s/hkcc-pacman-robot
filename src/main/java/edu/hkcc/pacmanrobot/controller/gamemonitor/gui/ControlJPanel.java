@@ -1,15 +1,20 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ControlJPanel extends JPanel {
 
+    private final ControlJPanel current = this;
     private final GameMonitorJFrame master;
     JButton btnPrevious;
     JButton btnNext;
     JButton btnFinish;
+    JButton btnResume;
+    JButton btnStop;
 
     /**
      * Create the panel.
@@ -44,6 +49,32 @@ public class ControlJPanel extends JPanel {
         add(btnFinish);
 
         updateView();
+
+
+        btnResume = new JButton("Resume");
+        btnResume.setEnabled(false);
+        btnResume.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                master.sao.gameStatus_(GameStatus.STATE_RESUME());
+            }
+        });
+        add(btnResume);
+
+        updateView();
+
+
+        btnStop = new JButton("Stop");
+        btnStop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int result = JOptionPane.showConfirmDialog(current, "Do you want to end the game?", "title", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    master.sao.gameStatus_(GameStatus.STATE_STOP());
+                }
+            }
+        });
+        add(btnStop);
+
+        updateView();
     }
 
     public void updateView() {
@@ -51,5 +82,7 @@ public class ControlJPanel extends JPanel {
         btnPrevious.setVisible(master.hasPrev());
         btnNext.setVisible(master.hasNext());
         btnFinish.setVisible(master.canFinish());
+        btnResume.setVisible(master.resumePage());
+        btnStop.setVisible(master.resumePage());
     }
 }

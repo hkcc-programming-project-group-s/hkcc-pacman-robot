@@ -4,7 +4,6 @@ import java.net.{InetAddress, NetworkInterface}
 
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
-import DeviceInfo.getLocalMacAddress
 
 /**
  * Created by 13058456a on 3/21/2015.
@@ -22,9 +21,9 @@ object DeviceInfo extends Message {
   val DEVICE_TYPE_GMAE_REPORT: Byte = 7
 
   val ROBOT_SET = Set(DEVICE_TYPE_ASSIGNMENT_ROBOT, DEVICE_TYPE_DEADLINE_ROBOT, DEVICE_TYPE_STUDENT_ROBOT, DEVICE_TYPE_UNCLASSED_ROBOT)
+  val NAME_MIN_LENGTH = 32
 
   val MAC_ADDRESS_BYTES=6
-  val NAME_MIN_LENGTH = 32
 
   def getLocalMacAddress: Array[Byte] = {
     val result = NetworkInterface.getByInetAddress(InetAddress.getLocalHost).getHardwareAddress
@@ -56,8 +55,10 @@ object DeviceInfo extends Message {
   }
 }
 
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
+<<<<<<< HEAD
+=======
 
+>>>>>>> pc_fix
 /**
  * @param MAC_ADDRESS
  * @param _name
@@ -68,8 +69,13 @@ import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
  * true => server save
  * false => server response to client (send all that type)
  */
-class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, private var _name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0L, var shouldSave: Boolean) extends Message {
+<<<<<<< HEAD
+class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, private var _name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0, var shouldSave: Boolean) extends Serializable {
   def deviceType = _deviceType
+=======
+class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, var name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0L, val shouldSave: Boolean) extends Message {
+  def deviceType: Byte = _deviceType
+>>>>>>> pc_fix
 
   def deviceType_=(newType: Byte) = {
     _deviceType = newType
@@ -92,4 +98,6 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     lastConnectionTime = newInfo.lastConnectionTime
     set_shouldSave
   }
+
+  override def port(): Int = Config.PORT_DEVICE_INFO
 }

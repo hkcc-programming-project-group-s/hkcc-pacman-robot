@@ -161,4 +161,9 @@ public class DeviceInfoJPanel extends JPanel {
             deviceInfoContainer.remove(this);
         newDeviceInfoContainer.add(this);
     }
+
+    public void refreshView() {
+        revalidate();
+        updateUI();
+    }
 }

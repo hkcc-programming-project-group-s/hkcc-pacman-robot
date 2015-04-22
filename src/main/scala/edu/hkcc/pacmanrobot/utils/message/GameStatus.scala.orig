@@ -30,6 +30,10 @@ object GameStatus extends Message {
 * message is not empty only when status is paused
 * */
 //class GameStatus(val status: GameStatus.GameStatusType,val message: String = "") extends Serializable
+<<<<<<< HEAD
+class GameStatus(var status: Byte, var message: String = "",var furtherInfo:Byte) extends Message {
+=======
 class GameStatus(var status: Byte, var message: String = "", var furtherInfo: Byte = 0) extends Message {
+>>>>>>> pc_fix
   override def port(): Int = Config.PORT_GAME_STATUS
 }

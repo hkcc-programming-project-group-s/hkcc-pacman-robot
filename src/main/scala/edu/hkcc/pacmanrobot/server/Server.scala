@@ -18,39 +18,39 @@ import edu.hkcc.pacmanrobot.utils.{Config, Timer}
  */
 class Server extends Thread {
   val deviceInfoManager = new DeviceInfoManager
-
   val positions = new ConcurrentHashMap[DeviceInfo, Position]()
-  val positionMessengerManager = new MessengerManager[Position](PORT_POSITION, {
+  val positionMessengerManager = new MessengerManager[Position](PORT_POSITION, initMessenger_func = messenger => {}, autoGet_func = {
     (macAddress, position) => {
       positions.put(deviceInfoManager.getDeviceInfoByMacAddress(macAddress), position)
     }
   })
-
-  val robotPositionMessengerManager = new MessengerManager[RobotPosition](PORT_ROBOT_POSITION, {
+  val robotPositionMessengerManager = new MessengerManager[RobotPosition](PORT_ROBOT_POSITION, initMessenger_func = messenger => {}, autoGet_func = {
     (macAddress, position) => {
       response_robotPosition(macAddress, position.deviceInfo.deviceType)
     }
   })
-
   val controllerRobotPairManager = new ControllerRobotPairManager
-  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, (macAddress, controllerRobotPair: ControllerRobotPair) => {
+  val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, initMessenger_func = messenger => {}, autoGet_func = (macAddress, controllerRobotPair: ControllerRobotPair) => {
     if (controllerRobotPair.shouldSave)
       controllerRobotPairManager.setControllerRobotPair(controllerRobotPair.controller_macAddress, controllerRobotPair.robot_macAddress)
     else
       response_pair(macAddress)
   }
   )
-  val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS, { (remoteMacAddress, gamestatus) => {
-    if (GameStatus.STATE_NORMAL.equals(gamestatus.status))
-      deviceInfoManager.update(remoteMacAddress)
-    else
-      switchGameStatus(gamestatus)
-  }
-  })
-  val movementCommandMessengerManager = new MessengerManager[MovementCommand](PORT_MOVEMENT_COMMAND, (remoteMacAddress, message) => {
+  val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS,
+    initMessenger_func = { (messenger) => messenger.sendMessage(gameStatus) },
+    autoGet_func = { (remoteMacAddress, gameStatus) => {
+      if (GameStatus.STATE_NORMAL.equals(gameStatus.status))
+        deviceInfoManager.update(remoteMacAddress)
+      else
+        switchGameStatus(gameStatus)
+    }
+    })
+  val movementCommandMessengerManager = new MessengerManager[MovementCommand](PORT_MOVEMENT_COMMAND, initMessenger_func = messenger => {}, autoGet_func = (remoteMacAddress, message) => {
     copyMovementCommand(remoteMacAddress, message)
   })
   val obstacleMapManager = new ObstacleMapManager
+  var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
 
   def response_pair(macAddress: Array[Byte]): Unit = {
     controllerRobotPairManager.controllerRobotPairs.forEach(new BiConsumer[Array[Byte], Array[Byte]] {
@@ -77,7 +77,9 @@ class Server extends Thread {
     obstacleMap.merge(message)
   })*/
 
+
   def switchGameStatus(gameStatus: GameStatus): Unit = {
+    this.gameStatus = gameStatus
     gameStatusMessengerManager.foreach(messenger => messenger.sendMessage(gameStatus))
     gameStatus.status match {
       case GameStatus.STATE_SETUP => gameSetup
