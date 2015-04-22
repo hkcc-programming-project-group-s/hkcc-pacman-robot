@@ -23,6 +23,7 @@ import java.util.Vector;
 
 public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(198, 228, 255);
+    public DeviceInfoJPanelHandler handler = this;
     /*public Vector<DeviceInfoJPanel> controllerJPanels = new Vector<DeviceInfoJPanel>();
     public Vector<DeviceInfoJPanel> unclassesRobotJPanels = new Vector<DeviceInfoJPanel>();
     public Vector<DeviceInfoJPanel> studentJPanels = new Vector<DeviceInfoJPanel>();
@@ -38,7 +39,6 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     DeviceInfoJPanel clicked = null;
     Vector<DeviceInfoJPanel> unclassedJPanels = new Vector<>();
     Vector<DeviceInfoContainer> deviceInfoContainers = new Vector<>();
-    public DeviceInfoJPanelHandler handler = this;
 
     /**
      * Create the frame.
@@ -196,19 +196,22 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         return deviceInfoContainers;
     }
 
-    public void addDeviceInfo() {
+    /**
+     * fetch DeviceInfo from server
+     */
+    public void loadDeviceInfo() {
         Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
-        for(DeviceInfo deviceInfo:deviceInfos){
+        for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))
                 unclasses_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
             else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_CONTROLLER())
                 controller_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
-            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT())
-                assignment_robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
-            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT())
-                deadline_robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
-            else if(deviceInfo.deviceType()==DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT())
-                student_robot_panel.add(new DeviceInfoJPanel(deviceInfo,handler));
+            else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT())
+                assignment_robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+            else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT())
+                deadline_robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
+            else if (deviceInfo.deviceType() == DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT())
+                student_robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
         }
     }
 
@@ -222,9 +225,9 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         for (DeviceInfoJPanel studentNum : student_robot_panel.deviceInfoJPanels) num_student++;
 
         if (num_student > num_controller)
-            JOptionPane.showConfirmDialog(this, "Too many student. Please remove some of student robot", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Too many student. Please remove some of student robot", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
         else if (num_student < num_controller)
-            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
         if (num_controller != num_student)
             return false;
 
@@ -239,11 +242,11 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
                 throw new IOException();
         } catch (IOException e1) {
             //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (Exception e2) {
             //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             //e2.printStackTrace();
             System.out.println(e2.toString());
             return false;
@@ -266,7 +269,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         assignment_robot_panel.clear();
         deadline_robot_panel.clear();
         controller_panel.clear();
-        addDeviceInfo();
+        loadDeviceInfo();
         /*controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.3", "Controller 1"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.1", "Controller 2"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.2", "Controller 3"), this));
@@ -287,18 +290,18 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         if (DeviceInfo.isRobot(clicked.deviceInfo._deviceType())) {
             if (e.getKeyCode() == KeyEvent.VK_A) {
                 clicked.transfer(assignment_robot_panel);
-                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
+                clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT());
                 System.out.println("changed to assignment.");
             } else if (e.getKeyCode() == KeyEvent.VK_D) {
                 clicked.transfer(deadline_robot_panel);
-                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
-                ;
+                clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT());
                 System.out.println("changed to deadline.");
             } else if (e.getKeyCode() == KeyEvent.VK_S) {
                 clicked.transfer(student_robot_panel);
-                clicked.update(new DeviceInfo(clicked.deviceInfo.name(), clicked.deviceInfo.ip(), DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT(), clicked.deviceInfo.lastConnectionTime(), true));
+                clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT());
                 System.out.println("changed to student.");
             } else return false;
+            clicked.refreshView();
         }
         return true;
     }

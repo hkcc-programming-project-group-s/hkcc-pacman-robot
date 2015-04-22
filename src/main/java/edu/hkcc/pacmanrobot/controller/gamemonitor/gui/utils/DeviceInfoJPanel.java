@@ -88,6 +88,11 @@ public class DeviceInfoJPanel extends JPanel {
         System.out.println("new DeviceInfoJPanel: " + toString());
     }
 
+    public void refreshView() {
+        revalidate();
+        updateUI();
+    }
+
     public void update(DeviceInfo newDeviceInfo) {
         deviceInfo = newDeviceInfo;
         lblIp.setText(deviceInfo.ip());
@@ -156,4 +161,6 @@ public class DeviceInfoJPanel extends JPanel {
             deviceInfoContainer.remove(this);
         newDeviceInfoContainer.add(this);
     }
+
+
 }

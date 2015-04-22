@@ -1,12 +1,8 @@
 <component name="libraryTable">
   <library name="lib-pacman">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/lib/pi4j" />
-      <root url="file://$PROJECT_DIR$/lib/myutils" />
-      <root url="file://$PROJECT_DIR$/lib/NeuroEvolution" />
-      <root url="file://$PROJECT_DIR$/lib/NeuroEvolution" />
-      <root url="file://$PROJECT_DIR$/lib/myutils" />
-      <root url="file://$PROJECT_DIR$/lib/lwjgl3/jar" />
+      <root url="jar://$PROJECT_DIR$/lib/myutils/myutils.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.jar!/" />
     </CLASSES>
     <JAVADOC />
     <NATIVE>
@@ -18,15 +14,8 @@
     </NATIVE>
     <SOURCES>
       <root url="file://$PROJECT_DIR$/lib/pi4j" />
-      <root url="file://$PROJECT_DIR$/lib/myutils/src/java" />
       <root url="jar://$PROJECT_DIR$/lib/lwjgl3/src.zip!/" />
     </SOURCES>
-    <jarDirectory url="file://$PROJECT_DIR$/lib/lwjgl3/jar" recursive="false" />
-    <jarDirectory url="file://$PROJECT_DIR$/lib/myutils" recursive="false" />
-    <jarDirectory url="file://$PROJECT_DIR$/lib/myutils" recursive="false" />
-    <jarDirectory url="file://$PROJECT_DIR$/lib/NeuroEvolution" recursive="false" />
-    <jarDirectory url="file://$PROJECT_DIR$/lib/NeuroEvolution" recursive="false" />
-    <jarDirectory url="file://$PROJECT_DIR$/lib/pi4j" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/lib/pi4j" recursive="false" type="SOURCES" />
   </library>
 </component>

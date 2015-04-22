@@ -7,22 +7,24 @@ import java.awt.*;
 
 public class GameMonitorJFrame extends JFrame {
 
-    public GameMonitorSAO sao = new GameMonitorSAO();
-    int WINDOW_WIDTH = 960;
-    int WINDOW_HEIGHT = 720;
+    public final GameMonitorSAO sao;
+    public ContentJPanel contentJPanel = new ContentJPanel(this);
+    public ControlJPanel controlJPanel = new ControlJPanel(this);
+    int WINDOW_WIDTH;
+    int WINDOW_HEIGHT;
     LogoJPanel logoJPanel = new LogoJPanel();
-    ContentJPanel contentJPanel = new ContentJPanel(this);
-    ControlJPanel controlJPanel = new ControlJPanel(this);
 
-    public GameMonitorJFrame() {
-        initialize();
+    public GameMonitorJFrame(GameMonitorSAO sao) {
+        this(sao, 960, 720);
     }
 
-    public GameMonitorJFrame(int width, int height) {
+    public GameMonitorJFrame(GameMonitorSAO sao, int width, int height) {
+        this.sao = sao;
         WINDOW_WIDTH = width;
         WINDOW_HEIGHT = height;
         initialize();
     }
+
 
     /**
      * Initialize the contents of the frame.
@@ -45,8 +47,16 @@ public class GameMonitorJFrame extends JFrame {
     }
 
     public void finish() {
+        if (contentJPanel.pairControllerRobotPage()) {
+            contentJPanel.prev();
+        } else {
+            contentJPanel.next();
+        }
         // TODO Auto-generated method stub
+    }
 
+    public boolean resumePage() {
+        return !contentJPanel.resumePage();
     }
 
     public boolean hasNext() {
@@ -58,6 +68,6 @@ public class GameMonitorJFrame extends JFrame {
     }
 
     public boolean canFinish() {
-        return !hasNext();
+        return contentJPanel.finish();
     }
 }

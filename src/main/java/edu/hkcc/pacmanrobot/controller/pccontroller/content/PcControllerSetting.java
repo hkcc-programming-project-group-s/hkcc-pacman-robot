@@ -1,8 +1,8 @@
 package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
-import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJPanel;
 import edu.hkcc.pacmanrobot.controller.utils.Utils;
+import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,14 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Vector;
 
 import static edu.hkcc.pacmanrobot.controller.pccontroller.content.PcControllerSetting.Range.isBetween;
 import static java.awt.event.KeyEvent.*;
 
-public class PcControllerSetting extends PcControllerJPanel {
+public class PcControllerSetting extends PcController_contentJPanel {
     public static Vector<Range> direction_keys = new Vector<>();
     static HashMap<Integer, String> keyNames = new HashMap<>();
     PcControllerSetting jFrame = this;
@@ -31,24 +30,8 @@ public class PcControllerSetting extends PcControllerJPanel {
     MyDispatcher myDispatcher = new MyDispatcher();
     Direction_Lable_Key[] direction_lable_keys;
     JPanel panel_center;
-    /**
-     * Create the frame.
-     *
-     * @throws IOException
-     * @throws MalformedURLException
-     */
 
-
-    private JPanel contentPane;
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
-    private JLabel ipAddressLbl;
     private JLabel controllerNameLbl;
-    private JLabel downArrowLbl;
-    private JLabel rightArrowLbl;
-    private JLabel leftArrowLbl;
-    private JLabel upArrowLbl;
     private Direction_Lable_Key key_to_edit = null;
 
     public PcControllerSetting(PcControllerJFrame pcControllerJFrame) {
@@ -82,14 +65,14 @@ public class PcControllerSetting extends PcControllerJPanel {
         gbc_nameLbl.gridy = 2;
         panel_center.add(nameLbl, gbc_nameLbl);
 
-        ipAddressLbl = new JLabel("192.168.1.1");
+        JLabel ipAddressLbl = new JLabel(master.sao.deviceInfo().ip());
         GridBagConstraints gbc_ipAddressLbl = new GridBagConstraints();
         gbc_ipAddressLbl.insets = new Insets(0, 0, 5, 5);
         gbc_ipAddressLbl.gridx = 2;
         gbc_ipAddressLbl.gridy = 1;
         panel_center.add(ipAddressLbl, gbc_ipAddressLbl);
 
-        controllerNameLbl = new JLabel("Patrick Controller");
+        controllerNameLbl = new JLabel(master.sao.deviceInfo().name());
         GridBagConstraints gbc_controllerNameLbl = new GridBagConstraints();
         gbc_controllerNameLbl.insets = new Insets(0, 0, 5, 5);
         gbc_controllerNameLbl.gridx = 2;
@@ -101,10 +84,16 @@ public class PcControllerSetting extends PcControllerJPanel {
             public void actionPerformed(ActionEvent e) {
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(myDispatcher);
                 Object name = JOptionPane.showInputDialog(jFrame, "What is the new name?", "Device Name", JOptionPane.QUESTION_MESSAGE, null, null, null);
-                System.out.println(name);
-                if (name != null) {
-                    controllerNameLbl.setText((String) name);
-                    //TODO message(send new name)
+                try {
+                    System.out.println(name);
+                    String newName = (String) name;
+                    if (newName != null && newName.length() > 0 && newName.length() < DeviceInfo.NAME_MIN_LENGTH()) {
+                        //TODO send name to server
+
+                    } else
+                        JOptionPane.showConfirmDialog(jFrame, "The name size is more than " + DeviceInfo.NAME_MIN_LENGTH() + ". Please enter again.", "Name Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e1) {
+
                 }
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(myDispatcher);
             }
@@ -161,7 +150,7 @@ public class PcControllerSetting extends PcControllerJPanel {
         gbc_forwardLbl.gridy = 5;
         panel_center.add(forwardLbl, gbc_forwardLbl);
 
-        upArrowLbl = new JLabel("Up Arrow");
+        JLabel upArrowLbl = new JLabel("Up Arrow");
         GridBagConstraints gbc_upArrowLbl = new GridBagConstraints();
         gbc_upArrowLbl.insets = new Insets(0, 0, 5, 5);
         gbc_upArrowLbl.gridx = 2;
@@ -188,7 +177,7 @@ public class PcControllerSetting extends PcControllerJPanel {
         gbc_BackwardLbl.gridy = 6;
         panel_center.add(BackwardLbl, gbc_BackwardLbl);
 
-        downArrowLbl = new JLabel("Down Arrow");
+        JLabel downArrowLbl = new JLabel("Down Arrow");
         GridBagConstraints gbc_downArrowLbl = new GridBagConstraints();
         gbc_downArrowLbl.insets = new Insets(0, 0, 5, 5);
         gbc_downArrowLbl.gridx = 2;
@@ -215,7 +204,7 @@ public class PcControllerSetting extends PcControllerJPanel {
         gbc_Anti_clockwiseTurnLbl.gridy = 7;
         panel_center.add(Anti_clockwiseTurnLbl, gbc_Anti_clockwiseTurnLbl);
 
-        leftArrowLbl = new JLabel("Left Arrow");
+        JLabel leftArrowLbl = new JLabel("Left Arrow");
         GridBagConstraints gbc_leftArrowLbl = new GridBagConstraints();
         gbc_leftArrowLbl.insets = new Insets(0, 0, 5, 5);
         gbc_leftArrowLbl.gridx = 2;
@@ -242,7 +231,7 @@ public class PcControllerSetting extends PcControllerJPanel {
         gbc_clockwiseTurm.gridy = 8;
         panel_center.add(clockwiseTurm, gbc_clockwiseTurm);
 
-        rightArrowLbl = new JLabel("Right Arrow");
+        JLabel rightArrowLbl = new JLabel("Right Arrow");
         GridBagConstraints gbc_rightArrowLbl = new GridBagConstraints();
         gbc_rightArrowLbl.insets = new Insets(0, 0, 0, 5);
         gbc_rightArrowLbl.gridx = 2;
@@ -342,13 +331,10 @@ public class PcControllerSetting extends PcControllerJPanel {
             else if (e.getKeyCode() == direction_lable_keys[3].keycode)
                 x = 1;
             else return false;
+            master.sao.sendMovementCommand(x, y);
             updateBallLocation();
             return true;
         }
-    }
-
-    private boolean checking(int keyCode) {
-        return false;
     }
 
     boolean onKeyReleased(KeyEvent e) {
@@ -389,11 +375,6 @@ public class PcControllerSetting extends PcControllerJPanel {
         }
 
         public Range(int range) {
-            this.high = range;
-            this.low = range;
-        }
-
-        public Range(char range) {
             this.high = range;
             this.low = range;
         }
@@ -468,7 +449,8 @@ public class PcControllerSetting extends PcControllerJPanel {
             else
                 label.setText(String.valueOf((char) keycode));
         }
-        public void getControllerInfo(){
+
+        public void getControllerInfo() {
 
         }
     }

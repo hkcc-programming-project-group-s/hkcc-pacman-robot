@@ -1,9 +1,6 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.PairControllerRobotJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.PositionSetting;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.SetDeviceInfo;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.SetDeviceName;
+import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.*;
 import myutils.gui.cardlayout.AbstractCardJPanel;
 
 import java.util.Vector;
@@ -28,6 +25,8 @@ public class ContentJPanel extends AbstractCardJPanel {
         master.sao.pairControllerRobotJPanel_$eq(pairControllerRobotJPanel);
         contents.add(pairControllerRobotJPanel);
         contents.add(new PositionSetting(master));
+        contents.add(new PauseReason(master));
+        contents.add(pairControllerRobotJPanel);
 
         for (int i = 0; i < contents.size(); i++)
             addToCards(contents.get(i), i + "");
@@ -45,7 +44,7 @@ public class ContentJPanel extends AbstractCardJPanel {
     }
 
     public void prev() {
-        if (canPrev())
+        if (canPrev() && contents.get(currentPage).onLeave())
             currentPage--;
         switchToCard(currentPage + "");
     }
@@ -57,6 +56,18 @@ public class ContentJPanel extends AbstractCardJPanel {
 
     public boolean hasNext() {
         return currentPage + 1 < contents.size();
+    }
+
+    public boolean resumePage() {
+        return (currentPage + 2 < contents.size());
+    }
+
+    public boolean finish() {
+        return (currentPage + 3 >= contents.size()) || (currentPage + 1 >= contents.size());
+    }
+
+    public boolean pairControllerRobotPage() {
+        return currentPage + 1 >= contents.size();
     }
 
     public boolean hasPrev() {

@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.utils.message;
+package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 
 import edu.hkcc.pacmanrobot.utils.Config;
 
@@ -6,9 +6,25 @@ import java.io.IOException;
 import java.net.Socket;
 
 /**
- * Created by 13058536A on 4/19/2015.
+ * Created by beenotung on 4/19/2015.
  */
-public class Messenger_Java<T> extends Thread {
+public class UDPMessenger extends Thread {
+
+    final boolean isServer;
+    final int messageType;
+    Socket socket;
+
+    public UDPMessenger(int messageType) {
+        this(connect(Config.PORT_UDP), messageType, false);
+    }
+
+
+    public UDPMessenger(Socket socket, int messageType, boolean isServer) {
+        this.socket = socket;
+        this.messageType = messageType;
+        this.isServer = isServer;
+        init();
+    }
 
     //will not call by server
     public static Socket connect(int port) {
@@ -29,11 +45,10 @@ public class Messenger_Java<T> extends Thread {
         return socket;
     }
 
-    public Messenger_Java(int port, boolean isServer) {
 
+    private void init() {
+        // new ObjectInputStream(socket.getInputStream())
+        //TODO
     }
 
-    public Messenger_Java(Socket socket, boolean isServer) {
-        final boolean isServer;
-    }
 }
