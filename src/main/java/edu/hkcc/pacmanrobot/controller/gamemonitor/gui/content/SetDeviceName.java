@@ -100,7 +100,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
             System.out.println(name);
             String newName = (String) name;
             if (newName != null && newName.length() > 0 && newName.length() < DeviceInfo.NAME_MIN_LENGTH()) {
-                target.deviceInfo.name_$eq(newName);
+                target.deviceInfo.name_(newName);
                 target.refreshView();
             } else
                 JOptionPane.showConfirmDialog(this, "The name size is more than " + DeviceInfo.NAME_MIN_LENGTH() + ". Please enter again.", "Name Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);

@@ -23,6 +23,7 @@ import java.util.Vector;
 
 public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(198, 228, 255);
+    public DeviceInfoJPanelHandler handler = this;
     /*public Vector<DeviceInfoJPanel> controllerJPanels = new Vector<DeviceInfoJPanel>();
     public Vector<DeviceInfoJPanel> unclassesRobotJPanels = new Vector<DeviceInfoJPanel>();
     public Vector<DeviceInfoJPanel> studentJPanels = new Vector<DeviceInfoJPanel>();
@@ -38,7 +39,6 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     DeviceInfoJPanel clicked = null;
     Vector<DeviceInfoJPanel> unclassedJPanels = new Vector<>();
     Vector<DeviceInfoContainer> deviceInfoContainers = new Vector<>();
-    public DeviceInfoJPanelHandler handler = this;
 
     /**
      * Create the frame.

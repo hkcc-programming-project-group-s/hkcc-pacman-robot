@@ -1,18 +1,13 @@
 package edu.hkcc.pacmanrobot.controller.gamemonitor.core
 
 import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.PairControllerRobotJPanel
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler
+import edu.hkcc.pacmanrobot.server.Server
 import edu.hkcc.pacmanrobot.utils.Config
-import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, DeviceInfo, FlashRequest}
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
-import scala.Function1
-import scala.runtime.BoxedUnit
+import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, DeviceInfo, FlashRequest}
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
 
-import collection.JavaConverters._
-import collection.JavaConversions._
-
-
-
+import scala.collection.JavaConverters._
 
 /**
  * Created by beenotung on 4/15/15.
@@ -26,7 +21,6 @@ class GameMonitorSAO(val server: Server) {
   var deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create(Config.PORT_DEVICE_INFO, message => {
     //don't use autoget
   }, null)
-
 
 
   var flashRequestMessenger: Messenger[FlashRequest] = Messenger.create(Config.PORT_FLASH_REQUEST, message => {}, null)

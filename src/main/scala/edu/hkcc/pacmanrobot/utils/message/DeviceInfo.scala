@@ -4,7 +4,6 @@ import java.net.{InetAddress, NetworkInterface}
 
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
-import DeviceInfo.getLocalMacAddress
 
 /**
  * Created by 13058456a on 3/21/2015.
@@ -23,7 +22,7 @@ object DeviceInfo extends Message {
 
   val ROBOT_SET = Set(DEVICE_TYPE_ASSIGNMENT_ROBOT, DEVICE_TYPE_DEADLINE_ROBOT, DEVICE_TYPE_STUDENT_ROBOT, DEVICE_TYPE_UNCLASSED_ROBOT)
 
-  val MAC_ADDRESS_BYTES=6
+  val MAC_ADDRESS_BYTES = 6
   val NAME_MIN_LENGTH = 32
 
   def getLocalMacAddress: Array[Byte] = {
@@ -56,8 +55,6 @@ object DeviceInfo extends Message {
   }
 }
 
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo.getLocalMacAddress
-
 /**
  * @param MAC_ADDRESS
  * @param _name
@@ -76,7 +73,13 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     set_shouldSave
   }
 
-  def set_shouldSave = shouldSave = true
+  def set(newInfo: DeviceInfo): Unit = {
+    name_(newInfo.name)
+    ip = newInfo.ip
+    _deviceType = newInfo._deviceType
+    lastConnectionTime = newInfo.lastConnectionTime
+    set_shouldSave
+  }
 
   def name = _name
 
@@ -85,11 +88,7 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     set_shouldSave
   }
 
-  def set(newInfo: DeviceInfo): Unit = {
-    name_(newInfo.name)
-    ip = newInfo.ip
-    _deviceType = newInfo._deviceType
-    lastConnectionTime = newInfo.lastConnectionTime
-    set_shouldSave
-  }
+  def set_shouldSave = shouldSave = true
+
+  override def port(): Int = Config.PORT_DEVICE_INFO
 }

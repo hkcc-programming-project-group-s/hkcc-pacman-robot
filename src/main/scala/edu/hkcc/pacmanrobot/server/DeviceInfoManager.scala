@@ -21,12 +21,13 @@ class DeviceInfoManager {
   }
 
   val messengerManager = new MessengerManager[DeviceInfo](Config.PORT_DEVICE_INFO, initMessenger_func = { _ => {} }, autoGet_func = { (remoteMacAddress, message) => {
-    if (message.shouldSave){
+    if (message.shouldSave) {
       deviceInfos.put(message.MAC_ADDRESS, message)
       message.shouldSave = false
     }
     else
       response(remoteMacAddress, message)
+  }
   })
 
   def response(remoteMacAddress: Array[Byte], deviceInfo: DeviceInfo): Unit = {

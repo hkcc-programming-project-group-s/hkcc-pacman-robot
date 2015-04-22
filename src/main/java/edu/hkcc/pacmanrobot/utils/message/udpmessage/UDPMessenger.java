@@ -3,7 +3,6 @@ package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 import edu.hkcc.pacmanrobot.utils.Config;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.Socket;
 
 /**
@@ -46,12 +45,10 @@ public class UDPMessenger extends Thread {
         return socket;
     }
 
-    final int byte_length() {
-        return UDPMessageSingleton.getInstance().getLength(messageType);
-    }
 
     private void init() {
-        new ObjectInputStream(socket.getInputStream())
+        // new ObjectInputStream(socket.getInputStream())
+        //TODO
     }
 
 }
