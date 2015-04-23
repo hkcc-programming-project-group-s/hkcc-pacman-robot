@@ -1,11 +1,14 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
+package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 /**
  * Created by Winner on 19/4/2015.
  */
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
+import edu.hkcc.pacmanrobot.utils.lang.StringUtils;
+import edu.hkcc.pacmanrobot.utils.message.udpmessage.Encoder;
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
 
 import javax.swing.*;
@@ -33,7 +36,7 @@ public class PauseReason extends GameMonitorContentJPanel {
         contentPane.add(GameResumeLabel, BorderLayout.NORTH);
 
         JTextPane textPane = new JTextPane();
-        textPane.setText(master.sao.reason());
+        textPane.setText(StringUtils.fill(' ', Encoder.DEFAULT_STRING_LENGTH));
         contentPane.add(textPane, BorderLayout.CENTER);
         textPane.setEditable(false);
 
@@ -51,9 +54,7 @@ public class PauseReason extends GameMonitorContentJPanel {
 
     @Override
     public boolean onLeave() {
-        //GameStatus gameStatus=master.sao.gameStatus();
-        GameStatus gameStatus = master.sao.gameStatus();
-        return true;
+        return GameMonitorSAO.gameStatus().status() != GameStatus.STATE_PAUSE();
     }
 
     @Override

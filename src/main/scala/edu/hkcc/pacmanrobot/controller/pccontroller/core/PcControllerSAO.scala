@@ -40,8 +40,6 @@ class PcControllerSAO extends GameDevice {
     }
   }
 
-  override def setup: Unit = ???
-
   override def gameStop: Unit = {
     shouldSend = false
   }

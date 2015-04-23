@@ -3,7 +3,7 @@ package edu.hkcc.pacmanrobot.utils.message.messenger
 import java.net.Socket
 import java.util.concurrent.Semaphore
 
-import edu.hkcc.pacmanrobot.server.{MessengerManager, ObstacleMapManager}
+import edu.hkcc.pacmanrobot.server.network.{MessengerManager, ObstacleMapManager}
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo

@@ -1,5 +1,7 @@
 package edu.hkcc.pacmanrobot.debug;
 
+import java.util.Calendar;
+
 /**
  * Created by beenotung on 4/22/15.
  * This is lazy Singleton
@@ -19,5 +21,10 @@ public class Debug {
             }
         }
         return instance;
+    }
+
+    public void printError(String message) {
+        System.out.println(Calendar.getInstance().getTime().toString());
+        System.out.println(message);
     }
 }

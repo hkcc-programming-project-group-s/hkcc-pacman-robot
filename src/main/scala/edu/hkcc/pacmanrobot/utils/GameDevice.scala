@@ -9,7 +9,7 @@ import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
  * Created by beenotung on 3/23/15.
  */
 
-abstract class Device extends Thread {
+trait Device extends Thread {
   var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
   var deviceInfo: DeviceInfo
 
@@ -23,10 +23,10 @@ abstract class Device extends Thread {
 
   def gameStop
 
-  def setup
+  def init
 }
 
-abstract class GameDevice extends Device {
+trait GameDevice extends Device {
   val deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create[DeviceInfo](Config.PORT_DEVICE_INFO, message => {
     deviceInfo.set(message)
   }, null)
@@ -44,17 +44,17 @@ abstract class GameDevice extends Device {
 
   override def start = {
     println(deviceInfo.name + " start ")
-    setup
     super.start
   }
 
   def loop
 
-  def init
+  var shouldRun = false
 
   override def run = {
     init
-    while (true) {
+    shouldRun = true
+    while (shouldRun) {
       loop
     }
   }

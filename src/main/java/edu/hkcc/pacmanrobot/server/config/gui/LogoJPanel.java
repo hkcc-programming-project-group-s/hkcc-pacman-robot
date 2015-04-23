@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
+package edu.hkcc.pacmanrobot.server.config.gui;
 
 
 import edu.hkcc.pacmanrobot.controller.utils.Utils;

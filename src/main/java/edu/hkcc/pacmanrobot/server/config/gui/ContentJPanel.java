@@ -1,6 +1,7 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
+package edu.hkcc.pacmanrobot.server.config.gui;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content.*;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.content.*;
 import myutils.gui.cardlayout.AbstractCardJPanel;
 
 import java.util.Vector;
@@ -22,7 +23,7 @@ public class ContentJPanel extends AbstractCardJPanel {
         contents.add(new SetDeviceName(master));
         contents.add(new SetDeviceInfo(master));
         PairControllerRobotJPanel pairControllerRobotJPanel = new PairControllerRobotJPanel(master);
-        master.sao.pairControllerRobotJPanel_$eq(pairControllerRobotJPanel);
+        GameMonitorSAO.pairControllerRobotJPanel_$eq(pairControllerRobotJPanel);
         contents.add(pairControllerRobotJPanel);
         contents.add(new PositionSetting(master));
         contents.add(new PauseReason(master));

@@ -11,7 +11,7 @@ import static edu.hkcc.pacmanrobot.utils.Config.*;
  */
 public class Encoder {
     private static Encoder instance = null;
-    final int DEFAULT_STRING_LENGTH = 256;
+    public static final int DEFAULT_STRING_LENGTH = 256;
     final int MAC_ADDRESS_BYTES = 6;
     final byte BYTE_TRUE = 0x01;
     final byte BYTE_FALSE = 0x00;

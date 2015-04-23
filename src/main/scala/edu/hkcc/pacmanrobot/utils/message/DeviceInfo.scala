@@ -73,8 +73,6 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     set_shouldSave
   }
 
-  def set_shouldSave = shouldSave = true
-
   def set(newInfo: DeviceInfo): Unit = {
     name_(newInfo.name)
     ip = newInfo.ip
@@ -89,6 +87,8 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     _name = name
     set_shouldSave
   }
+
+  def set_shouldSave = shouldSave = true
 
   override def port(): Int = Config.PORT_DEVICE_INFO
 }

@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.server
+package edu.hkcc.pacmanrobot.server.network
 
 import java.net.InetAddress
 import java.util.concurrent.ConcurrentHashMap

@@ -11,11 +11,11 @@ import edu.hkcc.pacmanrobot.utils.{Config, GameDevice}
 /**
  * Created by beenotung on 4/16/15.
  */
-class DefaultRobot extends GameDevice {
+object DefaultRobot extends GameDevice {
   val obstacleMapMessenger = new ObstacleMapMessenger
   val positionMessenger = Messenger.create[Position](Config.PORT_POSITION, message => {}, null)
   override var deviceInfo: DeviceInfo = DeviceInfo.create("noname_robot", DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT)
-  var newRobot: Robot = null
+  var newRobot: AbstractRobot = null
 
   override def loop: Unit = ???
 
@@ -35,25 +35,22 @@ class DefaultRobot extends GameDevice {
   def switchToRobot(robotType: Byte): Unit = {
     robotType match {
       case DEVICE_TYPE_STUDENT_ROBOT => {
-        newRobot = new StudentRobot(this)
+        newRobot = new StudentRobot()
         newRobot.start
       }
       case DEVICE_TYPE_ASSIGNMENT_ROBOT => {
-        newRobot = new AssignmentRobot(this)
+        newRobot = new AssignmentRobot()
         newRobot.start
       }
       case DEVICE_TYPE_DEADLINE_ROBOT => {
-        newRobot = new DeadlineRobot(this)
+        newRobot = new DeadlineRobot()
         newRobot.start
       }
     }
   }
 
-
-  override def setup = {
+  override def init: Unit = {
     positionMessenger.start()
     obstacleMapMessenger.start()
   }
-
-  override def init: Unit = ???
 }

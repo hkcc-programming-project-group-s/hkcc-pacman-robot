@@ -1,7 +1,4 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
-
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
-import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger;
+package edu.hkcc.pacmanrobot.server.config.gui;
 
 import javax.swing.*;
 
@@ -10,14 +7,20 @@ import javax.swing.*;
  */
 public abstract class GameMonitorContentJPanel extends JPanel {
     public final GameMonitorJFrame master;
-    public final Messenger<DeviceInfo> deviceInfoMessenger;
 
     public GameMonitorContentJPanel(GameMonitorJFrame gameMonitorJFrame) {
         this.master = gameMonitorJFrame;
-        deviceInfoMessenger = master.sao.deviceInfoMessenger();
     }
 
+    /**
+     * @return boolean
+     * true: success to leave
+     * false: failed to leave
+     */
     public abstract boolean onLeave();
 
+    /**
+     * init routine
+     */
     public abstract void onEnter();
 }

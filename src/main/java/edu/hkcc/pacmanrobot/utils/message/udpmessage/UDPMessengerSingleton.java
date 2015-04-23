@@ -1,6 +1,6 @@
 package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 
-import edu.hkcc.pacmanrobot.utils.lang.Drawer;
+import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -20,10 +20,10 @@ public class UDPMessengerSingleton extends Thread {
     private static UDPMessengerSingleton instance = null;
     final String MESSAGE_SERVER = "PACMAN_ROBOT_GAME_SERVER";
     final String MESSAGE_CLIENT = "PACMAN_ROBOT_GAME_CLIENT";
-    public Drawer<ByteBuffer> deviceInfoPacketDrawer = new Drawer<>();
-    public Drawer<ByteBuffer> movementCommandPacketDrawer = new Drawer<>();
-    public Drawer<ByteBuffer> gameStatusPacketDrawer = new Drawer<>();
-    public Drawer<String> serverAddressDrawer = new Drawer<String>();
+    public ConcurrencyDrawer<ByteBuffer> deviceInfoPacketDrawer = new ConcurrencyDrawer<>();
+    public ConcurrencyDrawer<ByteBuffer> movementCommandPacketDrawer = new ConcurrencyDrawer<>();
+    public ConcurrencyDrawer<ByteBuffer> gameStatusPacketDrawer = new ConcurrencyDrawer<>();
+    public ConcurrencyDrawer<String> serverAddressDrawer = new ConcurrencyDrawer<String>();
     DatagramSocket socket;
     boolean shouldRun = false;
     InputThread inputThread = new InputThread();

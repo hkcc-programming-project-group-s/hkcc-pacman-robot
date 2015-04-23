@@ -1,12 +1,13 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
+package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 //import com.sun.istack.internal.NotNull;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanelHandler;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
@@ -174,9 +175,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         //System.out.println("REMOVE HERE!!!");
         clicked.deviceInfoContainer.remove(clicked);
         clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DELETE());
-        deviceInfoMessenger.sendMessage(clicked.deviceInfo);
-        //TODO call messenger
-
+        GameMonitorSAO.updateDeviceInfo(clicked.deviceInfo);
     }
 
     //@NotNull
@@ -200,7 +199,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
      * fetch DeviceInfo from server
      */
     public void loadDeviceInfo() {
-        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(GameMonitorSAO.fetchDeviceInfos());
         for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))
                 unclasses_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
@@ -234,10 +233,10 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         try {
             //TODO sent robot types to server
             // use messenger to send to server
-            controller_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            student_robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            deadline_robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            assignment_robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
+            controller_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
+            student_robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
+            deadline_robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
+            assignment_robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
             if (new Random().nextBoolean())
                 throw new IOException();
         } catch (IOException e1) {

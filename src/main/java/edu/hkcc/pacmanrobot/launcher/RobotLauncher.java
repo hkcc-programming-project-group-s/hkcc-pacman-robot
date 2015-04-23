@@ -7,7 +7,6 @@ import edu.hkcc.pacmanrobot.robot.core.DefaultRobot;
  */
 public class RobotLauncher {
     public static void main(String[] args) {
-        DefaultRobot robot = new DefaultRobot();
-        robot.start();
+        DefaultRobot.start();
     }
 }

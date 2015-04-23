@@ -1,11 +1,12 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
+package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 import com.sun.istack.internal.NotNull;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanelHandler;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
@@ -88,9 +89,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     void remove(@NotNull DeviceInfoJPanel target) {
         target.deviceInfoContainer.remove(target);
         target.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DELETE());
-        deviceInfoMessenger.sendMessage(target.deviceInfo);
-        //TODO call messenger
-
+        GameMonitorSAO.updateDeviceInfo(target.deviceInfo);
     }
 
     void rename(@NotNull DeviceInfoJPanel target) {
@@ -135,8 +134,8 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     @Override
     public boolean onLeave() {
         try {
-            controller_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
+            controller_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
+            robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
             //TODO sent robot types to server
             // use messenger to send to server
             if (new Random().nextBoolean())
@@ -168,7 +167,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
 
 
     public void addDeviceInfo() {
-        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(GameMonitorSAO.fetchDeviceInfos());
         for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))
                 robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));

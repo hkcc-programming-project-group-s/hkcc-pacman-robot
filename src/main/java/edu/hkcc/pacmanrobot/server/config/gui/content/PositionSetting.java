@@ -1,12 +1,12 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
+package edu.hkcc.pacmanrobot.server.config.gui.content;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanelHandler;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
-import edu.hkcc.pacmanrobot.utils.message.FlashRequest;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -134,7 +134,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
     }
 
     public void addDeviceInfo() {
-        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(GameMonitorSAO.fetchDeviceInfos());
         for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))
                 robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
@@ -184,6 +184,6 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
     }
 
     public void sendRequest(DeviceInfo deviceInfo, boolean lightOn) {
-        master.sao.flashRequestMessenger().sendMessage(new FlashRequest(deviceInfo.MAC_ADDRESS(), lightOn));
+        GameMonitorSAO.requestFlash(deviceInfo.MAC_ADDRESS(), lightOn);
     }
 }

@@ -15,15 +15,24 @@ public class PutterLock {
         this(false);
     }
 
-    public synchronized void take() throws InterruptedException {
+    public boolean isAvaliable() {
+        return avaliable;
+    }
+
+    public synchronized void waitAndTakeKey() throws InterruptedException {
         while (!this.avaliable) wait();
         this.avaliable = false;
         this.notify();
     }
 
 
-    public synchronized void put() {
+    public synchronized void putKey() {
         this.avaliable = true;
+        this.notify();
+    }
+
+    public synchronized void takeKey() {
+        this.avaliable = false;
         this.notify();
     }
 }

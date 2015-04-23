@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils;
+package edu.hkcc.pacmanrobot.server.config.gui.utils;
 
 import com.sun.istack.internal.NotNull;
 

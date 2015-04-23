@@ -5,7 +5,7 @@ import java.net._
 import java.rmi.server.ServerNotActiveException
 import java.util.concurrent.{ConcurrentLinkedQueue, Semaphore}
 
-import edu.hkcc.pacmanrobot.server.MessengerManager
+import edu.hkcc.pacmanrobot.server.network.MessengerManager
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.Worker.forkAndStart
 import edu.hkcc.pacmanrobot.utils.exception.ClientSocketClosedException

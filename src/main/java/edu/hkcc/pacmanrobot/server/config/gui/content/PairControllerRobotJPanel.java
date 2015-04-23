@@ -1,11 +1,12 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
+package edu.hkcc.pacmanrobot.server.config.gui.content;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DevicePairJPanel;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DevicePairJPanel;
 import edu.hkcc.pacmanrobot.utils.message.ControllerRobotPair;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
@@ -267,12 +268,12 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
     }
 
     public void savePair(DevicePairJPanel clickedPairJPanel) {
-        master.sao.savePair(new ControllerRobotPair(clickedPairJPanel.controllerJPanel.deviceInfo.MAC_ADDRESS(), clickedPairJPanel.robotJPanel.deviceInfo.MAC_ADDRESS(), true));
+        GameMonitorSAO.savePair(new ControllerRobotPair(clickedPairJPanel.controllerJPanel.deviceInfo.MAC_ADDRESS(), clickedPairJPanel.robotJPanel.deviceInfo.MAC_ADDRESS(), true));
     }
 
     public void updateView() {
-        Vector<ControllerRobotPair> pairs = new Vector<ControllerRobotPair>(master.sao.fetchControllerRobotPairs());
-        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        Vector<ControllerRobotPair> pairs = new Vector<ControllerRobotPair>(GameMonitorSAO.fetchControllerRobotPairs());
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(GameMonitorSAO.fetchDeviceInfos());
         DeviceInfo controller = null;
         DeviceInfo robot = null;
         for (ControllerRobotPair pair : pairs) {
@@ -292,9 +293,9 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
                 robot = null;
             } else {
                 if (controller == null)
-                    master.sao.savePair(new ControllerRobotPair(controller.MAC_ADDRESS(), controller.MAC_ADDRESS(), true));
+                    GameMonitorSAO.savePair(new ControllerRobotPair(controller.MAC_ADDRESS(), controller.MAC_ADDRESS(), true));
                 if (robot == null)
-                    master.sao.savePair(new ControllerRobotPair(robot.MAC_ADDRESS(), robot.MAC_ADDRESS(), true));
+                    GameMonitorSAO.savePair(new ControllerRobotPair(robot.MAC_ADDRESS(), robot.MAC_ADDRESS(), true));
             }
         }
         for (DeviceInfo deviceInfo : deviceInfos) {

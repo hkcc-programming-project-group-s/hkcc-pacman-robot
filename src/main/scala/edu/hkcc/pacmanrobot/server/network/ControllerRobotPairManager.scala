@@ -1,4 +1,4 @@
-package edu.hkcc.pacmanrobot.server
+package edu.hkcc.pacmanrobot.server.network
 
 import java.util.concurrent.{ConcurrentHashMap, Semaphore}
 import java.util.function.BiConsumer

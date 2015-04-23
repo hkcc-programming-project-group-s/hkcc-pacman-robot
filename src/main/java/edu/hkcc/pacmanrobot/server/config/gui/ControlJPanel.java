@@ -1,5 +1,6 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
+package edu.hkcc.pacmanrobot.server.config.gui;
 
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
 
 import javax.swing.*;
@@ -51,11 +52,12 @@ public class ControlJPanel extends JPanel {
         updateView();
 
 
+        //TODO check logic (should compare, not hardcode disable)
         btnResume = new JButton("Resume");
         btnResume.setEnabled(false);
         btnResume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.sao.gameStatus_(GameStatus.STATE_RESUME());
+                GameMonitorSAO.gameStatus_(GameStatus.STATE_RESUME());
             }
         });
         add(btnResume);
@@ -68,7 +70,7 @@ public class ControlJPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int result = JOptionPane.showConfirmDialog(current, "Do you want to end the game?", "title", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
-                    master.sao.gameStatus_(GameStatus.STATE_STOP());
+                    GameMonitorSAO.gameStatus_(GameStatus.STATE_STOP());
                 }
             }
         });
