@@ -3,12 +3,16 @@ package edu.hkcc.pacmanrobot.utils.lang;
 /**
  * Created by beenotung on 4/22/15.
  */
-public class PutterSemaphore {
+public class PutterLock {
 
     private volatile boolean avaliable;
 
-    public PutterSemaphore(boolean initStatus) {
+    public PutterLock(boolean initStatus) {
         this.avaliable = initStatus;
+    }
+
+    public PutterLock() {
+        this(false);
     }
 
     public synchronized void take() throws InterruptedException {
@@ -18,7 +22,7 @@ public class PutterSemaphore {
     }
 
 
-    public synchronized void release() throws InterruptedException {
+    public synchronized void put() {
         this.avaliable = true;
         this.notify();
     }
