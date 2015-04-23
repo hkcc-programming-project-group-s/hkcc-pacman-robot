@@ -1,6 +1,10 @@
 package edu.hkcc.pacmanrobot.utils;
 
+import edu.hkcc.pacmanrobot.debug.Debug;
+import edu.hkcc.pacmanrobot.utils.message.udpmessage.UDPMessengerSingleton;
+
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 /**
@@ -21,7 +25,7 @@ public class Config {
     public static final int PORT_UDP = 40220;
 
 
-    public static String serverAddress = "192.168.43.1";
+    public static String serverAddress = null;
     //public static String serverAddress = "192.168.1.3";
     //public static String serverAddress = "172.26.3.180";
     //public static String serverAddress = "172.25.56.109";
@@ -33,12 +37,18 @@ public class Config {
 
     static {
         try {
-            serverAddress = InetAddress.getByName("BeenoTung_Archlinux_Home").getHostAddress();
-            //serverAddress = InetAddress.getByName("BeenoTung_ArchLinux_Notebook").getHostAddress();
+            serverAddress = UDPMessengerSingleton.getInstance().serverAddressDrawer.getContent();
             System.out.println("server ip: " + Config.serverAddress);
-        } catch (UnknownHostException e) {
-            //e.printStackTrace();
+        } catch (SocketException e) {
+            //This is server
+            try {
+                serverAddress = InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e1) {
+                //Never happen
+            }
+        } catch (InterruptedException e) {
             System.out.println("cannot get server ip");
+            System.exit(Debug.getInstance().SERVER_NOT_FOUND);
         }
     }
 }
