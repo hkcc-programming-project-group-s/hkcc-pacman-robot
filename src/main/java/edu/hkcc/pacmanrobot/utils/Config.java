@@ -16,8 +16,8 @@ public class Config {
     public static final int PORT_GAME_STATUS = 40212;
     public static final int PORT_MOVEMENT_COMMAND = 40213;
     public static final int PORT_DEVICE_INFO = 40214;
-    public static final int PORT_POSITION = 40215;
-    public static final int PORT_ROBOT_POSITION = 40016;
+    //public static final int PORT_POSITION = 40215;
+    public static final int PORT_ROBOT_POSITION = 40216;
     //public static final int PORT_CONNECTION_INFO = 4219;
     public static final int PORT_CONTROLLER_ROBOT_PAIR = 40217;
     public static final int PORT_FLASH_REQUEST = 40218;
@@ -29,11 +29,11 @@ public class Config {
     //public static String serverAddress = "192.168.1.3";
     //public static String serverAddress = "172.26.3.180";
     //public static String serverAddress = "172.25.56.109";
-    public static long RECONNECTION_TIMEOUT = 500;
+    public static long RECONNECTION_INTERVAL = 500;
     public static long MOVEMENT_COMMAND_INTERVAL = 50;
-    public static long MOTOR_CYCLE_INTERVAL = 500;
+    public static long MOTOR_CYCLE_INTERVAL = 50;
     public static long SYNC_MAP_CYCLE_INTERVAL = 1000;
-    public static long SAVE_INTERVAL = 2000L;
+    public static long SAVE_INTERVAL = 10000L;
 
     static {
         try {

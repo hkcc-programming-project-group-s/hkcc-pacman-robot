@@ -1,5 +1,6 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui;
+package edu.hkcc.pacmanrobot.server.config.gui;
 
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
 
 import javax.swing.*;
@@ -18,13 +19,15 @@ public class ControlJPanel extends JPanel {
 
     /**
      * Create the panel.
+     *
+     * @param master
      */
-    public ControlJPanel(final GameMonitorJFrame master) {
+    public ControlJPanel(GameMonitorJFrame master) {
         this.master = master;
         btnPrevious = new JButton("Previous");
         btnPrevious.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.prev();
+                GameMonitorJFrame.getInstance().prev();
                 updateView();
             }
         });
@@ -33,7 +36,7 @@ public class ControlJPanel extends JPanel {
         btnNext = new JButton("Next");
         btnNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.next();
+                GameMonitorJFrame.getInstance().next();
                 updateView();
             }
         });
@@ -42,33 +45,28 @@ public class ControlJPanel extends JPanel {
         btnFinish = new JButton("Finish");
         btnFinish.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.finish();
+                GameMonitorJFrame.getInstance().finish();
                 updateView();
             }
         });
         add(btnFinish);
 
-        updateView();
-
-
+        //TODO check logic (should compare, not hardcode disable)
         btnResume = new JButton("Resume");
         btnResume.setEnabled(false);
         btnResume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.sao.gameStatus_(GameStatus.STATE_RESUME());
+                GameMonitorSAO.gameStatus_(GameStatus.STATE_RESUME());
             }
         });
         add(btnResume);
-
-        updateView();
-
 
         btnStop = new JButton("Stop");
         btnStop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int result = JOptionPane.showConfirmDialog(current, "Do you want to end the game?", "title", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
-                    master.sao.gameStatus_(GameStatus.STATE_STOP());
+                    GameMonitorSAO.gameStatus_(GameStatus.STATE_STOP());
                 }
             }
         });
@@ -78,11 +76,11 @@ public class ControlJPanel extends JPanel {
     }
 
     public void updateView() {
-        // TODO Auto-generated method stub
-        btnPrevious.setVisible(master.hasPrev());
-        btnNext.setVisible(master.hasNext());
+        //Debug.getInstance().printMessage("control panel update view");
+        btnPrevious.setVisible(master.canPrev());
+        btnNext.setVisible(master.canNext());
         btnFinish.setVisible(master.canFinish());
-        btnResume.setVisible(master.resumePage());
-        btnStop.setVisible(master.resumePage());
+        btnResume.setVisible(master.canResume());
+        btnStop.setVisible(master.canStop());
     }
 }

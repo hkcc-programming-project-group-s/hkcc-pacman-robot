@@ -1,7 +1,8 @@
-package edu.hkcc.pacmanrobot.server
+package edu.hkcc.pacmanrobot.server.network
 
 import java.net.Socket
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
@@ -33,6 +34,8 @@ object ObstacleMapManager {
 }
 
 class ObstacleMapManager extends MessengerManager[ObstacleMap](Config.PORT_MAP, initMessenger_func = messenger => messenger.sendMessage(ObstacleMapManager.obstacleMap), autoGet_func = (remoteMacAddress, map) => ObstacleMapManager.autoGet_func(remoteMacAddress, map)) {
+  Debug.getInstance().printMessage("MessengerManager init 0%")
+
   //override def messengers = ???
   /*override def genMessenger(socket: Socket): Messenger[ObstacleMap] = {
     new ObstacleMapMessenger(ObstacleMapManager.obstacleMap, socket, this)
@@ -50,4 +53,5 @@ class ObstacleMapManager extends MessengerManager[ObstacleMap](Config.PORT_MAP, 
     add(newMessenger)
   }
 
+  Debug.getInstance().printMessage("MessengerManager init 100%")
 }

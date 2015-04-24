@@ -1,11 +1,10 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
+package edu.hkcc.pacmanrobot.server.config.gui.content;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DevicePairJPanel;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DevicePairJPanel;
 import edu.hkcc.pacmanrobot.utils.message.ControllerRobotPair;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
@@ -16,10 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Random;
 import java.util.Vector;
 
-public class PairControllerRobotJPanel extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
+public class PairControllerRobotContentPanel extends AbstractContentPanel implements DeviceInfoJPanelHandler {
     private static final int MAX_WRONG_ATTEMPT = 3;
     public final DeviceInfoContainer controller_container = new DeviceInfoContainer("Controllers");
     public final DeviceInfoContainer robot_container = new DeviceInfoContainer("Robots");
@@ -42,8 +40,7 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
      * @throws IOException
      * @throws MalformedURLException
      */
-    public PairControllerRobotJPanel(GameMonitorJFrame gameMonitorJFrame) {
-        super(gameMonitorJFrame);
+    public PairControllerRobotContentPanel() {
         setBounds(100, 100, 800, 600);
         setBorder(new EmptyBorder(5, 5, 5, 5));
         //getContentPane().add(contentPane);
@@ -220,27 +217,12 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
     @Override
     public boolean onLeave() {
         if (robot_container.deviceInfoJPanels.size() * controller_container.deviceInfoJPanels.size() > 0) {
-            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot",
+                    "Oops", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             return false;
         } else {
-            //send to server
-            try {
-                //TODO
-                // use messenger to send to server
-                for (DevicePairJPanel pairControllerRobot : devicePairJPanels) savePair(pairControllerRobot);
-                if (new Random().nextBoolean())
-                    throw new IOException();
-            } catch (IOException e1) {
-                //TODO network / server problem, retry
-                JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-                return false;
-            } catch (Exception e2) {
-                //TODO network / server problem, retry
-                JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-                //e2.printStackTrace();
-                System.out.println(e2.toString());
-                return false;
-            }
+            //save on server
+            for (DevicePairJPanel pairControllerRobot : devicePairJPanels) savePair(pairControllerRobot);
 
             pair_panel.clear();
             controller_container.clear();
@@ -262,17 +244,16 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
         robot_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.6", "Robot 3"), this));
         robot_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.7", "Robot 4"), this));
         */
-
         updateView();
     }
 
     public void savePair(DevicePairJPanel clickedPairJPanel) {
-        master.sao.savePair(new ControllerRobotPair(clickedPairJPanel.controllerJPanel.deviceInfo.MAC_ADDRESS(), clickedPairJPanel.robotJPanel.deviceInfo.MAC_ADDRESS(), true));
+        GameMonitorSAO.savePair(new ControllerRobotPair(clickedPairJPanel.controllerJPanel.deviceInfo.MAC_ADDRESS(), clickedPairJPanel.robotJPanel.deviceInfo.MAC_ADDRESS(), true));
     }
 
     public void updateView() {
-        Vector<ControllerRobotPair> pairs = new Vector<ControllerRobotPair>(master.sao.fetchControllerRobotPairs());
-        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        Vector<ControllerRobotPair> pairs = new Vector<ControllerRobotPair>(GameMonitorSAO.fetchControllerRobotPairs());
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(GameMonitorSAO.fetchDeviceInfos());
         DeviceInfo controller = null;
         DeviceInfo robot = null;
         for (ControllerRobotPair pair : pairs) {
@@ -292,9 +273,9 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
                 robot = null;
             } else {
                 if (controller == null)
-                    master.sao.savePair(new ControllerRobotPair(controller.MAC_ADDRESS(), controller.MAC_ADDRESS(), true));
+                    GameMonitorSAO.savePair(new ControllerRobotPair(controller.MAC_ADDRESS(), controller.MAC_ADDRESS(), true));
                 if (robot == null)
-                    master.sao.savePair(new ControllerRobotPair(robot.MAC_ADDRESS(), robot.MAC_ADDRESS(), true));
+                    GameMonitorSAO.savePair(new ControllerRobotPair(robot.MAC_ADDRESS(), robot.MAC_ADDRESS(), true));
             }
         }
         for (DeviceInfo deviceInfo : deviceInfos) {
@@ -304,6 +285,8 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
                 robot_container.add(new DeviceInfoJPanel(deviceInfo, this));
         }
         //master.sao.controllerRobotPairMessenger().sendMessage(new ControllerRobotPair(null,null,false));
+        revalidate();
+        updateUI();
     }
 
 

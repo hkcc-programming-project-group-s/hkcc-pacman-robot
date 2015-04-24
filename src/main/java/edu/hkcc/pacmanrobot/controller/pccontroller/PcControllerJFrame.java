@@ -4,8 +4,8 @@ package edu.hkcc.pacmanrobot.controller.pccontroller;
  * Created by Winner on 18/4/2015.
  */
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.LogoJPanel;
 import edu.hkcc.pacmanrobot.controller.pccontroller.core.PcControllerSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.LogoJPanel;
 
 import javax.swing.*;
 import java.awt.*;

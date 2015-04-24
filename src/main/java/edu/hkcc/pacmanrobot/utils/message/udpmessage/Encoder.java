@@ -10,8 +10,8 @@ import static edu.hkcc.pacmanrobot.utils.Config.*;
  * this class is a lazy Singleton
  */
 public class Encoder {
+    public static final int DEFAULT_STRING_LENGTH = 256;
     private static Encoder instance = null;
-    final int DEFAULT_STRING_LENGTH = 256;
     final int MAC_ADDRESS_BYTES = 6;
     final byte BYTE_TRUE = 0x01;
     final byte BYTE_FALSE = 0x00;

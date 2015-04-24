@@ -1,6 +1,6 @@
-package edu.hkcc.pacmanrobot.server
+package edu.hkcc.pacmanrobot.server.network
 
-import java.net.{ServerSocket, Socket}
+import java.net.{BindException, ServerSocket, Socket}
 import java.util.concurrent.{ConcurrentHashMap, Semaphore}
 import java.util.function.BiConsumer
 
@@ -14,6 +14,7 @@ object MessengerManager {
   def nothing[Type](messenger: Messenger[Type]): Unit = {}
 }
 
+@throws(classOf[BindException])
 class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenger[Type] => Unit), autoGet_func: ((Array[Byte], Type) => Unit))
   extends Thread {
 
@@ -77,17 +78,23 @@ class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenge
     key
   }
 
+  def sendByMacAddress(macAddress: Array[Byte], message: Type) = {
+    if (macAddress != null)
+      if (messengers.containsKey(macAddress))
+        messengers.get(macAddress).sendMessage(message)
+  }
+
+  def sendToAll(message: Type) = {
+    foreach(op = {
+      messenger => messenger.sendMessage(message)
+    })
+  }
+
   def foreach(op: Messenger[Type] => Unit) = {
     messengers.forEach(new BiConsumer[Array[Byte], Messenger[Type]] {
       override def accept(macAddress: Array[Byte], messenger: Messenger[Type]): Unit = {
         op(messenger)
       }
     })
-  }
-
-  def sendByMacAddress(macAddress: Array[Byte], message: Type) = {
-    if (macAddress != null)
-      if (messengers.containsKey(macAddress))
-        messengers.get(macAddress).sendMessage(message)
   }
 }

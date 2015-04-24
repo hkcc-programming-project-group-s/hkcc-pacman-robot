@@ -1,12 +1,11 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
+package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 //import com.sun.istack.internal.NotNull;
 
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanelHandler;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
@@ -16,12 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.Random;
 import java.util.Vector;
 
 //import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
 
-public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
+public class SetRobotTypeContentPanel extends AbstractContentPanel implements DeviceInfoJPanelHandler {
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(198, 228, 255);
     public DeviceInfoJPanelHandler handler = this;
     /*public Vector<DeviceInfoJPanel> controllerJPanels = new Vector<DeviceInfoJPanel>();
@@ -43,8 +41,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     /**
      * Create the frame.
      */
-    public SetDeviceInfo(GameMonitorJFrame gameMonitorJFrame) {
-        super(gameMonitorJFrame);
+    public SetRobotTypeContentPanel() {
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(myDispatcher);
 
@@ -174,9 +171,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         //System.out.println("REMOVE HERE!!!");
         clicked.deviceInfoContainer.remove(clicked);
         clicked.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DELETE());
-        deviceInfoMessenger.sendMessage(clicked.deviceInfo);
-        //TODO call messenger
-
+        GameMonitorSAO.updateDeviceInfo(clicked.deviceInfo);
     }
 
     //@NotNull
@@ -200,7 +195,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
      * fetch DeviceInfo from server
      */
     public void loadDeviceInfo() {
-        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(GameMonitorSAO.fetchDeviceInfos());
         for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))
                 unclasses_panel.add(new DeviceInfoJPanel(deviceInfo, handler));
@@ -218,48 +213,30 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
 
     @Override
     public boolean onLeave() {
-        //TODO if student num != controller num
-        int num_student = 0, num_controller = 0;
-
-        for (DeviceInfoJPanel controllerNum : controller_panel.deviceInfoJPanels) num_controller++;
-        for (DeviceInfoJPanel studentNum : student_robot_panel.deviceInfoJPanels) num_student++;
+        int num_controller = controller_panel.deviceInfoJPanels.size();
+        int num_student = student_robot_panel.deviceInfoJPanels.size();
 
         if (num_student > num_controller)
-            JOptionPane.showConfirmDialog(this, "Too many student. Please remove some of student robot", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Too many student. Please remove some of student robot",
+                    "Oops", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
         else if (num_student < num_controller)
-            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot",
+                    "Oops", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
         if (num_controller != num_student)
             return false;
 
-        try {
-            //TODO sent robot types to server
-            // use messenger to send to server
-            controller_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            student_robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            deadline_robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            assignment_robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            if (new Random().nextBoolean())
-                throw new IOException();
-        } catch (IOException e1) {
-            //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-            return false;
-        } catch (Exception e2) {
-            //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-            //e2.printStackTrace();
-            System.out.println(e2.toString());
-            return false;
-        }
+        controller_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
+        student_robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
+        deadline_robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
+        assignment_robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
 
         unclasses_panel.clear();
         assignment_robot_panel.clear();
         deadline_robot_panel.clear();
         student_robot_panel.clear();
         controller_panel.clear();
-        System.out.println();
-        return true;
 
+        return true;
     }
 
     @Override
@@ -282,6 +259,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
         unclasses_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.132", "Robot 7"), this));
         unclasses_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.155.131", "Robot 8"), this));*/
         revalidate();
+        updateUI();
     }
 
     boolean onKeyReleased(KeyEvent e) throws IOException {

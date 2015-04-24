@@ -1,5 +1,6 @@
 package edu.hkcc.pacmanrobot.utils.studentrobot.code
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.Message
 
@@ -13,7 +14,7 @@ object GameStatus extends Message {
     type GameStatus = Value
     val SETUP,START,RESUME,STOP,PAUSE,WIN,LOSE=Value
   }*/
-  val STATE_NORMAL: Byte = 0x08
+  val STATE_REQUEST: Byte = 0x08
   val STATE_SETUP: Byte = 0x01
   val STATE_START: Byte = 0x02
   val STATE_RESUME: Byte = 0x03
@@ -26,10 +27,19 @@ object GameStatus extends Message {
 }
 
 
-/*
-* message is not empty only when status is paused
-* */
-//class GameStatus(val status: GameStatus.GameStatusType,val message: String = "") extends Serializable
+/**
+ *
+ * @param status
+ * @param message
+ * has content only when status is paused
+ * @param furtherInfo
+ * when network problem is encountered : device type
+ * when required by user : STATE_REQUEST
+ */
 class GameStatus(var status: Byte, var message: String = "", var furtherInfo: Byte = 0) extends Message {
+  Debug.getInstance().printMessage("GameStatus init 0%")
+
   override def port(): Int = Config.PORT_GAME_STATUS
+
+  Debug.getInstance().printMessage("GameStatus init 100%")
 }

@@ -1,11 +1,10 @@
-package edu.hkcc.pacmanrobot.controller.gamemonitor.gui.content;
+package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 import com.sun.istack.internal.NotNull;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorContentJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoContainer;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanel;
-import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.utils.DeviceInfoJPanelHandler;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanelHandler;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
@@ -14,11 +13,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.util.Random;
 import java.util.Vector;
 
-public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
+public class SetDeviceNameContentPanel extends AbstractContentPanel implements DeviceInfoJPanelHandler {
     public DeviceInfoJPanelHandler handler = this;
     DeviceInfoContainer controller_panel = new DeviceInfoContainer("controller");
     DeviceInfoContainer robot_panel = new DeviceInfoContainer("Robots");
@@ -27,8 +24,8 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     Vector<DeviceInfoContainer> deviceInfoContainers = new Vector<>();
 
 
-    public SetDeviceName(GameMonitorJFrame gameMonitorJFrame) {
-        super(gameMonitorJFrame);
+    public SetDeviceNameContentPanel() {
+        super();
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(myDispatcher);
 
@@ -66,13 +63,13 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
         Component horizontalStrut = Box.createHorizontalStrut(20);
         button_panel.add(horizontalStrut);
 
-        JButton btnRomove = new JButton("Romove");
-        btnRomove.addActionListener(new ActionListener() {
+        JButton btnRemove = new JButton("Remove");
+        btnRemove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (clicked != null) remove(clicked);
             }
         });
-        button_panel.add(btnRomove);
+        button_panel.add(btnRemove);
 
         initView();
     }
@@ -88,9 +85,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     void remove(@NotNull DeviceInfoJPanel target) {
         target.deviceInfoContainer.remove(target);
         target.deviceInfo.deviceType_$eq(DeviceInfo.DEVICE_TYPE_DELETE());
-        deviceInfoMessenger.sendMessage(target.deviceInfo);
-        //TODO call messenger
-
+        GameMonitorSAO.updateDeviceInfo(target.deviceInfo);
     }
 
     void rename(@NotNull DeviceInfoJPanel target) {
@@ -134,24 +129,8 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
 
     @Override
     public boolean onLeave() {
-        try {
-            controller_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            robot_panel.deviceInfoJPanels.forEach(p -> deviceInfoMessenger.sendMessage(p.deviceInfo));
-            //TODO sent robot types to server
-            // use messenger to send to server
-            if (new Random().nextBoolean())
-                throw new IOException();
-        } catch (IOException e1) {
-            //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "Connect Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-            return false;
-        } catch (Exception e2) {
-            //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "Connect Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-            //e2.printStackTrace();
-            System.out.println(e2.toString());
-            return false;
-        }
+        controller_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
+        robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
         controller_panel.clear();
         robot_panel.clear();
         return true;
@@ -162,13 +141,12 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     public void onEnter() {
         controller_panel.clear();
         robot_panel.clear();
-        addDeviceInfo();
-        //start request
+        loadDeviceInfo();
     }
 
 
-    public void addDeviceInfo() {
-        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(master.sao.fetchDeviceInfos());
+    public void loadDeviceInfo() {
+        Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(GameMonitorSAO.fetchDeviceInfos());
         for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))
                 robot_panel.add(new DeviceInfoJPanel(deviceInfo, handler));

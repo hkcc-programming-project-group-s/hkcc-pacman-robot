@@ -13,6 +13,6 @@ import edu.hkcc.pacmanrobot.utils.Config
  * true => server tell robot to light on
  * false -> server tell robot to reset position
  */
-class FlashRequest(val macAddress: Array[Byte], val shouldFlash: Boolean) extends Message {
+class FlashRequest(val macAddress: Array[Byte], val shouldFlash: Boolean = false) extends Message {
   override def port(): Int = Config.PORT_FLASH_REQUEST
 }

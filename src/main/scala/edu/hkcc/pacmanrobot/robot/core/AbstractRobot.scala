@@ -8,7 +8,7 @@ import edu.hkcc.pacmanrobot.utils.message.messenger.ObstacleMapMessenger
 /**
  * Created by 13058536A on 3/25/2015.
  */
-abstract class Robot(val defaultRobot: DefaultRobot) extends Thread {
+abstract class AbstractRobot extends Thread {
   val mapMessenger = new ObstacleMapMessenger()
   val bufferMap = new ObstacleMap
   val mapThread = new Thread(new Runnable {

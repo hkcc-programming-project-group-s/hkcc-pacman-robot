@@ -5,7 +5,7 @@ import java.net._
 import java.rmi.server.ServerNotActiveException
 import java.util.concurrent.{ConcurrentLinkedQueue, Semaphore}
 
-import edu.hkcc.pacmanrobot.server.MessengerManager
+import edu.hkcc.pacmanrobot.server.network.MessengerManager
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.Worker.forkAndStart
 import edu.hkcc.pacmanrobot.utils.exception.ClientSocketClosedException
@@ -41,7 +41,7 @@ object Messenger {
           if (isServer)
             throw new ServerNotActiveException("Server is not available")
           else
-            Thread.sleep(Config.RECONNECTION_TIMEOUT)
+            Thread.sleep(Config.RECONNECTION_INTERVAL)
         }
       }
     } while (socket.isClosed || !socket.isConnected)
@@ -53,14 +53,10 @@ object Messenger {
 abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerManager: MessengerManager[Type],
                                val SEND_INTERVAL: Long = 50, val GET_INTERVAL: Long = 50)
   extends Thread {
+  var running = false
 
   def stopThread = {
-    inputThread.interrupt
-    inputThread.stop
-    outputThread.interrupt
-    outputThread.stop
-    currentMessenger.interrupt
-    currentMessenger.stop
+    running = false
   }
 
   val currentMessenger = this
@@ -68,7 +64,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   var outputStream: ObjectOutputStream = null
   val inputThread: Thread = new Thread(new Runnable {
     override def run: Unit = {
-      while (!isInterrupted) {
+      while (running) {
         try {
           receiveMessage
         }
@@ -83,7 +79,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   })
   val outputThread: Thread = new Thread(new Runnable {
     override def run = {
-      while (!isInterrupted) {
+      while (running) {
         try {
           sendMessage
           Thread.sleep(SEND_INTERVAL)
@@ -233,7 +229,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
 
   //  @throws(classOf[ClientSocketClosedException[Type]])
   override def run: Unit = {
-    //running = true
+    running = true
     println("init messenger on port:" + port)
     try
       checkConnection()
@@ -265,8 +261,7 @@ abstract class Messenger[Type](var socket: Socket, val port: Int, val messengerM
   }
 
   override def interrupt = {
-    inputThread.interrupt
-    outputThread.interrupt
+    running = false
     super.interrupt
   }
 

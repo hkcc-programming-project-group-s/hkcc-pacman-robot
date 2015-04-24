@@ -22,6 +22,12 @@ class MutableParArray[Type] extends {
     semaphore.release()
   }
 
+  def self_(newParArray: ParArray[Type]) = {
+    _self = newParArray
+  }
+
+  def self: ParArray[Type] = _self
+
   def remove(contents: ParArray[Type]): Unit = {
     contents.foreach(m => remove(m))
   }
@@ -31,10 +37,4 @@ class MutableParArray[Type] extends {
     self_(self.filter(m => newContent.equals(m)))
     semaphore.release()
   }
-
-  def self_(newParArray: ParArray[Type]) = {
-    _self = newParArray
-  }
-
-  def self: ParArray[Type] = _self
 }

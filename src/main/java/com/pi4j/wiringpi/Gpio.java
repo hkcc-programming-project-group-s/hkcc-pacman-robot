@@ -593,7 +593,7 @@ public class Gpio {
      * <p>
      * <p>
      * The function will be called when the interrupt triggers. When it is triggered, it’s cleared in the dispatcher
-     * before calling your function, so if a subsequent interrupt fires before you finish your handler, then it won’t
+     * before calling your function, so if a subsequent interrupt fires before you canFinish your handler, then it won’t
      * be missed. (However it can only track one more interrupt, if more than one interrupt fires while one is being
      * handled then they will be ignored)
      * </p>
