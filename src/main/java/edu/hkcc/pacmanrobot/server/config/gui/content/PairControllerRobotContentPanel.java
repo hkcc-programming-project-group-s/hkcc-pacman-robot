@@ -1,7 +1,6 @@
 package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
-import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
@@ -20,7 +19,7 @@ import java.net.MalformedURLException;
 import java.util.Random;
 import java.util.Vector;
 
-public class PairControllerRobotJPanel extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
+public class PairControllerRobotContentPanel extends AbstractContentPanel implements DeviceInfoJPanelHandler {
     private static final int MAX_WRONG_ATTEMPT = 3;
     public final DeviceInfoContainer controller_container = new DeviceInfoContainer("Controllers");
     public final DeviceInfoContainer robot_container = new DeviceInfoContainer("Robots");
@@ -43,7 +42,7 @@ public class PairControllerRobotJPanel extends GameMonitorContentJPanel implemen
      * @throws IOException
      * @throws MalformedURLException
      */
-    public PairControllerRobotJPanel(GameMonitorJFrame gameMonitorJFrame) {
+    public PairControllerRobotContentPanel(GameMonitorJFrame gameMonitorJFrame) {
         super(gameMonitorJFrame);
         setBounds(100, 100, 800, 600);
         setBorder(new EmptyBorder(5, 5, 5, 5));

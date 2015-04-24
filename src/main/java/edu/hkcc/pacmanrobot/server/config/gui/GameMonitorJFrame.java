@@ -3,25 +3,35 @@ package edu.hkcc.pacmanrobot.server.config.gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * this class is lazy singleton
+ */
 public class GameMonitorJFrame extends JFrame {
-
-
+    public static GameMonitorJFrame instance = null;
     public ContentJPanel contentJPanel = new ContentJPanel(this);
     public ControlJPanel controlJPanel = new ControlJPanel(this);
     int WINDOW_WIDTH;
     int WINDOW_HEIGHT;
     LogoJPanel logoJPanel = new LogoJPanel();
 
-    public GameMonitorJFrame() {
-        this(960, 720);
-    }
-
-    public GameMonitorJFrame(int width, int height) {
+    private GameMonitorJFrame(int width, int height) {
         WINDOW_WIDTH = width;
         WINDOW_HEIGHT = height;
         initialize();
     }
 
+    public static GameMonitorJFrame getInstance(int width, int height) {
+        if (instance == null)
+            synchronized (GameMonitorJFrame.class) {
+                if (instance == null)
+                    instance = new GameMonitorJFrame(width, height);
+            }
+        return instance;
+    }
+
+    public static GameMonitorJFrame getInstance() {
+        return getInstance(960, 720);
+    }
 
     /**
      * Initialize the contents of the frame.

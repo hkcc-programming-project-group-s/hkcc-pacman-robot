@@ -1,6 +1,5 @@
 package edu.hkcc.pacmanrobot.server.config.core
 
-import edu.hkcc.pacmanrobot.server.config.gui.content.PairControllerRobotJPanel
 import edu.hkcc.pacmanrobot.server.network.Server_NetworkThread
 import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, DeviceInfo}
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
@@ -14,7 +13,7 @@ object GameMonitorSAO {
   //var deviceInfos: Vector[DeviceInfo] = new Vector[DeviceInfo]
   var reason: String = null
   var canResume: Boolean = true
-  var _pairControllerRobotJPanel: PairControllerRobotJPanel = null
+  //var _pairControllerRobotJPanel: PairControllerRobotContentPanel = null
 
   //  var deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create(Config.PORT_DEVICE_INFO, message => {
   //    //don't use autoget
@@ -22,14 +21,14 @@ object GameMonitorSAO {
 
   def requestFlash(macAddress: Array[Byte], shouldLight: Boolean) = {
     if (shouldLight)
-      Server_NetworkThread.flashLightManager.flash(macAddress)
+      Server_NetworkThread.getInstance().flashLightManager.flash(macAddress)
     else
-      Server_NetworkThread.flashLightManager.clear
+      Server_NetworkThread.getInstance().flashLightManager.clear
   }
 
-  def pairControllerRobotJPanel = _pairControllerRobotJPanel
+  //def pairControllerRobotJPanel = _pairControllerRobotJPanel
 
-  def pairControllerRobotJPanel_=(pairControllerRobotJPanel: PairControllerRobotJPanel) = _pairControllerRobotJPanel = pairControllerRobotJPanel
+  //def pairControllerRobotJPanel_=(pairControllerRobotJPanel: PairControllerRobotContentPanel) = _pairControllerRobotJPanel = pairControllerRobotJPanel
 
   def fetchControllerRobotPairs: java.util.Collection[ControllerRobotPair] = {
     val v = Vector.fill[ControllerRobotPair](0)(null)
@@ -39,7 +38,7 @@ object GameMonitorSAO {
   }
 
   def updateDeviceInfo(deviceInfo: DeviceInfo) = {
-    Server_NetworkThread.deviceInfoManager.deviceInfos.put(deviceInfo.MAC_ADDRESS, deviceInfo)
+    Server_NetworkThread.getInstance().deviceInfoManager.deviceInfos.put(deviceInfo.MAC_ADDRESS, deviceInfo)
   }
 
   def fetchDeviceInfos: java.util.Collection[DeviceInfo] = {
@@ -60,8 +59,8 @@ object GameMonitorSAO {
   }
 
   def gameStatus_(newGameStatus: GameStatus) = {
-    Server_NetworkThread.switchGameStatus(newGameStatus)
+    Server_NetworkThread.getInstance().switchGameStatus(newGameStatus)
   }
 
-  def gameStatus = Server_NetworkThread.gameStatus
+  def gameStatus = Server_NetworkThread.getInstance().gameStatus
 }

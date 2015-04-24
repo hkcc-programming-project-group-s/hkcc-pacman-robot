@@ -11,7 +11,7 @@ import edu.hkcc.pacmanrobot.utils.message.{DeviceInfo, Position, RobotPosition}
 import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Utils}
 import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL11._
+import org.lwjgl.opengl.GL11.{glColor3f, _}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random

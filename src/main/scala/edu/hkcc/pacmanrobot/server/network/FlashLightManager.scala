@@ -1,5 +1,6 @@
 package edu.hkcc.pacmanrobot.server.network
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.Config._
 import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer
 import edu.hkcc.pacmanrobot.utils.message.FlashRequest
@@ -8,9 +9,12 @@ import edu.hkcc.pacmanrobot.utils.message.FlashRequest
  * Created by beenotung on 4/23/15.
  */
 class FlashLightManager() {
+  Debug.getInstance().printError("FlashLightManager init 0%")
   val messengerManager = new MessengerManager[FlashRequest](PORT_FLASH_REQUEST, initMessenger_func = messenger => {
     messenger.sendMessage(new FlashRequest(messenger.getRemoteMacAddress, shouldFlash = false))
   }, autoGet_func = (macAddress, position) => {})
+
+  Debug.getInstance().printError("FlashLightManager init 50%")
   val lastTarget: ConcurrencyDrawer[Array[Byte]] = new ConcurrencyDrawer[Array[Byte]]
 
   def clear = {
@@ -26,4 +30,6 @@ class FlashLightManager() {
     if (lastOne != null)
       messengerManager.sendByMacAddress(lastOne, new FlashRequest(lastOne, shouldFlash = false))
   }
+
+  Debug.getInstance().printError("FlashLightManager init 100%")
 }

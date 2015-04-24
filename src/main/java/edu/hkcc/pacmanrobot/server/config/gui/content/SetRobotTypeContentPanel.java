@@ -3,7 +3,6 @@ package edu.hkcc.pacmanrobot.server.config.gui.content;
 //import com.sun.istack.internal.NotNull;
 
 import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
-import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
@@ -22,7 +21,7 @@ import java.util.Vector;
 
 //import edu.hkcc.pacmanrobot.controller.gamemonitor.gui.GameMonitorJFrame;
 
-public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
+public class SetRobotTypeContentPanel extends AbstractContentPanel implements DeviceInfoJPanelHandler {
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(198, 228, 255);
     public DeviceInfoJPanelHandler handler = this;
     /*public Vector<DeviceInfoJPanel> controllerJPanels = new Vector<DeviceInfoJPanel>();
@@ -44,7 +43,7 @@ public class SetDeviceInfo extends GameMonitorContentJPanel implements DeviceInf
     /**
      * Create the frame.
      */
-    public SetDeviceInfo(GameMonitorJFrame gameMonitorJFrame) {
+    public SetRobotTypeContentPanel(GameMonitorJFrame gameMonitorJFrame) {
         super(gameMonitorJFrame);
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(myDispatcher);

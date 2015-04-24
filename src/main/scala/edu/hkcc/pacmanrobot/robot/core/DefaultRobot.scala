@@ -5,7 +5,7 @@ import edu.hkcc.pacmanrobot.robot.deadlinerobot.DeadlineRobot
 import edu.hkcc.pacmanrobot.robot.studentrobot.StudentRobot
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo._
 import edu.hkcc.pacmanrobot.utils.message.messenger.{Messenger, ObstacleMapMessenger}
-import edu.hkcc.pacmanrobot.utils.message.{DeviceInfo, Position}
+import edu.hkcc.pacmanrobot.utils.message.{DeviceInfo, RobotPosition}
 import edu.hkcc.pacmanrobot.utils.{Config, GameDevice}
 
 /**
@@ -13,7 +13,7 @@ import edu.hkcc.pacmanrobot.utils.{Config, GameDevice}
  */
 object DefaultRobot extends GameDevice {
   val obstacleMapMessenger = new ObstacleMapMessenger
-  val positionMessenger = Messenger.create[Position](Config.PORT_POSITION, message => {}, null)
+  val robotPositionMessenger = Messenger.create[RobotPosition](Config.PORT_ROBOT_POSITION, message => {}, null)
   override var deviceInfo: DeviceInfo = DeviceInfo.create("noname_robot", DeviceInfo.DEVICE_TYPE_UNCLASSED_ROBOT)
   var newRobot: AbstractRobot = null
 
@@ -50,7 +50,7 @@ object DefaultRobot extends GameDevice {
   }
 
   override def init: Unit = {
-    positionMessenger.start()
+    robotPositionMessenger.stopThread
     obstacleMapMessenger.start()
   }
 }

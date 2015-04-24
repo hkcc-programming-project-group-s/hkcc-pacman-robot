@@ -5,7 +5,6 @@ package edu.hkcc.pacmanrobot.server.config.gui.content;
  */
 
 import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
-import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.utils.lang.StringUtils;
 import edu.hkcc.pacmanrobot.utils.message.udpmessage.Encoder;
@@ -17,14 +16,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PauseReason extends GameMonitorContentJPanel {
+public class PauseReasonContentPanel extends AbstractContentPanel {
 
     boolean change_pair = false;
 
     /**
      * Create the frame.
      */
-    public PauseReason(GameMonitorJFrame gameMonitorJFrame) {
+    public PauseReasonContentPanel(GameMonitorJFrame gameMonitorJFrame) {
         super(gameMonitorJFrame);
         setBounds(100, 100, 450, 300);
         JPanel contentPane = new JPanel();

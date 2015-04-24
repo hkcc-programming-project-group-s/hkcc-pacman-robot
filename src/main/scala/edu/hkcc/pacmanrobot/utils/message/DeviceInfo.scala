@@ -81,14 +81,14 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     set_shouldSave
   }
 
+  def set_shouldSave = shouldSave = true
+
   def name = _name
 
   def name_(name: String) = {
     _name = name
     set_shouldSave
   }
-
-  def set_shouldSave = shouldSave = true
 
   override def port(): Int = Config.PORT_DEVICE_INFO
 }

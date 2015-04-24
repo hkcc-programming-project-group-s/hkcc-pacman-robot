@@ -2,7 +2,6 @@ package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 import com.sun.istack.internal.NotNull;
 import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
-import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
@@ -19,7 +18,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 
-public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
+public class SetDeviceNameContentPanel extends AbstractContentPanel implements DeviceInfoJPanelHandler {
     public DeviceInfoJPanelHandler handler = this;
     DeviceInfoContainer controller_panel = new DeviceInfoContainer("controller");
     DeviceInfoContainer robot_panel = new DeviceInfoContainer("Robots");
@@ -28,7 +27,7 @@ public class SetDeviceName extends GameMonitorContentJPanel implements DeviceInf
     Vector<DeviceInfoContainer> deviceInfoContainers = new Vector<>();
 
 
-    public SetDeviceName(GameMonitorJFrame gameMonitorJFrame) {
+    public SetDeviceNameContentPanel(GameMonitorJFrame gameMonitorJFrame) {
         super(gameMonitorJFrame);
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(myDispatcher);

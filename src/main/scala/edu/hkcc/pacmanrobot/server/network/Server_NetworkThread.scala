@@ -1,9 +1,10 @@
 package edu.hkcc.pacmanrobot.server.network
 
-import java.net.InetAddress
+import java.net.{BindException, InetAddress}
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.Config._
 import edu.hkcc.pacmanrobot.utils.Utils.random
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
@@ -15,22 +16,52 @@ import edu.hkcc.pacmanrobot.utils.{Config, Timer}
 
 /**
  * Created by beenotung on 4/2/2015.
+ * this is java compatible lazy singleton
  */
-object Server_NetworkThread extends Thread {
+object Server_NetworkThread {
+  private var instance: Server_NetworkThread = null
+
+  @throws(classOf[BindException])
+  def getInstance(): Server_NetworkThread = {
+    if (instance == null)
+      Server_NetworkThread.synchronized({
+        if (instance == null) {
+          Debug.getInstance().printError("start init Server_NetworkThread")
+          instance = new Server_NetworkThread()
+          Debug.getInstance().printError("finished init Server_NetworkThread")
+          instance.start()
+          Debug.getInstance().printError("started Server_NetworkThread")
+        }
+      })
+    instance
+  }
+}
+
+@throws(classOf[BindException])
+class Server_NetworkThread extends Thread {
+  Debug.getInstance().printError("Server_NetworkThread init 0%")
+
+  Debug.getInstance().printError("init DeviceInfo Manager")
   val deviceInfoManager = new DeviceInfoManager
+
+  Debug.getInstance().printError("init FlashLight Manager")
   val flashLightManager = new FlashLightManager
-  val positions = new ConcurrentHashMap[DeviceInfo, Position]()
-  val positionMessengerManager = new MessengerManager[Position](PORT_POSITION, initMessenger_func = messenger => {}, autoGet_func = {
-    (macAddress, position) => {
-      positions.put(deviceInfoManager.getDeviceInfoByMacAddress(macAddress), position)
-    }
-  })
+
+  val robotPositions = new ConcurrentHashMap[Array[Byte], Position]()
+  Debug.getInstance().printError("init Robot-Position Messenger-Manager")
   val robotPositionMessengerManager = new MessengerManager[RobotPosition](PORT_ROBOT_POSITION, initMessenger_func = messenger => {}, autoGet_func = {
-    (macAddress, position) => {
-      response_robotPosition(macAddress, position.deviceInfo.deviceType)
+    (macAddress, message) => {
+      if (macAddress.equals(message.deviceInfo.MAC_ADDRESS))
+      //update robot position
+        robotPositions.put(message.deviceInfo.MAC_ADDRESS, message.position)
+      else
+      //response request
+        response_robotPosition(macAddress, message)
     }
   })
+
   val controllerRobotPairManager = new ControllerRobotPairManager
+  Debug.getInstance().printError("init Controller-Robot-Pair Messenger-Manager")
   val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, initMessenger_func = messenger => {}, autoGet_func = (macAddress, controllerRobotPair: ControllerRobotPair) => {
     if (controllerRobotPair.shouldSave)
       controllerRobotPairManager.setControllerRobotPair(controllerRobotPair.controller_macAddress, controllerRobotPair.robot_macAddress)
@@ -38,6 +69,8 @@ object Server_NetworkThread extends Thread {
       response_pair(macAddress)
   }
   )
+
+  Debug.getInstance().printError("init Game-Status Messenger-Manager")
   val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS,
     initMessenger_func = { (messenger) => messenger.sendMessage(gameStatus) },
     autoGet_func = { (remoteMacAddress, gameStatus) => {
@@ -47,11 +80,27 @@ object Server_NetworkThread extends Thread {
         switchGameStatus(gameStatus)
     }
     })
+
+  Debug.getInstance().printError("init MovementCommand Messenger-Manager")
   val movementCommandMessengerManager = new MessengerManager[MovementCommand](PORT_MOVEMENT_COMMAND, initMessenger_func = messenger => {}, autoGet_func = (remoteMacAddress, message) => {
     copyMovementCommand(remoteMacAddress, message)
   })
+
+  Debug.getInstance().printError("init Obstacle-Map Manager")
   val obstacleMapManager = new ObstacleMapManager
+
+  Debug.getInstance().printError("init Game-Status")
   var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
+
+  Debug.getInstance().printError("Server_NetworkThread init 40%")
+  @volatile var running = false
+  Debug.getInstance().printError("Server_NetworkThread init 50%")
+
+  override def
+  start = {
+    if (!running)
+      super.start
+  }
 
   def response_gameStatus(macAddress: Array[Byte]): Unit = {
     gameStatusMessengerManager.sendByMacAddress(macAddress, gameStatus)
@@ -67,12 +116,18 @@ object Server_NetworkThread extends Thread {
     controllerRobotPairMessengerManager.sendByMacAddress(macAddress, null)
   }
 
-  def response_robotPosition(macAddress: Array[Byte], robotType: Byte): Unit = {
-
-  }
-
-  def copyMovementCommand(controllerMacAddress: Array[Byte], message: MovementCommand): Unit = {
-    movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
+  def response_robotPosition(macAddress: Array[Byte], message: RobotPosition): Unit = {
+    if (message.deviceInfo.MAC_ADDRESS != null) {
+      //response desired target
+      message.position = robotPositions.get(message.deviceInfo.MAC_ADDRESS)
+      robotPositionMessengerManager.sendByMacAddress(macAddress, message)
+    }
+    else {
+      //response desired types
+      deviceInfoManager.getDeviceInfosByDeviceType(message.deviceInfo.deviceType).foreach(deviceInfo =>
+        robotPositionMessengerManager.sendByMacAddress(macAddress, new RobotPosition(deviceInfo, robotPositions.get(deviceInfo.MAC_ADDRESS)))
+      )
+    }
   }
 
   /*
@@ -82,6 +137,9 @@ object Server_NetworkThread extends Thread {
     obstacleMap.merge(message)
   })*/
 
+  def copyMovementCommand(controllerMacAddress: Array[Byte], message: MovementCommand): Unit = {
+    movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
+  }
 
   def switchGameStatus(newGameStatus: GameStatus): Unit = {
     if (GameStatus.STATE_REQUEST.equals(newGameStatus.status)) return
@@ -107,9 +165,11 @@ object Server_NetworkThread extends Thread {
   def gameSetup: Unit = {}
 
   override def run = {
+    println("start run server service thread")
     setup
     test
-    while (true) {
+    running = true
+    while (running) {
       Thread.sleep(SAVE_INTERVAL)
       save
     }
@@ -151,7 +211,7 @@ object Server_NetworkThread extends Thread {
     gameStatusMessengerManager.start
     movementCommandMessengerManager.start
     obstacleMapManager.start
-    positionMessengerManager.start
+    robotPositionMessengerManager.start
   }
 
   def load = {
@@ -163,5 +223,8 @@ object Server_NetworkThread extends Thread {
 
   def save = {
     //TODO save status to database
+    println("start backup process")
   }
+
+  Debug.getInstance().printError("Server_NetworkThread init 100%")
 }

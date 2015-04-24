@@ -1,7 +1,6 @@
 package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
-import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorContentJPanel;
 import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
@@ -17,7 +16,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 
-public class PositionSetting extends GameMonitorContentJPanel implements DeviceInfoJPanelHandler {
+public class SetRobotPositionContentPanel extends AbstractContentPanel implements DeviceInfoJPanelHandler {
     public DeviceInfoJPanelHandler handler = this;
     DeviceInfoContainer robot_panel = new DeviceInfoContainer("Pending Robot");
     DeviceInfoContainer moving_robot_panel = new DeviceInfoContainer("Moving Robots");
@@ -39,7 +38,7 @@ public class PositionSetting extends GameMonitorContentJPanel implements DeviceI
     /**
      * Create the frame.
      */
-    public PositionSetting(GameMonitorJFrame gameMonitorJFrame) {
+    public SetRobotPositionContentPanel(GameMonitorJFrame gameMonitorJFrame) {
         super(gameMonitorJFrame);
         setBounds(100, 100, 800, 600);
         setBorder(new EmptyBorder(5, 5, 5, 5));

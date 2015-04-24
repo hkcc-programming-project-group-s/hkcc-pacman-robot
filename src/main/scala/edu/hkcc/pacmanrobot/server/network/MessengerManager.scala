@@ -1,6 +1,6 @@
 package edu.hkcc.pacmanrobot.server.network
 
-import java.net.{ServerSocket, Socket}
+import java.net.{BindException, ServerSocket, Socket}
 import java.util.concurrent.{ConcurrentHashMap, Semaphore}
 import java.util.function.BiConsumer
 
@@ -14,6 +14,7 @@ object MessengerManager {
   def nothing[Type](messenger: Messenger[Type]): Unit = {}
 }
 
+@throws(classOf[BindException])
 class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenger[Type] => Unit), autoGet_func: ((Array[Byte], Type) => Unit))
   extends Thread {
 

@@ -9,6 +9,8 @@ import java.util.Calendar;
 public class Debug {
     public static Debug instance = null;
     public final byte SERVER_NOT_FOUND = 0x01;
+    public final byte DUPLICATED_SERVER_LAUNCH = 0x02;
+    public boolean activated = true;
 
     private Debug() {
     }
@@ -24,7 +26,7 @@ public class Debug {
     }
 
     public void printError(String message) {
-        System.out.println(Calendar.getInstance().getTime().toString());
-        System.out.println(message);
+        if (activated)
+            System.out.println(Calendar.getInstance().getTime().toString() + "\t" + message);
     }
 }

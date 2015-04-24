@@ -16,14 +16,14 @@ object Timer {
     })
   }
 
-  def sleep(time: Long) = {
-    Thread sleep time
-  }
-
   def setTimeDelay(callback: => Unit, time: Long) {
     forkAndStart({
       sleep(time)
       callback
     })
+  }
+
+  def sleep(time: Long) = {
+    Thread sleep time
   }
 }

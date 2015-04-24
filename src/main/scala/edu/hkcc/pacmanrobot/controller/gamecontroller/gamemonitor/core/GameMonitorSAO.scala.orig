@@ -32,7 +32,7 @@ class GameMonitorSAO(val server: Server) {
   var flashRequestMessenger: Messenger[FlashRequest] = Messenger.create(Config.PORT_FLASH_REQUEST, message => {}, null)
 
   var controllerRobotPairMessenger: Messenger[ControllerRobotPair] = Messenger.create(Config.PORT_CONTROLLER_ROBOT_PAIR, message => {
-    if (pairControllerRobotJPanel != null)
+    if (pairControllerRobotContentPanel != null)
       fetchControllerRobotPairs //TODO
   }, null)
 
@@ -40,9 +40,9 @@ class GameMonitorSAO(val server: Server) {
 
   var gameStatus: GameStatus = server.gameStatus
 
-  def pairControllerRobotJPanel = _pairControllerRobotJPanel
+  def pairControllerRobotContentPanel = _pairControllerRobotJPanel
 
-  def pairControllerRobotJPanel_=(pairControllerRobotJPanel: PairControllerRobotJPanel) = _pairControllerRobotJPanel = pairControllerRobotJPanel
+  def pairControllerRobotJPanel_=(pairControllerRobotContentPanel: PairControllerRobotJPanel) = _pairControllerRobotJPanel = pairControllerRobotContentPanel
 
   def fetchControllerRobotPairs: java.util.Collection[ControllerRobotPair] = {
     val v = Vector.fill[ControllerRobotPair](0)(null)

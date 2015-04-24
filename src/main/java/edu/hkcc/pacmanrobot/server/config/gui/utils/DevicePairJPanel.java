@@ -1,6 +1,6 @@
 package edu.hkcc.pacmanrobot.server.config.gui.utils;
 
-import edu.hkcc.pacmanrobot.server.config.gui.content.PairControllerRobotJPanel;
+import edu.hkcc.pacmanrobot.server.config.gui.content.PairControllerRobotContentPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ public class DevicePairJPanel extends JPanel {
     public static final Color unclicked_color = DeviceInfoJPanel.unclicked_color;
     public final DeviceInfoJPanel controllerJPanel;
     public final DeviceInfoJPanel robotJPanel;
-    private final PairControllerRobotJPanel master;
+    private final PairControllerRobotContentPanel master;
     public boolean isClicked = false;
     public boolean isSelected = false;
     LineBox verticalBox;
@@ -23,8 +23,8 @@ public class DevicePairJPanel extends JPanel {
     /**
      * Create the panel.
      */
-    public DevicePairJPanel(PairControllerRobotJPanel pairControllerRobotJPanel, DeviceInfoJPanel controllerJPanel, DeviceInfoJPanel robotJPanel) {
-        master = pairControllerRobotJPanel;
+    public DevicePairJPanel(PairControllerRobotContentPanel pairControllerRobotContentPanel, DeviceInfoJPanel controllerJPanel, DeviceInfoJPanel robotJPanel) {
+        master = pairControllerRobotContentPanel;
         this.controllerJPanel = controllerJPanel;
         this.robotJPanel = robotJPanel;
         //controllerJPanel.setBackground(new Color(0, 0, 0, 0));
@@ -66,7 +66,7 @@ public class DevicePairJPanel extends JPanel {
         });
     }
 
-    /*public PairControllerRobotJPanel getMaster() {
+    /*public PairControllerRobotContentPanel getMaster() {
         if (controllerJPanel.master_pair.equals(robotJPanel.master_pair))
             throw new IllegalComponentStateException();
         return controllerJPanel.master_pair;

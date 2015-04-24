@@ -1,6 +1,5 @@
 package edu.hkcc.pacmanrobot.server.config.gui;
 
-import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
 import edu.hkcc.pacmanrobot.server.config.gui.content.*;
 import myutils.gui.cardlayout.AbstractCardJPanel;
 
@@ -10,7 +9,7 @@ public class ContentJPanel extends AbstractCardJPanel {
 
     private final GameMonitorJFrame master;
     public int currentPage = 0;
-    Vector<GameMonitorContentJPanel> contents;
+    Vector<AbstractContentPanel> contents;
 
     public ContentJPanel(GameMonitorJFrame master) {
         super();
@@ -20,14 +19,14 @@ public class ContentJPanel extends AbstractCardJPanel {
     @Override
     protected void myInit() {
         contents = new Vector<>();
-        contents.add(new SetDeviceName(master));
-        contents.add(new SetDeviceInfo(master));
-        PairControllerRobotJPanel pairControllerRobotJPanel = new PairControllerRobotJPanel(master);
-        GameMonitorSAO.pairControllerRobotJPanel_$eq(pairControllerRobotJPanel);
-        contents.add(pairControllerRobotJPanel);
-        contents.add(new PositionSetting(master));
-        contents.add(new PauseReason(master));
-        contents.add(pairControllerRobotJPanel);
+        contents.add(new SetDeviceNameContentPanel(master));
+        contents.add(new SetRobotTypeContentPanel(master));
+        PairControllerRobotContentPanel pairControllerRobotContentPanel = new PairControllerRobotContentPanel(master);
+        //GameMonitorSAO.pairControllerRobotJPanel_$eq(pairControllerRobotContentPanel);
+        contents.add(pairControllerRobotContentPanel);
+        contents.add(new SetRobotPositionContentPanel(master));
+        contents.add(new PauseReasonContentPanel(master));
+        contents.add(pairControllerRobotContentPanel);
 
         for (int i = 0; i < contents.size(); i++)
             addToCards(contents.get(i), i + "");

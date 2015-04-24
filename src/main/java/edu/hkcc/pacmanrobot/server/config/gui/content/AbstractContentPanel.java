@@ -1,14 +1,16 @@
-package edu.hkcc.pacmanrobot.server.config.gui;
+package edu.hkcc.pacmanrobot.server.config.gui.content;
+
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
 
 import javax.swing.*;
 
 /**
  * Created by 13058456a on 4/13/2015.
  */
-public abstract class GameMonitorContentJPanel extends JPanel {
+public abstract class AbstractContentPanel extends JPanel {
     public final GameMonitorJFrame master;
 
-    public GameMonitorContentJPanel(GameMonitorJFrame gameMonitorJFrame) {
+    public AbstractContentPanel(GameMonitorJFrame gameMonitorJFrame) {
         this.master = gameMonitorJFrame;
     }
 

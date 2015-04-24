@@ -1,5 +1,6 @@
 package edu.hkcc.pacmanrobot.utils.studentrobot.code
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.Message
 
@@ -31,5 +32,9 @@ object GameStatus extends Message {
 * */
 //class GameStatus(val status: GameStatus.GameStatusType,val message: String = "") extends Serializable
 class GameStatus(var status: Byte, var message: String = "", var furtherInfo: Byte = 0) extends Message {
+  Debug.getInstance().printError("GameStatus init 0%")
+
   override def port(): Int = Config.PORT_GAME_STATUS
+
+  Debug.getInstance().printError("GameStatus init 100%")
 }

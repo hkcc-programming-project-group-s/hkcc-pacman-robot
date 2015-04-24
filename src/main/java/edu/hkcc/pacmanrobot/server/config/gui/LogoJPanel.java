@@ -11,7 +11,7 @@ public class LogoJPanel extends JPanel {
     /**
      * Create the panel.
      */
-    public static final String LOGO = "https://dl.dropboxusercontent.com/u/13757442/htm/robocode-tank.png";
+    public static final String LOGO = "https://dl.dropboxusercontent.com/u/13757442/htm/pacman-logo-desktop.png";
 
     public LogoJPanel() {
         JLabel lblLogoimage = null;

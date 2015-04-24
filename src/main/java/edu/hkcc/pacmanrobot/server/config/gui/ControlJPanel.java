@@ -49,9 +49,6 @@ public class ControlJPanel extends JPanel {
         });
         add(btnFinish);
 
-        updateView();
-
-
         //TODO check logic (should compare, not hardcode disable)
         btnResume = new JButton("Resume");
         btnResume.setEnabled(false);
@@ -61,9 +58,6 @@ public class ControlJPanel extends JPanel {
             }
         });
         add(btnResume);
-
-        updateView();
-
 
         btnStop = new JButton("Stop");
         btnStop.addActionListener(new ActionListener() {
