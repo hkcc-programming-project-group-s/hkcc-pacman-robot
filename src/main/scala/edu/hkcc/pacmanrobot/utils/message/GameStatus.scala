@@ -27,14 +27,19 @@ object GameStatus extends Message {
 }
 
 
-/*
-* message is not empty only when status is paused
-* */
-//class GameStatus(val status: GameStatus.GameStatusType,val message: String = "") extends Serializable
+/**
+ *
+ * @param status
+ * @param message
+ * has content only when status is paused
+ * @param furtherInfo
+ * when network problem is encountered : device type
+ * when required by user : STATE_REQUEST
+ */
 class GameStatus(var status: Byte, var message: String = "", var furtherInfo: Byte = 0) extends Message {
-  Debug.getInstance().printError("GameStatus init 0%")
+  Debug.getInstance().printMessage("GameStatus init 0%")
 
   override def port(): Int = Config.PORT_GAME_STATUS
 
-  Debug.getInstance().printError("GameStatus init 100%")
+  Debug.getInstance().printMessage("GameStatus init 100%")
 }

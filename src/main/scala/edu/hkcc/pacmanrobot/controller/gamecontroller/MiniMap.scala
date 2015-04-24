@@ -158,19 +158,6 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
       render_square(getXForOpenGL(x), getYForOpenGL(y), 0, obstacle_radius * 2)
     }
 
-    def getXForOpenGL(x: Int): Float = {
-      ((x - range._1._1) / x_range * 2 - 1) * 0.8f
-    }
-
-    def getYForOpenGL(y: Int): Float = {
-      ((y - range._2._1) / y_range * 2 - 1) * 0.8f
-    }
-
-    def render_obstacle(obstacle: OpenglObstacle): Unit = {
-      glColor3f(obstacle.R, obstacle.G, obstacle.B)
-      render_square(obstacle.x, obstacle.y, 0, obstacle_radius)
-    }
-
     /**
      *
      * @param cx
@@ -189,6 +176,19 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
       glVertex3f(cx + r, cy + r, cz)
       glVertex3f(cx - r, cy + r, cz)
       glEnd()
+    }
+
+    def getXForOpenGL(x: Int): Float = {
+      ((x - range._1._1) / x_range * 2 - 1) * 0.8f
+    }
+
+    def getYForOpenGL(y: Int): Float = {
+      ((y - range._2._1) / y_range * 2 - 1) * 0.8f
+    }
+
+    def render_obstacle(obstacle: OpenglObstacle): Unit = {
+      glColor3f(obstacle.R, obstacle.G, obstacle.B)
+      render_square(obstacle.x, obstacle.y, 0, obstacle_radius)
     }
 
     class OpenglObstacle(val x: Float, val y: Float, ratio: Float) extends Comparable[OpenglObstacle] {

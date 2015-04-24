@@ -34,7 +34,7 @@ object ObstacleMapManager {
 }
 
 class ObstacleMapManager extends MessengerManager[ObstacleMap](Config.PORT_MAP, initMessenger_func = messenger => messenger.sendMessage(ObstacleMapManager.obstacleMap), autoGet_func = (remoteMacAddress, map) => ObstacleMapManager.autoGet_func(remoteMacAddress, map)) {
-  Debug.getInstance().printError("MessengerManager init 0%")
+  Debug.getInstance().printMessage("MessengerManager init 0%")
 
   //override def messengers = ???
   /*override def genMessenger(socket: Socket): Messenger[ObstacleMap] = {
@@ -53,5 +53,5 @@ class ObstacleMapManager extends MessengerManager[ObstacleMap](Config.PORT_MAP, 
     add(newMessenger)
   }
 
-  Debug.getInstance().printError("MessengerManager init 100%")
+  Debug.getInstance().printMessage("MessengerManager init 100%")
 }

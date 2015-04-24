@@ -25,7 +25,7 @@ public class Debug {
         return instance;
     }
 
-    public void printError(String message) {
+    public void printMessage(String message) {
         if (activated)
             System.out.println(Calendar.getInstance().getTime().toString() + "\t" + message);
     }

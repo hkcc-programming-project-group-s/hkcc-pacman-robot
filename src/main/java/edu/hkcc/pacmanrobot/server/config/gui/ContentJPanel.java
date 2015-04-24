@@ -1,5 +1,7 @@
 package edu.hkcc.pacmanrobot.server.config.gui;
 
+import edu.hkcc.pacmanrobot.debug.Debug;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
 import edu.hkcc.pacmanrobot.server.config.gui.content.*;
 import myutils.gui.cardlayout.AbstractCardJPanel;
 
@@ -16,54 +18,60 @@ public class ContentJPanel extends AbstractCardJPanel {
         this.master = master;
     }
 
+
+    public boolean canPrev() {
+        return hasPrev() && !hasFinishedConfig();
+    }
+
     @Override
     protected void myInit() {
         contents = new Vector<>();
-        contents.add(new SetDeviceNameContentPanel(master));
-        contents.add(new SetRobotTypeContentPanel(master));
-        PairControllerRobotContentPanel pairControllerRobotContentPanel = new PairControllerRobotContentPanel(master);
-        //GameMonitorSAO.pairControllerRobotJPanel_$eq(pairControllerRobotContentPanel);
-        contents.add(pairControllerRobotContentPanel);
-        contents.add(new SetRobotPositionContentPanel(master));
-        contents.add(new PauseReasonContentPanel(master));
-        contents.add(pairControllerRobotContentPanel);
+        contents.add(new SetDeviceNameContentPanel());
+        contents.add(new SetRobotTypeContentPanel());
+        contents.add(new PairControllerRobotContentPanel());
+        contents.add(new FlashRobotContentPanel());
+        contents.add(new MinimapContentPanel());
+        contents.add(new PauseReasonContentPanel());
+        contents.add(new PairControllerRobotContentPanel());
 
         for (int i = 0; i < contents.size(); i++)
             addToCards(contents.get(i), i + "");
     }
 
-    public boolean canNext() {
-        //contents[currentPage].
-        return hasNext();
-    }
-
     public void next() {
-        if (canNext() && contents.get(currentPage).onLeave())
+        if (hasNext() && contents.get(currentPage).onLeave())
             currentPage++;
         switchToCard(currentPage + "");
     }
 
     public void prev() {
-        if (canPrev() && contents.get(currentPage).onLeave())
+        if (hasPrev() && contents.get(currentPage).onLeave())
             currentPage--;
         switchToCard(currentPage + "");
-    }
-
-    public boolean canPrev() {
-        //check content
-        return hasPrev();
     }
 
     public boolean hasNext() {
         return currentPage + 1 < contents.size();
     }
 
-    public boolean resumePage() {
-        return (currentPage + 2 < contents.size());
+    public boolean isResumePage() {
+        return contents.get(currentPage).getClass().equals(MinimapContentPanel.class);
     }
 
-    public boolean finish() {
-        return (currentPage + 3 >= contents.size()) || (currentPage + 1 >= contents.size());
+    public boolean isPausedPage() {
+        return contents.get(currentPage).getClass().equals(PauseReasonContentPanel.class);
+    }
+
+    public boolean canResume() {
+        return isPausedPage() && GameMonitorSAO.canResume();
+    }
+
+    public boolean canPause() {
+        return isResumePage();
+    }
+
+    public boolean canFinish() {
+        return currentPage == getFirstPageNumber(FlashRobotContentPanel.class);
     }
 
     public boolean pairControllerRobotPage() {
@@ -72,5 +80,38 @@ public class ContentJPanel extends AbstractCardJPanel {
 
     public boolean hasPrev() {
         return currentPage > 0;
+    }
+
+    @Override
+    public void switchToCard(String label) {
+        Debug.getInstance().printMessage("Content Panel switch view: " + contents.get(Integer.parseInt(label)).getClass().getSimpleName());
+        super.switchToCard(label);
+    }
+
+
+    public void switchToCard(Class _class) {
+        int id = getFirstPageNumber(_class);
+        if (id >= 0)
+            switchToCard(id + "");
+    }
+
+    public int getFirstPageNumber(Class _class) {
+        for (int i = 0; i < contents.size(); i++)
+            if (_class.equals(contents.get(i).getClass()))
+                return i;
+        return -1;
+    }
+
+    public boolean hasFinishedConfig() {
+        return currentPage > getFirstPageNumber(FlashRobotContentPanel.class);
+        //return currentPage >= getFirstPageNumber(PauseReasonContentPanel.class);
+    }
+
+    public boolean canStop() {
+        return hasFinishedConfig();
+    }
+
+    public boolean canNext() {
+        return hasNext() && !hasFinishedConfig() && !contents.get(currentPage).getClass().equals(FlashRobotContentPanel.class);
     }
 }

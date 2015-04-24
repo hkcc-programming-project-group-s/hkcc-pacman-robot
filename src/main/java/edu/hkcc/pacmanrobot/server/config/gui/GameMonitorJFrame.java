@@ -1,5 +1,7 @@
 package edu.hkcc.pacmanrobot.server.config.gui;
 
+import edu.hkcc.pacmanrobot.debug.Debug;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,11 +10,12 @@ import java.awt.*;
  */
 public class GameMonitorJFrame extends JFrame {
     public static GameMonitorJFrame instance = null;
-    public ContentJPanel contentJPanel = new ContentJPanel(this);
-    public ControlJPanel controlJPanel = new ControlJPanel(this);
+
+    public ContentJPanel contentJPanel;
+    public ControlJPanel controlJPanel;
     int WINDOW_WIDTH;
     int WINDOW_HEIGHT;
-    LogoJPanel logoJPanel = new LogoJPanel();
+    LogoJPanel logoJPanel;
 
     private GameMonitorJFrame(int width, int height) {
         WINDOW_WIDTH = width;
@@ -23,8 +26,9 @@ public class GameMonitorJFrame extends JFrame {
     public static GameMonitorJFrame getInstance(int width, int height) {
         if (instance == null)
             synchronized (GameMonitorJFrame.class) {
-                if (instance == null)
+                if (instance == null) {
                     instance = new GameMonitorJFrame(width, height);
+                }
             }
         return instance;
     }
@@ -37,8 +41,14 @@ public class GameMonitorJFrame extends JFrame {
      * Initialize the contents of the frame.
      */
     private void initialize() {
+        contentJPanel = new ContentJPanel(this);
+        controlJPanel = new ControlJPanel(this);
+        logoJPanel = new LogoJPanel();
+
+        Debug.getInstance().printMessage("Game MonitorJFrame initialize");
         setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
-        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        //setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         getContentPane().add(logoJPanel, BorderLayout.NORTH);
         getContentPane().add(contentJPanel, BorderLayout.CENTER);
@@ -62,19 +72,29 @@ public class GameMonitorJFrame extends JFrame {
         // TODO Auto-generated method stub
     }
 
-    public boolean resumePage() {
-        return !contentJPanel.resumePage();
-    }
 
-    public boolean hasNext() {
-        return contentJPanel.hasNext();
-    }
-
-    public boolean hasPrev() {
-        return contentJPanel.hasPrev();
+    public boolean canNext() {
+        return contentJPanel.canNext();
     }
 
     public boolean canFinish() {
-        return contentJPanel.finish();
+        return contentJPanel.canFinish();
+    }
+
+    public boolean canResume() {
+        return contentJPanel.canResume();
+    }
+
+    public boolean canStop() {
+        return contentJPanel.canStop();
+    }
+
+    public boolean canPrev() {
+        return contentJPanel.canPrev();
+    }
+
+    public boolean canPause() {
+        return contentJPanel.canPause();
     }
 }
+

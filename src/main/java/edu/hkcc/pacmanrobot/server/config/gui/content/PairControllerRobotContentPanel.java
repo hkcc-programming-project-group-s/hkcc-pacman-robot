@@ -1,7 +1,6 @@
 package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
-import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanelHandler;
@@ -16,7 +15,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Random;
 import java.util.Vector;
 
 public class PairControllerRobotContentPanel extends AbstractContentPanel implements DeviceInfoJPanelHandler {
@@ -42,8 +40,7 @@ public class PairControllerRobotContentPanel extends AbstractContentPanel implem
      * @throws IOException
      * @throws MalformedURLException
      */
-    public PairControllerRobotContentPanel(GameMonitorJFrame gameMonitorJFrame) {
-        super(gameMonitorJFrame);
+    public PairControllerRobotContentPanel() {
         setBounds(100, 100, 800, 600);
         setBorder(new EmptyBorder(5, 5, 5, 5));
         //getContentPane().add(contentPane);
@@ -220,27 +217,12 @@ public class PairControllerRobotContentPanel extends AbstractContentPanel implem
     @Override
     public boolean onLeave() {
         if (robot_container.deviceInfoJPanels.size() * controller_container.deviceInfoJPanels.size() > 0) {
-            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Too many controller. Please remove controller or change robot to student robot",
+                    "Oops", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             return false;
         } else {
-            //send to server
-            try {
-                //TODO
-                // use messenger to send to server
-                for (DevicePairJPanel pairControllerRobot : devicePairJPanels) savePair(pairControllerRobot);
-                if (new Random().nextBoolean())
-                    throw new IOException();
-            } catch (IOException e1) {
-                //TODO network / server problem, retry
-                JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-                return false;
-            } catch (Exception e2) {
-                //TODO network / server problem, retry
-                JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "title", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-                //e2.printStackTrace();
-                System.out.println(e2.toString());
-                return false;
-            }
+            //save on server
+            for (DevicePairJPanel pairControllerRobot : devicePairJPanels) savePair(pairControllerRobot);
 
             pair_panel.clear();
             controller_container.clear();
@@ -262,7 +244,6 @@ public class PairControllerRobotContentPanel extends AbstractContentPanel implem
         robot_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.6", "Robot 3"), this));
         robot_container.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.7", "Robot 4"), this));
         */
-
         updateView();
     }
 
@@ -304,6 +285,8 @@ public class PairControllerRobotContentPanel extends AbstractContentPanel implem
                 robot_container.add(new DeviceInfoJPanel(deviceInfo, this));
         }
         //master.sao.controllerRobotPairMessenger().sendMessage(new ControllerRobotPair(null,null,false));
+        revalidate();
+        updateUI();
     }
 
 

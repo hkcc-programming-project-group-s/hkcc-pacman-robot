@@ -15,15 +15,15 @@ import scala.collection.mutable.ArrayBuffer
  */
 @throws(classOf[BindException])
 class DeviceInfoManager {
-  Debug.getInstance().printError("DeviceInfoManager init 0%")
+  Debug.getInstance().printMessage("DeviceInfoManager init 0%")
   val deviceInfos = new ConcurrentHashMap[Array[Byte], DeviceInfo]()
-  Debug.getInstance().printError("DeviceInfoManager init 5%")
+  Debug.getInstance().printMessage("DeviceInfoManager init 5%")
 
   {
     val server = DeviceInfo.create(InetAddress.getLocalHost.getHostName, DeviceInfo.DEVICE_TYPE_SERVER)
     deviceInfos.put(server.MAC_ADDRESS, server)
   }
-  Debug.getInstance().printError("DeviceInfoManager init 20%")
+  Debug.getInstance().printMessage("DeviceInfoManager init 20%")
 
   val messengerManager = new MessengerManager[DeviceInfo](Config.PORT_DEVICE_INFO, initMessenger_func = { _ => {} }, autoGet_func = { (remoteMacAddress, message) => {
     if (message.shouldSave) {
@@ -34,7 +34,7 @@ class DeviceInfoManager {
       response(remoteMacAddress, message)
   }
   })
-  Debug.getInstance().printError("DeviceInfoManager init 90%")
+  Debug.getInstance().printMessage("DeviceInfoManager init 90%")
 
   def response(remoteMacAddress: Array[Byte], deviceInfo: DeviceInfo): Unit = {
     getDeviceInfosByDeviceType(deviceInfo.deviceType).foreach(deviceInfo =>
@@ -70,5 +70,5 @@ class DeviceInfoManager {
     deviceInfos.get(macAddress).lastConnectionTime = System.currentTimeMillis()
   }
 
-  Debug.getInstance().printError("DeviceInfoManager init 100%")
+  Debug.getInstance().printMessage("DeviceInfoManager init 100%")
 }

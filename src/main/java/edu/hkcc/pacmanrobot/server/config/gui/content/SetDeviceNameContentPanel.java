@@ -2,7 +2,6 @@ package edu.hkcc.pacmanrobot.server.config.gui.content;
 
 import com.sun.istack.internal.NotNull;
 import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
-import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoContainer;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanel;
 import edu.hkcc.pacmanrobot.server.config.gui.utils.DeviceInfoJPanelHandler;
@@ -14,8 +13,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.util.Random;
 import java.util.Vector;
 
 public class SetDeviceNameContentPanel extends AbstractContentPanel implements DeviceInfoJPanelHandler {
@@ -27,8 +24,8 @@ public class SetDeviceNameContentPanel extends AbstractContentPanel implements D
     Vector<DeviceInfoContainer> deviceInfoContainers = new Vector<>();
 
 
-    public SetDeviceNameContentPanel(GameMonitorJFrame gameMonitorJFrame) {
-        super(gameMonitorJFrame);
+    public SetDeviceNameContentPanel() {
+        super();
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(myDispatcher);
 
@@ -66,13 +63,13 @@ public class SetDeviceNameContentPanel extends AbstractContentPanel implements D
         Component horizontalStrut = Box.createHorizontalStrut(20);
         button_panel.add(horizontalStrut);
 
-        JButton btnRomove = new JButton("Romove");
-        btnRomove.addActionListener(new ActionListener() {
+        JButton btnRemove = new JButton("Remove");
+        btnRemove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (clicked != null) remove(clicked);
             }
         });
-        button_panel.add(btnRomove);
+        button_panel.add(btnRemove);
 
         initView();
     }
@@ -132,24 +129,8 @@ public class SetDeviceNameContentPanel extends AbstractContentPanel implements D
 
     @Override
     public boolean onLeave() {
-        try {
-            controller_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
-            robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
-            //TODO sent robot types to server
-            // use messenger to send to server
-            if (new Random().nextBoolean())
-                throw new IOException();
-        } catch (IOException e1) {
-            //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "Connect Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-            return false;
-        } catch (Exception e2) {
-            //TODO network / server problem, retry
-            JOptionPane.showConfirmDialog(this, "Cannot connect to server. It may be the problem of network or server. Please wait a minute.", "Connect Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-            //e2.printStackTrace();
-            System.out.println(e2.toString());
-            return false;
-        }
+        controller_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
+        robot_panel.deviceInfoJPanels.forEach(p -> GameMonitorSAO.updateDeviceInfo(p.deviceInfo));
         controller_panel.clear();
         robot_panel.clear();
         return true;
@@ -160,12 +141,11 @@ public class SetDeviceNameContentPanel extends AbstractContentPanel implements D
     public void onEnter() {
         controller_panel.clear();
         robot_panel.clear();
-        addDeviceInfo();
-        //start request
+        loadDeviceInfo();
     }
 
 
-    public void addDeviceInfo() {
+    public void loadDeviceInfo() {
         Vector<DeviceInfo> deviceInfos = new Vector<DeviceInfo>(GameMonitorSAO.fetchDeviceInfos());
         for (DeviceInfo deviceInfo : deviceInfos) {
             if (DeviceInfo.isRobot(deviceInfo.deviceType()))

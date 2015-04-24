@@ -19,13 +19,15 @@ public class ControlJPanel extends JPanel {
 
     /**
      * Create the panel.
+     *
+     * @param master
      */
-    public ControlJPanel(final GameMonitorJFrame master) {
+    public ControlJPanel(GameMonitorJFrame master) {
         this.master = master;
         btnPrevious = new JButton("Previous");
         btnPrevious.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.prev();
+                GameMonitorJFrame.getInstance().prev();
                 updateView();
             }
         });
@@ -34,7 +36,7 @@ public class ControlJPanel extends JPanel {
         btnNext = new JButton("Next");
         btnNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.next();
+                GameMonitorJFrame.getInstance().next();
                 updateView();
             }
         });
@@ -43,7 +45,7 @@ public class ControlJPanel extends JPanel {
         btnFinish = new JButton("Finish");
         btnFinish.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.finish();
+                GameMonitorJFrame.getInstance().finish();
                 updateView();
             }
         });
@@ -74,11 +76,11 @@ public class ControlJPanel extends JPanel {
     }
 
     public void updateView() {
-        // TODO Auto-generated method stub
-        btnPrevious.setVisible(master.hasPrev());
-        btnNext.setVisible(master.hasNext());
+        //Debug.getInstance().printMessage("control panel update view");
+        btnPrevious.setVisible(master.canPrev());
+        btnNext.setVisible(master.canNext());
         btnFinish.setVisible(master.canFinish());
-        btnResume.setVisible(master.resumePage());
-        btnStop.setVisible(master.resumePage());
+        btnResume.setVisible(master.canResume());
+        btnStop.setVisible(master.canStop());
     }
 }

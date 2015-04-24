@@ -26,11 +26,11 @@ object Server_NetworkThread {
     if (instance == null)
       Server_NetworkThread.synchronized({
         if (instance == null) {
-          Debug.getInstance().printError("start init Server_NetworkThread")
+          Debug.getInstance().printMessage("start init Server_NetworkThread")
           instance = new Server_NetworkThread()
-          Debug.getInstance().printError("finished init Server_NetworkThread")
+          Debug.getInstance().printMessage("finished init Server_NetworkThread")
           instance.start()
-          Debug.getInstance().printError("started Server_NetworkThread")
+          Debug.getInstance().printMessage("started Server_NetworkThread")
         }
       })
     instance
@@ -39,16 +39,16 @@ object Server_NetworkThread {
 
 @throws(classOf[BindException])
 class Server_NetworkThread extends Thread {
-  Debug.getInstance().printError("Server_NetworkThread init 0%")
+  Debug.getInstance().printMessage("Server_NetworkThread init 0%")
 
-  Debug.getInstance().printError("init DeviceInfo Manager")
+  Debug.getInstance().printMessage("init DeviceInfo Manager")
   val deviceInfoManager = new DeviceInfoManager
 
-  Debug.getInstance().printError("init FlashLight Manager")
+  Debug.getInstance().printMessage("init FlashLight Manager")
   val flashLightManager = new FlashLightManager
 
   val robotPositions = new ConcurrentHashMap[Array[Byte], Position]()
-  Debug.getInstance().printError("init Robot-Position Messenger-Manager")
+  Debug.getInstance().printMessage("init Robot-Position Messenger-Manager")
   val robotPositionMessengerManager = new MessengerManager[RobotPosition](PORT_ROBOT_POSITION, initMessenger_func = messenger => {}, autoGet_func = {
     (macAddress, message) => {
       if (macAddress.equals(message.deviceInfo.MAC_ADDRESS))
@@ -61,7 +61,7 @@ class Server_NetworkThread extends Thread {
   })
 
   val controllerRobotPairManager = new ControllerRobotPairManager
-  Debug.getInstance().printError("init Controller-Robot-Pair Messenger-Manager")
+  Debug.getInstance().printMessage("init Controller-Robot-Pair Messenger-Manager")
   val controllerRobotPairMessengerManager = new MessengerManager[ControllerRobotPair](PORT_CONTROLLER_ROBOT_PAIR, initMessenger_func = messenger => {}, autoGet_func = (macAddress, controllerRobotPair: ControllerRobotPair) => {
     if (controllerRobotPair.shouldSave)
       controllerRobotPairManager.setControllerRobotPair(controllerRobotPair.controller_macAddress, controllerRobotPair.robot_macAddress)
@@ -70,7 +70,7 @@ class Server_NetworkThread extends Thread {
   }
   )
 
-  Debug.getInstance().printError("init Game-Status Messenger-Manager")
+  Debug.getInstance().printMessage("init Game-Status Messenger-Manager")
   val gameStatusMessengerManager = new MessengerManager[GameStatus](PORT_GAME_STATUS,
     initMessenger_func = { (messenger) => messenger.sendMessage(gameStatus) },
     autoGet_func = { (remoteMacAddress, gameStatus) => {
@@ -81,20 +81,20 @@ class Server_NetworkThread extends Thread {
     }
     })
 
-  Debug.getInstance().printError("init MovementCommand Messenger-Manager")
+  Debug.getInstance().printMessage("init MovementCommand Messenger-Manager")
   val movementCommandMessengerManager = new MessengerManager[MovementCommand](PORT_MOVEMENT_COMMAND, initMessenger_func = messenger => {}, autoGet_func = (remoteMacAddress, message) => {
     copyMovementCommand(remoteMacAddress, message)
   })
 
-  Debug.getInstance().printError("init Obstacle-Map Manager")
+  Debug.getInstance().printMessage("init Obstacle-Map Manager")
   val obstacleMapManager = new ObstacleMapManager
 
-  Debug.getInstance().printError("init Game-Status")
+  Debug.getInstance().printMessage("init Game-Status")
   var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
 
-  Debug.getInstance().printError("Server_NetworkThread init 40%")
+  Debug.getInstance().printMessage("Server_NetworkThread init 40%")
   @volatile var running = false
-  Debug.getInstance().printError("Server_NetworkThread init 50%")
+  Debug.getInstance().printMessage("Server_NetworkThread init 50%")
 
   override def
   start = {
@@ -226,5 +226,5 @@ class Server_NetworkThread extends Thread {
     println("start backup process")
   }
 
-  Debug.getInstance().printError("Server_NetworkThread init 100%")
+  Debug.getInstance().printMessage("Server_NetworkThread init 100%")
 }

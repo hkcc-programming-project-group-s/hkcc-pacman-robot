@@ -43,13 +43,13 @@ public class PacmanNetwork {
                     UDPMessengerSingleton.getInstance().send(packet);
                 } catch (SocketException e) {
                     //e.printStackTrace();
-                    Debug.getInstance().printError("Network error");
+                    Debug.getInstance().printMessage("Network error");
                 }
                 try {
                     Thread.sleep(INTERVAL);
                 } catch (InterruptedException e) {
                     //   e.printStackTrace();
-                    Debug.getInstance().printError("Interrupted while sleeping");
+                    Debug.getInstance().printMessage("Interrupted while sleeping");
                 }
             }
         }

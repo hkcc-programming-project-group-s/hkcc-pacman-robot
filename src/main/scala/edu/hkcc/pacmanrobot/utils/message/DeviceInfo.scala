@@ -73,6 +73,8 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     set_shouldSave
   }
 
+  def set_shouldSave = shouldSave = true
+
   def set(newInfo: DeviceInfo): Unit = {
     name_(newInfo.name)
     ip = newInfo.ip
@@ -80,8 +82,6 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     lastConnectionTime = newInfo.lastConnectionTime
     set_shouldSave
   }
-
-  def set_shouldSave = shouldSave = true
 
   def name = _name
 

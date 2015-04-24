@@ -11,8 +11,6 @@ import scala.collection.JavaConverters._
  */
 object GameMonitorSAO {
   //var deviceInfos: Vector[DeviceInfo] = new Vector[DeviceInfo]
-  var reason: String = null
-  var canResume: Boolean = true
   //var _pairControllerRobotJPanel: PairControllerRobotContentPanel = null
 
   //  var deviceInfoMessenger: Messenger[DeviceInfo] = Messenger.create(Config.PORT_DEVICE_INFO, message => {
@@ -47,7 +45,9 @@ object GameMonitorSAO {
   }
 
   def savePair(controllerRobotPair: ControllerRobotPair) {
-    //TODO send pair of controller and robot to server
+    Server_NetworkThread.getInstance().controllerRobotPairManager.setControllerRobotPair(
+      controllerRobotPair.controller_macAddress, controllerRobotPair.robot_macAddress
+    )
   }
 
   def gameStatus_(newStatus: Byte): Unit = {
@@ -61,6 +61,16 @@ object GameMonitorSAO {
   def gameStatus_(newGameStatus: GameStatus) = {
     Server_NetworkThread.getInstance().switchGameStatus(newGameStatus)
   }
+
+  def clearFlash = {
+    Server_NetworkThread.getInstance().flashLightManager.clear
+  }
+
+  def canResume: Boolean = {
+    gameStatus.furtherInfo.equals(GameStatus.STATE_REQUEST)
+  }
+
+  def reason: String = gameStatus.message
 
   def gameStatus = Server_NetworkThread.getInstance().gameStatus
 }

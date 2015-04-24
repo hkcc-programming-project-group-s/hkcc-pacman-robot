@@ -23,8 +23,7 @@ public class PauseReasonContentPanel extends AbstractContentPanel {
     /**
      * Create the frame.
      */
-    public PauseReasonContentPanel(GameMonitorJFrame gameMonitorJFrame) {
-        super(gameMonitorJFrame);
+    public PauseReasonContentPanel() {
         setBounds(100, 100, 450, 300);
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -45,7 +44,7 @@ public class PauseReasonContentPanel extends AbstractContentPanel {
         btnRepairRobot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 change_pair = true;
-                master.contentJPanel.next();
+                GameMonitorJFrame.getInstance().contentJPanel.next();
                 //TODO
             }
         });
