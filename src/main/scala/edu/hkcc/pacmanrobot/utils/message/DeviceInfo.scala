@@ -10,6 +10,7 @@ import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
  * Created by 13058456a on 3/21/2015.
  */
 object DeviceInfo extends Message {
+  Debug.getInstance().printMessage("Singleton DeviceInfo first loaded")
   override val port: Int = Config.PORT_DEVICE_INFO
 
   val DEVICE_TYPE_DELETE: Byte = 0

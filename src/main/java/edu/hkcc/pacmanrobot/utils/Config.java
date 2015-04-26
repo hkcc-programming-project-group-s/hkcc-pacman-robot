@@ -11,10 +11,12 @@ import java.net.UnknownHostException;
  * Created by beenotung on 3/26/15.
  */
 public class Config {
+    static {Debug.getInstance().printMessage("static class Config loaded");}
     //40152-65535
     public static final int PORT_MAP = 40211;
     public static final int PORT_GAME_STATUS = 40212;
     public static final int PORT_MOVEMENT_COMMAND = 40213;
+    static {Debug.getInstance().printMessage("static class Config loaded PORT_DEVICE_INFO");}
     public static final int PORT_DEVICE_INFO = 40214;
     //public static final int PORT_POSITION = 40215;
     public static final int PORT_ROBOT_POSITION = 40216;
