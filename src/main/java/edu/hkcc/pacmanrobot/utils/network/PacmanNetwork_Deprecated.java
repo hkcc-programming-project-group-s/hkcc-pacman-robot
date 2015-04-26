@@ -22,7 +22,7 @@ public class PacmanNetwork_Deprecated {
         public void run() {
             while (!isInterrupted()) {
                 try {
-                    Config.serverAddress = InetAddress.getLocalHost().getHostAddress();
+                    Config.getInstance(true).serverAddress = InetAddress.getLocalHost().getHostAddress();
                     final byte[] MAC_ADDRESS = NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress();
                     DatagramSocket socket = new DatagramSocket(PacmanNetwork_Deprecated.PORT);
                     byte[] buffer = PacmanNetwork_Deprecated.MESSAGE_SERVER.getBytes();

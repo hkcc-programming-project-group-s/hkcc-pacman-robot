@@ -71,6 +71,7 @@ object DeviceInfo extends Message {
  * false => server response to client (send all that type)
  */
 class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, private var _name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0L, var shouldSave: Boolean) extends Message {
+  Debug.getInstance().printMessage("DeviceInfo init 0%")
   def deviceType = _deviceType
 
   def deviceType_=(newType: Byte) = {
@@ -78,6 +79,7 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     set_shouldSave
   }
 
+  Debug.getInstance().printMessage("DeviceInfo init 20%")
   def set_shouldSave = shouldSave = true
 
   def set(newInfo: DeviceInfo): Unit = {
@@ -88,6 +90,7 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     set_shouldSave
   }
 
+  Debug.getInstance().printMessage("DeviceInfo init 40%")
   def name = _name
 
   def name_(name: String) = {
@@ -95,5 +98,7 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     set_shouldSave
   }
 
+  Debug.getInstance().printMessage("DeviceInfo init 80%")
   override def port(): Int = Config.PORT_DEVICE_INFO
+  Debug.getInstance().printMessage("DeviceInfo init 100%")
 }

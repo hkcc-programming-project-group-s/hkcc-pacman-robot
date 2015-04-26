@@ -1,6 +1,6 @@
 package edu.hkcc.pacmanrobot.server.network
 
-import java.net.{BindException, InetAddress}
+import java.net.BindException
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
@@ -198,8 +198,7 @@ class Server_NetworkThread extends Thread {
   //def obstacleMapSubscribers = obstacleMapMessengerManager.messengers
 
   def setup: Unit = {
-    Config.serverAddress = InetAddress.getLocalHost.getHostAddress
-    println("server ip: " + Config.serverAddress)
+    Config.getInstance(true)
     load
     PacmanNetwork.startServerPulisher()
     startMessengerManagers
