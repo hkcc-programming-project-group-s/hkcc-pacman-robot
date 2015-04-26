@@ -2,6 +2,7 @@ package edu.hkcc.pacmanrobot.utils.message
 
 import java.net.{InetAddress, NetworkInterface}
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
 
@@ -33,7 +34,10 @@ object DeviceInfo extends Message {
   }
 
   def create(name: String, deviceType: Byte): DeviceInfo = {
-    new DeviceInfo(_name = name, ip = InetAddress.getLocalHost.getHostAddress, _deviceType = deviceType, shouldSave = true)
+    Debug.getInstance().printMessage("resolving self IP for DeviceInfo")
+    val ip = InetAddress.getLocalHost.getHostAddress
+    Debug.getInstance().printMessage("resolved self IP = \t"+ip.toString)
+    new DeviceInfo(_name = name, ip = ip, _deviceType = deviceType, shouldSave = true)
   }
 
   def request(deviceType: Byte, messenger: Messenger[DeviceInfo]) = {

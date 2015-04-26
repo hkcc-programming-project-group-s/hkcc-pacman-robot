@@ -105,9 +105,9 @@ public interface GpioPin {
 
     GpioPinShutdown getShutdownOptions();
 
-    void setShutdownOptions(GpioPinShutdown options);
-
     void setShutdownOptions(Boolean unexport);
+
+    void setShutdownOptions(GpioPinShutdown options);
 
     void setShutdownOptions(Boolean unexport, PinState state);
 

@@ -20,7 +20,10 @@ class DeviceInfoManager {
   Debug.getInstance().printMessage("DeviceInfoManager init 5%")
 
   {
-    val server = DeviceInfo.create(InetAddress.getLocalHost.getHostName, DeviceInfo.DEVICE_TYPE_SERVER)
+    Debug.getInstance().printMessage("resolving self HostName for DeviceInfo")
+    val name = InetAddress.getLocalHost.getHostName
+    Debug.getInstance().printMessage("resolved HostName = \t" + name)
+    val server = DeviceInfo.create(name, DeviceInfo.DEVICE_TYPE_SERVER)
     deviceInfos.put(server.MAC_ADDRESS, server)
   }
   Debug.getInstance().printMessage("DeviceInfoManager init 20%")
