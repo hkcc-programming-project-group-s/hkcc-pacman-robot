@@ -16,20 +16,23 @@
 -	[ ]	Build Robot Driver
 -	[X]	Design Essentail Data Structure
 -	[X]	Build Non-working Prototype
--	[ ]	Complete Designing Data Structure
+-	[X]	Complete Designing Data Structure
 -	[X]	Build Partially Working Prototype
 -	[ ]	Design Hardware-Software Integration
 -	[ ]	Build Pilot Prototype
 -	[ ]	Implement the Robots (Student, Assignment and Deadline) (Hardware)
 -	[ ]	Training Robot Decision Making
--	[ ]	Fine-tune System Model
+-	[X]	Fine-tune System Model
 -	[ ]	Complete Architectural Design Report
 -	[ ]	Implement Android App
--	[ ]	Implement Server
+-	[X]	Implement Server
 -	[ ]	Build Robot Absract Action API
--	[ ]	Implement Java App
+-	[X]	Implement Java App
 -	[ ]	Combine and edu.hkcc.pacmanrobot.launcher.Test the Robot Program with Android App, Server
 -	[ ]	Final edu.hkcc.pacmanrobot.launcher.Test (Debug and Fine-tune)
 -	[ ]	Complete Testing Report
--	[ ]	Complete Demon Report
--	[ ]	Present in HKTDC
+-	[ ]	Complete Demo Report
+-	[X]	Present in HKTDC
+-	[ ]	Complete Final Report
+- [ ] user guideline
+- [ ] game set-up guideline
