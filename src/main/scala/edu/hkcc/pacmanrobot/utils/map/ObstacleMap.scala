@@ -85,16 +85,6 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
     }
   }
 
-  def to2DParArrayBoolean: ParArray[ParArray[Boolean]] = {
-    val map = to2DArrayLong
-    if (map == null)
-      null
-    else {
-      val now = System.currentTimeMillis()
-      ParArray.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
-    }
-  }
-
   def to2DArrayLong: Array[Array[Long]] = {
     if (isEmpty) null
     else {
@@ -132,5 +122,15 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
       }
     })
     newInstance
+  }
+
+  def to2DParArrayBoolean: ParArray[ParArray[Boolean]] = {
+    val map = to2DArrayLong
+    if (map == null)
+      null
+    else {
+      val now = System.currentTimeMillis()
+      ParArray.tabulate[Boolean](map.length, map(0).length)((x, y) => ObstacleMap.prob(map(x)(y), now) > 0.5)
+    }
   }
 }

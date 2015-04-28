@@ -141,6 +141,11 @@ class Server_NetworkThread extends Thread {
     movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
   }
 
+  def switchGameStatus(newGameStatus: Byte): Unit = {
+    gameStatus.status = newGameStatus
+    switchGameStatus(gameStatus)
+  }
+
   def switchGameStatus(newGameStatus: GameStatus): Unit = {
     if (GameStatus.STATE_REQUEST.equals(newGameStatus.status)) return
     this.gameStatus = newGameStatus
@@ -160,7 +165,9 @@ class Server_NetworkThread extends Thread {
 
   def gameStart: Unit = ???
 
-  def gameStop: Unit = ???
+  def gameStop: Unit = {
+    switchGameStatus(GameStatus.STATE_SETUP)
+  }
 
   def gameSetup: Unit = {}
 

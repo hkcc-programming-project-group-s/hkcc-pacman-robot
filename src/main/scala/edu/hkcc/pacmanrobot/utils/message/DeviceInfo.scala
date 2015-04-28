@@ -1,10 +1,9 @@
 package edu.hkcc.pacmanrobot.utils.message
 
-import java.net.{InetAddress, NetworkInterface}
-
 import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
+import edu.hkcc.pacmanrobot.utils.network.NetworkUtils
 
 /**
  * Created by 13058456a on 3/21/2015.
@@ -27,17 +26,10 @@ object DeviceInfo extends Message {
   val MAC_ADDRESS_BYTES = 6
   val NAME_MIN_LENGTH = 32
 
-  def getLocalMacAddress: Array[Byte] = {
-    val result = NetworkInterface.getByInetAddress(InetAddress.getLocalHost).getHardwareAddress
-    if (result == null)
-      throw new UnsupportedOperationException
-    result
-  }
-
   def create(name: String, deviceType: Byte): DeviceInfo = {
     Debug.getInstance().printMessage("resolving self IP for DeviceInfo")
-    val ip = InetAddress.getLocalHost.getHostAddress
-    Debug.getInstance().printMessage("resolved self IP = \t"+ip.toString)
+    val ip = NetworkUtils.getOnlineInetAddress.getHostAddress
+    Debug.getInstance().printMessage("resolved self IP = \t" + ip.toString)
     new DeviceInfo(_name = name, ip = ip, _deviceType = deviceType, shouldSave = true)
   }
 
@@ -70,8 +62,9 @@ object DeviceInfo extends Message {
  * true => server save
  * false => server response to client (send all that type)
  */
-class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, private var _name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0L, var shouldSave: Boolean) extends Message {
+class DeviceInfo(val MAC_ADDRESS: Array[Byte] = NetworkUtils.getLocalMacAddress, private var _name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0L, var shouldSave: Boolean) extends Message {
   Debug.getInstance().printMessage("DeviceInfo init 0%")
+
   def deviceType = _deviceType
 
   def deviceType_=(newType: Byte) = {
@@ -80,7 +73,6 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
   }
 
   Debug.getInstance().printMessage("DeviceInfo init 20%")
-  def set_shouldSave = shouldSave = true
 
   def set(newInfo: DeviceInfo): Unit = {
     name_(newInfo.name)
@@ -90,7 +82,10 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
     set_shouldSave
   }
 
+  def set_shouldSave = shouldSave = true
+
   Debug.getInstance().printMessage("DeviceInfo init 40%")
+
   def name = _name
 
   def name_(name: String) = {
@@ -99,6 +94,8 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = DeviceInfo.getLocalMacAddress, p
   }
 
   Debug.getInstance().printMessage("DeviceInfo init 80%")
+
   override def port(): Int = Config.PORT_DEVICE_INFO
+
   Debug.getInstance().printMessage("DeviceInfo init 100%")
 }

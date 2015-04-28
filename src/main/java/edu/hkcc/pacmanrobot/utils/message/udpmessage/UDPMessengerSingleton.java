@@ -1,11 +1,10 @@
 package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 
+import edu.hkcc.pacmanrobot.debug.Debug;
 import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketException;
+import java.net.*;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,6 +19,8 @@ public class UDPMessengerSingleton extends Thread {
     private static UDPMessengerSingleton instance = null;
     final String MESSAGE_SERVER = "PACMAN_ROBOT_GAME_SERVER";
     final String MESSAGE_CLIENT = "PACMAN_ROBOT_GAME_CLIENT";
+    private final int port;
+    private final String name;
     public ConcurrencyDrawer<ByteBuffer> deviceInfoPacketDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<ByteBuffer> movementCommandPacketDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<ByteBuffer> gameStatusPacketDrawer = new ConcurrencyDrawer<>();
@@ -28,27 +29,46 @@ public class UDPMessengerSingleton extends Thread {
     boolean shouldRun = false;
     InputThread inputThread = new InputThread();
 
-    private UDPMessengerSingleton(int port) throws SocketException {
+    private UDPMessengerSingleton(int port, String name) throws SocketException {
         socket = new DatagramSocket(port);
+        this.port = port;
+        this.name = name;
         start();
     }
 
     public static UDPMessengerSingleton getInstance() throws SocketException {
-        return getInstance(PORT_UDP);
+        return getInstance(PORT_UDP, IP_UDP_GROUP_NAME);
     }
 
-    public static UDPMessengerSingleton getInstance(int port) throws SocketException {
+    public static UDPMessengerSingleton getInstance(int port, String name) throws SocketException {
         if (instance == null) {
             synchronized (Encoder.class) {
                 if (instance == null)
-                    instance = new UDPMessengerSingleton(port);
+                    instance = new UDPMessengerSingleton(port, name);
             }
         }
         return instance;
     }
 
-    public void send(DatagramPacket packet) {
-        sendPacket(packet);
+    public void send(byte[] buffer, int offset, int length) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InetAddress[] group = InetAddress.getAllByName(name);
+                    for (int i = 0; i < group.length; i++) {
+                        DatagramPacket packet = new DatagramPacket(buffer, offset, length, group[i], port);
+                        socket.send(packet);
+                    }
+                } catch (UnknownHostException e) {
+                    Debug.getInstance().printMessage("UDP multi cast not supported");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Debug.getInstance().printMessage("Network error");
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -57,18 +77,6 @@ public class UDPMessengerSingleton extends Thread {
         inputThread.start();
     }
 
-    private void sendPacket(DatagramPacket packet) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    socket.send(packet);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
     private void decodePacket(DatagramPacket packet) {
         //TODO

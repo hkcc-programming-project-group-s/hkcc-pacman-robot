@@ -5,8 +5,8 @@ import java.net.Socket
 import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
 import edu.hkcc.pacmanrobot.utils.message.messenger.{Messenger, ObstacleMapMessenger}
+import edu.hkcc.pacmanrobot.utils.network.NetworkUtils
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -26,7 +26,7 @@ object ObstacleMapManager {
   def autoGet_func(getRemoteMacAddress: Array[Byte], message: ObstacleMap): Unit = {
     if (messengers.length > 1)
       messengers.foreach(m => {
-        if (!m.getRemoteMacAddress.equals(DeviceInfo.getLocalMacAddress))
+        if (!m.getRemoteMacAddress.equals(NetworkUtils.getLocalMacAddress))
           m.sendMessage(message)
       })
     obstacleMap.merge(message)

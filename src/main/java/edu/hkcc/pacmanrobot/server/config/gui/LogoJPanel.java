@@ -2,6 +2,7 @@ package edu.hkcc.pacmanrobot.server.config.gui;
 
 
 import edu.hkcc.pacmanrobot.controller.utils.Utils;
+import edu.hkcc.pacmanrobot.utils.Config;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -11,12 +12,12 @@ public class LogoJPanel extends JPanel {
     /**
      * Create the panel.
      */
-    public static final String LOGO = "https://dl.dropboxusercontent.com/u/13757442/htm/pacman-logo-desktop.png";
+
 
     public LogoJPanel() {
         JLabel lblLogoimage = null;
         try {
-            lblLogoimage = new JLabel(Utils.getImageIcon(LOGO));
+            lblLogoimage = new JLabel(Utils.getImageIcon(Config.URL_LOGO));
         } catch (IOException e) {
             e.printStackTrace();
         }
