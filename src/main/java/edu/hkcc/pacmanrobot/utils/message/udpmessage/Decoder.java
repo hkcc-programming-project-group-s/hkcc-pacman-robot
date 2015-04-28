@@ -34,7 +34,7 @@ public class Decoder {
         return instance;
     }
 
-    DeviceInfo getDeviceInfo(byte[] array) {
+    public DeviceInfo getDeviceInfo(byte[] array) {
         byte[] macAddress = new byte[DeviceInfo.MAC_ADDRESS_BYTES()];
         StringBuilder name = new StringBuilder();
         StringBuilder ip = new StringBuilder();
@@ -51,7 +51,7 @@ public class Decoder {
         return new DeviceInfo(macAddress, name.toString().trim(), ip.toString().trim(), deviceType.get(), lastConnectionTime.get(), shouldSave.get());
     }
 
-    MovementCommand getMovementCommand(byte[] array) {
+    public MovementCommand getMovementCommand(byte[] array) {
         ByteBuffer mode = ByteBuffer.allocate(1);
         AtomicLong p1 = new AtomicLong();
         AtomicLong p2 = new AtomicLong();
@@ -62,7 +62,7 @@ public class Decoder {
         return new MovementCommand(mode.get(), new Point2D<Double>(Double.longBitsToDouble(p1.get()), Double.longBitsToDouble(p2.get())));
     }
 
-    GameStatus getGameStatus(byte[] array) {
+    public GameStatus getGameStatus(byte[] array) {
         ByteBuffer status = ByteBuffer.allocate(1);
         StringBuilder message = new StringBuilder();
         ByteBuffer furtherInfo = ByteBuffer.allocate(1);
