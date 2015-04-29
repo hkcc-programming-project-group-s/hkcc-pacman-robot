@@ -1,7 +1,10 @@
 package edu.hkcc.pacmanrobot.utils.lang;
 
+import edu.hkcc.pacmanrobot.debug.Debug;
+
 /**
  * Created by beenotung on 4/22/15.
+ * need more testing
  */
 public class ConcurrencyDrawer<T> {
     private final PutterLock lock = new PutterLock();
@@ -16,6 +19,7 @@ public class ConcurrencyDrawer<T> {
     }
 
     public synchronized T update(T newObject) {
+        //Debug.getInstance().printMessage("PutterLock update: "+content.toString());
         T oldObject = content;
         content = newObject;
         lock.putKey();

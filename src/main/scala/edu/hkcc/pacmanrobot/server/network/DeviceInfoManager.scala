@@ -78,6 +78,14 @@ class DeviceInfoManager {
   def update(macAddress: Array[Byte]) = {
     deviceInfos.get(macAddress).lastConnectionTime = System.currentTimeMillis()
   }
+  def update(ip:String) = {
+    deviceInfos.forEach(new BiConsumer[Array[Byte],DeviceInfo] {
+      override def accept(k: Array[Byte], v: DeviceInfo): Unit = {
+        if(v.ip.equals(ip))
+          v.lastConnectionTime=System.currentTimeMillis()
+      }
+    })
+  }
 
   Debug.getInstance().printMessage("DeviceInfoManager init 100%")
 }

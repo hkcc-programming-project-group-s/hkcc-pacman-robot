@@ -1,7 +1,10 @@
 package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 
+//import edu.hkcc.pacmanrobot.debug.Debug;
+
 import edu.hkcc.pacmanrobot.debug.Debug;
 import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -19,6 +22,12 @@ import static edu.hkcc.pacmanrobot.utils.Config.*;
  * this is a lazy singleton
  */
 public class UDPMessengerSingleton extends Thread {
+    private final ReceiveActor receiveActor;
+
+    public static interface ReceiveActor {
+        void apply(String ip);
+    }
+
     private static UDPMessengerSingleton instance = null;
     final String MESSAGE_SERVER = "PACMAN_ROBOT_GAME_SERVER";
     final String MESSAGE_CLIENT = "PACMAN_ROBOT_GAME_CLIENT";
@@ -33,25 +42,34 @@ public class UDPMessengerSingleton extends Thread {
     boolean shouldRun = false;
     InputThread inputThread = new InputThread();
 
-    private UDPMessengerSingleton(int port, String name) throws IOException {
+    private UDPMessengerSingleton(int port, String name, ReceiveActor receiveActor) throws IOException {
         //datagramSocket = new DatagramSocket(port);
         multicastSocket = new MulticastSocket(port);
         multicastSocket.joinGroup(InetAddress.getByName(name));
         multicastSocket.setLoopbackMode(true);
         this.port = port;
         this.name = name;
+        this.receiveActor = receiveActor;
         start();
     }
 
-    public static UDPMessengerSingleton getInstance() throws IOException {
-        return getInstance(PORT_UDP, IP_UDP_GROUP_NAME);
+    //for lazy get access
+    public static UDPMessengerSingleton getInstance() throws NotImplementedException {
+        if (instance == null)
+            throw new NotImplementedException();
+        else
+            return instance;
     }
 
-    public static UDPMessengerSingleton getInstance(int port, String name) throws IOException {
+    public static UDPMessengerSingleton getInstance(ReceiveActor receiveActor) throws IOException {
+        return getInstance(PORT_UDP, IP_UDP_GROUP_NAME, receiveActor);
+    }
+
+    public static UDPMessengerSingleton getInstance(int port, String name, ReceiveActor receiveActor) throws IOException {
         if (instance == null) {
             synchronized (Encoder.class) {
                 if (instance == null)
-                    instance = new UDPMessengerSingleton(port, name);
+                    instance = new UDPMessengerSingleton(port, name, receiveActor);
             }
         }
         return instance;
@@ -81,10 +99,12 @@ public class UDPMessengerSingleton extends Thread {
                         multicastSocket.send(packet);
                     }
                 } catch (UnknownHostException e) {
-                    Debug.getInstance().printMessage("UDP multi cast not supported");
+                    //  Debug.getInstance().printMessage("UDP multi cast not supported");
+                    System.out.println("UDP multi cast not supported");
                     e.printStackTrace();
                 } catch (IOException e) {
-                    Debug.getInstance().printMessage("Network error");
+                    //   Debug.getInstance().printMessage("Network error");
+                    System.out.println("Network error");
                     e.printStackTrace();
                 }
             }
@@ -106,25 +126,35 @@ public class UDPMessengerSingleton extends Thread {
                 if (new String(packet.getData(), packet.getOffset(), packet.getLength()).equals(MESSAGE_SERVER))
                     serverAddressDrawer.update(packet.getAddress().getHostAddress());
                 else {
-                    byte[] data = new byte[packet.getLength()];
-                    System.arraycopy(packet.getData(), packet.getOffset(), data, 0, packet.getLength());
+                    byte[] buffer = new byte[packet.getLength()];
+                    System.arraycopy(packet.getData(), packet.getOffset(), buffer, 0, packet.getLength());
                     int index = 0;
                     AtomicInteger messageType = new AtomicInteger();
-                    ByteBuffer buffer = ByteBuffer.wrap(data, index, data.length - index);
-                    index = Decoder.getInstance().loadFromArray(data, index, messageType);
+                    index=Decoder.getInstance().loadFromArray(buffer, index, messageType);
+                    ByteBuffer data = ByteBuffer.wrap(buffer, index, buffer.length - index);
+                    //index = Decoder.getInstance().loadFromArray(data, index, messageType);
+                    boolean knownType = true;
+                    //Debug.getInstance().printMessage("checking message (type): " + messageType.get());
                     switch (messageType.get()) {
                         case PORT_DEVICE_INFO:
-                            deviceInfoPacketDrawer.update(buffer);
+                            Debug.getInstance().printMessage("DeviceInfo UDP packet received");
+                            deviceInfoPacketDrawer.update(data);
                             break;
                         case PORT_MOVEMENT_COMMAND:
-                            movementCommandPacketDrawer.update(buffer);
+                            Debug.getInstance().printMessage("MovementCommand UDP packet received");
+                            movementCommandPacketDrawer.update(data);
+                            Debug.getInstance().printMessage("MovementCommand UDP packet put(ed)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                             break;
                         case PORT_GAME_STATUS:
-                            gameStatusPacketDrawer.update(buffer);
+                            Debug.getInstance().printMessage("GameStatus UDP packet received");
+                            gameStatusPacketDrawer.update(data);
                             break;
                         default:
-                            System.out.println("Unknown UDP packet received");
+                            Debug.getInstance().printMessage("Unknown UDP packet received");
+                            knownType = false;
+                            break;
                     }
+                    if ((receiveActor != null) && knownType) receiveActor.apply(packet.getAddress().getHostAddress());
                 }
             }
         }).start();

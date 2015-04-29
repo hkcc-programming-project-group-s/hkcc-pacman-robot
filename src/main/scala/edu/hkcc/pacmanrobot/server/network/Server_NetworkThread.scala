@@ -9,6 +9,7 @@ import edu.hkcc.pacmanrobot.utils.Config._
 import edu.hkcc.pacmanrobot.utils.Utils.random
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
 import edu.hkcc.pacmanrobot.utils.message._
+import edu.hkcc.pacmanrobot.utils.message.udpmessage.{Decoder, UDPMessengerSingleton}
 import edu.hkcc.pacmanrobot.utils.network.PacmanNetwork
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
 import edu.hkcc.pacmanrobot.utils.{Config, Timer}
@@ -199,6 +200,10 @@ class Server_NetworkThread extends Thread {
       )
       obstacleMap.merge(bufferedMap)
       bufferedMap.clear
+      Debug.getInstance().printMessage("waiting new movement command")
+      val movementCommandBuffer = UDPMessengerSingleton.getInstance().movementCommandPacketDrawer.getContent.array()
+      val movementCommand = Decoder.getInstance().getMovementCommand(movementCommandBuffer)
+      Debug.getInstance().printMessage("\n\n\n\n\n\nnew movement command: "+movementCommand.toString)
     }, true, 500)
   }
 
