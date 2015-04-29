@@ -22,6 +22,7 @@ public class PutterLock {
     }
 
     public synchronized void waitAndTakeKey() throws InterruptedException {
+        Debug.getInstance().printMessage(Thread.currentThread().getName() + " waitKey (PutterLock)\n\n\n\n\n\n\n\n\n");
         while (!this.avaliable) {
             //Debug.getInstance().printMessage(Thread.currentThread().getName() + " self block (PutterLock)");
             //wait();

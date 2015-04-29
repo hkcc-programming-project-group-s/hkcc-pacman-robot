@@ -27,6 +27,7 @@ public class ServerLauncher {
             });
         } catch (BindException e) {
             System.out.println("Server is already launched on this computer!!!");
+            e.printStackTrace();
             System.exit(Debug.getInstance().DUPLICATED_SERVER_LAUNCH);
         }
     }

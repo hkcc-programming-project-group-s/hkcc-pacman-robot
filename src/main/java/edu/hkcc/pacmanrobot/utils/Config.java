@@ -36,34 +36,13 @@ public class Config {
     //public static String serverAddress = "172.25.56.109";
     public static long RECONNECTION_INTERVAL = 500;
     public static long MOVEMENT_COMMAND_INTERVAL = 50;
+    public static long CLIENT_REPORT_CYCLE_INTERVAL = 50;
     public static long MOTOR_CYCLE_INTERVAL = 50;
+    public static long SYNC_POSITION_CYCLE_INTERVAL = 1000;
     public static long SYNC_MAP_CYCLE_INTERVAL = 1000;
     public static long SAVE_INTERVAL = 10000L;
     public static boolean isServer = false;
 
-    static {
-        Debug.getInstance().printMessage("static class Config init 0%");
-    }
-
-    static {
-        Debug.getInstance().printMessage("static class Config init 10%");
-    }
-
-    static {
-        Debug.getInstance().printMessage("static class Config init 15%");
-    }
-
-    static {
-        Debug.getInstance().printMessage("static class Config init 30%");
-    }
-
-    static {
-        Debug.getInstance().printMessage("static class Config init 50%");
-    }
-
-    static {
-        Debug.getInstance().printMessage("static class Config init 100%");
-    }
 
     public String serverAddress = null;
 
@@ -93,7 +72,7 @@ public class Config {
         else
             try {
                 Debug.getInstance().printMessage("listening udp to get server address");
-                serverAddress = UDPMessengerSingleton.getInstance(isServer?new UDPMessengerSingleton.ReceiveActor() {
+                serverAddress = UDPMessengerSingleton.getInstance(isServer ? new UDPMessengerSingleton.ReceiveActor() {
                     @Override
                     public void apply(String ip) {
                         try {
@@ -102,7 +81,7 @@ public class Config {
                             e.printStackTrace();
                         }
                     }
-                }:null).serverAddressDrawer.getContent();
+                } : null).serverAddressDrawer.waitGetContent();
                 System.out.println("server ip: " + serverAddress);
             } catch (IOException e) {
                 // the program is already launched

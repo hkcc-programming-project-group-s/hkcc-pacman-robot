@@ -11,7 +11,6 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static edu.hkcc.pacmanrobot.utils.Config.*;
@@ -22,26 +21,20 @@ import static edu.hkcc.pacmanrobot.utils.Config.*;
  * this is a lazy singleton
  */
 public class UDPMessengerSingleton extends Thread {
-    private final ReceiveActor receiveActor;
-
-    public static interface ReceiveActor {
-        void apply(String ip);
-    }
-
     private static UDPMessengerSingleton instance = null;
     final String MESSAGE_SERVER = "PACMAN_ROBOT_GAME_SERVER";
     final String MESSAGE_CLIENT = "PACMAN_ROBOT_GAME_CLIENT";
+    private final ReceiveActor receiveActor;
     private final int port;
     private final String name;
-    public ConcurrencyDrawer<ByteBuffer> deviceInfoPacketDrawer = new ConcurrencyDrawer<>();
-    public ConcurrencyDrawer<ByteBuffer> movementCommandPacketDrawer = new ConcurrencyDrawer<>();
-    public ConcurrencyDrawer<ByteBuffer> gameStatusPacketDrawer = new ConcurrencyDrawer<>();
-    public ConcurrencyDrawer<String> serverAddressDrawer = new ConcurrencyDrawer<String>();
+    public ConcurrencyDrawer<byte[]> deviceInfoBytesDrawer = new ConcurrencyDrawer<>();
+    public ConcurrencyDrawer<byte[]> movementCommandBytesDrawer = new ConcurrencyDrawer<>();
+    public ConcurrencyDrawer<byte[]> gameStatusBytesDrawer = new ConcurrencyDrawer<>();
+    public ConcurrencyDrawer<String> serverAddressDrawer = new ConcurrencyDrawer<>();
     //DatagramSocket datagramSocket;
     MulticastSocket multicastSocket;
     boolean shouldRun = false;
     InputThread inputThread = new InputThread();
-
     private UDPMessengerSingleton(int port, String name, ReceiveActor receiveActor) throws IOException {
         //datagramSocket = new DatagramSocket(port);
         multicastSocket = new MulticastSocket(port);
@@ -117,7 +110,6 @@ public class UDPMessengerSingleton extends Thread {
         inputThread.start();
     }
 
-
     private void decodePacket(DatagramPacket packet) {
         //TODO
         new Thread(new Runnable() {
@@ -130,24 +122,44 @@ public class UDPMessengerSingleton extends Thread {
                     System.arraycopy(packet.getData(), packet.getOffset(), buffer, 0, packet.getLength());
                     int index = 0;
                     AtomicInteger messageType = new AtomicInteger();
-                    index=Decoder.getInstance().loadFromArray(buffer, index, messageType);
-                    ByteBuffer data = ByteBuffer.wrap(buffer, index, buffer.length - index);
+                    index = Decoder.getInstance().loadFromArray(buffer, index, messageType);
+                    //Debug.getInstance().printMessage("");
+                    //Debug.getInstance().printMessage("");
+                    //Debug.getInstance().printMessage("");
+                    //Debug.getInstance().printMessage("");
+                    //Debug.getInstance().printMessage("");
+                    //Debug.getInstance().printMessage("******************");
+
+                    //ByteBuffer data = ByteBuffer.wrap(buffer, index, buffer.length - index);
+                    byte[] data = new byte[buffer.length - index];
+                    System.arraycopy(buffer, index, data, 0, data.length);
+
+                    //Debug.getInstance().printMessage(buffer);
+                    //Debug.getInstance().printMessage(index + "");
+                    //Debug.getInstance().printMessage(buffer.length - index + "");
+                    //Debug.getInstance().printMessage(data);
+                    //Debug.getInstance().printMessage("******************");
+                    //Debug.getInstance().printMessage("");
+                    //Debug.getInstance().printMessage("");
+                    //Debug.getInstance().printMessage("");
+                    //Debug.getInstance().printMessage("");
+                    //Debug.getInstance().printMessage("");
                     //index = Decoder.getInstance().loadFromArray(data, index, messageType);
                     boolean knownType = true;
                     //Debug.getInstance().printMessage("checking message (type): " + messageType.get());
                     switch (messageType.get()) {
                         case PORT_DEVICE_INFO:
                             Debug.getInstance().printMessage("DeviceInfo UDP packet received");
-                            deviceInfoPacketDrawer.update(data);
+                            deviceInfoBytesDrawer.update(data);
                             break;
                         case PORT_MOVEMENT_COMMAND:
                             Debug.getInstance().printMessage("MovementCommand UDP packet received");
-                            movementCommandPacketDrawer.update(data);
-                            Debug.getInstance().printMessage("MovementCommand UDP packet put(ed)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            movementCommandBytesDrawer.update(data);
+                            //Debug.getInstance().printMessage("MovementCommand UDP packet put(ed)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                             break;
                         case PORT_GAME_STATUS:
                             Debug.getInstance().printMessage("GameStatus UDP packet received");
-                            gameStatusPacketDrawer.update(data);
+                            gameStatusBytesDrawer.update(data);
                             break;
                         default:
                             Debug.getInstance().printMessage("Unknown UDP packet received");
@@ -158,6 +170,11 @@ public class UDPMessengerSingleton extends Thread {
                 }
             }
         }).start();
+    }
+
+
+    public static interface ReceiveActor {
+        void apply(String ip);
     }
 
     class InputThread extends Thread {

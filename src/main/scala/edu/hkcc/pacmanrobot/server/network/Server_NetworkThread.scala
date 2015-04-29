@@ -201,10 +201,10 @@ class Server_NetworkThread extends Thread {
       obstacleMap.merge(bufferedMap)
       bufferedMap.clear
       Debug.getInstance().printMessage("waiting new movement command")
-      val movementCommandBuffer = UDPMessengerSingleton.getInstance().movementCommandPacketDrawer.getContent.array()
-      val movementCommand = Decoder.getInstance().getMovementCommand(movementCommandBuffer)
-      Debug.getInstance().printMessage("\n\n\n\n\n\nnew movement command: "+movementCommand.toString)
-    }, true, 500)
+      //val movementCommandBuffer = UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent.array()
+      val movementCommand = Decoder.getInstance().getMovementCommand(UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent)
+      Debug.getInstance().printMessage("\n\n\n\n\n\nnew movement command: " + movementCommand.toString)
+    }, true, 1)
   }
 
   //def obstacleMapSubscribers = obstacleMapMessengerManager.messengers

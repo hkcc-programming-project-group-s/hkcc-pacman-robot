@@ -59,7 +59,7 @@ public class Decoder {
         index = loadFromArray(array, index, mode);
         index = loadFromArray(array, index, p1);
         index = loadFromArray(array, index, p2);
-        return new MovementCommand(mode.get(), new Point2D<Double>(Double.longBitsToDouble(p1.get()), Double.longBitsToDouble(p2.get())));
+        return new MovementCommand(mode.get(0), new Point2D<Double>(Double.longBitsToDouble(p1.get()), Double.longBitsToDouble(p2.get())));
     }
 
     public GameStatus getGameStatus(byte[] array) {
@@ -101,7 +101,7 @@ public class Decoder {
 
     int loadFromArray(byte[] array, int index_start, ByteBuffer content) {
         content.clear();
-        content.put(array[index_start]);
+        content.put(0, array[index_start]);
         return index_start + 1;
     }
 
