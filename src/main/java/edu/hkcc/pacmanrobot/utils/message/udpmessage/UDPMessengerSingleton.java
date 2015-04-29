@@ -58,6 +58,7 @@ public class UDPMessengerSingleton extends Thread {
                     InetAddress[] group = InetAddress.getAllByName(name);
                     for (int i = 0; i < group.length; i++) {
                         DatagramPacket packet = new DatagramPacket(buffer, offset, length, group[i], port);
+                        Debug.getInstance().printMessage("send UDP package, size: " + packet.getLength());
                         socket.send(packet);
                     }
                 } catch (UnknownHostException e) {
@@ -120,6 +121,7 @@ public class UDPMessengerSingleton extends Thread {
                 try {
                     DatagramPacket packet = new DatagramPacket(buffer, buffer_length);
                     socket.receive(packet);
+                    Debug.getInstance().printMessage("Received UDP package, source: " + packet.getAddress().getHostAddress() + " size: " + packet.getLength());
                     decodePacket(packet);
                 } catch (IOException e) {
                     e.printStackTrace();
