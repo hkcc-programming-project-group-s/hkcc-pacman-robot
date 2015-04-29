@@ -42,6 +42,7 @@ class DeviceInfoManager {
     //Debug.getInstance().printMessage("null check hashmap: "+deviceInfos.asInstanceOf[Object])
     deviceInfos.put(deviceInfo.MAC_ADDRESS, deviceInfo)
   }
+
   Debug.getInstance().printMessage("DeviceInfoManager init 90%")
 
   def response(remoteMacAddress: Array[Byte], deviceInfo: DeviceInfo): Unit = {

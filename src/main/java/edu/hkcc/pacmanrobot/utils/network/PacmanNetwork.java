@@ -2,6 +2,7 @@ package edu.hkcc.pacmanrobot.utils.network;
 
 
 import edu.hkcc.pacmanrobot.debug.Debug;
+import edu.hkcc.pacmanrobot.utils.Config;
 import edu.hkcc.pacmanrobot.utils.message.udpmessage.UDPMessengerSingleton;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class PacmanNetwork {
             byte[] buffer = MESSAGE_SERVER.getBytes();
             while (shouldRun) {
                 try {
-                    UDPMessengerSingleton.getInstance().send(buffer, 0, buffer.length);
+                    UDPMessengerSingleton.getInstance().send(buffer, 0, buffer.length, Config.PORT_SERVER_DISCOVER);
                 } catch (IOException e) {
                     Debug.getInstance().printMessage("Network error");
                     e.printStackTrace();

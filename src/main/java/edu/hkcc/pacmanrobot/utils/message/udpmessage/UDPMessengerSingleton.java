@@ -4,7 +4,10 @@ import edu.hkcc.pacmanrobot.debug.Debug;
 import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -32,7 +35,7 @@ public class UDPMessengerSingleton extends Thread {
 
     private UDPMessengerSingleton(int port, String name) throws IOException {
         //datagramSocket = new DatagramSocket(port);
-        multicastSocket=new MulticastSocket(port);
+        multicastSocket = new MulticastSocket(port);
         multicastSocket.joinGroup(InetAddress.getByName(name));
         multicastSocket.setLoopbackMode(true);
         this.port = port;
@@ -54,15 +57,22 @@ public class UDPMessengerSingleton extends Thread {
         return instance;
     }
 
-    public void send(byte[] buffer, int offset, int length) {
+    public void send(byte[] buffer, int offset, int length, int messageType) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     InetAddress[] group = InetAddress.getAllByName(name);
+                    byte[] outgoingBuffer = new byte[length + Integer.BYTES];
+                    int index = 0;
+                    index = Encoder.getInstance().saveToArray(outgoingBuffer, index, messageType);
+                    System.arraycopy(buffer, offset, outgoingBuffer, index, length);
                     for (int i = 0; i < group.length; i++) {
-                        DatagramPacket packet = new DatagramPacket(buffer, offset, length, group[i], port);
-                        Debug.getInstance().printMessage("send UDP package, socket: "+packet.getSocketAddress()+" size: " + packet.getLength());
+                        DatagramPacket packet = new DatagramPacket(outgoingBuffer, 0, outgoingBuffer.length, group[i], port);
+                        //Debug.getInstance().printMessage("size 1: " + buffer.length);
+                        //Debug.getInstance().printMessage("size 2: " + outgoingBuffer.length);
+                        //Debug.getInstance().printMessage("size 3: " + packet.getLength());
+                        Debug.getInstance().printMessage("send UDP package, socket: " + packet.getSocketAddress() + " size: " + packet.getLength() + " messagetype: " + messageType);
                         //Debug.getInstance().printMessage("^- socket: " +packet.getSocketAddress());
                         //Debug.getInstance().printMessage("^- InetAddress: " + InetAddress.getByName("230.0.0.1"));
                         //Debug.getInstance().printMessage("^- NetworkInterface: " + NetworkInterface.getByInetAddress(InetAddress.getByName("230.0.0.1")));
