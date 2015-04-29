@@ -4,7 +4,7 @@ package edu.hkcc.pacmanrobot.utils.network;
 import edu.hkcc.pacmanrobot.debug.Debug;
 import edu.hkcc.pacmanrobot.utils.message.udpmessage.UDPMessengerSingleton;
 
-import java.net.SocketException;
+import java.io.IOException;
 
 /**
  * Created by beenotung on 4/19/15.
@@ -39,9 +39,9 @@ public class PacmanNetwork {
             while (shouldRun) {
                 try {
                     UDPMessengerSingleton.getInstance().send(buffer, 0, buffer.length);
-                } catch (SocketException e) {
-                    //e.printStackTrace();
+                } catch (IOException e) {
                     Debug.getInstance().printMessage("Network error");
+                    e.printStackTrace();
                 }
                 try {
                     Thread.sleep(INTERVAL);

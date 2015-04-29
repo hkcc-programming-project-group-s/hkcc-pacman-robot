@@ -25,22 +25,26 @@ public class UDPMessengerSingleton extends Thread {
     public ConcurrencyDrawer<ByteBuffer> movementCommandPacketDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<ByteBuffer> gameStatusPacketDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<String> serverAddressDrawer = new ConcurrencyDrawer<String>();
-    DatagramSocket socket;
+    //DatagramSocket datagramSocket;
+    MulticastSocket multicastSocket;
     boolean shouldRun = false;
     InputThread inputThread = new InputThread();
 
-    private UDPMessengerSingleton(int port, String name) throws SocketException {
-        socket = new DatagramSocket(port);
+    private UDPMessengerSingleton(int port, String name) throws IOException {
+        //datagramSocket = new DatagramSocket(port);
+        multicastSocket=new MulticastSocket(port);
+        multicastSocket.joinGroup(InetAddress.getByName(name));
+        multicastSocket.setLoopbackMode(true);
         this.port = port;
         this.name = name;
         start();
     }
 
-    public static UDPMessengerSingleton getInstance() throws SocketException {
+    public static UDPMessengerSingleton getInstance() throws IOException {
         return getInstance(PORT_UDP, IP_UDP_GROUP_NAME);
     }
 
-    public static UDPMessengerSingleton getInstance(int port, String name) throws SocketException {
+    public static UDPMessengerSingleton getInstance(int port, String name) throws IOException {
         if (instance == null) {
             synchronized (Encoder.class) {
                 if (instance == null)
@@ -58,8 +62,13 @@ public class UDPMessengerSingleton extends Thread {
                     InetAddress[] group = InetAddress.getAllByName(name);
                     for (int i = 0; i < group.length; i++) {
                         DatagramPacket packet = new DatagramPacket(buffer, offset, length, group[i], port);
-                        Debug.getInstance().printMessage("send UDP package, size: " + packet.getLength());
-                        socket.send(packet);
+                        Debug.getInstance().printMessage("send UDP package, socket: "+packet.getSocketAddress()+" size: " + packet.getLength());
+                        //Debug.getInstance().printMessage("^- socket: " +packet.getSocketAddress());
+                        //Debug.getInstance().printMessage("^- InetAddress: " + InetAddress.getByName("230.0.0.1"));
+                        //Debug.getInstance().printMessage("^- NetworkInterface: " + NetworkInterface.getByInetAddress(InetAddress.getByName("230.0.0.1")));
+
+                        //datagramSocket.send(packet);
+                        multicastSocket.send(packet);
                     }
                 } catch (UnknownHostException e) {
                     Debug.getInstance().printMessage("UDP multi cast not supported");
@@ -120,7 +129,8 @@ public class UDPMessengerSingleton extends Thread {
             while (shouldRun) {
                 try {
                     DatagramPacket packet = new DatagramPacket(buffer, buffer_length);
-                    socket.receive(packet);
+                    //datagramSocket.receive(packet);
+                    multicastSocket.receive(packet);
                     Debug.getInstance().printMessage("Received UDP package, source: " + packet.getAddress().getHostAddress() + " size: " + packet.getLength());
                     decodePacket(packet);
                 } catch (IOException e) {

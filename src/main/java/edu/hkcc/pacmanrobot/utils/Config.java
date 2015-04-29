@@ -4,6 +4,7 @@ import edu.hkcc.pacmanrobot.debug.Debug;
 import edu.hkcc.pacmanrobot.utils.message.udpmessage.UDPMessengerSingleton;
 import edu.hkcc.pacmanrobot.utils.network.NetworkUtils;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -92,7 +93,7 @@ public class Config {
                 Debug.getInstance().printMessage("listening udp to get server address");
                 serverAddress = UDPMessengerSingleton.getInstance().serverAddressDrawer.getContent();
                 System.out.println("server ip: " + serverAddress);
-            } catch (SocketException e) {
+            } catch (IOException e) {
                 // the program is already launched
                 try {
                     serverAddress = InetAddress.getLocalHost().getHostAddress();
