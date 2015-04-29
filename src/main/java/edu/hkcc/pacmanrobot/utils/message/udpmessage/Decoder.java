@@ -3,6 +3,7 @@ package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 import edu.hkcc.pacmanrobot.utils.Point2D;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import edu.hkcc.pacmanrobot.utils.message.MovementCommand;
+import edu.hkcc.pacmanrobot.utils.network.NetworkUtils;
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
 
 import java.nio.ByteBuffer;
@@ -35,7 +36,7 @@ public class Decoder {
     }
 
     public DeviceInfo getDeviceInfo(byte[] array) {
-        byte[] macAddress = new byte[DeviceInfo.MAC_ADDRESS_BYTES()];
+        byte[] macAddress = new byte[NetworkUtils.MAC_ADDRESS_BYTES];
         StringBuilder name = new StringBuilder();
         StringBuilder ip = new StringBuilder();
         ByteBuffer deviceType = ByteBuffer.allocate(1);
@@ -49,6 +50,31 @@ public class Decoder {
         index = loadFromArray(array, index, lastConnectionTime);
         index = loadFromArray(array, index, shouldSave);
         return new DeviceInfo(macAddress, name.toString().trim(), ip.toString().trim(), deviceType.get(), lastConnectionTime.get(), shouldSave.get());
+    }
+
+    public String getDeviceName(byte[] array) {
+        byte[] macAddress = new byte[NetworkUtils.MAC_ADDRESS_BYTES];
+        StringBuilder name = new StringBuilder();
+
+        int index = 0;
+        index = loadFromArray(array, index, macAddress);
+        index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, name);
+
+        return name.toString();
+    }
+
+    public String getDeviceName(byte[] targetedMacAddress, byte[] array) {
+        byte[] macAddress = new byte[NetworkUtils.MAC_ADDRESS_BYTES];
+        StringBuilder name = new StringBuilder();
+
+        int index = 0;
+        index = loadFromArray(array, index, macAddress);
+        index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, name);
+
+        if (targetedMacAddress.equals(macAddress))
+            return name.toString();
+        else
+            return null;
     }
 
     public MovementCommand getMovementCommand(byte[] array) {

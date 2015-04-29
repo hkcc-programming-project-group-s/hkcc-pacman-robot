@@ -10,6 +10,8 @@ import java.util.Enumeration;
  * Created by beenotung on 4/29/15.
  */
 public class NetworkUtils {
+    public static int MAC_ADDRESS_BYTES = 6;
+
     public static InetAddress getOnlineInetAddress() throws SocketException {
         InetAddress result = null;
         for (Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces(); networkInterfaces.hasMoreElements(); ) {
