@@ -534,16 +534,16 @@ public class GpioPinImpl implements GpioPin,
     }
 
     @Override
+    public void setShutdownOptions(Boolean unexport) {
+        setShutdownOptions(unexport, null);
+    }
+
+    @Override
     public void setShutdownOptions(GpioPinShutdown options) {
         shutdownOptions.setUnexport(options.getUnexport());
         shutdownOptions.setState(options.getState());
         shutdownOptions.setMode(options.getMode());
         shutdownOptions.setPullResistor(options.getPullResistor());
-    }
-
-    @Override
-    public void setShutdownOptions(Boolean unexport) {
-        setShutdownOptions(unexport, null);
     }
 
     @Override

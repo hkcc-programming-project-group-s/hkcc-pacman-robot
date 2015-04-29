@@ -35,6 +35,7 @@ public class UDPMessengerSingleton extends Thread {
     MulticastSocket multicastSocket;
     boolean shouldRun = false;
     InputThread inputThread = new InputThread();
+
     private UDPMessengerSingleton(int port, String name, ReceiveActor receiveActor) throws IOException {
         //datagramSocket = new DatagramSocket(port);
         multicastSocket = new MulticastSocket(port);
