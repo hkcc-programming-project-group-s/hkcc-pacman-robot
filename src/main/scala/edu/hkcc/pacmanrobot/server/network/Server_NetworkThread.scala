@@ -5,11 +5,11 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.debug.Debug
+import edu.hkcc.pacmanrobot.server.config.gui.GameMonitorJFrame
 import edu.hkcc.pacmanrobot.utils.Config._
 import edu.hkcc.pacmanrobot.utils.Utils.random
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
 import edu.hkcc.pacmanrobot.utils.message._
-import edu.hkcc.pacmanrobot.utils.message.udpmessage.{Decoder, UDPMessengerSingleton}
 import edu.hkcc.pacmanrobot.utils.network.PacmanNetwork
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
 import edu.hkcc.pacmanrobot.utils.{Config, Timer}
@@ -168,9 +168,12 @@ class Server_NetworkThread extends Thread {
 
   def gameStop: Unit = {
     switchGameStatus(GameStatus.STATE_SETUP)
+
   }
 
-  def gameSetup: Unit = {}
+  def gameSetup: Unit = {
+    GameMonitorJFrame.getInstance().reset()
+  }
 
   override def run = {
     println("start run server service thread")
@@ -187,11 +190,12 @@ class Server_NetworkThread extends Thread {
     import ObstacleMapManager.obstacleMap
     val bufferedMap = new ObstacleMap
     Timer.setTimeInterval({
-      //println
-      //println(Calendar.getInstance().getTime)
-      //println("random put")
-      (1 to 100).foreach(i =>
-        bufferedMap.put(new MapUnit(new MapKey(random nextInt 4000, random nextInt 4000), System.currentTimeMillis()))
+      Debug.getInstance().printMessage("random put")
+      (1 to 100).foreach(i => {
+        val key = new MapKey(random nextInt 4000, random nextInt 4000)
+        //  Debug.getInstance().printMessage("generated obstacle: x=" + key.x + "\t y=" + key.y)
+        bufferedMap.put(new MapUnit(key, System.currentTimeMillis()))
+      }
       )
       val toSend = bufferedMap.clone
       //println("number of obstacleMapSubscribers=" + obstacleMapManager.messengers.size)
@@ -202,9 +206,9 @@ class Server_NetworkThread extends Thread {
       bufferedMap.clear
       //Debug.getInstance().printMessage("waiting new movement command")
       //val movementCommandBuffer = UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent.array()
-      val movementCommand = Decoder.getInstance().getMovementCommand(UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent.data)
+      //val movementCommand = Decoder.getInstance().getMovementCommand(UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent.data)
       //Debug.getInstance().printMessage("new movement command: " + movementCommand.toString)
-    }, true, 1)
+    }, true, 500)
   }
 
   //def obstacleMapSubscribers = obstacleMapMessengerManager.messengers

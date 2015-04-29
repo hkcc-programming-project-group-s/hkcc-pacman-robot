@@ -8,7 +8,10 @@ import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static edu.hkcc.pacmanrobot.utils.Config.*;
@@ -25,16 +28,6 @@ public class UDPMessengerSingleton extends Thread {
     private final ReceiveActor receiveActor;
     private final int port;
     private final String name;
-
-    public static class PacketWrapper {
-        final public InetAddress senderAddress;
-        final public byte[] data;
-        public PacketWrapper(InetAddress senderAddress, byte[] data) {
-            this.senderAddress = senderAddress;
-            this.data = data;
-        }
-    }
-
     public ConcurrencyDrawer<PacketWrapper> deviceInfoBytesDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<PacketWrapper> movementCommandBytesDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<PacketWrapper> gameStatusBytesDrawer = new ConcurrencyDrawer<>();
@@ -182,9 +175,18 @@ public class UDPMessengerSingleton extends Thread {
         }).start();
     }
 
-
     public static interface ReceiveActor {
         void apply(String ip);
+    }
+
+    public static class PacketWrapper {
+        final public InetAddress senderAddress;
+        final public byte[] data;
+
+        public PacketWrapper(InetAddress senderAddress, byte[] data) {
+            this.senderAddress = senderAddress;
+            this.data = data;
+        }
     }
 
     class InputThread extends Thread {

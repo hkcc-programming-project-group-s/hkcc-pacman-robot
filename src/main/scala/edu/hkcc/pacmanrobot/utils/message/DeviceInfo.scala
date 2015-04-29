@@ -74,6 +74,8 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = NetworkUtils.getLocalMacAddress,
 
   Debug.getInstance().printMessage("DeviceInfo init 20%")
 
+  def set_shouldSave = shouldSave = true
+
   def set(newInfo: DeviceInfo): Unit = {
     name_(newInfo.name)
     ip = newInfo.ip
@@ -81,8 +83,6 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = NetworkUtils.getLocalMacAddress,
     lastConnectionTime = newInfo.lastConnectionTime
     set_shouldSave
   }
-
-  def set_shouldSave = shouldSave = true
 
   Debug.getInstance().printMessage("DeviceInfo init 40%")
 

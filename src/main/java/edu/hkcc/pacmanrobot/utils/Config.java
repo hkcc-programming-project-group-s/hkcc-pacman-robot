@@ -30,6 +30,16 @@ public class Config {
     public static final int PORT_UDP = 40220;
     public static final String IP_UDP_GROUP_NAME = "230.0.0.1";
     public static final String URL_LOGO = "https://dl.dropboxusercontent.com/u/13757442/htm/pacman-logo-desktop.png";
+    public static final String URL_LOGO_DESKTOP = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/desktop_icon_cropped.png";
+    public static final String URL_LOGO_ENJOY = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/enjoy_the_game_cropped.png";
+    public static final String URL_ICON_BALL = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/ball.png";
+    public static final String URL_ICON_CONTROLLER = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/controller.png";
+    public static final String URL_ICON_UNCLASSED = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/unclassed.png";
+    public static final String URL_ICON_STUDENT = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/student.png";
+    public static final String URL_ICON_DEADLINE = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/deadline.png";
+    public static final String URL_ICON_ASSIGNMENT = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/assignment.png";
+    public static final String URL_APK = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/pacman-controller.apk";
+    public static final String URL_ = "";
     public static Config instance = null;
     //public static String serverAddress = "192.168.1.3";
     //public static String serverAddress = "172.26.3.180";

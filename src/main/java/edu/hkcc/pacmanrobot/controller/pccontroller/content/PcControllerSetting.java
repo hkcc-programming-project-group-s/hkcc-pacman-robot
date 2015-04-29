@@ -2,6 +2,7 @@ package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
 import edu.hkcc.pacmanrobot.controller.utils.Utils;
+import edu.hkcc.pacmanrobot.utils.Config;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 
 import javax.swing.*;
@@ -116,7 +117,8 @@ public class PcControllerSetting extends PcController_contentJPanel {
 
         try {
             ball = new JLabel(
-                    Utils.getImageIcon("https://dl.dropboxusercontent.com/u/13757442/htm/ball.png"));
+                    //Utils.getImageIcon("https://dl.dropboxusercontent.com/u/13757442/htm/ball.png"));
+                    Utils.getImageIcon(Config.URL_ICON_BALL));
         } catch (IOException e) {
             e.printStackTrace();
         }

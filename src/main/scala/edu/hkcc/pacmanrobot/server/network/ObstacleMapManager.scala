@@ -22,6 +22,7 @@ import scala.collection.mutable.ArrayBuffer
 object ObstacleMapManager {
   val obstacleMap = new ObstacleMap
   val messengers = new ArrayBuffer[ObstacleMapMessenger]()
+  var lastUpdateTime: Long = 0L
 
   def autoGet_func(getRemoteMacAddress: Array[Byte], message: ObstacleMap): Unit = {
     if (messengers.length > 1)
@@ -30,6 +31,7 @@ object ObstacleMapManager {
           m.sendMessage(message)
       })
     obstacleMap.merge(message)
+    lastUpdateTime = System.currentTimeMillis()
   }
 }
 

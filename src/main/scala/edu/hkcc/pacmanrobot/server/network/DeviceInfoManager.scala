@@ -63,6 +63,16 @@ class DeviceInfoManager {
     result.toArray
   }
 
+  def getAll: Array[DeviceInfo] = {
+    val result = new ArrayBuffer[DeviceInfo]()
+    deviceInfos.forEach(new BiConsumer[Array[Byte], DeviceInfo] {
+      override def accept(k: Array[Byte], v: DeviceInfo): Unit = {
+        result :+ v
+      }
+    })
+    result.toArray
+  }
+
   def getDeviceInfoByMacAddress(macAddress: Array[Byte]): DeviceInfo = {
     var device: DeviceInfo = null
     deviceInfos.forEach(new BiConsumer[Array[Byte], DeviceInfo] {
@@ -76,7 +86,16 @@ class DeviceInfoManager {
   }
 
   def update(macAddress: Array[Byte]) = {
-    deviceInfos.get(macAddress).lastConnectionTime = System.currentTimeMillis()
+    try
+      deviceInfos.get(macAddress).lastConnectionTime = System.currentTimeMillis()
+    catch {
+      case e: NullPointerException => {
+        // the device is not registered
+      }
+      case e: Exception => {
+        //just in case
+      }
+    }
   }
 
   def update(ip: String) = {

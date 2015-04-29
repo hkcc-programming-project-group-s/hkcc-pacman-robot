@@ -14,7 +14,6 @@ import edu.hkcc.pacmanrobot.utils.{Config, Worker}
  * Created by beenotung on 4/29/15.
  */
 object udpManager extends Thread {
-  var running = false
   val messenger = UDPMessengerSingleton.getInstance(new ReceiveActor {
     override def apply(ip: String): Unit = {
       Server_NetworkThread.getInstance().deviceInfoManager.update(ip)
@@ -51,7 +50,6 @@ object udpManager extends Thread {
       }
     }
   }
-  var gameStatus = new ConcurrencyDrawer[GameStatus]()
   val gameStatusThread = new Thread() {
     override def run = {
       while (running) {
@@ -61,7 +59,8 @@ object udpManager extends Thread {
       }
     }
   }
-
+  var running = false
+  var gameStatus = new ConcurrencyDrawer[GameStatus]()
 
   override def run = {
     running = true
