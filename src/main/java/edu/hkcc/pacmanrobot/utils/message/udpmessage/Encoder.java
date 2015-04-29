@@ -55,7 +55,7 @@ public class Encoder {
         return length;
     }
 
-    byte[] getDeviceInfo(byte[] MAC_ADDRESS, String name, String ip, byte deviceType, long lastConnectionTime, boolean shouldSave) {
+    public byte[] getDeviceInfo(byte[] MAC_ADDRESS, String name, String ip, byte deviceType, long lastConnectionTime, boolean shouldSave) {
         byte[] result = new byte[getLength(PORT_DEVICE_INFO)];
         int index = 0;
         index = saveToArray(result, index, MAC_ADDRESS);
@@ -67,7 +67,7 @@ public class Encoder {
         return result;
     }
 
-    byte[] getMovementCommand(byte mode, double p1, double p2) {
+    public byte[] getMovementCommand(byte mode, double p1, double p2) {
         byte[] result = new byte[getLength(PORT_MOVEMENT_COMMAND)];
         int index = 0;
         index = saveToArray(result, index, mode);
@@ -76,7 +76,7 @@ public class Encoder {
         return result;
     }
 
-    byte[] getGameStatus(byte status, String message, byte furtherInfo) {
+    public byte[] getGameStatus(byte status, String message, byte furtherInfo) {
         byte[] result = new byte[getLength(PORT_GAME_STATUS)];
         int index = 0;
         index = saveToArray(result, index, status);

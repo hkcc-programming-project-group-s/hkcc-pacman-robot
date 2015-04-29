@@ -2,10 +2,12 @@ package edu.hkcc.pacmanrobot.utils.network;
 
 
 import edu.hkcc.pacmanrobot.debug.Debug;
+import edu.hkcc.pacmanrobot.server.network.Server_NetworkThread;
+import edu.hkcc.pacmanrobot.utils.Config;
 import edu.hkcc.pacmanrobot.utils.message.udpmessage.UDPMessengerSingleton;
 
-import java.net.DatagramPacket;
-import java.net.SocketException;
+import java.io.IOException;
+import java.net.BindException;
 
 /**
  * Created by beenotung on 4/19/15.
@@ -39,11 +41,19 @@ public class PacmanNetwork {
             byte[] buffer = MESSAGE_SERVER.getBytes();
             while (shouldRun) {
                 try {
-                    DatagramPacket packet = new DatagramPacket(buffer, 0, buffer.length);
-                    UDPMessengerSingleton.getInstance().send(packet);
-                } catch (SocketException e) {
-                    //e.printStackTrace();
+                    UDPMessengerSingleton.getInstance(new UDPMessengerSingleton.ReceiveActor() {
+                        @Override
+                        public void apply(String ip) {
+                            try {
+                                Server_NetworkThread.getInstance().deviceInfoManager().update(ip);
+                            } catch (BindException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).send(buffer, 0, buffer.length, Config.PORT_SERVER_DISCOVER);
+                } catch (IOException e) {
                     Debug.getInstance().printMessage("Network error");
+                    e.printStackTrace();
                 }
                 try {
                     Thread.sleep(INTERVAL);

@@ -19,12 +19,11 @@ class DeviceInfoManager {
   val deviceInfos = new ConcurrentHashMap[Array[Byte], DeviceInfo]()
   Debug.getInstance().printMessage("DeviceInfoManager init 5%")
 
-  {
-    val server = DeviceInfo.create(InetAddress.getLocalHost.getHostName, DeviceInfo.DEVICE_TYPE_SERVER)
-    deviceInfos.put(server.MAC_ADDRESS, server)
-  }
-  Debug.getInstance().printMessage("DeviceInfoManager init 20%")
 
+  Debug.getInstance().printMessage("resolving self HostName for DeviceInfo")
+  val name = InetAddress.getLocalHost.getHostName
+  Debug.getInstance().printMessage("resolved HostName = \t" + name)
+  addDeviceInfo(DeviceInfo.create(name, DeviceInfo.DEVICE_TYPE_SERVER))
   val messengerManager = new MessengerManager[DeviceInfo](Config.PORT_DEVICE_INFO, initMessenger_func = { _ => {} }, autoGet_func = { (remoteMacAddress, message) => {
     if (message.shouldSave) {
       deviceInfos.put(message.MAC_ADDRESS, message)
@@ -34,6 +33,16 @@ class DeviceInfoManager {
       response(remoteMacAddress, message)
   }
   })
+
+  Debug.getInstance().printMessage("DeviceInfoManager init 20%")
+
+  def addDeviceInfo(deviceInfo: DeviceInfo) = {
+    //Debug.getInstance().printMessage("null check deviceInfo: "+deviceInfo.asInstanceOf[Object])
+    //Debug.getInstance().printMessage("null check deviceInfo.mac: "+deviceInfo.MAC_ADDRESS.asInstanceOf[Object])
+    //Debug.getInstance().printMessage("null check hashmap: "+deviceInfos.asInstanceOf[Object])
+    deviceInfos.put(deviceInfo.MAC_ADDRESS, deviceInfo)
+  }
+
   Debug.getInstance().printMessage("DeviceInfoManager init 90%")
 
   def response(remoteMacAddress: Array[Byte], deviceInfo: DeviceInfo): Unit = {
@@ -68,6 +77,15 @@ class DeviceInfoManager {
 
   def update(macAddress: Array[Byte]) = {
     deviceInfos.get(macAddress).lastConnectionTime = System.currentTimeMillis()
+  }
+
+  def update(ip: String) = {
+    deviceInfos.forEach(new BiConsumer[Array[Byte], DeviceInfo] {
+      override def accept(k: Array[Byte], v: DeviceInfo): Unit = {
+        if (v.ip.equals(ip))
+          v.lastConnectionTime = System.currentTimeMillis()
+      }
+    })
   }
 
   Debug.getInstance().printMessage("DeviceInfoManager init 100%")

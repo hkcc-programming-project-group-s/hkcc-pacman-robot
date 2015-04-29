@@ -4,6 +4,7 @@ import java.net.{BindException, ServerSocket, Socket}
 import java.util.concurrent.{ConcurrentHashMap, Semaphore}
 import java.util.function.BiConsumer
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.Worker
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
 
@@ -17,10 +18,16 @@ object MessengerManager {
 @throws(classOf[BindException])
 class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenger[Type] => Unit), autoGet_func: ((Array[Byte], Type) => Unit))
   extends Thread {
-
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 0%")
   val messengers = new ConcurrentHashMap[Array[Byte], Messenger[Type]]()
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 20%")
   val semaphore = new Semaphore(1)
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 30%")
   var serverSocket = new ServerSocket(servicePort)
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 50%")
+  var running = false
+
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 55%")
 
   override def run(): Unit = {
     //    Timer.setTimeInterval({
@@ -32,11 +39,14 @@ class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenge
     //        }
     //      })
     //    }, isAlive, 1000)
-    while (true) {
+    running = true
+    while (running) {
       println("waiting incoming request from port: " + servicePort)
       genMessenger(serverSocket.accept())
     }
   }
+
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 60%")
 
   def genMessenger(socket: Socket) = {
     val newMessenger = new Messenger[Type](socket, servicePort, this) {
@@ -50,9 +60,13 @@ class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenge
     initMessenger_func(newMessenger)
   }
 
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 65%")
+
   def add(newMessenger: Messenger[Type]) = {
     messengers.put(newMessenger.getRemoteMacAddress, newMessenger)
   }
+
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 70%")
 
   def remove(removeTarget: Messenger[Type]) = {
     Worker.forkAndStart({
@@ -67,6 +81,8 @@ class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenge
     })
   }
 
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 75%")
+
   def getKey(messenger: Messenger[Type]): Array[Byte] = {
     var key: Array[Byte] = null
     messengers.forEach(new BiConsumer[Array[Byte], Messenger[Type]] {
@@ -78,17 +94,23 @@ class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenge
     key
   }
 
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 80%")
+
   def sendByMacAddress(macAddress: Array[Byte], message: Type) = {
     if (macAddress != null)
       if (messengers.containsKey(macAddress))
         messengers.get(macAddress).sendMessage(message)
   }
 
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 85%")
+
   def sendToAll(message: Type) = {
     foreach(op = {
       messenger => messenger.sendMessage(message)
     })
   }
+
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 90%")
 
   def foreach(op: Messenger[Type] => Unit) = {
     messengers.forEach(new BiConsumer[Array[Byte], Messenger[Type]] {
@@ -97,4 +119,14 @@ class MessengerManager[Type](val servicePort: Int, initMessenger_func: (Messenge
       }
     })
   }
+
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 95%")
+
+  override def start() = {
+    if (!running)
+      super.start()
+  }
+
+  Debug.getInstance().printMessage("MessengerManager [" + servicePort + "] init 100%")
 }
+

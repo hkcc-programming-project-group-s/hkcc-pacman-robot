@@ -33,8 +33,8 @@ object Messenger {
     var socket: Socket = new Socket()
     do {
       try {
-        println("try to connect to " + Config.serverAddress + ":" + port)
-        socket = new Socket(Config.serverAddress, port)
+        println("try to connect to " + Config.getInstance(isServer).serverAddress + ":" + port)
+        socket = new Socket(Config.getInstance(isServer).serverAddress, port)
       }
       catch {
         case e: ConnectException => {
@@ -45,7 +45,7 @@ object Messenger {
         }
       }
     } while (socket.isClosed || !socket.isConnected)
-    println("connected to " + Config.serverAddress + ":" + port)
+    println("connected to " + Config.getInstance(isServer).serverAddress + ":" + port)
     socket
   }
 }

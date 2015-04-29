@@ -1,6 +1,6 @@
 package edu.hkcc.pacmanrobot.server.network
 
-import java.net.{BindException, InetAddress}
+import java.net.BindException
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
@@ -9,6 +9,7 @@ import edu.hkcc.pacmanrobot.utils.Config._
 import edu.hkcc.pacmanrobot.utils.Utils.random
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, MapUnit, ObstacleMap}
 import edu.hkcc.pacmanrobot.utils.message._
+import edu.hkcc.pacmanrobot.utils.message.udpmessage.{Decoder, UDPMessengerSingleton}
 import edu.hkcc.pacmanrobot.utils.network.PacmanNetwork
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
 import edu.hkcc.pacmanrobot.utils.{Config, Timer}
@@ -141,6 +142,11 @@ class Server_NetworkThread extends Thread {
     movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
   }
 
+  def switchGameStatus(newGameStatus: Byte): Unit = {
+    gameStatus.status = newGameStatus
+    switchGameStatus(gameStatus)
+  }
+
   def switchGameStatus(newGameStatus: GameStatus): Unit = {
     if (GameStatus.STATE_REQUEST.equals(newGameStatus.status)) return
     this.gameStatus = newGameStatus
@@ -160,7 +166,9 @@ class Server_NetworkThread extends Thread {
 
   def gameStart: Unit = ???
 
-  def gameStop: Unit = ???
+  def gameStop: Unit = {
+    switchGameStatus(GameStatus.STATE_SETUP)
+  }
 
   def gameSetup: Unit = {}
 
@@ -192,14 +200,17 @@ class Server_NetworkThread extends Thread {
       )
       obstacleMap.merge(bufferedMap)
       bufferedMap.clear
-    }, true, 500)
+      Debug.getInstance().printMessage("waiting new movement command")
+      //val movementCommandBuffer = UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent.array()
+      val movementCommand = Decoder.getInstance().getMovementCommand(UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent)
+      Debug.getInstance().printMessage("\n\n\n\n\n\nnew movement command: " + movementCommand.toString)
+    }, true, 1)
   }
 
   //def obstacleMapSubscribers = obstacleMapMessengerManager.messengers
 
   def setup: Unit = {
-    Config.serverAddress = InetAddress.getLocalHost.getHostAddress
-    println("server ip: " + Config.serverAddress)
+    Config.getInstance(true)
     load
     PacmanNetwork.startServerPulisher()
     startMessengerManagers

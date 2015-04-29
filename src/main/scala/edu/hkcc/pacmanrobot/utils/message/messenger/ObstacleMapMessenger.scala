@@ -6,7 +6,7 @@ import java.util.concurrent.Semaphore
 import edu.hkcc.pacmanrobot.server.network.{MessengerManager, ObstacleMapManager}
 import edu.hkcc.pacmanrobot.utils.Config
 import edu.hkcc.pacmanrobot.utils.map.ObstacleMap
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
+import edu.hkcc.pacmanrobot.utils.network.NetworkUtils
 
 /**
  * Created by beenotung on 4/14/15.
@@ -30,7 +30,7 @@ class ObstacleMapMessenger(val obstacleMap: ObstacleMap, socket: Socket, manager
   override def autoGet(message: ObstacleMap): Unit = {
     if (manager != null)
       manager.foreach(messenger => {
-        if (!messenger.getRemoteMacAddress.equals(DeviceInfo.getLocalMacAddress))
+        if (!messenger.getRemoteMacAddress.equals(NetworkUtils.getLocalMacAddress))
           messenger.sendMessage(message)
       })
     //println("autoget")
