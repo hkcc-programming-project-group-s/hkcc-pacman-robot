@@ -200,20 +200,24 @@ class Server_NetworkThread extends Thread {
       )
       obstacleMap.merge(bufferedMap)
       bufferedMap.clear
-      Debug.getInstance().printMessage("waiting new movement command")
+      //Debug.getInstance().printMessage("waiting new movement command")
       //val movementCommandBuffer = UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent.array()
-      val movementCommand = Decoder.getInstance().getMovementCommand(UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent)
-      Debug.getInstance().printMessage("\n\n\n\n\n\nnew movement command: " + movementCommand.toString)
+      val movementCommand = Decoder.getInstance().getMovementCommand(UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent.data)
+      //Debug.getInstance().printMessage("new movement command: " + movementCommand.toString)
     }, true, 1)
   }
 
   //def obstacleMapSubscribers = obstacleMapMessengerManager.messengers
+
 
   def setup: Unit = {
     Config.getInstance(true)
     load
     PacmanNetwork.startServerPulisher()
     startMessengerManagers
+    // handle udp messenger
+
+    udpManager.start
   }
 
   def startMessengerManagers = {

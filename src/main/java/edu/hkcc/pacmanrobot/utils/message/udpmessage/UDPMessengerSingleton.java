@@ -2,15 +2,13 @@ package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 
 //import edu.hkcc.pacmanrobot.debug.Debug;
 
+
 import edu.hkcc.pacmanrobot.debug.Debug;
 import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static edu.hkcc.pacmanrobot.utils.Config.*;
@@ -27,9 +25,19 @@ public class UDPMessengerSingleton extends Thread {
     private final ReceiveActor receiveActor;
     private final int port;
     private final String name;
-    public ConcurrencyDrawer<byte[]> deviceInfoBytesDrawer = new ConcurrencyDrawer<>();
-    public ConcurrencyDrawer<byte[]> movementCommandBytesDrawer = new ConcurrencyDrawer<>();
-    public ConcurrencyDrawer<byte[]> gameStatusBytesDrawer = new ConcurrencyDrawer<>();
+
+    public static class PacketWrapper {
+        final public InetAddress senderAddress;
+        final public byte[] data;
+        public PacketWrapper(InetAddress senderAddress, byte[] data) {
+            this.senderAddress = senderAddress;
+            this.data = data;
+        }
+    }
+
+    public ConcurrencyDrawer<PacketWrapper> deviceInfoBytesDrawer = new ConcurrencyDrawer<>();
+    public ConcurrencyDrawer<PacketWrapper> movementCommandBytesDrawer = new ConcurrencyDrawer<>();
+    public ConcurrencyDrawer<PacketWrapper> gameStatusBytesDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<String> serverAddressDrawer = new ConcurrencyDrawer<>();
     //DatagramSocket datagramSocket;
     MulticastSocket multicastSocket;
@@ -148,19 +156,20 @@ public class UDPMessengerSingleton extends Thread {
                     //index = Decoder.getInstance().loadFromArray(data, index, messageType);
                     boolean knownType = true;
                     //Debug.getInstance().printMessage("checking message (type): " + messageType.get());
+                    PacketWrapper packetWrapper = new PacketWrapper(packet.getAddress(), data);
                     switch (messageType.get()) {
                         case PORT_DEVICE_INFO:
                             Debug.getInstance().printMessage("DeviceInfo UDP packet received");
-                            deviceInfoBytesDrawer.update(data);
+                            deviceInfoBytesDrawer.update(packetWrapper);
                             break;
                         case PORT_MOVEMENT_COMMAND:
                             Debug.getInstance().printMessage("MovementCommand UDP packet received");
-                            movementCommandBytesDrawer.update(data);
+                            movementCommandBytesDrawer.update(packetWrapper);
                             //Debug.getInstance().printMessage("MovementCommand UDP packet put(ed)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                             break;
                         case PORT_GAME_STATUS:
                             Debug.getInstance().printMessage("GameStatus UDP packet received");
-                            gameStatusBytesDrawer.update(data);
+                            gameStatusBytesDrawer.update(packetWrapper);
                             break;
                         default:
                             Debug.getInstance().printMessage("Unknown UDP packet received");
