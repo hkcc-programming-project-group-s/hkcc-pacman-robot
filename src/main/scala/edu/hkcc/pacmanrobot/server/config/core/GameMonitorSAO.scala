@@ -82,7 +82,7 @@ object GameMonitorSAO {
     gameStatus.furtherInfo.equals(GameStatus.STATE_REQUEST)
   }
 
-  def gameStatus = Server_NetworkThread.getInstance().gameStatus
-
   def reason: String = gameStatus.message
+
+  def gameStatus = Server_NetworkThread.getInstance().gameStatus
 }

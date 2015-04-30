@@ -24,7 +24,7 @@ object DeviceInfo extends Message {
   val ROBOT_SET = Set(DEVICE_TYPE_ASSIGNMENT_ROBOT, DEVICE_TYPE_DEADLINE_ROBOT, DEVICE_TYPE_STUDENT_ROBOT, DEVICE_TYPE_UNCLASSED_ROBOT)
 
   val MAC_ADDRESS_BYTES = 6
-  val NAME_MIN_LENGTH = 32
+  val NAME_MAX_LENGTH = 32
 
   def create(name: String, deviceType: Byte): DeviceInfo = {
     Debug.getInstance().printMessage("resolving self IP for DeviceInfo")
@@ -63,18 +63,7 @@ object DeviceInfo extends Message {
  * false => server response to client (send all that type)
  */
 class DeviceInfo(val MAC_ADDRESS: Array[Byte] = NetworkUtils.getLocalMacAddress, private var _name: String, var ip: String, var _deviceType: Byte, var lastConnectionTime: Long = 0L, var shouldSave: Boolean) extends Message {
-  Debug.getInstance().printMessage("DeviceInfo init 0%")
-
-  def deviceType = _deviceType
-
-  def deviceType_=(newType: Byte) = {
-    _deviceType = newType
-    set_shouldSave
-  }
-
-  Debug.getInstance().printMessage("DeviceInfo init 20%")
-
-  def set_shouldSave = shouldSave = true
+  //Debug.getInstance().printMessage("DeviceInfo init 0%")
 
   def set(newInfo: DeviceInfo): Unit = {
     name_(newInfo.name)
@@ -84,18 +73,33 @@ class DeviceInfo(val MAC_ADDRESS: Array[Byte] = NetworkUtils.getLocalMacAddress,
     set_shouldSave
   }
 
-  Debug.getInstance().printMessage("DeviceInfo init 40%")
-
-  def name = _name
-
   def name_(name: String) = {
     _name = name
     set_shouldSave
   }
 
-  Debug.getInstance().printMessage("DeviceInfo init 80%")
+  //Debug.getInstance().printMessage("DeviceInfo init 20%")
+
+  def set_shouldSave = shouldSave = true
 
   override def port(): Int = Config.PORT_DEVICE_INFO
 
-  Debug.getInstance().printMessage("DeviceInfo init 100%")
+  //Debug.getInstance().printMessage("DeviceInfo init 40%")
+
+  override def toString: String = {
+    "name: " + name + "\tip: " + ip + "\t mac address: " + MAC_ADDRESS.toVector.toString() + "\t device type: " + deviceType
+  }
+
+  def name = _name
+
+  //Debug.getInstance().printMessage("DeviceInfo init 80%")
+
+  def deviceType = _deviceType
+
+  def deviceType_=(newType: Byte) = {
+    _deviceType = newType
+    set_shouldSave
+  }
+
+  //Debug.getInstance().printMessage("DeviceInfo init 100%")
 }

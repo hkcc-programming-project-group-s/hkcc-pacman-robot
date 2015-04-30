@@ -94,11 +94,12 @@ public class SetDeviceNameContentPanel extends AbstractContentPanel implements D
         try {
             System.out.println(name);
             String newName = (String) name;
-            if (newName != null && newName.length() > 0 && newName.length() < DeviceInfo.NAME_MIN_LENGTH()) {
+            if (newName != null && newName.length() > 0 && newName.length() <= DeviceInfo.NAME_MAX_LENGTH()) {
                 target.deviceInfo.name_(newName);
+                target.lblName.setText(newName);
                 target.refreshView();
             } else
-                JOptionPane.showConfirmDialog(this, "The name size is more than " + DeviceInfo.NAME_MIN_LENGTH() + ". Please enter again.", "Name Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showConfirmDialog(this, "The name length should be 1 to " + DeviceInfo.NAME_MAX_LENGTH() + ". Please enter again.", "Name Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
 
         }

@@ -1,7 +1,5 @@
 package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 
-import edu.hkcc.pacmanrobot.debug.Debug;
-
 import java.nio.ByteBuffer;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -94,8 +92,8 @@ public class Encoder {
     }
 
     int saveToArray(byte[] array, int index_start, String content) {
-        Debug.getInstance().printMessage("content length = " + content.length());
-        Debug.getInstance().printMessage("content bytes length = " + content.getBytes().length);
+        //Debug.getInstance().printMessage("content length = " + content.length());
+        //Debug.getInstance().printMessage("content bytes length = " + content.getBytes().length);
         System.arraycopy(content.getBytes(), 0, array, index_start, content.length());
         return index_start + content.length();
     }

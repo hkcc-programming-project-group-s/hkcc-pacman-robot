@@ -247,7 +247,8 @@ public class SetRobotTypeContentPanel extends AbstractContentPanel implements De
         deadline_robot_panel.clear();
         controller_panel.clear();
         loadDeviceInfo();
-        /*controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.3", "Controller 1"), this));
+        /* testing
+        controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.3", "Controller 1"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.1", "Controller 2"), this));
         controller_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.CONTROLLER, "192.168.1.2", "Controller 3"), this));
         unclasses_panel.add(new DeviceInfoJPanel(new DeviceInfo(DeviceInfo.ROBOT_UNCLASSED, "192.168.1.4", "Robot 1"), this));
@@ -264,7 +265,6 @@ public class SetRobotTypeContentPanel extends AbstractContentPanel implements De
 
     boolean onKeyReleased(KeyEvent e) throws IOException {
         if (clicked == null) return false;
-        //System.out.println("I am here.");
         if (DeviceInfo.isRobot(clicked.deviceInfo._deviceType())) {
             if (e.getKeyCode() == KeyEvent.VK_A) {
                 clicked.transfer(assignment_robot_panel);
@@ -281,11 +281,12 @@ public class SetRobotTypeContentPanel extends AbstractContentPanel implements De
             } else return false;
             clicked.refreshView();
         }
-        return true;
+        //return true; testing (input dialog keydispatcher overridden)
+        return false;
     }
 
     boolean onKeyPressed(KeyEvent e) {
-        return true;
+        return false;
     }
 
     class MyDispatcher implements KeyEventDispatcher {
@@ -302,7 +303,8 @@ public class SetRobotTypeContentPanel extends AbstractContentPanel implements De
                 }
             else if (e.getID() == KeyEvent.KEY_TYPED)
                 ;
-            return (e.getKeyChar() != ' ');
+            //return (e.getKeyChar() != ' '); testing (input dialog keydispatcher overridden)
+            return false;
         }
     }
 }

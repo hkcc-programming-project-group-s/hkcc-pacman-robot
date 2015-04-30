@@ -88,11 +88,11 @@ public class PcControllerSetting extends PcController_contentJPanel {
                 try {
                     System.out.println(name);
                     String newName = (String) name;
-                    if (newName != null && newName.length() > 0 && newName.length() < DeviceInfo.NAME_MIN_LENGTH()) {
+                    if (newName != null && newName.length() > 0 && newName.length() < DeviceInfo.NAME_MAX_LENGTH()) {
                         //TODO send name to server
 
                     } else
-                        JOptionPane.showConfirmDialog(jFrame, "The name size is more than " + DeviceInfo.NAME_MIN_LENGTH() + ". Please enter again.", "Name Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showConfirmDialog(jFrame, "The name size is more than " + DeviceInfo.NAME_MAX_LENGTH() + ". Please enter again.", "Name Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
                 } catch (Exception e1) {
 
                 }

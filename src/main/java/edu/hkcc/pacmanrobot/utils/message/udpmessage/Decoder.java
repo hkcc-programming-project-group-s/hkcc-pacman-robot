@@ -36,31 +36,39 @@ public class Decoder {
     }
 
     public DeviceInfo getDeviceInfo(byte[] array) {
-        byte[] macAddress = new byte[NetworkUtils.MAC_ADDRESS_BYTES];
-        StringBuilder name = new StringBuilder();
-        StringBuilder ip = new StringBuilder();
-        ByteBuffer deviceType = ByteBuffer.allocate(1);
-        AtomicLong lastConnectionTime = new AtomicLong();
-        AtomicBoolean shouldSave = new AtomicBoolean();
-        int index = 0;
-        index = loadFromArray(array, index, macAddress);
-        index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, name);
-        index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, ip);
-        index = loadFromArray(array, index, deviceType);
-        index = loadFromArray(array, index, lastConnectionTime);
-        index = loadFromArray(array, index, shouldSave);
-        return new DeviceInfo(macAddress, name.toString().trim(), ip.toString().trim(), deviceType.get(), lastConnectionTime.get(), shouldSave.get());
+        try {
+            byte[] macAddress = new byte[NetworkUtils.MAC_ADDRESS_BYTES];
+            StringBuilder name = new StringBuilder();
+            StringBuilder ip = new StringBuilder();
+            ByteBuffer deviceType = ByteBuffer.allocate(1);
+            AtomicLong lastConnectionTime = new AtomicLong();
+            AtomicBoolean shouldSave = new AtomicBoolean();
+            int index = 0;
+            index = loadFromArray(array, index, macAddress);
+            index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, name);
+            index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, ip);
+            index = loadFromArray(array, index, deviceType);
+            index = loadFromArray(array, index, lastConnectionTime);
+            index = loadFromArray(array, index, shouldSave);
+            return new DeviceInfo(macAddress, name.toString().trim(), ip.toString().trim(), deviceType.get(), lastConnectionTime.get(), shouldSave.get());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String getDeviceName(byte[] array) {
-        byte[] macAddress = new byte[NetworkUtils.MAC_ADDRESS_BYTES];
-        StringBuilder name = new StringBuilder();
+        try {
+            byte[] macAddress = new byte[NetworkUtils.MAC_ADDRESS_BYTES];
+            StringBuilder name = new StringBuilder();
 
-        int index = 0;
-        index = loadFromArray(array, index, macAddress);
-        index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, name);
+            int index = 0;
+            index = loadFromArray(array, index, macAddress);
+            index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, name);
 
-        return name.toString();
+            return name.toString().trim();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String getDeviceName(byte[] targetedMacAddress, byte[] array) {
@@ -78,28 +86,37 @@ public class Decoder {
     }
 
     public MovementCommand getMovementCommand(byte[] array) {
-        ByteBuffer mode = ByteBuffer.allocate(1);
-        AtomicLong p1 = new AtomicLong();
-        AtomicLong p2 = new AtomicLong();
-        int index = 0;
-        index = loadFromArray(array, index, mode);
-        index = loadFromArray(array, index, p1);
-        index = loadFromArray(array, index, p2);
-        return new MovementCommand(mode.get(0), new Point2D<Double>(Double.longBitsToDouble(p1.get()), Double.longBitsToDouble(p2.get())));
+        try {
+            ByteBuffer mode = ByteBuffer.allocate(1);
+            AtomicLong p1 = new AtomicLong();
+            AtomicLong p2 = new AtomicLong();
+            int index = 0;
+            index = loadFromArray(array, index, mode);
+            index = loadFromArray(array, index, p1);
+            index = loadFromArray(array, index, p2);
+            return new MovementCommand(mode.get(0), new Point2D<Double>(Double.longBitsToDouble(p1.get()), Double.longBitsToDouble(p2.get())));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public GameStatus getGameStatus(byte[] array) {
-        ByteBuffer status = ByteBuffer.allocate(1);
-        StringBuilder message = new StringBuilder();
-        ByteBuffer furtherInfo = ByteBuffer.allocate(1);
-        int index = 0;
-        index = loadFromArray(array, index, status);
-        index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, message);
-        index = loadFromArray(array, index, furtherInfo);
-        return new GameStatus(status.get(), message.toString(), furtherInfo.get());
+        try {
+            ByteBuffer status = ByteBuffer.allocate(1);
+            StringBuilder message = new StringBuilder();
+            ByteBuffer furtherInfo = ByteBuffer.allocate(1);
+            int index = 0;
+            index = loadFromArray(array, index, status);
+            index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, message);
+            index = loadFromArray(array, index, furtherInfo);
+            return new GameStatus(status.get(), message.toString(), furtherInfo.get());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    int loadFromArray(byte[] array, int index_start, int length, StringBuilder content) {
+
+    int loadFromArray(byte[] array, int index_start, int length, StringBuilder content) throws StringIndexOutOfBoundsException {
         content.setLength(0);
         content.append(new String(array, index_start, length));
         return index_start + length;
