@@ -1,8 +1,5 @@
 package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 
-//import edu.hkcc.pacmanrobot.debug.Debug;
-
-
 import edu.hkcc.pacmanrobot.debug.Debug;
 import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -32,7 +29,7 @@ public class UDPMessengerSingleton extends Thread {
     public ConcurrencyDrawer<PacketWrapper> movementCommandBytesDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<PacketWrapper> gameStatusBytesDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<String> serverAddressDrawer = new ConcurrencyDrawer<>();
-    //DatagramSocket datagramSocket;
+    //DatagramSocket datagramSocket; this socket does not support boardcast well
     MulticastSocket multicastSocket;
     boolean shouldRun = false;
     InputThread inputThread = new InputThread();
@@ -117,7 +114,6 @@ public class UDPMessengerSingleton extends Thread {
     }
 
     private void decodePacket(DatagramPacket packet) {
-        //TODO
         new Thread(new Runnable() {
             @Override
             public void run() {
