@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.iml" filepath="$PROJECT_DIR$/lib/NeuroEvolution/NeuroEvolution.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot.iml" filepath="$PROJECT_DIR$/.idea/modules/hkcc-pacman-robot.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib/myutils/myutils.iml" filepath="$PROJECT_DIR$/lib/myutils/myutils.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/java-myutils/src/myutils.iml" filepath="$PROJECT_DIR$/lib/java-myutils/src/myutils.iml" />
     </modules>
   </component>
