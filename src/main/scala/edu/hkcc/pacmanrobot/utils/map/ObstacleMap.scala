@@ -7,6 +7,7 @@ package edu.hkcc.pacmanrobot.utils.map
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiConsumer
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.message.Message
 import edu.hkcc.pacmanrobot.utils.{Config, Point2D, Utils}
 
@@ -107,15 +108,11 @@ class ObstacleMap extends ConcurrentHashMap[MapKey, Long] with Cloneable with Me
             array(k.x - range._1._1)(k.y - range._2._1) = v
           catch {
             case e: Exception => {
-              println(e.toString)
+              Debug.getInstance().printMessage(e.toString)
               e.printStackTrace()
-              println()
-              println("range:")
-              println(range._1)
-              println(range._2)
-              println
-              println("array size= " + array.length + ", " + array(0).length)
-              println(k.x + ", " + k.y)
+              Debug.getInstance().printMessage("range: " + range._1 + " , " + range._2)
+              Debug.getInstance().printMessage("array size= " + array.length + ", " + array(0).length)
+              Debug.getInstance().printMessage("procesing location" + k.x + ", " + k.y)
             }
           }
         }
