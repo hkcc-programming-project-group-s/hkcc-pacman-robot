@@ -96,5 +96,18 @@ public class GameMonitorJFrame extends JFrame {
     public boolean canPause() {
         return contentJPanel.canPause();
     }
+
+
+    public void reset() {
+        Debug.getInstance().printMessage("Game Monitor JFrame reset");
+        contentJPanel.switchToCard(0);
+        controlJPanel.updateView();
+        //controlJPanel.reset();
+        setVisible(true);
+        revalidate();
+        repaint();
+        getContentPane().revalidate();
+        getContentPane().repaint();
+    }
 }
 

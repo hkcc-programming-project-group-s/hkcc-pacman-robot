@@ -3,6 +3,7 @@ package edu.hkcc.pacmanrobot.server.network
 import java.net.NetworkInterface
 import java.util.concurrent.ConcurrentLinkedQueue
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
 import edu.hkcc.pacmanrobot.utils.message.udpmessage.UDPMessengerSingleton.ReceiveActor
@@ -14,7 +15,6 @@ import edu.hkcc.pacmanrobot.utils.{Config, Worker}
  * Created by beenotung on 4/29/15.
  */
 object udpManager extends Thread {
-  var running = false
   val messenger = UDPMessengerSingleton.getInstance(new ReceiveActor {
     override def apply(ip: String): Unit = {
       Server_NetworkThread.getInstance().deviceInfoManager.update(ip)
@@ -35,10 +35,20 @@ object udpManager extends Thread {
       })
       //input
       while (running) {
-        val wrapper = messenger.deviceInfoBytesDrawer.waitGetContent()
-        val deviceInfo = Decoder.getInstance().getDeviceInfo(wrapper.data)
-        Server_NetworkThread.getInstance().deviceInfoManager.addDeviceInfo(deviceInfo)
-        Server_NetworkThread.getInstance().deviceInfoManager.update(NetworkInterface.getByInetAddress(wrapper.senderAddress).getHardwareAddress)
+        try {
+          val wrapper = messenger.deviceInfoBytesDrawer.waitGetContent()
+          val deviceInfo = Decoder.getInstance().getDeviceInfo(wrapper.data)
+          Debug.getInstance().printMessage("received device info from udp: " + deviceInfo.toString)
+          val manager = Server_NetworkThread.getInstance().deviceInfoManager
+          manager.addDeviceInfo(deviceInfo)
+          manager.update(deviceInfo.MAC_ADDRESS)
+          //Debug.getInstance().printMessage("\n\n\ntotal number of device info: "+manager.getAll.length)
+        }
+        catch {
+          case e: NullPointerException => {
+            Debug.getInstance().printMessage("corrupted device info from udp\n\n")
+          }
+        }
       }
     }
   }
@@ -47,11 +57,19 @@ object udpManager extends Thread {
       while (running) {
         val wrapper = messenger.movementCommandBytesDrawer.waitGetContent()
         val movementCommand = Decoder.getInstance().getMovementCommand(wrapper.data)
-        Server_NetworkThread.getInstance().copyMovementCommand(NetworkInterface.getByInetAddress(wrapper.senderAddress).getHardwareAddress, movementCommand)
+        try {
+          Server_NetworkThread.getInstance().copyMovementCommand(NetworkInterface.getByInetAddress(wrapper.senderAddress).getHardwareAddress, movementCommand)
+        } catch {
+          case e: NullPointerException => {
+            Debug.getInstance().printMessage("received movement command from unpaired controller")
+          }
+          case e: Exception => {
+            //just in case
+          }
+        }
       }
     }
   }
-  var gameStatus = new ConcurrencyDrawer[GameStatus]()
   val gameStatusThread = new Thread() {
     override def run = {
       while (running) {
@@ -61,7 +79,8 @@ object udpManager extends Thread {
       }
     }
   }
-
+  var running = false
+  var gameStatus = new ConcurrencyDrawer[GameStatus]()
 
   override def run = {
     running = true

@@ -1,10 +1,14 @@
 package edu.hkcc.pacmanrobot.server.config.core
 
+import java.util.function.BiConsumer
+
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.server.network.Server_NetworkThread
 import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, DeviceInfo}
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by beenotung on 4/15/15.
@@ -29,10 +33,15 @@ object GameMonitorSAO {
   //def pairControllerRobotJPanel_=(pairControllerRobotJPanel: PairControllerRobotContentPanel) = _pairControllerRobotJPanel = pairControllerRobotJPanel
 
   def fetchControllerRobotPairs: java.util.Collection[ControllerRobotPair] = {
-    val v = Vector.fill[ControllerRobotPair](0)(null)
-    v.asJavaCollection
-    null
-    //TODO get pair and save it
+    //var result:Vector[ControllerRobotPair] = Vector.empty[ControllerRobotPair]
+    val result = new ArrayBuffer[ControllerRobotPair]
+    //val manager=Server_NetworkThread.getInstance().deviceInfoManager
+    Server_NetworkThread.getInstance().controllerRobotPairManager.controllerRobotPairs.forEach(new BiConsumer[Array[Byte], Array[Byte]] {
+      override def accept(controller: Array[Byte], robot: Array[Byte]): Unit = {
+        result += new ControllerRobotPair(controller, robot, false)
+      }
+    })
+    result.asJavaCollection
   }
 
   def updateDeviceInfo(deviceInfo: DeviceInfo) = {
@@ -40,8 +49,11 @@ object GameMonitorSAO {
   }
 
   def fetchDeviceInfos: java.util.Collection[DeviceInfo] = {
-    null
-    //TODO get deviceinfo and save it
+    val devices = Server_NetworkThread.getInstance().deviceInfoManager.getAll
+    Debug.getInstance().printMessage("Number of deviceInfo on server: " + devices.length)
+    val result = devices.toVector.asJavaCollection
+    Debug.getInstance().printMessage("Number of deviceInfo for monitor: " + result.size)
+    result
   }
 
   def savePair(controllerRobotPair: ControllerRobotPair) {
@@ -70,7 +82,7 @@ object GameMonitorSAO {
     gameStatus.furtherInfo.equals(GameStatus.STATE_REQUEST)
   }
 
-  def gameStatus = Server_NetworkThread.getInstance().gameStatus
-
   def reason: String = gameStatus.message
+
+  def gameStatus = Server_NetworkThread.getInstance().gameStatus
 }

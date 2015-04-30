@@ -40,14 +40,14 @@ public class ContentJPanel extends AbstractCardJPanel {
 
     public void next() {
         if (hasNext() && contents.get(currentPage).onLeave())
-            currentPage++;
-        switchToCard(currentPage + "");
+            //currentPage++;
+            switchToCard(currentPage + 1);
     }
 
     public void prev() {
         if (hasPrev() && contents.get(currentPage).onLeave())
-            currentPage--;
-        switchToCard(currentPage + "");
+            //currentPage--;
+            switchToCard(currentPage - 1);
     }
 
     public boolean hasNext() {
@@ -82,10 +82,27 @@ public class ContentJPanel extends AbstractCardJPanel {
         return currentPage > 0;
     }
 
+
     @Override
+    @Deprecated
     public void switchToCard(String label) {
         Debug.getInstance().printMessage("Content Panel switch view: " + contents.get(Integer.parseInt(label)).getClass().getSimpleName());
         super.switchToCard(label);
+    }
+
+    public void switchToCard(int index) {
+        Debug.getInstance().printMessage("GUI try leave page");
+        if (!contents.get(currentPage).onLeave())
+            //current page not completed
+            return;
+        //current page completed
+        Debug.getInstance().printMessage("GUI left page");
+        Debug.getInstance().printMessage("Content Panel switch view: " + contents.get(index).getClass().getSimpleName());
+        currentPage = index;
+        super.switchToCard(index + "");
+        contents.get(index).onEnter();
+        revalidate();
+        updateUI();
     }
 
 

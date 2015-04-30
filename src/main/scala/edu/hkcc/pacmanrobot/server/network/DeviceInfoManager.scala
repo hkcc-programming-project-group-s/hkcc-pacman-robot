@@ -36,12 +36,34 @@ class DeviceInfoManager {
 
   Debug.getInstance().printMessage("DeviceInfoManager init 20%")
 
+  var _mac_map = new ConcurrentHashMap[String, Array[Byte]]()
+
   def addDeviceInfo(deviceInfo: DeviceInfo) = {
     //Debug.getInstance().printMessage("null check deviceInfo: "+deviceInfo.asInstanceOf[Object])
     //Debug.getInstance().printMessage("null check deviceInfo.mac: "+deviceInfo.MAC_ADDRESS.asInstanceOf[Object])
     //Debug.getInstance().printMessage("null check hashmap: "+deviceInfos.asInstanceOf[Object])
-    deviceInfos.put(deviceInfo.MAC_ADDRESS, deviceInfo)
+    //  Debug.getInstance().printMessage("new device info registered: " + deviceInfo.toString)
+    deviceInfos.putIfAbsent(duplicateFilter(deviceInfo.MAC_ADDRESS), deviceInfo)
   }
+
+  def duplicateFilter(mac_address: Array[Byte]): Array[Byte] = {
+    mac_map.putIfAbsent(mac_address.toVector.toString.intern(), mac_address)
+    val result = mac_map.get(mac_address.toVector.toString.intern())
+    //Debug.getInstance().printMessage("mac key: "+mac_address.toVector.toString.intern().hashCode)
+    //Debug.getInstance().printMessage("mac object: "+result)
+    result
+  }
+
+  def mac_map: ConcurrentHashMap[String, Array[Byte]] = {
+    if (_mac_map == null) {
+      getClass.synchronized {
+        if (_mac_map == null)
+          _mac_map = new ConcurrentHashMap[String, Array[Byte]]()
+      }
+    }
+    _mac_map
+  }
+
 
   Debug.getInstance().printMessage("DeviceInfoManager init 90%")
 
@@ -63,10 +85,22 @@ class DeviceInfoManager {
     result.toArray
   }
 
+  def getAll: Array[DeviceInfo] = {
+    val result = new ArrayBuffer[DeviceInfo]()
+    //Debug.getInstance().printMessage("get all start")
+    deviceInfos.forEach(new BiConsumer[Array[Byte], DeviceInfo] {
+      override def accept(k: Array[Byte], v: DeviceInfo): Unit = {
+        result += v
+        //Debug.getInstance().printMessage("get all: " + v.toString)
+      }
+    })
+    //Debug.getInstance().printMessage("get all end")
+    result.toArray
+  }
+
   def getDeviceInfoByMacAddress(macAddress: Array[Byte]): DeviceInfo = {
     var device: DeviceInfo = null
     deviceInfos.forEach(new BiConsumer[Array[Byte], DeviceInfo] {
-
       override def accept(k: Array[Byte], v: DeviceInfo): Unit = {
         if (macAddress.equals(v.MAC_ADDRESS))
           device = v
@@ -76,7 +110,16 @@ class DeviceInfoManager {
   }
 
   def update(macAddress: Array[Byte]) = {
-    deviceInfos.get(macAddress).lastConnectionTime = System.currentTimeMillis()
+    try
+      deviceInfos.get(macAddress).lastConnectionTime = System.currentTimeMillis()
+    catch {
+      case e: NullPointerException => {
+        // the device is not registered
+      }
+      case e: Exception => {
+        //just in case
+      }
+    }
   }
 
   def update(ip: String) = {

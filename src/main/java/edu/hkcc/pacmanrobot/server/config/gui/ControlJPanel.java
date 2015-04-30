@@ -82,5 +82,17 @@ public class ControlJPanel extends JPanel {
         btnFinish.setVisible(master.canFinish());
         btnResume.setVisible(master.canResume());
         btnStop.setVisible(master.canStop());
+        revalidate();
+        updateUI();
+    }
+
+    public void reset() {
+        btnPrevious.setVisible(false);
+        btnNext.setVisible(true);
+        btnFinish.setVisible(false);
+        btnResume.setVisible(false);
+        btnStop.setVisible(false);
+        revalidate();
+        updateUI();
     }
 }

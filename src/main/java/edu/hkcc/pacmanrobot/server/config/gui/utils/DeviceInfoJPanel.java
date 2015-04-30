@@ -36,9 +36,9 @@ public class DeviceInfoJPanel extends JPanel {
     public boolean isSelected = false;
     public DeviceInfoJPanelHandler deviceInfoJPanelHandler = null;
     public Component emptyBox = Box.createRigidArea(new Dimension(64, 64));
+    public JLabel lblName;
     JLabel lblIcon;
     JLabel lblIp;
-    JLabel lblName;
 
     public DeviceInfoJPanel(DeviceInfo deviceInfo, DeviceInfoJPanelHandler handler) {
         this.deviceInfo = deviceInfo;

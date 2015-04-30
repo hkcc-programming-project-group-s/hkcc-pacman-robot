@@ -17,7 +17,8 @@ public class LogoJPanel extends JPanel {
     public LogoJPanel() {
         JLabel lblLogoimage = null;
         try {
-            lblLogoimage = new JLabel(Utils.getImageIcon(Config.URL_LOGO));
+            //lblLogoimage = new JLabel(Utils.getImageIcon(Config.URL_LOGO));
+            lblLogoimage = new JLabel(Utils.getImageIcon(Config.URL_LOGO_DESKTOP));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -8,7 +8,10 @@ import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static edu.hkcc.pacmanrobot.utils.Config.*;
@@ -25,16 +28,6 @@ public class UDPMessengerSingleton extends Thread {
     private final ReceiveActor receiveActor;
     private final int port;
     private final String name;
-
-    public static class PacketWrapper {
-        final public InetAddress senderAddress;
-        final public byte[] data;
-        public PacketWrapper(InetAddress senderAddress, byte[] data) {
-            this.senderAddress = senderAddress;
-            this.data = data;
-        }
-    }
-
     public ConcurrencyDrawer<PacketWrapper> deviceInfoBytesDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<PacketWrapper> movementCommandBytesDrawer = new ConcurrencyDrawer<>();
     public ConcurrencyDrawer<PacketWrapper> gameStatusBytesDrawer = new ConcurrencyDrawer<>();
@@ -132,28 +125,16 @@ public class UDPMessengerSingleton extends Thread {
                     int index = 0;
                     AtomicInteger messageType = new AtomicInteger();
                     index = Decoder.getInstance().loadFromArray(buffer, index, messageType);
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("******************");
 
-                    //ByteBuffer data = ByteBuffer.wrap(buffer, index, buffer.length - index);
+                    /*
+                       //ByteBuffer data = ByteBuffer.wrap(buffer, index, buffer.length - index);
+                       //index = Decoder.getInstance().loadFromArray(data, index, messageType);
+                        this method is deprecated as the index (offset) might change after one read
+                        to support multi time read, it's better to copy a new just fit byte []
+                     */
                     byte[] data = new byte[buffer.length - index];
                     System.arraycopy(buffer, index, data, 0, data.length);
 
-                    //Debug.getInstance().printMessage(buffer);
-                    //Debug.getInstance().printMessage(index + "");
-                    //Debug.getInstance().printMessage(buffer.length - index + "");
-                    //Debug.getInstance().printMessage(data);
-                    //Debug.getInstance().printMessage("******************");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //index = Decoder.getInstance().loadFromArray(data, index, messageType);
                     boolean knownType = true;
                     //Debug.getInstance().printMessage("checking message (type): " + messageType.get());
                     PacketWrapper packetWrapper = new PacketWrapper(packet.getAddress(), data);
@@ -182,9 +163,18 @@ public class UDPMessengerSingleton extends Thread {
         }).start();
     }
 
-
     public static interface ReceiveActor {
         void apply(String ip);
+    }
+
+    public static class PacketWrapper {
+        final public InetAddress senderAddress;
+        final public byte[] data;
+
+        public PacketWrapper(InetAddress senderAddress, byte[] data) {
+            this.senderAddress = senderAddress;
+            this.data = data;
+        }
     }
 
     class InputThread extends Thread {

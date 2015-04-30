@@ -22,7 +22,8 @@ public class ServerLauncher {
                 @Override
                 public void run() {
                     System.out.println("Launch the GUI configurator");
-                    GameMonitorJFrame.getInstance().setVisible(true);
+                    //GameMonitorJFrame.getInstance().setVisible(true);
+                    GameMonitorJFrame.getInstance().reset();
                 }
             });
         } catch (BindException e) {
