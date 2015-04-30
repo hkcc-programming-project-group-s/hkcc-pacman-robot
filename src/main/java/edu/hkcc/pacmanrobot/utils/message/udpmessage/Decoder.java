@@ -1,10 +1,8 @@
 package edu.hkcc.pacmanrobot.utils.message.udpmessage;
 
 import edu.hkcc.pacmanrobot.utils.Point2D;
-import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
 import edu.hkcc.pacmanrobot.utils.message.MovementCommand;
 import edu.hkcc.pacmanrobot.utils.network.NetworkUtils;
-import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -33,27 +31,6 @@ public class Decoder {
             }
         }
         return instance;
-    }
-
-    public DeviceInfo getDeviceInfo(byte[] array) {
-        try {
-            byte[] macAddress = new byte[NetworkUtils.MAC_ADDRESS_BYTES];
-            StringBuilder name = new StringBuilder();
-            StringBuilder ip = new StringBuilder();
-            ByteBuffer deviceType = ByteBuffer.allocate(1);
-            AtomicLong lastConnectionTime = new AtomicLong();
-            AtomicBoolean shouldSave = new AtomicBoolean();
-            int index = 0;
-            index = loadFromArray(array, index, macAddress);
-            index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, name);
-            index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, ip);
-            index = loadFromArray(array, index, deviceType);
-            index = loadFromArray(array, index, lastConnectionTime);
-            index = loadFromArray(array, index, shouldSave);
-            return new DeviceInfo(macAddress, name.toString().trim(), ip.toString().trim(), deviceType.get(), lastConnectionTime.get(), shouldSave.get());
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     public String getDeviceName(byte[] array) {
@@ -99,22 +76,6 @@ public class Decoder {
             return null;
         }
     }
-
-    public GameStatus getGameStatus(byte[] array) {
-        try {
-            ByteBuffer status = ByteBuffer.allocate(1);
-            StringBuilder message = new StringBuilder();
-            ByteBuffer furtherInfo = ByteBuffer.allocate(1);
-            int index = 0;
-            index = loadFromArray(array, index, status);
-            index = loadFromArray(array, index, DEFAULT_STRING_LENGTH, message);
-            index = loadFromArray(array, index, furtherInfo);
-            return new GameStatus(status.get(), message.toString(), furtherInfo.get());
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
 
     int loadFromArray(byte[] array, int index_start, int length, StringBuilder content) throws StringIndexOutOfBoundsException {
         content.setLength(0);

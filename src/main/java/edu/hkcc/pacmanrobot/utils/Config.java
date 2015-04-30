@@ -1,7 +1,6 @@
 package edu.hkcc.pacmanrobot.utils;
 
 import edu.hkcc.pacmanrobot.debug.Debug;
-import edu.hkcc.pacmanrobot.server.network.Server_NetworkThread;
 import edu.hkcc.pacmanrobot.utils.message.udpmessage.UDPMessengerSingleton;
 import edu.hkcc.pacmanrobot.utils.network.NetworkUtils;
 
@@ -85,11 +84,7 @@ public class Config {
                 serverAddress = UDPMessengerSingleton.getInstance(isServer ? new UDPMessengerSingleton.ReceiveActor() {
                     @Override
                     public void apply(String ip) {
-                        try {
-                            Server_NetworkThread.getInstance().deviceInfoManager().update(ip);
-                        } catch (BindException e) {
-                            e.printStackTrace();
-                        }
+                        //Server_NetworkThread.getInstance().deviceInfoManager().update(ip);
                     }
                 } : null).serverAddressDrawer.waitGetContent();
                 System.out.println("server ip: " + serverAddress);
