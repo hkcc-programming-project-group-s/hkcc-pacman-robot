@@ -40,6 +40,8 @@ public class Config {
     public static final String URL_ICON_ASSIGNMENT = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/assignment.png";
     public static final String URL_APK = "https://dl.dropboxusercontent.com/u/13757442/htm/hkcc/pacman/pacman-controller.apk";
     public static final String URL_ = "";
+    //game logic
+    public static final double ROBOT_MIN_DISTANCE = 5;
     public static Config instance = null;
     //public static String serverAddress = "192.168.1.3";
     //public static String serverAddress = "172.26.3.180";
@@ -52,8 +54,6 @@ public class Config {
     public static long SYNC_MAP_CYCLE_INTERVAL = 1000;
     public static long SAVE_INTERVAL = 10000L;
     public static boolean isServer = false;
-
-
     public String serverAddress = null;
 
     public Config(boolean isServer) {
@@ -105,7 +105,4 @@ public class Config {
                 System.exit(Debug.getInstance().SERVER_NOT_FOUND);
             }
     }
-
-    //game logic
-    public static final double ROBOT_MIN_DISTANCE=5;
 }

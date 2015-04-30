@@ -2,6 +2,7 @@ package edu.hkcc.pacmanrobot.server.config.core
 
 import java.util.function.BiConsumer
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.server.network.Server_NetworkThread
 import edu.hkcc.pacmanrobot.utils.message.{ControllerRobotPair, DeviceInfo}
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
@@ -48,7 +49,11 @@ object GameMonitorSAO {
   }
 
   def fetchDeviceInfos: java.util.Collection[DeviceInfo] = {
-    Server_NetworkThread.getInstance().deviceInfoManager.getAll.toVector.asJavaCollection
+    val devices = Server_NetworkThread.getInstance().deviceInfoManager.getAll
+    Debug.getInstance().printMessage("Number of deviceInfo on server: " + devices.length)
+    val result = devices.toVector.asJavaCollection
+    Debug.getInstance().printMessage("Number of deviceInfo for monitor: " + result.size)
+    result
   }
 
   def savePair(controllerRobotPair: ControllerRobotPair) {

@@ -36,13 +36,16 @@ object udpManager extends Thread {
       //input
       while (running) {
         try {
+          Debug.getInstance().printMessage("\n\n\n\n\n wait device info")
           val wrapper = messenger.deviceInfoBytesDrawer.waitGetContent()
+          Debug.getInstance().printMessage("\n\n\n\n\n got device info")
+          Debug.getInstance().printMessage("\n\n\n\n\n device info byte [] length = " + wrapper.data.length)
           val deviceInfo = Decoder.getInstance().getDeviceInfo(wrapper.data)
           Server_NetworkThread.getInstance().deviceInfoManager.addDeviceInfo(deviceInfo)
           Server_NetworkThread.getInstance().deviceInfoManager.update(NetworkInterface.getByInetAddress(wrapper.senderAddress).getHardwareAddress)
         }
-        catch{
-          case e:NullPointerException=>{
+        catch {
+          case e: NullPointerException => {
             // TODO
           }
         }

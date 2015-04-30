@@ -91,90 +91,6 @@ class Server_NetworkThread extends Thread {
   val obstacleMapManager = new ObstacleMapManager
 
   Debug.getInstance().printMessage("init Game-Status")
-  var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
-
-  Debug.getInstance().printMessage("Server_NetworkThread init 40%")
-  @volatile var running = false
-  Debug.getInstance().printMessage("Server_NetworkThread init 50%")
-
-  override def
-  start = {
-    if (!running)
-      super.start
-  }
-
-  def response_gameStatus(macAddress: Array[Byte]): Unit = {
-    gameStatusMessengerManager.sendByMacAddress(macAddress, gameStatus)
-  }
-
-  def response_pair(macAddress: Array[Byte]): Unit = {
-    controllerRobotPairManager.controllerRobotPairs.forEach(new BiConsumer[Array[Byte], Array[Byte]] {
-      override def accept(t: Array[Byte], u: Array[Byte]): Unit = {
-        controllerRobotPairMessengerManager.sendByMacAddress(macAddress,
-          new ControllerRobotPair(t, u, true))
-      }
-    })
-    controllerRobotPairMessengerManager.sendByMacAddress(macAddress, null)
-  }
-
-  def response_robotPosition(macAddress: Array[Byte], message: RobotPosition): Unit = {
-    if (message.deviceInfo.MAC_ADDRESS != null) {
-      //response desired target
-      message.position = robotPositions.get(message.deviceInfo.MAC_ADDRESS)
-      robotPositionMessengerManager.sendByMacAddress(macAddress, message)
-    }
-    else {
-      //response desired types
-      deviceInfoManager.getDeviceInfosByDeviceType(message.deviceInfo.deviceType).foreach(deviceInfo =>
-        robotPositionMessengerManager.sendByMacAddress(macAddress, new RobotPosition(deviceInfo, robotPositions.get(deviceInfo.MAC_ADDRESS)))
-      )
-    }
-  }
-
-  /*
-  val obstacleMapMessengerManager = new MessengerManager[ObstacleMap](PORT_MAP, (macAddress, message) => {
-    obstacleMapSubscribers.foreach(messenger =>
-      if (!macAddress.equals(messenger.getRemoteMacAddress)) messenger.sendMessage(message))
-    obstacleMap.merge(message)
-  })*/
-
-  def copyMovementCommand(controllerMacAddress: Array[Byte], message: MovementCommand): Unit = {
-    Debug.getInstance().printMessage("copying movement command to tcp listener: " + message.point2D.toString)
-    movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
-  }
-
-  def switchGameStatus(newGameStatus: Byte): Unit = {
-    gameStatus.status = newGameStatus
-    switchGameStatus(gameStatus)
-  }
-
-  def switchGameStatus(newGameStatus: GameStatus): Unit = {
-    if (GameStatus.STATE_REQUEST.equals(newGameStatus.status)) return
-    this.gameStatus = newGameStatus
-    gameStatusMessengerManager.foreach(messenger => messenger.sendMessage(newGameStatus))
-    newGameStatus.status match {
-      case GameStatus.STATE_SETUP => gameSetup
-      case GameStatus.STATE_START => gameStart
-      case GameStatus.STATE_PAUSE => gamePause
-      case GameStatus.STATE_RESUME => gameResume
-      case GameStatus.STATE_STOP => gameStop
-    }
-  }
-
-  def gameResume: Unit = {
-    //switchGameStatus(GameStatus.STATE_START)
-    winCheckThread.start
-  }
-
-  def gamePause: Unit = {
-    winCheckThread.running = false
-  }
-
-  def gameStart: Unit = {
-    ObstacleMapManager.obstacleMap.clear()
-    winCheckThread.start
-  }
-
   val winCheckThread = new Thread() {
     var running = false
 
@@ -213,6 +129,89 @@ class Server_NetworkThread extends Thread {
       }
       running = false
     }
+  }
+
+  Debug.getInstance().printMessage("Server_NetworkThread init 40%")
+  var gameStatus: GameStatus = new GameStatus(GameStatus.STATE_SETUP)
+  Debug.getInstance().printMessage("Server_NetworkThread init 50%")
+  @volatile var running = false
+
+  override def
+  start = {
+    if (!running)
+      super.start
+  }
+
+  def response_gameStatus(macAddress: Array[Byte]): Unit = {
+    gameStatusMessengerManager.sendByMacAddress(macAddress, gameStatus)
+  }
+
+  def response_pair(macAddress: Array[Byte]): Unit = {
+    controllerRobotPairManager.controllerRobotPairs.forEach(new BiConsumer[Array[Byte], Array[Byte]] {
+      override def accept(t: Array[Byte], u: Array[Byte]): Unit = {
+        controllerRobotPairMessengerManager.sendByMacAddress(macAddress,
+          new ControllerRobotPair(t, u, true))
+      }
+    })
+    controllerRobotPairMessengerManager.sendByMacAddress(macAddress, null)
+  }
+
+  /*
+  val obstacleMapMessengerManager = new MessengerManager[ObstacleMap](PORT_MAP, (macAddress, message) => {
+    obstacleMapSubscribers.foreach(messenger =>
+      if (!macAddress.equals(messenger.getRemoteMacAddress)) messenger.sendMessage(message))
+    obstacleMap.merge(message)
+  })*/
+
+  def response_robotPosition(macAddress: Array[Byte], message: RobotPosition): Unit = {
+    if (message.deviceInfo.MAC_ADDRESS != null) {
+      //response desired target
+      message.position = robotPositions.get(message.deviceInfo.MAC_ADDRESS)
+      robotPositionMessengerManager.sendByMacAddress(macAddress, message)
+    }
+    else {
+      //response desired types
+      deviceInfoManager.getDeviceInfosByDeviceType(message.deviceInfo.deviceType).foreach(deviceInfo =>
+        robotPositionMessengerManager.sendByMacAddress(macAddress, new RobotPosition(deviceInfo, robotPositions.get(deviceInfo.MAC_ADDRESS)))
+      )
+    }
+  }
+
+  def copyMovementCommand(controllerMacAddress: Array[Byte], message: MovementCommand): Unit = {
+    Debug.getInstance().printMessage("copying movement command to tcp listener: " + message.point2D.toString)
+    movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
+  }
+
+  def switchGameStatus(newGameStatus: Byte): Unit = {
+    gameStatus.status = newGameStatus
+    switchGameStatus(gameStatus)
+  }
+
+  def switchGameStatus(newGameStatus: GameStatus): Unit = {
+    if (GameStatus.STATE_REQUEST.equals(newGameStatus.status)) return
+    this.gameStatus = newGameStatus
+    gameStatusMessengerManager.foreach(messenger => messenger.sendMessage(newGameStatus))
+    newGameStatus.status match {
+      case GameStatus.STATE_SETUP => gameSetup
+      case GameStatus.STATE_START => gameStart
+      case GameStatus.STATE_PAUSE => gamePause
+      case GameStatus.STATE_RESUME => gameResume
+      case GameStatus.STATE_STOP => gameStop
+    }
+  }
+
+  def gameResume: Unit = {
+    //switchGameStatus(GameStatus.STATE_START)
+    winCheckThread.start
+  }
+
+  def gamePause: Unit = {
+    winCheckThread.running = false
+  }
+
+  def gameStart: Unit = {
+    ObstacleMapManager.obstacleMap.clear()
+    winCheckThread.start
   }
 
   def gameStop: Unit = {

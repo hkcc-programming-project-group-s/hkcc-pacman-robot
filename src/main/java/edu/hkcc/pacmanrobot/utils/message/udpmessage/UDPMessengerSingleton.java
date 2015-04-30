@@ -125,28 +125,16 @@ public class UDPMessengerSingleton extends Thread {
                     int index = 0;
                     AtomicInteger messageType = new AtomicInteger();
                     index = Decoder.getInstance().loadFromArray(buffer, index, messageType);
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("******************");
 
-                    //ByteBuffer data = ByteBuffer.wrap(buffer, index, buffer.length - index);
+                    /*
+                       //ByteBuffer data = ByteBuffer.wrap(buffer, index, buffer.length - index);
+                       //index = Decoder.getInstance().loadFromArray(data, index, messageType);
+                        this method is deprecated as the index (offset) might change after one read
+                        to support multi time read, it's better to copy a new just fit byte []
+                     */
                     byte[] data = new byte[buffer.length - index];
                     System.arraycopy(buffer, index, data, 0, data.length);
 
-                    //Debug.getInstance().printMessage(buffer);
-                    //Debug.getInstance().printMessage(index + "");
-                    //Debug.getInstance().printMessage(buffer.length - index + "");
-                    //Debug.getInstance().printMessage(data);
-                    //Debug.getInstance().printMessage("******************");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //Debug.getInstance().printMessage("");
-                    //index = Decoder.getInstance().loadFromArray(data, index, messageType);
                     boolean knownType = true;
                     //Debug.getInstance().printMessage("checking message (type): " + messageType.get());
                     PacketWrapper packetWrapper = new PacketWrapper(packet.getAddress(), data);
