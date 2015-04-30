@@ -91,7 +91,11 @@ public class UDPMessengerSingleton extends Thread {
                         //Debug.getInstance().printMessage("^- NetworkInterface: " + NetworkInterface.getByInetAddress(InetAddress.getByName("230.0.0.1")));
 
                         //datagramSocket.send(packet);
-                        multicastSocket.send(packet);
+                        try {
+                            multicastSocket.send(packet);
+                        } catch (IOException e) {
+                            Debug.getInstance().printMessage("Network access is lost!!!!");
+                        }
                     }
                 } catch (UnknownHostException e) {
                     //  Debug.getInstance().printMessage("UDP multi cast not supported");
