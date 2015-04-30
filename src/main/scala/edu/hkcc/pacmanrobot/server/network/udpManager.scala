@@ -3,6 +3,7 @@ package edu.hkcc.pacmanrobot.server.network
 import java.net.NetworkInterface
 import java.util.concurrent.ConcurrentLinkedQueue
 
+import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.utils.lang.ConcurrencyDrawer
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo
 import edu.hkcc.pacmanrobot.utils.message.udpmessage.UDPMessengerSingleton.ReceiveActor
@@ -34,10 +35,17 @@ object udpManager extends Thread {
       })
       //input
       while (running) {
-        val wrapper = messenger.deviceInfoBytesDrawer.waitGetContent()
-        val deviceInfo = Decoder.getInstance().getDeviceInfo(wrapper.data)
-        Server_NetworkThread.getInstance().deviceInfoManager.addDeviceInfo(deviceInfo)
-        Server_NetworkThread.getInstance().deviceInfoManager.update(NetworkInterface.getByInetAddress(wrapper.senderAddress).getHardwareAddress)
+        try {
+          val wrapper = messenger.deviceInfoBytesDrawer.waitGetContent()
+          val deviceInfo = Decoder.getInstance().getDeviceInfo(wrapper.data)
+          Server_NetworkThread.getInstance().deviceInfoManager.addDeviceInfo(deviceInfo)
+          Server_NetworkThread.getInstance().deviceInfoManager.update(NetworkInterface.getByInetAddress(wrapper.senderAddress).getHardwareAddress)
+        }
+        catch{
+          case e:NullPointerException=>{
+            // TODO
+          }
+        }
       }
     }
   }
@@ -46,7 +54,16 @@ object udpManager extends Thread {
       while (running) {
         val wrapper = messenger.movementCommandBytesDrawer.waitGetContent()
         val movementCommand = Decoder.getInstance().getMovementCommand(wrapper.data)
-        Server_NetworkThread.getInstance().copyMovementCommand(NetworkInterface.getByInetAddress(wrapper.senderAddress).getHardwareAddress, movementCommand)
+        try {
+          Server_NetworkThread.getInstance().copyMovementCommand(NetworkInterface.getByInetAddress(wrapper.senderAddress).getHardwareAddress, movementCommand)
+        } catch {
+          case e: NullPointerException => {
+            Debug.getInstance().printMessage("received movement command from unpaired controller")
+          }
+          case e: Exception => {
+            //just in case
+          }
+        }
       }
     }
   }

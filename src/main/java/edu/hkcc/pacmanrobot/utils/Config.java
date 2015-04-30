@@ -105,4 +105,7 @@ public class Config {
                 System.exit(Debug.getInstance().SERVER_NOT_FOUND);
             }
     }
+
+    //game logic
+    public static final double ROBOT_MIN_DISTANCE=5;
 }

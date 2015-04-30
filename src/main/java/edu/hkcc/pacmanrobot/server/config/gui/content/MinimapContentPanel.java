@@ -3,7 +3,9 @@ package edu.hkcc.pacmanrobot.server.config.gui.content;
 import edu.hkcc.pacmanrobot.controller.gamecontroller.MiniMap;
 import edu.hkcc.pacmanrobot.controller.utils.Utils;
 import edu.hkcc.pacmanrobot.debug.Debug;
+import edu.hkcc.pacmanrobot.server.config.core.GameMonitorSAO;
 import edu.hkcc.pacmanrobot.utils.Config;
+import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,14 +36,14 @@ public class MinimapContentPanel extends AbstractContentPanel {
 
     @Override
     public boolean onLeave() {
-        return false;
+        return true;
     }
 
     @Override
     public void onEnter() {
         Debug.getInstance().printMessage("Pop out Mini Map (OpenGL) Window");
         try {
-            //MiniMap.instance().start();
+            GameMonitorSAO.gameStatus_(GameStatus.STATE_START());
             miniMap.start();
         } catch (NullPointerException e) {
             //should never happen

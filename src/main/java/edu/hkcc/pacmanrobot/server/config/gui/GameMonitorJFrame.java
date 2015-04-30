@@ -99,10 +99,15 @@ public class GameMonitorJFrame extends JFrame {
 
 
     public void reset() {
+        Debug.getInstance().printMessage("Game Monitor JFrame reset");
         contentJPanel.switchToCard(0);
         controlJPanel.updateView();
         //controlJPanel.reset();
         setVisible(true);
+        revalidate();
+        repaint();
+        getContentPane().revalidate();
+        getContentPane().repaint();
     }
 }
 

@@ -139,6 +139,7 @@ class Server_NetworkThread extends Thread {
   })*/
 
   def copyMovementCommand(controllerMacAddress: Array[Byte], message: MovementCommand): Unit = {
+    Debug.getInstance().printMessage("copying movement command to tcp listener: " + message.point2D.toString)
     movementCommandMessengerManager.sendByMacAddress(controllerRobotPairManager.getRobot_macAddress(controllerMacAddress), message)
   }
 
@@ -160,19 +161,69 @@ class Server_NetworkThread extends Thread {
     }
   }
 
-  def gameResume: Unit = ???
+  def gameResume: Unit = {
+    //switchGameStatus(GameStatus.STATE_START)
+    winCheckThread.start
+  }
 
-  def gamePause: Unit = ???
+  def gamePause: Unit = {
+    winCheckThread.running = false
+  }
 
-  def gameStart: Unit = ???
+  def gameStart: Unit = {
+    ObstacleMapManager.obstacleMap.clear()
+    winCheckThread.start
+  }
+
+  val winCheckThread = new Thread() {
+    var running = false
+
+    override def start = {
+      if (!running)
+        try {
+          super.start
+        }
+        catch {
+          case e: IllegalThreadStateException => {
+            //This is expected when restart the game (not first round)
+          }
+        }
+    }
+
+    override def run = {
+      running = true
+      while (running && Server_NetworkThread.getInstance().running) {
+        // check if opposite robots are closed
+        var win = false
+        var lose = false
+        deviceInfoManager.getDeviceInfosByDeviceType(DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT).foreach(student => {
+          val studentPosition = robotPositions.get(student)
+          deviceInfoManager.getDeviceInfosByDeviceType(DeviceInfo.DEVICE_TYPE_ASSIGNMENT_ROBOT).foreach(assignment =>
+            win &= studentPosition.distance(robotPositions.get(assignment)) <= Config.ROBOT_MIN_DISTANCE
+          )
+          deviceInfoManager.getDeviceInfosByDeviceType(DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT).foreach(deadlinerobot =>
+            lose &= studentPosition.distance(robotPositions.get(deadlinerobot)) <= Config.ROBOT_MIN_DISTANCE
+          )
+        })
+        // further work on more game level will use win and lose is different priority
+        if (win)
+          switchGameStatus(new GameStatus(GameStatus.STATE_WIN, "Student Win", DeviceInfo.DEVICE_TYPE_STUDENT_ROBOT))
+        else if (lose)
+          switchGameStatus(new GameStatus(GameStatus.STATE_LOSE, "Student Lose", DeviceInfo.DEVICE_TYPE_DEADLINE_ROBOT))
+      }
+      running = false
+    }
+  }
 
   def gameStop: Unit = {
     switchGameStatus(GameStatus.STATE_SETUP)
-
+    winCheckThread.running = false
   }
 
   def gameSetup: Unit = {
     GameMonitorJFrame.getInstance().reset()
+    winCheckThread.running = false
+
   }
 
   override def run = {
@@ -186,28 +237,27 @@ class Server_NetworkThread extends Thread {
     }
   }
 
+  // generate noise on the map as obstacle (for debug usage)
   def test = {
     import ObstacleMapManager.obstacleMap
     val bufferedMap = new ObstacleMap
     Timer.setTimeInterval({
-      Debug.getInstance().printMessage("random put")
-      (1 to 100).foreach(i => {
-        val key = new MapKey(random nextInt 4000, random nextInt 4000)
-        //  Debug.getInstance().printMessage("generated obstacle: x=" + key.x + "\t y=" + key.y)
-        bufferedMap.put(new MapUnit(key, System.currentTimeMillis()))
+      if (gameStatus.status.equals(GameStatus.STATE_START) || gameStatus.status.equals(GameStatus.STATE_RESUME)) {
+        Debug.getInstance().printMessage("random put")
+        (1 to 5).foreach(i => {
+          val key = new MapKey(random nextInt 4000, random nextInt 4000)
+          //  Debug.getInstance().printMessage("generated obstacle: x=" + key.x + "\t y=" + key.y)
+          bufferedMap.put(new MapUnit(key, System.currentTimeMillis()))
+        }
+        )
+        val toSend = bufferedMap.clone
+        //println("number of obstacleMapSubscribers=" + obstacleMapManager.messengers.size)
+        obstacleMapManager.foreach(m =>
+          m.sendMessage(toSend)
+        )
+        obstacleMap.merge(bufferedMap)
+        bufferedMap.clear
       }
-      )
-      val toSend = bufferedMap.clone
-      //println("number of obstacleMapSubscribers=" + obstacleMapManager.messengers.size)
-      obstacleMapManager.foreach(m =>
-        m.sendMessage(toSend)
-      )
-      obstacleMap.merge(bufferedMap)
-      bufferedMap.clear
-      //Debug.getInstance().printMessage("waiting new movement command")
-      //val movementCommandBuffer = UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent.array()
-      //val movementCommand = Decoder.getInstance().getMovementCommand(UDPMessengerSingleton.getInstance().movementCommandBytesDrawer.waitGetContent.data)
-      //Debug.getInstance().printMessage("new movement command: " + movementCommand.toString)
     }, true, 500)
   }
 

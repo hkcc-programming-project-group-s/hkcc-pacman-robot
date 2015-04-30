@@ -1,10 +1,10 @@
 package edu.hkcc.pacmanrobot.controller.gamecontroller
 
 import java.awt.Color
+import java.util
 import java.util.function.BiConsumer
 
 import edu.hkcc.pacmanrobot.controller.gamecontroller.MiniMap._
-import edu.hkcc.pacmanrobot.debug.Debug
 import edu.hkcc.pacmanrobot.server.network.ObstacleMapManager
 import edu.hkcc.pacmanrobot.utils.map.{MapKey, ObstacleMap}
 
@@ -17,6 +17,7 @@ import myutils.gui.opengl.AbstractSimpleOpenGLApplication
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11.{glColor3f, _}
 
+import scala.collection.JavaConverters._
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
@@ -144,40 +145,41 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
       //val obstacleMap = mapMessenger.getMap
       if (!updated) return
       update
-      Debug.getInstance().printMessage("\n\n\n-3")
       range = Utils.getObstacleMapRange(obstacleMap)
       x_range = range._1._2 - range._1._1
       y_range = range._2._2 - range._2._1
-      Debug.getInstance().printMessage("\n\n\n-2")
+
       obstacle_radius = Math.min(
         Math.max(
           0.8f / x_range, 1f / WINDOW_WIDTH * minPixel),
         Math.max(
           0.8f / y_range, 1f / WINDOW_HEIGHT * minPixel
         ))
-      Debug.getInstance().printMessage("\n\n\n-1")
+
       val now = System.currentTimeMillis
-      Debug.getInstance().printMessage("\n\n\n___1")
+
       //var ratio:Float = 1
-      Debug.getInstance().printMessage("\n\n\n___2")
-      Debug.getInstance().printMessage("\n\n\n0")
+
       obstacles.clear()
-      Debug.getInstance().printMessage("\n\n\n1")
+
+      // generate and render OpenGL objects according to the obstacles location and last discoved time
       obstacleMap.forEach(new BiConsumer[MapKey, Long] {
         override def accept(k: MapKey, v: Long): Unit = {
           val ratio: Float = ObstacleMap.prob(v, now).toFloat
-          Debug.getInstance().printMessage(ratio.toString)
+          //Debug.getInstance().printMessage(ratio.toString)
           obstacles += new OpenglObstacle(getXForOpenGL(k.x), getYForOpenGL(k.y), ratio)
         }
       })
-      Debug.getInstance().printMessage("\n\n\n2")
-      obstacles.toArray
-      Debug.getInstance().printMessage("\n\n\n2.1")
-      scala.util.control.NonFatal
-      val sorted = obstacles.toArray.sorted
-      Debug.getInstance().printMessage("\n\n\n2.5")
-      sorted.foreach(o => render_obstacle(o))
-      Debug.getInstance().printMessage("\n\n\n3")
+      /*
+      obstacles.sorted
+      the above method might lead to JVM level fatal error, therefore deprecated in this case
+       */
+      // convert the scala collection to java collection, then use java API to sort the elements
+      val javaCollection: java.util.Collection[OpenglObstacle] = obstacles.toVector.asJavaCollection
+      util.Arrays.sort(javaCollection.toArray())
+      javaCollection.toArray.foreach(u => render_obstacle(u.asInstanceOf[OpenglObstacle]))
+
+      // generate and render OpenGL objects according to the robots location
       val positions = MiniMapSAO.positions
       positions.forEach(new BiConsumer[DeviceInfo, Position] {
         override def accept(t: DeviceInfo, u: Position): Unit = {
@@ -204,7 +206,7 @@ class MiniMap(WINDOW_WIDTH: Int = 800, WINDOW_HEIGHT: Int = 800)
     }
 
     def render_obstacle(obstacle: OpenglObstacle): Unit = {
-      Debug.getInstance().printMessage("render obstacle: x= " + obstacle.x + "\ty= " + obstacle.y)
+      //Debug.getInstance().printMessage("render obstacle: x= " + obstacle.x + "\ty= " + obstacle.y)
       glColor3f(obstacle.R, obstacle.G, obstacle.B)
       render_square(obstacle.x, obstacle.y, 0, obstacle_radius)
     }

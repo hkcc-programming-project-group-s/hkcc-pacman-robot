@@ -91,14 +91,18 @@ public class ContentJPanel extends AbstractCardJPanel {
     }
 
     public void switchToCard(int index) {
+        Debug.getInstance().printMessage("GUI try leave page");
         if (!contents.get(currentPage).onLeave())
             //current page not completed
             return;
         //current page completed
+        Debug.getInstance().printMessage("GUI left page");
         Debug.getInstance().printMessage("Content Panel switch view: " + contents.get(index).getClass().getSimpleName());
         currentPage = index;
         super.switchToCard(index + "");
         contents.get(index).onEnter();
+        revalidate();
+        updateUI();
     }
 
 
