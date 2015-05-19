@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
+import edu.hkcc.pacmanrobot.controller.pccontroller.core.PcControllerSAO;
 import edu.hkcc.pacmanrobot.controller.utils.Utils;
 import edu.hkcc.pacmanrobot.utils.Config;
 import edu.hkcc.pacmanrobot.utils.message.DeviceInfo;
@@ -66,14 +67,14 @@ public class PcControllerSetting extends PcController_contentJPanel {
         gbc_nameLbl.gridy = 2;
         panel_center.add(nameLbl, gbc_nameLbl);
 
-        JLabel ipAddressLbl = new JLabel(master.sao.deviceInfo().ip());
+        JLabel ipAddressLbl = new JLabel(PcControllerSAO.deviceInfo().ip());
         GridBagConstraints gbc_ipAddressLbl = new GridBagConstraints();
         gbc_ipAddressLbl.insets = new Insets(0, 0, 5, 5);
         gbc_ipAddressLbl.gridx = 2;
         gbc_ipAddressLbl.gridy = 1;
         panel_center.add(ipAddressLbl, gbc_ipAddressLbl);
 
-        controllerNameLbl = new JLabel(master.sao.deviceInfo().name());
+        controllerNameLbl = new JLabel(PcControllerSAO.deviceInfo().name());
         GridBagConstraints gbc_controllerNameLbl = new GridBagConstraints();
         gbc_controllerNameLbl.insets = new Insets(0, 0, 5, 5);
         gbc_controllerNameLbl.gridx = 2;
@@ -333,7 +334,7 @@ public class PcControllerSetting extends PcController_contentJPanel {
             else if (e.getKeyCode() == direction_lable_keys[3].keycode)
                 x = 1;
             else return false;
-            master.sao.sendMovementCommand(x, y);
+            PcControllerSAO.sendMovementCommand(x, y);
             updateBallLocation();
             return true;
         }

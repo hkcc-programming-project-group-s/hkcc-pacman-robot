@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
+import edu.hkcc.pacmanrobot.controller.pccontroller.core.PcControllerSAO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,10 +35,10 @@ public class PauseResumable extends PcController_contentJPanel {
         contentPane.add(GameResumeLabel, BorderLayout.NORTH);
 
         JTextPane textPane = new JTextPane();
-        if (!master.sao.isControllerPause()) {
+        if (!PcControllerSAO.isControllerPause()) {
             textPane.setText("The time is " + h + ":" + m + ":" + s + "\n" + "The problem is solved. You can resume the game now.");
-        } else if (master.sao.isControllerPause())
-            textPane.setText("The time is " + h + ":" + m + ":" + s + "\n" + master.sao.getReason() + " You can resume the game if you want.");
+        } else if (PcControllerSAO.isControllerPause())
+            textPane.setText("The time is " + h + ":" + m + ":" + s + "\n" + PcControllerSAO.getReason() + " You can resume the game if you want.");
         contentPane.add(textPane, BorderLayout.CENTER);
         textPane.setEditable(false);
 

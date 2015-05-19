@@ -1,30 +1,43 @@
 package edu.hkcc.pacmanrobot.controller.pccontroller;
 
 /**
- * Created by Winner on 18/4/2015.
+ * Created by Nicola on 18/4/2015.
+ * Secondary Modified By Beeno on 19/5/2015 (Singleton)
  */
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.core.PcControllerSAO;
 import edu.hkcc.pacmanrobot.server.config.gui.LogoJPanel;
+import edu.hkcc.pacmanrobot.server.network.Server_NetworkThread;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PcControllerJFrame extends JFrame {
 
-    public PcControllerSAO sao = new PcControllerSAO();
-    public PcControllerJFrame jframe = this;
+    private static PcControllerJFrame instance = null;
+
+    public static PcControllerJFrame getInstance() {
+        return getInstance(600, 400);
+    }
+
+    public static PcControllerJFrame getInstance( int width, int height) {
+        if (instance == null)
+            synchronized (PcControllerJFrame.class) {
+                if (instance == null) {
+                    instance = new PcControllerJFrame(width, height);
+                }
+            }
+        return instance;
+    }
+
     int WINDOW_WIDTH = 960;
     int WINDOW_HEIGHT = 720;
     LogoJPanel logoJPanel = new LogoJPanel();
     PcController_centerJPanel contentJPanel = new PcController_centerJPanel(this);
     PcController_buttomJPanel controlJPanel = new PcController_buttomJPanel(this);
 
-    public PcControllerJFrame() {
-        initialize();
-    }
 
-    public PcControllerJFrame(int width, int height) {
+    private PcControllerJFrame(int width, int height) {
         WINDOW_WIDTH = width;
         WINDOW_HEIGHT = height;
         initialize();

@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.controller.pccontroller.core
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame
+import edu.hkcc.pacmanrobot.server.network.Server_NetworkThread
 import edu.hkcc.pacmanrobot.utils.GameDevice
 import edu.hkcc.pacmanrobot.utils.message.messenger.Messenger
 import edu.hkcc.pacmanrobot.utils.message.{DeviceInfo, MovementCommand}
@@ -8,11 +9,21 @@ import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus
 
 
 /**
- * Created by 13058456a on 4/15/2015.
+ * Created by Beeno Tung on 4/15/2015.
  */
-class PcControllerSAO extends GameDevice {
+object PcController {
+  /*var instance: PcControllerSAO = null
+  def getInstance: PcControllerSAO = {
+    if (instance == null)
+      synchronized {
+        if (instance == null) instance = new PcControllerSAO()
+      }
+    instance
+  }*/
+}
+
+object PcControllerSAO extends GameDevice {
   val movementCommandMessenger: Messenger[MovementCommand] = Messenger.create[MovementCommand](MovementCommand.port, { message => }, null)
-  val PcControllerJFrame = new PcControllerJFrame()
   override var deviceInfo: DeviceInfo = DeviceInfo.create("PC Controller", DeviceInfo.DEVICE_TYPE_CONTROLLER)
   var reason: String = null
   var canResume: Boolean = true;
@@ -23,18 +34,18 @@ class PcControllerSAO extends GameDevice {
 
   override def gameResume: Unit = {
     shouldSend = true
-    PcControllerJFrame.palying
+    PcControllerJFrame.getInstance().palying
   }
 
   override def gamePause: Unit = {
     shouldSend = false
     reason = gameStatus.message
     if (!gameStatus.furtherInfo.equals(0)) {
-      PcControllerJFrame.unresume()
+      PcControllerJFrame.getInstance().unresume()
       canResume = false
     }
     else if (gameStatus.furtherInfo.equals(0)) {
-      PcControllerJFrame.reaume()
+      PcControllerJFrame.getInstance().reaume()
       canResume = true
       reason = null
     }

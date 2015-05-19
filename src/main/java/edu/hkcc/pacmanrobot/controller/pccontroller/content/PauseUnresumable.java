@@ -1,6 +1,7 @@
 package edu.hkcc.pacmanrobot.controller.pccontroller.content;
 
 import edu.hkcc.pacmanrobot.controller.pccontroller.PcControllerJFrame;
+import edu.hkcc.pacmanrobot.controller.pccontroller.core.PcControllerSAO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -32,7 +33,7 @@ public class PauseUnresumable extends PcController_contentJPanel {
         int h = now.get(Calendar.HOUR_OF_DAY);
         int m = now.get(Calendar.MINUTE);
         int s = now.get(Calendar.SECOND);
-        textPane.setText("The time is " + h + ":" + m + ":" + s + "\n" + master.sao.getReason() + " Please check the device. If the problem is solved, click recheck and server will check the problem again.");
+        textPane.setText("The time is " + h + ":" + m + ":" + s + "\n" + PcControllerSAO.getReason() + " Please check the device. If the problem is solved, click recheck and server will check the problem again.");
         contentPane.add(textPane, BorderLayout.CENTER);
         textPane.setEditable(false);
 

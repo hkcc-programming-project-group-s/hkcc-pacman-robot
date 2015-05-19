@@ -69,7 +69,6 @@ public class GameMonitorJFrame extends JFrame {
         } else {
             contentJPanel.next();
         }
-        // TODO Auto-generated method stub
     }
 
 

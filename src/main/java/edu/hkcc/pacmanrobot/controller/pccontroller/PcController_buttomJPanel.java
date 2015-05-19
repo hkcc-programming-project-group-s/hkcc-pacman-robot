@@ -4,6 +4,7 @@ package edu.hkcc.pacmanrobot.controller.pccontroller;
  * Created by Winner on 18/4/2015.
  */
 
+import edu.hkcc.pacmanrobot.controller.pccontroller.core.PcControllerSAO;
 import edu.hkcc.pacmanrobot.utils.studentrobot.code.GameStatus;
 
 import javax.swing.*;
@@ -28,7 +29,7 @@ public class PcController_buttomJPanel extends JPanel {
         btnPause = new JButton("Pause");
         btnPause.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.sao.sendGameStatus(GameStatus.STATE_RESUME());
+                PcControllerSAO.sendGameStatus(GameStatus.STATE_RESUME());
                 updateView();
             }
         });
@@ -37,7 +38,7 @@ public class PcController_buttomJPanel extends JPanel {
         btnRecheck = new JButton("Recheck");
         btnRecheck.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (master.sao.canResume()) master.reaume();
+                if (PcControllerSAO.canResume()) master.reaume();
                 updateView();
             }
         });
@@ -46,7 +47,7 @@ public class PcController_buttomJPanel extends JPanel {
         btnResume = new JButton("Resume");
         btnResume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                master.sao.sendGameStatus(GameStatus.STATE_RESUME());
+                PcControllerSAO.sendGameStatus(GameStatus.STATE_RESUME());
                 updateView();
             }
         });
@@ -57,7 +58,7 @@ public class PcController_buttomJPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int result = JOptionPane.showConfirmDialog(current, "Do you want to end the game?", "title", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
-                    master.sao.sendGameStatus(GameStatus.STATE_STOP());
+                    PcControllerSAO.sendGameStatus(GameStatus.STATE_STOP());
                 }
             }
         });
