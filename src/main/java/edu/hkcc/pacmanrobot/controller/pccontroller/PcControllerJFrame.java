@@ -17,10 +17,10 @@ public class PcControllerJFrame extends JFrame {
     private static PcControllerJFrame instance = null;
 
     public static PcControllerJFrame getInstance() {
-        return getInstance(600, 400);
+        return getInstance(400, 600);
     }
 
-    public static PcControllerJFrame getInstance( int width, int height) {
+    public static PcControllerJFrame getInstance(int width, int height) {
         if (instance == null)
             synchronized (PcControllerJFrame.class) {
                 if (instance == null) {
